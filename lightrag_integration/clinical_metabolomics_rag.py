@@ -42,6 +42,32 @@ import openai
 from dataclasses import dataclass
 import json
 
+# Tenacity for retry logic - graceful fallback if not available
+try:
+    from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+    TENACITY_AVAILABLE = True
+except ImportError:
+    # Fallback decorators for when tenacity is not available
+    TENACITY_AVAILABLE = False
+    
+    def retry(*args, **kwargs):
+        """Fallback retry decorator that does nothing."""
+        def decorator(func):
+            return func
+        return decorator
+    
+    def stop_after_attempt(*args, **kwargs):
+        """Fallback stop condition."""
+        return None
+    
+    def wait_exponential(*args, **kwargs):
+        """Fallback wait strategy."""
+        return None
+        
+    def retry_if_exception_type(*args, **kwargs):
+        """Fallback retry condition."""
+        return None
+
 # LightRAG imports - will be mocked for testing
 try:
     from lightrag import LightRAG
@@ -330,6 +356,237 @@ class ClinicalMetabolomicsRAG:
         
         return llm_function
     
+    def _get_llm_function(self) -> Callable:
+        """
+        Get LLM function for LightRAG with enhanced OpenAI integration.
+        
+        This method creates a more robust LLM function with comprehensive error handling,
+        API cost monitoring, rate limiting support, and biomedical optimization.
+        It supports both production and testing environments.
+        
+        Returns:
+            Callable: Async function that handles LLM requests with the signature:
+                async (prompt: str, model: str, max_tokens: int, temperature: float, **kwargs) -> str
+        
+        Features:
+            - Enhanced error handling for API failures, rate limits, and timeouts
+            - Real-time API cost monitoring and logging
+            - Automatic retry logic with exponential backoff
+            - Model availability validation
+            - Biomedical prompt optimization
+            - Support for both LightRAG and direct OpenAI integration
+        """
+        async def enhanced_llm_function(
+            prompt: str,
+            model: str = None,
+            max_tokens: int = None,
+            temperature: float = 0.1,
+            **kwargs
+        ) -> str:
+            """
+            Enhanced LLM function with comprehensive error handling and cost monitoring.
+            
+            Args:
+                prompt: The input prompt for the LLM
+                model: Model name (defaults to config model)
+                max_tokens: Maximum tokens to generate (defaults to config max_tokens)
+                temperature: Sampling temperature for generation
+                **kwargs: Additional parameters for the API call
+            
+            Returns:
+                str: The generated response from the LLM
+            
+            Raises:
+                openai.RateLimitError: When API rate limits are exceeded
+                openai.AuthenticationError: When API key is invalid or missing
+                openai.APITimeoutError: When request times out
+                openai.BadRequestError: When model is unavailable or request is malformed
+                ClinicalMetabolomicsRAGError: For other API or processing errors
+            """
+            import openai
+            
+            # Use configured values or defaults
+            model = model or self.effective_model
+            max_tokens = max_tokens or self.effective_max_tokens
+            
+            # Validate model availability for biomedical tasks
+            if model not in ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo']:
+                self.logger.warning(f"Model {model} may not be optimal for biomedical tasks")
+            
+            # Enhanced biomedical prompt optimization
+            if self.biomedical_params.get('entity_extraction_focus') == 'biomedical':
+                # Add biomedical context hints to improve domain-specific responses
+                domain_context = (
+                    "Context: This is a clinical metabolomics query. Focus on metabolites, "
+                    "biomarkers, clinical pathways, and biomedical relationships. "
+                    "Prioritize accurate scientific information and clinical relevance.\n\n"
+                )
+                optimized_prompt = domain_context + prompt
+            else:
+                optimized_prompt = prompt
+            
+            # Define retry strategy with exponential backoff (if tenacity is available)
+            if TENACITY_AVAILABLE:
+                @retry(
+                    stop=stop_after_attempt(self.retry_config['max_attempts']),
+                    wait=wait_exponential(multiplier=self.retry_config['backoff_factor'], max=self.retry_config['max_wait_time']),
+                    retry=retry_if_exception_type((
+                        openai.RateLimitError,
+                        openai.APITimeoutError,
+                        openai.InternalServerError,
+                        openai.APIConnectionError
+                    ))
+                )
+                async def make_api_call():
+                    return await _make_single_api_call()
+            else:
+                # Simple retry logic without tenacity
+                async def make_api_call():
+                    last_exception = None
+                    for attempt in range(self.retry_config['max_attempts']):
+                        try:
+                            return await _make_single_api_call()
+                        except (openai.RateLimitError, openai.APITimeoutError, 
+                               openai.InternalServerError, openai.APIConnectionError) as e:
+                            last_exception = e
+                            if attempt < self.retry_config['max_attempts'] - 1:
+                                wait_time = min(self.retry_config['backoff_factor'] ** attempt, 
+                                              self.retry_config['max_wait_time'])
+                                self.logger.warning(f"API call failed (attempt {attempt + 1}), retrying in {wait_time}s: {e}")
+                                await asyncio.sleep(wait_time)
+                            else:
+                                raise
+                        except Exception as e:
+                            # Don't retry for other exceptions
+                            raise
+                    
+                    if last_exception:
+                        raise last_exception
+            
+            async def _make_single_api_call():
+                start_time = time.time()
+                
+                try:
+                    if LIGHTRAG_AVAILABLE:
+                        # Use LightRAG's OpenAI wrapper with enhanced parameters
+                        response = await openai_complete_if_cache(
+                            model=model,
+                            prompt=optimized_prompt,
+                            max_tokens=max_tokens,
+                            temperature=temperature,
+                            api_key=self.config.api_key,
+                            timeout=30.0,  # 30 second timeout
+                            **kwargs
+                        )
+                        
+                        # Extract token usage if available (would be from actual response)
+                        token_usage = {
+                            'total_tokens': len(optimized_prompt.split()) + len(response.split()),
+                            'prompt_tokens': len(optimized_prompt.split()),
+                            'completion_tokens': len(response.split())
+                        }
+                        
+                    else:
+                        # Use OpenAI client directly for testing and development
+                        completion = await self.openai_client.chat.completions.create(
+                            model=model,
+                            messages=[{"role": "user", "content": optimized_prompt}],
+                            max_tokens=max_tokens,
+                            temperature=temperature,
+                            timeout=30.0,
+                            **kwargs
+                        )
+                        response = completion.choices[0].message.content
+                        
+                        # Extract actual token usage from completion
+                        token_usage = {
+                            'total_tokens': completion.usage.total_tokens,
+                            'prompt_tokens': completion.usage.prompt_tokens,
+                            'completion_tokens': completion.usage.completion_tokens
+                        }
+                    
+                    # Calculate API cost based on model and usage
+                    api_cost = self._calculate_api_cost(model, token_usage)
+                    processing_time = time.time() - start_time
+                    
+                    # Track cost and usage if enabled
+                    if self.cost_tracking_enabled:
+                        self.track_api_cost(api_cost, token_usage)
+                        self.logger.debug(
+                            f"LLM call completed: {processing_time:.2f}s, "
+                            f"${api_cost:.4f}, {token_usage['total_tokens']} tokens"
+                        )
+                    
+                    return response
+                    
+                except openai.RateLimitError as e:
+                    self.logger.warning(f"Rate limit exceeded: {e}")
+                    raise
+                    
+                except openai.AuthenticationError as e:
+                    self.logger.error(f"Authentication failed - check API key: {e}")
+                    raise ClinicalMetabolomicsRAGError(f"OpenAI authentication failed: {e}") from e
+                    
+                except openai.APITimeoutError as e:
+                    self.logger.warning(f"API timeout: {e}")
+                    raise
+                    
+                except openai.BadRequestError as e:
+                    self.logger.error(f"Invalid request - model {model} may be unavailable: {e}")
+                    raise ClinicalMetabolomicsRAGError(f"Invalid API request: {e}") from e
+                    
+                except openai.InternalServerError as e:
+                    self.logger.warning(f"OpenAI server error (will retry): {e}")
+                    raise
+                    
+                except openai.APIConnectionError as e:
+                    self.logger.warning(f"API connection error (will retry): {e}")
+                    raise
+                    
+                except Exception as e:
+                    self.logger.error(f"Unexpected LLM function error: {e}")
+                    raise ClinicalMetabolomicsRAGError(f"LLM function failed: {e}") from e
+            
+            try:
+                return await make_api_call()
+            except Exception as e:
+                # Final error handling after all retries exhausted
+                self.logger.error(f"LLM function failed after {self.retry_config['max_attempts']} attempts: {e}")
+                raise ClinicalMetabolomicsRAGError(f"LLM function failed permanently: {e}") from e
+        
+        return enhanced_llm_function
+    
+    def _calculate_api_cost(self, model: str, token_usage: Dict[str, int]) -> float:
+        """
+        Calculate the API cost for a given model and token usage.
+        
+        Args:
+            model: The model used for the API call
+            token_usage: Dictionary with prompt_tokens and completion_tokens
+            
+        Returns:
+            float: Estimated cost in USD
+        """
+        # Current OpenAI pricing (as of 2025)
+        pricing = {
+            'gpt-4o': {'prompt': 0.005, 'completion': 0.015},  # per 1K tokens
+            'gpt-4o-mini': {'prompt': 0.00015, 'completion': 0.0006},
+            'gpt-4': {'prompt': 0.03, 'completion': 0.06},
+            'gpt-4-turbo': {'prompt': 0.01, 'completion': 0.03},
+            'gpt-3.5-turbo': {'prompt': 0.0015, 'completion': 0.002}
+        }
+        
+        # Default pricing if model not found
+        default_pricing = {'prompt': 0.002, 'completion': 0.004}
+        
+        model_pricing = pricing.get(model, default_pricing)
+        
+        prompt_cost = (token_usage.get('prompt_tokens', 0) / 1000.0) * model_pricing['prompt']
+        completion_cost = (token_usage.get('completion_tokens', 0) / 1000.0) * model_pricing['completion']
+        
+        total_cost = prompt_cost + completion_cost
+        return total_cost
+    
     def _create_embedding_function(self) -> EmbeddingFunc:
         """Create embedding function for LightRAG using OpenAI."""
         async def embedding_function(texts: List[str]) -> List[List[float]]:
@@ -358,8 +615,8 @@ class ClinicalMetabolomicsRAG:
         and domain-specific optimization for metabolite, protein, and pathway analysis.
         """
         try:
-            # Create LLM and embedding functions
-            llm_func = self._create_llm_function()
+            # Create LLM and embedding functions using enhanced implementations
+            llm_func = self._get_llm_function()
             embedding_func = self._create_embedding_function()
             
             # Create LightRAG instance with biomedical-optimized parameters

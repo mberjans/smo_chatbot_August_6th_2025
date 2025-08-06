@@ -431,6 +431,278 @@ class TestClinicalMetabolomicsRAGLightRAGSetup:
             pytest.skip("ClinicalMetabolomicsRAG not implemented yet - TDD phase")
 
 
+class TestClinicalMetabolomicsRAGGetLLMFunction:
+    """Test class for the enhanced _get_llm_function method implementation."""
+    
+    @pytest.mark.asyncio
+    async def test_get_llm_function_basic_functionality(self, valid_config, mock_openai_client):
+        """Test basic functionality of the _get_llm_function method."""
+        try:
+            from lightrag_integration.clinical_metabolomics_rag import ClinicalMetabolomicsRAG
+            
+            with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+                 patch('lightrag_integration.clinical_metabolomics_rag.openai.OpenAI') as mock_openai:
+                
+                # Set up mocks
+                mock_openai.return_value = mock_openai_client
+                mock_lightrag.return_value = MockLightRAGInstance()
+                
+                # Mock OpenAI completion response
+                mock_completion = MagicMock()
+                mock_completion.choices = [MagicMock()]
+                mock_completion.choices[0].message.content = "Test LLM response"
+                mock_completion.usage.total_tokens = 150
+                mock_completion.usage.prompt_tokens = 100
+                mock_completion.usage.completion_tokens = 50
+                mock_openai_client.chat.completions.create = AsyncMock(return_value=mock_completion)
+                
+                rag = ClinicalMetabolomicsRAG(config=valid_config)
+                
+                # Get the LLM function
+                llm_func = rag._get_llm_function()
+                assert callable(llm_func)
+                
+                # Test the LLM function
+                response = await llm_func("Test prompt")
+                assert response == "Test LLM response"
+                
+                # Verify API call was made with correct parameters
+                mock_openai_client.chat.completions.create.assert_called_once()
+                call_args = mock_openai_client.chat.completions.create.call_args[1]
+                assert call_args['model'] == valid_config.model
+                assert call_args['max_tokens'] == valid_config.max_tokens
+                assert call_args['temperature'] == 0.1
+                
+        except ImportError:
+            pytest.skip("ClinicalMetabolomicsRAG not implemented yet - TDD phase")
+    
+    @pytest.mark.asyncio
+    async def test_get_llm_function_cost_monitoring(self, valid_config, mock_openai_client):
+        """Test that _get_llm_function properly tracks API costs."""
+        try:
+            from lightrag_integration.clinical_metabolomics_rag import ClinicalMetabolomicsRAG
+            
+            with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+                 patch('lightrag_integration.clinical_metabolomics_rag.openai.OpenAI') as mock_openai:
+                
+                mock_openai.return_value = mock_openai_client
+                mock_lightrag.return_value = MockLightRAGInstance()
+                
+                # Mock OpenAI completion response
+                mock_completion = MagicMock()
+                mock_completion.choices = [MagicMock()]
+                mock_completion.choices[0].message.content = "Test response"
+                mock_completion.usage.total_tokens = 150
+                mock_completion.usage.prompt_tokens = 100
+                mock_completion.usage.completion_tokens = 50
+                mock_openai_client.chat.completions.create = AsyncMock(return_value=mock_completion)
+                
+                rag = ClinicalMetabolomicsRAG(config=valid_config, enable_cost_tracking=True)
+                
+                initial_cost = rag.total_cost
+                
+                # Call LLM function
+                llm_func = rag._get_llm_function()
+                await llm_func("Test prompt for cost tracking")
+                
+                # Verify cost was tracked
+                assert rag.total_cost > initial_cost
+                assert rag.cost_monitor['queries'] > 0
+                
+        except ImportError:
+            pytest.skip("ClinicalMetabolomicsRAG not implemented yet - TDD phase")
+    
+    @pytest.mark.asyncio
+    async def test_get_llm_function_biomedical_prompt_optimization(self, valid_config, mock_openai_client):
+        """Test biomedical prompt optimization in _get_llm_function."""
+        try:
+            from lightrag_integration.clinical_metabolomics_rag import ClinicalMetabolomicsRAG
+            
+            with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+                 patch('lightrag_integration.clinical_metabolomics_rag.openai.OpenAI') as mock_openai:
+                
+                mock_openai.return_value = mock_openai_client
+                mock_lightrag.return_value = MockLightRAGInstance()
+                
+                # Mock OpenAI completion response
+                mock_completion = MagicMock()
+                mock_completion.choices = [MagicMock()]
+                mock_completion.choices[0].message.content = "Biomedical response"
+                mock_completion.usage.total_tokens = 200
+                mock_completion.usage.prompt_tokens = 150
+                mock_completion.usage.completion_tokens = 50
+                mock_openai_client.chat.completions.create = AsyncMock(return_value=mock_completion)
+                
+                rag = ClinicalMetabolomicsRAG(config=valid_config)
+                
+                # Ensure biomedical parameters are set
+                rag.biomedical_params['entity_extraction_focus'] = 'biomedical'
+                
+                llm_func = rag._get_llm_function()
+                await llm_func("What metabolites are involved in diabetes?")
+                
+                # Verify the prompt was enhanced with biomedical context
+                call_args = mock_openai_client.chat.completions.create.call_args[1]
+                messages = call_args['messages']
+                assert len(messages) == 1
+                prompt = messages[0]['content']
+                assert 'clinical metabolomics' in prompt.lower()
+                assert 'biomarkers' in prompt.lower()
+                
+        except ImportError:
+            pytest.skip("ClinicalMetabolomicsRAG not implemented yet - TDD phase")
+    
+    @pytest.mark.asyncio
+    async def test_get_llm_function_error_handling(self, valid_config, mock_openai_client):
+        """Test error handling in _get_llm_function."""
+        try:
+            from lightrag_integration.clinical_metabolomics_rag import ClinicalMetabolomicsRAG
+            import openai
+            
+            with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+                 patch('lightrag_integration.clinical_metabolomics_rag.openai.OpenAI') as mock_openai:
+                
+                mock_openai.return_value = mock_openai_client
+                mock_lightrag.return_value = MockLightRAGInstance()
+                
+                rag = ClinicalMetabolomicsRAG(config=valid_config)
+                llm_func = rag._get_llm_function()
+                
+                # Test rate limit error handling
+                mock_openai_client.chat.completions.create = AsyncMock(
+                    side_effect=openai.RateLimitError("Rate limit exceeded", response=None, body=None)
+                )
+                
+                with pytest.raises(openai.RateLimitError):
+                    await llm_func("Test prompt")
+                
+                # Test authentication error handling
+                mock_openai_client.chat.completions.create = AsyncMock(
+                    side_effect=openai.AuthenticationError("Invalid API key", response=None, body=None)
+                )
+                
+                with pytest.raises(Exception):  # Should be wrapped in ClinicalMetabolomicsRAGError
+                    await llm_func("Test prompt")
+                
+        except ImportError:
+            pytest.skip("ClinicalMetabolomicsRAG not implemented yet - TDD phase")
+    
+    @pytest.mark.asyncio
+    async def test_get_llm_function_retry_logic(self, valid_config, mock_openai_client):
+        """Test retry logic in _get_llm_function."""
+        try:
+            from lightrag_integration.clinical_metabolomics_rag import ClinicalMetabolomicsRAG
+            import openai
+            
+            with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+                 patch('lightrag_integration.clinical_metabolomics_rag.openai.OpenAI') as mock_openai:
+                
+                mock_openai.return_value = mock_openai_client
+                mock_lightrag.return_value = MockLightRAGInstance()
+                
+                rag = ClinicalMetabolomicsRAG(config=valid_config)
+                llm_func = rag._get_llm_function()
+                
+                # Mock API timeout followed by successful response
+                mock_completion = MagicMock()
+                mock_completion.choices = [MagicMock()]
+                mock_completion.choices[0].message.content = "Success after retry"
+                mock_completion.usage.total_tokens = 150
+                mock_completion.usage.prompt_tokens = 100
+                mock_completion.usage.completion_tokens = 50
+                
+                mock_openai_client.chat.completions.create = AsyncMock(
+                    side_effect=[
+                        openai.APITimeoutError("Timeout"),
+                        mock_completion
+                    ]
+                )
+                
+                # Should succeed on retry
+                response = await llm_func("Test prompt")
+                assert response == "Success after retry"
+                
+                # Verify API was called twice (original + retry)
+                assert mock_openai_client.chat.completions.create.call_count == 2
+                
+        except ImportError:
+            pytest.skip("ClinicalMetabolomicsRAG not implemented yet - TDD phase")
+    
+    @pytest.mark.asyncio
+    async def test_get_llm_function_model_validation(self, valid_config, mock_openai_client):
+        """Test model validation warnings in _get_llm_function."""
+        try:
+            from lightrag_integration.clinical_metabolomics_rag import ClinicalMetabolomicsRAG
+            
+            with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+                 patch('lightrag_integration.clinical_metabolomics_rag.openai.OpenAI') as mock_openai:
+                
+                mock_openai.return_value = mock_openai_client
+                mock_lightrag.return_value = MockLightRAGInstance()
+                
+                # Create config with non-optimal model for biomedical tasks
+                config = LightRAGConfig(
+                    api_key="test-api-key",
+                    model="text-davinci-003",  # Non-optimal model
+                    working_dir=Path("/tmp/test_lightrag"),
+                    auto_create_dirs=False
+                )
+                
+                mock_completion = MagicMock()
+                mock_completion.choices = [MagicMock()]
+                mock_completion.choices[0].message.content = "Response"
+                mock_completion.usage.total_tokens = 150
+                mock_completion.usage.prompt_tokens = 100
+                mock_completion.usage.completion_tokens = 50
+                mock_openai_client.chat.completions.create = AsyncMock(return_value=mock_completion)
+                
+                rag = ClinicalMetabolomicsRAG(config=config)
+                
+                # Mock logger to capture warnings
+                with patch.object(rag.logger, 'warning') as mock_warning:
+                    llm_func = rag._get_llm_function()
+                    await llm_func("Test prompt")
+                    
+                    # Should log warning about non-optimal model
+                    mock_warning.assert_called_with(
+                        "Model text-davinci-003 may not be optimal for biomedical tasks"
+                    )
+                
+        except ImportError:
+            pytest.skip("ClinicalMetabolomicsRAG not implemented yet - TDD phase")
+    
+    def test_calculate_api_cost_method(self, valid_config):
+        """Test the _calculate_api_cost method."""
+        try:
+            from lightrag_integration.clinical_metabolomics_rag import ClinicalMetabolomicsRAG
+            
+            with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag:
+                mock_lightrag.return_value = MockLightRAGInstance()
+                
+                rag = ClinicalMetabolomicsRAG(config=valid_config)
+                
+                # Test cost calculation for different models
+                test_cases = [
+                    ('gpt-4o-mini', {'prompt_tokens': 1000, 'completion_tokens': 500}),
+                    ('gpt-4o', {'prompt_tokens': 1000, 'completion_tokens': 500}),
+                    ('gpt-3.5-turbo', {'prompt_tokens': 1000, 'completion_tokens': 500}),
+                ]
+                
+                for model, token_usage in test_cases:
+                    cost = rag._calculate_api_cost(model, token_usage)
+                    assert isinstance(cost, float)
+                    assert cost > 0.0
+                    
+                    # Verify cost calculation logic
+                    if model == 'gpt-4o-mini':
+                        # Should be cheapest option
+                        expected_cost = (1000/1000 * 0.00015) + (500/1000 * 0.0006)
+                        assert abs(cost - expected_cost) < 0.0001
+                
+        except ImportError:
+            pytest.skip("ClinicalMetabolomicsRAG not implemented yet - TDD phase")
+
+
 class TestClinicalMetabolomicsRAGOpenAISetup:
     """Test class for OpenAI API integration and configuration."""
     
