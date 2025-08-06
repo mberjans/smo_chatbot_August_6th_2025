@@ -77,6 +77,19 @@ class LightRAGConfig:
     log_backup_count: int = field(default_factory=lambda: int(os.getenv("LIGHTRAG_LOG_BACKUP_COUNT", "5")))
     log_filename: str = "lightrag_integration.log"
     
+    # Enhanced Cost Tracking Configuration
+    enable_cost_tracking: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_COST_TRACKING", "true").lower() in ("true", "1", "yes", "t", "on"))
+    daily_budget_limit: Optional[float] = field(default_factory=lambda: float(os.getenv("LIGHTRAG_DAILY_BUDGET_LIMIT")) if os.getenv("LIGHTRAG_DAILY_BUDGET_LIMIT") else None)
+    monthly_budget_limit: Optional[float] = field(default_factory=lambda: float(os.getenv("LIGHTRAG_MONTHLY_BUDGET_LIMIT")) if os.getenv("LIGHTRAG_MONTHLY_BUDGET_LIMIT") else None)
+    cost_alert_threshold_percentage: float = field(default_factory=lambda: float(os.getenv("LIGHTRAG_COST_ALERT_THRESHOLD", "80.0")))
+    enable_budget_alerts: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_BUDGET_ALERTS", "true").lower() in ("true", "1", "yes", "t", "on"))
+    cost_persistence_enabled: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_COST_PERSISTENCE_ENABLED", "true").lower() in ("true", "1", "yes", "t", "on"))
+    cost_db_path: Optional[Path] = field(default_factory=lambda: Path(os.getenv("LIGHTRAG_COST_DB_PATH", "cost_tracking.db")) if os.getenv("LIGHTRAG_COST_DB_PATH", "cost_tracking.db") else None)
+    enable_research_categorization: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_RESEARCH_CATEGORIZATION", "true").lower() in ("true", "1", "yes", "t", "on"))
+    enable_audit_trail: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_AUDIT_TRAIL", "true").lower() in ("true", "1", "yes", "t", "on"))
+    cost_report_frequency: str = field(default_factory=lambda: os.getenv("LIGHTRAG_COST_REPORT_FREQUENCY", "daily"))
+    max_cost_retention_days: int = field(default_factory=lambda: int(os.getenv("LIGHTRAG_MAX_COST_RETENTION_DAYS", "365")))
+    
     def __post_init__(self):
         """Post-initialization processing to handle Path objects and derived values."""
         # Ensure working_dir is a Path object
@@ -113,6 +126,21 @@ class LightRAGConfig:
             valid_levels = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
             if self.log_level not in valid_levels:
                 self.log_level = "INFO"  # Fall back to INFO for invalid levels
+        
+        # Handle cost tracking path objects and defaults
+        if isinstance(self.cost_db_path, str):
+            self.cost_db_path = Path(self.cost_db_path)
+        elif self.cost_db_path is None:
+            self.cost_db_path = Path("cost_tracking.db")
+        
+        # Make cost_db_path relative to working_dir if not absolute
+        if not self.cost_db_path.is_absolute():
+            self.cost_db_path = self.working_dir / self.cost_db_path
+        
+        # Validate cost report frequency
+        valid_frequencies = {"hourly", "daily", "weekly", "monthly"}
+        if self.cost_report_frequency not in valid_frequencies:
+            self.cost_report_frequency = "daily"
         
         # Automatically create necessary directories if requested
         if self.auto_create_dirs:
@@ -173,6 +201,23 @@ class LightRAGConfig:
         # Check if log filename has valid extension
         if not self.log_filename.endswith('.log'):
             raise LightRAGConfigError("log_filename should end with '.log' extension")
+        
+        # Validate cost tracking configuration
+        if self.daily_budget_limit is not None and self.daily_budget_limit <= 0:
+            raise LightRAGConfigError("daily_budget_limit must be positive if specified")
+        
+        if self.monthly_budget_limit is not None and self.monthly_budget_limit <= 0:
+            raise LightRAGConfigError("monthly_budget_limit must be positive if specified")
+        
+        if not (0 <= self.cost_alert_threshold_percentage <= 100):
+            raise LightRAGConfigError("cost_alert_threshold_percentage must be between 0 and 100")
+        
+        if self.max_cost_retention_days <= 0:
+            raise LightRAGConfigError("max_cost_retention_days must be positive")
+        
+        valid_frequencies = {"hourly", "daily", "weekly", "monthly"}
+        if self.cost_report_frequency not in valid_frequencies:
+            raise LightRAGConfigError(f"cost_report_frequency must be one of {valid_frequencies}, got: {self.cost_report_frequency}")
         
         # Validate working directory
         if not self.working_dir.exists():
@@ -448,6 +493,10 @@ class LightRAGConfig:
         if 'log_dir' in config_dict:
             config_dict['log_dir'] = Path(config_dict['log_dir'])
         
+        # Handle cost_db_path object
+        if 'cost_db_path' in config_dict and config_dict['cost_db_path'] is not None:
+            config_dict['cost_db_path'] = Path(config_dict['cost_db_path'])
+        
         # Set auto_create_dirs if not already specified in the dictionary
         if 'auto_create_dirs' not in config_dict:
             config_dict['auto_create_dirs'] = auto_create_dirs
@@ -505,7 +554,18 @@ class LightRAGConfig:
             'enable_file_logging': self.enable_file_logging,
             'log_max_bytes': self.log_max_bytes,
             'log_backup_count': self.log_backup_count,
-            'log_filename': self.log_filename
+            'log_filename': self.log_filename,
+            'enable_cost_tracking': self.enable_cost_tracking,
+            'daily_budget_limit': self.daily_budget_limit,
+            'monthly_budget_limit': self.monthly_budget_limit,
+            'cost_alert_threshold_percentage': self.cost_alert_threshold_percentage,
+            'enable_budget_alerts': self.enable_budget_alerts,
+            'cost_persistence_enabled': self.cost_persistence_enabled,
+            'cost_db_path': str(self.cost_db_path) if self.cost_db_path else None,
+            'enable_research_categorization': self.enable_research_categorization,
+            'enable_audit_trail': self.enable_audit_trail,
+            'cost_report_frequency': self.cost_report_frequency,
+            'max_cost_retention_days': self.max_cost_retention_days
         }
     
     def copy(self) -> 'LightRAGConfig':
@@ -540,7 +600,10 @@ class LightRAGConfig:
             f"enable_file_logging={self.enable_file_logging}, "
             f"log_max_bytes={self.log_max_bytes}, "
             f"log_backup_count={self.log_backup_count}, "
-            f"log_filename={self.log_filename})"
+            f"log_filename={self.log_filename}, "
+            f"enable_cost_tracking={self.enable_cost_tracking}, "
+            f"daily_budget_limit={self.daily_budget_limit}, "
+            f"monthly_budget_limit={self.monthly_budget_limit})"
         )
     
     def __repr__(self) -> str:
@@ -566,7 +629,11 @@ class LightRAGConfig:
             f"enable_file_logging={self.enable_file_logging}, "
             f"log_max_bytes={self.log_max_bytes}, "
             f"log_backup_count={self.log_backup_count}, "
-            f"log_filename='{self.log_filename}')"
+            f"log_filename='{self.log_filename}', "
+            f"enable_cost_tracking={self.enable_cost_tracking}, "
+            f"daily_budget_limit={self.daily_budget_limit}, "
+            f"monthly_budget_limit={self.monthly_budget_limit}, "
+            f"cost_db_path=Path('{self.cost_db_path}'))"
         )
 
 

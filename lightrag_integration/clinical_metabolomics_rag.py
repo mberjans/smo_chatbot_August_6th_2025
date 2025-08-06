@@ -106,6 +106,11 @@ except ImportError:
 
 # Local imports
 from .config import LightRAGConfig, LightRAGConfigError
+from .cost_persistence import CostPersistence, CostRecord, ResearchCategory
+from .budget_manager import BudgetManager, BudgetThreshold, BudgetAlert
+from .api_metrics_logger import APIUsageMetricsLogger, APIMetric, MetricType
+from .research_categorizer import ResearchCategorizer, CategoryPrediction
+from .audit_trail import AuditTrail, AuditEventType
 from .pdf_processor import BiomedicalPDFProcessor, BiomedicalPDFProcessorError
 
 
@@ -366,7 +371,7 @@ class ClinicalMetabolomicsRAG:
         self.config = config
         self.effective_model = kwargs.get('custom_model', config.model)
         self.effective_max_tokens = kwargs.get('custom_max_tokens', config.max_tokens)
-        self.cost_tracking_enabled = kwargs.get('enable_cost_tracking', True)
+        self.cost_tracking_enabled = getattr(config, 'enable_cost_tracking', True)
         
         # Initialize core attributes
         self.lightrag_instance = None
@@ -382,8 +387,22 @@ class ClinicalMetabolomicsRAG:
             'costs': []
         }
         
+        # Initialize enhanced cost tracking components
+        self.cost_persistence = None
+        self.budget_manager = None
+        self.research_categorizer = None
+        self.audit_trail = None
+        self._current_session_id = None
+        
+        # Initialize API metrics logger
+        self.api_metrics_logger = None
+        
         # Set up logging
         self.logger = self._setup_logging()
+        
+        # Initialize enhanced cost tracking if enabled
+        if self.cost_tracking_enabled:
+            self._initialize_enhanced_cost_tracking()
         
         # Initialize biomedical parameters
         self.biomedical_params = self._initialize_biomedical_params()
@@ -442,6 +461,148 @@ class ClinicalMetabolomicsRAG:
         except Exception as e:
             self.logger.error(f"Failed to initialize LightRAG: {e}")
             raise ClinicalMetabolomicsRAGError(f"LightRAG initialization failed: {e}") from e
+    def _initialize_enhanced_cost_tracking(self) -> None:
+        """
+        Initialize enhanced cost tracking components.
+        
+        Sets up cost persistence, budget management, research categorization,
+        and audit trail systems based on configuration settings.
+        """
+        try:
+            # Initialize cost persistence if enabled
+            if getattr(self.config, 'cost_persistence_enabled', True):
+                self.cost_persistence = CostPersistence(
+                    db_path=getattr(self.config, 'cost_db_path', Path('cost_tracking.db')),
+                    retention_days=getattr(self.config, 'max_cost_retention_days', 365),
+                    logger=self.logger if hasattr(self, 'logger') else None
+                )
+            
+            # Initialize budget manager if budget limits are configured
+            daily_budget = getattr(self.config, 'daily_budget_limit', None)
+            monthly_budget = getattr(self.config, 'monthly_budget_limit', None)
+            
+            if (daily_budget or monthly_budget) and self.cost_persistence:
+                # Set up budget thresholds
+                alert_threshold = getattr(self.config, 'cost_alert_threshold_percentage', 80.0)
+                thresholds = BudgetThreshold(
+                    warning_percentage=alert_threshold * 0.9,  # 90% of alert threshold
+                    critical_percentage=alert_threshold,
+                    exceeded_percentage=100.0
+                )
+                
+                # Create budget manager with alert callback
+                self.budget_manager = BudgetManager(
+                    cost_persistence=self.cost_persistence,
+                    daily_budget_limit=daily_budget,
+                    monthly_budget_limit=monthly_budget,
+                    thresholds=thresholds,
+                    alert_callback=self._handle_budget_alert,
+                    logger=self.logger if hasattr(self, 'logger') else None
+                )
+            
+            # Initialize research categorizer if enabled
+            if getattr(self.config, 'enable_research_categorization', True):
+                self.research_categorizer = ResearchCategorizer(
+                    logger=self.logger if hasattr(self, 'logger') else None
+                )
+            
+            # Initialize audit trail if enabled
+            if getattr(self.config, 'enable_audit_trail', True) and self.cost_persistence:
+                self.audit_trail = AuditTrail(
+                    cost_persistence=self.cost_persistence,
+                    audit_callback=self._handle_audit_event,
+                    logger=self.logger if hasattr(self, 'logger') else None
+                )
+            
+            # Generate session ID for this instance
+            import uuid
+            self._current_session_id = str(uuid.uuid4())
+            
+            if hasattr(self, 'logger'):
+                self.logger.info("Enhanced cost tracking initialized successfully")
+            
+            # Initialize API metrics logger if enhanced cost tracking is enabled
+            if getattr(self.config, 'enable_api_metrics_logging', True):
+                self._initialize_api_metrics_logger()
+            
+        except Exception as e:
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Failed to initialize enhanced cost tracking: {e}")
+                self.logger.info("Continuing with basic cost tracking")
+            # Continue with basic cost tracking even if enhanced features fail
+    
+    def _initialize_api_metrics_logger(self) -> None:
+        """
+        Initialize the API usage metrics logger.
+        
+        Sets up comprehensive API usage metrics logging that integrates with
+        the existing logging infrastructure and enhanced cost tracking system.
+        """
+        try:
+            self.api_metrics_logger = APIUsageMetricsLogger(
+                config=self.config,
+                cost_persistence=self.cost_persistence,
+                budget_manager=self.budget_manager,
+                research_categorizer=self.research_categorizer,
+                audit_trail=self.audit_trail,
+                logger=self.logger
+            )
+            
+            if hasattr(self, 'logger'):
+                self.logger.info("API usage metrics logger initialized successfully")
+        
+        except Exception as e:
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Failed to initialize API metrics logger: {e}")
+                self.logger.info("Continuing without API metrics logging")
+            self.api_metrics_logger = None
+    
+    def _handle_budget_alert(self, alert: BudgetAlert) -> None:
+        """
+        Handle budget alerts from the budget manager.
+        
+        Args:
+            alert: Budget alert to process
+        """
+        try:
+            # Log the alert
+            if hasattr(self, 'logger'):
+                self.logger.warning(f"Budget Alert: {alert.message}")
+            
+            # Record audit event if audit trail is available
+            if self.audit_trail:
+                self.audit_trail.log_budget_alert(alert)
+            
+            # Here you could add additional alert handling:
+            # - Send notifications
+            # - Update dashboard
+            # - Trigger emergency cost controls
+            
+        except Exception as e:
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Error handling budget alert: {e}")
+    
+    def _handle_audit_event(self, event) -> None:
+        """
+        Handle audit events from the audit trail.
+        
+        Args:
+            event: Audit event to process
+        """
+        try:
+            # Log critical audit events
+            if event.severity in ['error', 'critical']:
+                if hasattr(self, 'logger'):
+                    self.logger.warning(f"Critical Audit Event: {event.description}")
+            
+            # Here you could add additional audit event handling:
+            # - Real-time monitoring dashboards
+            # - Security incident response
+            # - Compliance reporting triggers
+            
+        except Exception as e:
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Error handling audit event: {e}")
     
     def _setup_logging(self) -> logging.Logger:
         """Set up logging for the RAG system."""
@@ -682,6 +843,26 @@ class ClinicalMetabolomicsRAG:
                 # Track API call
                 self.error_metrics['api_call_stats']['total_calls'] += 1
                 
+                # Initialize API metrics tracking if available
+                api_tracker = None
+                if self.api_metrics_logger:
+                    try:
+                        api_tracker = self.api_metrics_logger.track_api_call(
+                            operation_name="llm_completion",
+                            model_name=model,
+                            research_category=kwargs.get('research_category', ResearchCategory.GENERAL_QUERY.value),
+                            metadata={
+                                'temperature': temperature,
+                                'max_tokens': max_tokens,
+                                'prompt_length': len(optimized_prompt),
+                                'biomedical_optimized': self.biomedical_params.get('entity_extraction_focus') == 'biomedical'
+                            }
+                        )
+                        api_tracker = api_tracker.__enter__()
+                    except Exception as e:
+                        self.logger.debug(f"Could not initialize API metrics tracking: {e}")
+                        api_tracker = None
+                
                 try:
                     if LIGHTRAG_AVAILABLE:
                         # Use LightRAG's OpenAI wrapper with enhanced parameters
@@ -737,35 +918,75 @@ class ClinicalMetabolomicsRAG:
                             f"${api_cost:.4f}, {token_usage['total_tokens']} tokens"
                         )
                     
+                    # Update API metrics if tracker is available
+                    if api_tracker:
+                        try:
+                            api_tracker.set_tokens(
+                                prompt=token_usage['prompt_tokens'],
+                                completion=token_usage['completion_tokens']
+                            )
+                            api_tracker.set_cost(api_cost)
+                            api_tracker.set_response_details(
+                                response_time_ms=processing_time * 1000,
+                                request_size=len(optimized_prompt.encode('utf-8')),
+                                response_size=len(response.encode('utf-8'))
+                            )
+                            api_tracker.add_metadata('processing_time_seconds', processing_time)
+                            api_tracker.add_metadata('cost_per_token', api_cost / max(token_usage['total_tokens'], 1))
+                        except Exception as e:
+                            self.logger.debug(f"Error updating API metrics: {e}")
+                    
                     return response
                     
                 except openai.RateLimitError as e:
+                    if api_tracker:
+                        api_tracker.set_error("RateLimitError", str(e))
                     self.logger.warning(f"Rate limit exceeded: {e}")
                     raise
                     
                 except openai.AuthenticationError as e:
+                    if api_tracker:
+                        api_tracker.set_error("AuthenticationError", str(e))
                     self.logger.error(f"Authentication failed - check API key: {e}")
                     raise ClinicalMetabolomicsRAGError(f"OpenAI authentication failed: {e}") from e
                     
                 except openai.APITimeoutError as e:
+                    if api_tracker:
+                        api_tracker.set_error("APITimeoutError", str(e))
                     self.logger.warning(f"API timeout: {e}")
                     raise
                     
                 except openai.BadRequestError as e:
+                    if api_tracker:
+                        api_tracker.set_error("BadRequestError", str(e))
                     self.logger.error(f"Invalid request - model {model} may be unavailable: {e}")
                     raise ClinicalMetabolomicsRAGError(f"Invalid API request: {e}") from e
                     
                 except openai.InternalServerError as e:
+                    if api_tracker:
+                        api_tracker.set_error("InternalServerError", str(e))
                     self.logger.warning(f"OpenAI server error (will retry): {e}")
                     raise
                     
                 except openai.APIConnectionError as e:
+                    if api_tracker:
+                        api_tracker.set_error("APIConnectionError", str(e))
                     self.logger.warning(f"API connection error (will retry): {e}")
                     raise
                     
                 except Exception as e:
+                    if api_tracker:
+                        api_tracker.set_error("UnexpectedError", str(e))
                     self.logger.error(f"Unexpected LLM function error: {e}")
                     raise ClinicalMetabolomicsRAGError(f"LLM function failed: {e}") from e
+                
+                finally:
+                    # Ensure API metrics tracker is properly closed
+                    if api_tracker:
+                        try:
+                            api_tracker.__exit__(None, None, None)
+                        except Exception as e:
+                            self.logger.debug(f"Error closing API metrics tracker: {e}")
             
             try:
                 # Wrap with circuit breaker and request queue
@@ -814,6 +1035,33 @@ class ClinicalMetabolomicsRAG:
         completion_cost = (token_usage.get('completion_tokens', 0) / 1000.0) * model_pricing['completion']
         
         total_cost = prompt_cost + completion_cost
+        return total_cost
+    
+    def _calculate_embedding_cost(self, model: str, token_usage: Dict[str, int]) -> float:
+        """
+        Calculate the API cost for embedding operations.
+        
+        Args:
+            model: The embedding model used
+            token_usage: Dictionary with embedding token usage
+            
+        Returns:
+            float: Estimated cost in USD
+        """
+        # Current OpenAI embedding pricing (as of 2025)
+        embedding_pricing = {
+            'text-embedding-3-small': 0.00002,  # per 1K tokens
+            'text-embedding-3-large': 0.00013,
+            'text-embedding-ada-002': 0.0001
+        }
+        
+        # Default pricing if model not found
+        default_price = 0.0001  # per 1K tokens
+        
+        price_per_1k = embedding_pricing.get(model, default_price)
+        embedding_tokens = token_usage.get('embedding_tokens', token_usage.get('total_tokens', 0))
+        
+        total_cost = (embedding_tokens / 1000.0) * price_per_1k
         return total_cost
     
     def _get_embedding_function(self) -> EmbeddingFunc:
@@ -944,6 +1192,27 @@ class ClinicalMetabolomicsRAG:
                 # Track API call
                 self.error_metrics['api_call_stats']['total_calls'] += 1
                 
+                # Initialize API metrics tracking if available
+                api_tracker = None
+                if self.api_metrics_logger:
+                    try:
+                        total_text_length = sum(len(text) for text in non_empty_texts)
+                        api_tracker = self.api_metrics_logger.track_api_call(
+                            operation_name="embedding_generation",
+                            model_name=model,
+                            research_category=ResearchCategory.GENERAL_QUERY.value,  # Could be enhanced based on text content
+                            metadata={
+                                'batch_size': len(non_empty_texts),
+                                'total_text_length': total_text_length,
+                                'average_text_length': total_text_length / len(non_empty_texts) if non_empty_texts else 0,
+                                'model_type': 'embedding'
+                            }
+                        )
+                        api_tracker = api_tracker.__enter__()
+                    except Exception as e:
+                        self.logger.debug(f"Could not initialize API metrics tracking for embeddings: {e}")
+                        api_tracker = None
+                
                 try:
                     if LIGHTRAG_AVAILABLE:
                         # Use LightRAG's OpenAI embedding wrapper with enhanced parameters
@@ -1007,6 +1276,22 @@ class ClinicalMetabolomicsRAG:
                             f"${api_cost:.4f}, {len(non_empty_texts)} texts, {token_usage['embedding_tokens']} tokens"
                         )
                     
+                    # Update API metrics if tracker is available
+                    if api_tracker:
+                        try:
+                            api_tracker.set_tokens(embedding=token_usage['embedding_tokens'])
+                            api_tracker.set_cost(api_cost)
+                            api_tracker.set_response_details(
+                                response_time_ms=processing_time * 1000,
+                                request_size=sum(len(text.encode('utf-8')) for text in non_empty_texts),
+                                response_size=len(embeddings) * len(embeddings[0]) * 4 if embeddings else 0  # Approximate size
+                            )
+                            api_tracker.add_metadata('processing_time_seconds', processing_time)
+                            api_tracker.add_metadata('cost_per_token', api_cost / max(token_usage['embedding_tokens'], 1))
+                            api_tracker.add_metadata('embeddings_generated', len(embeddings) if embeddings else 0)
+                        except Exception as e:
+                            self.logger.debug(f"Error updating embedding API metrics: {e}")
+                    
                     # Reconstruct full embedding list with zero vectors for empty texts
                     full_embeddings = []
                     non_empty_idx = 0
@@ -1022,32 +1307,54 @@ class ClinicalMetabolomicsRAG:
                     return full_embeddings
                     
                 except openai.RateLimitError as e:
+                    if api_tracker:
+                        api_tracker.set_error("RateLimitError", str(e))
                     self.logger.warning(f"Embedding rate limit exceeded: {e}")
                     raise
                     
                 except openai.AuthenticationError as e:
+                    if api_tracker:
+                        api_tracker.set_error("AuthenticationError", str(e))
                     self.logger.error(f"Embedding authentication failed - check API key: {e}")
                     raise ClinicalMetabolomicsRAGError(f"OpenAI embedding authentication failed: {e}") from e
                     
                 except openai.APITimeoutError as e:
+                    if api_tracker:
+                        api_tracker.set_error("APITimeoutError", str(e))
                     self.logger.warning(f"Embedding API timeout: {e}")
                     raise
                     
                 except openai.BadRequestError as e:
+                    if api_tracker:
+                        api_tracker.set_error("BadRequestError", str(e))
                     self.logger.error(f"Invalid embedding request - model {model} may be unavailable: {e}")
                     raise ClinicalMetabolomicsRAGError(f"Invalid embedding API request: {e}") from e
                     
                 except openai.InternalServerError as e:
+                    if api_tracker:
+                        api_tracker.set_error("InternalServerError", str(e))
                     self.logger.warning(f"OpenAI embedding server error (will retry): {e}")
                     raise
                     
                 except openai.APIConnectionError as e:
+                    if api_tracker:
+                        api_tracker.set_error("APIConnectionError", str(e))
                     self.logger.warning(f"Embedding API connection error (will retry): {e}")
                     raise
                     
                 except Exception as e:
+                    if api_tracker:
+                        api_tracker.set_error("UnexpectedError", str(e))
                     self.logger.error(f"Unexpected embedding function error: {e}")
                     raise ClinicalMetabolomicsRAGError(f"Embedding function failed: {e}") from e
+                
+                finally:
+                    # Ensure API metrics tracker is properly closed
+                    if api_tracker:
+                        try:
+                            api_tracker.__exit__(None, None, None)
+                        except Exception as e:
+                            self.logger.debug(f"Error closing embedding API metrics tracker: {e}")
             
             try:
                 # Wrap with circuit breaker and request queue
@@ -1181,8 +1488,16 @@ class ClinicalMetabolomicsRAG:
             
             # Track costs if enabled
             query_cost = 0.001  # Mock cost for now - would be calculated from actual usage
+            token_usage = {'total_tokens': 150, 'prompt_tokens': 100, 'completion_tokens': 50}
             if self.cost_tracking_enabled:
-                self.track_api_cost(query_cost, {'total_tokens': 150, 'prompt_tokens': 100, 'completion_tokens': 50})
+                self.track_api_cost(
+                    cost=query_cost, 
+                    token_usage=token_usage,
+                    operation_type=mode,
+                    query_text=query,
+                    success=True,
+                    response_time=processing_time
+                )
             
             # Prepare response
             result = {
@@ -1209,17 +1524,32 @@ class ClinicalMetabolomicsRAG:
             self.logger.error(f"Query processing failed: {e}")
             raise ClinicalMetabolomicsRAGError(f"Query processing failed: {e}") from e
     
-    def track_api_cost(self, cost: float, token_usage: Dict[str, int]) -> None:
+    def track_api_cost(self, 
+                      cost: float, 
+                      token_usage: Dict[str, int],
+                      operation_type: str = "hybrid",
+                      model_name: Optional[str] = None,
+                      query_text: Optional[str] = None,
+                      success: bool = True,
+                      error_type: Optional[str] = None,
+                      response_time: Optional[float] = None) -> None:
         """
-        Track API costs and token usage.
+        Track API costs and token usage with enhanced categorization and persistence.
         
         Args:
             cost: Cost of the API call in USD
             token_usage: Dictionary with token usage statistics
+            operation_type: Type of operation (llm, embedding, hybrid)
+            model_name: Name of the model used
+            query_text: Original query text for categorization
+            success: Whether the operation was successful
+            error_type: Type of error if not successful
+            response_time: Response time in seconds
         """
         if not self.cost_tracking_enabled:
             return
         
+        # Basic cost tracking (maintain backwards compatibility)
         self.total_cost += cost
         self.cost_monitor['queries'] += 1
         self.cost_monitor['total_tokens'] += token_usage.get('total_tokens', 0)
@@ -1232,7 +1562,294 @@ class ClinicalMetabolomicsRAG:
             'tokens': token_usage
         })
         
+        # Enhanced cost tracking if components are available
+        if self.cost_persistence or self.budget_manager or self.audit_trail:
+            try:
+                # Categorize the query if possible
+                research_category = ResearchCategory.GENERAL_QUERY
+                query_type = None
+                subject_area = None
+                
+                if self.research_categorizer and query_text:
+                    prediction = self.research_categorizer.categorize_query(query_text)
+                    research_category = prediction.category
+                    query_type = prediction.query_type
+                    subject_area = prediction.subject_area
+                
+                # Record cost in persistence layer
+                if self.cost_persistence:
+                    self.cost_persistence.record_cost(
+                        cost_usd=cost,
+                        operation_type=operation_type,
+                        model_name=model_name or self.effective_model,
+                        token_usage=token_usage,
+                        session_id=self._current_session_id,
+                        research_category=research_category,
+                        query_type=query_type,
+                        subject_area=subject_area,
+                        response_time=response_time,
+                        success=success,
+                        error_type=error_type,
+                        metadata={
+                            'query_length': len(query_text) if query_text else 0,
+                            'model_effective': self.effective_model,
+                            'max_tokens_effective': self.effective_max_tokens
+                        }
+                    )
+                
+                # Check budget status
+                if self.budget_manager:
+                    budget_status = self.budget_manager.check_budget_status(
+                        cost_amount=cost,
+                        operation_type=operation_type,
+                        research_category=research_category
+                    )
+                    
+                    # Log budget warnings or errors
+                    if not budget_status.get('operation_allowed', True):
+                        self.logger.warning("Budget exceeded - operation should be restricted")
+                    
+                    # Handle any alerts generated
+                    for alert in budget_status.get('alerts_generated', []):
+                        self._handle_budget_alert(alert)
+                
+                # Log audit event
+                if self.audit_trail:
+                    self.audit_trail.log_event(
+                        AuditEventType.COST_RECORDED,
+                        session_id=self._current_session_id,
+                        description=f"API cost tracked: ${cost:.4f}",
+                        category="cost_tracking",
+                        severity="info" if success else "warning",
+                        cost_amount=cost,
+                        research_category=research_category,
+                        operation_type=operation_type,
+                        metadata={
+                            'token_usage': token_usage,
+                            'model_name': model_name or self.effective_model,
+                            'response_time': response_time,
+                            'success': success,
+                            'error_type': error_type
+                        }
+                    )
+                
+            except Exception as e:
+                self.logger.error(f"Error in enhanced cost tracking: {e}")
+                # Continue with basic tracking even if enhanced features fail
+        
         self.logger.debug(f"Tracked API cost: ${cost:.4f}, Total: ${self.total_cost:.4f}")
+    
+    def get_enhanced_cost_summary(self) -> Dict[str, Any]:
+        """
+        Get comprehensive cost summary including enhanced tracking data.
+        
+        Returns:
+            Dict containing detailed cost analysis and budget status
+        """
+        summary = {
+            'basic_cost_tracking': {
+                'total_cost': self.total_cost,
+                'total_queries': self.cost_monitor['queries'],
+                'total_tokens': self.cost_monitor['total_tokens'],
+                'average_cost_per_query': self.total_cost / max(self.cost_monitor['queries'], 1)
+            },
+            'enhanced_features_available': {
+                'cost_persistence': self.cost_persistence is not None,
+                'budget_manager': self.budget_manager is not None,
+                'research_categorizer': self.research_categorizer is not None,
+                'audit_trail': self.audit_trail is not None
+            }
+        }
+        
+        # Add enhanced data if available
+        if self.budget_manager:
+            summary['budget_status'] = self.budget_manager.get_budget_summary()
+        
+        if self.cost_persistence:
+            summary['research_analysis'] = self.cost_persistence.get_research_analysis(days=30)
+        
+        if self.research_categorizer:
+            summary['categorization_stats'] = self.research_categorizer.get_category_statistics()
+        
+        return summary
+    
+    def generate_cost_report(self, 
+                           days: int = 30,
+                           include_audit_data: bool = True) -> Dict[str, Any]:
+        """
+        Generate comprehensive cost report.
+        
+        Args:
+            days: Number of days to include in the report
+            include_audit_data: Whether to include audit trail data
+            
+        Returns:
+            Dict containing comprehensive cost report
+        """
+        if not self.cost_persistence:
+            return {
+                'error': 'Enhanced cost tracking not available',
+                'basic_summary': self.get_cost_summary()
+            }
+        
+        try:
+            from datetime import datetime, timedelta, timezone
+            end_date = datetime.now(timezone.utc)
+            start_date = end_date - timedelta(days=days)
+            
+            # Get cost report from persistence layer
+            cost_report = self.cost_persistence.generate_cost_report(start_date, end_date)
+            
+            # Add audit data if requested and available
+            if include_audit_data and self.audit_trail:
+                audit_report = self.audit_trail.generate_audit_report(start_date, end_date)
+                cost_report['audit_summary'] = audit_report
+            
+            # Add budget analysis if available
+            if self.budget_manager:
+                cost_report['budget_analysis'] = {
+                    'current_status': self.budget_manager.get_budget_summary(),
+                    'spending_trends': self.budget_manager.get_spending_trends(days)
+                }
+            
+            return cost_report
+            
+        except Exception as e:
+            self.logger.error(f"Error generating cost report: {e}")
+            return {
+                'error': f'Failed to generate cost report: {e}',
+                'basic_summary': self.get_cost_summary()
+            }
+    
+    def set_budget_limits(self, 
+                         daily_limit: Optional[float] = None, 
+                         monthly_limit: Optional[float] = None) -> bool:
+        """
+        Set or update budget limits for cost monitoring.
+        
+        Args:
+            daily_limit: Daily budget limit in USD
+            monthly_limit: Monthly budget limit in USD
+            
+        Returns:
+            bool: True if limits were successfully set
+        """
+        try:
+            # Update configuration
+            if daily_limit is not None:
+                self.config.daily_budget_limit = daily_limit
+            if monthly_limit is not None:
+                self.config.monthly_budget_limit = monthly_limit
+            
+            # Update budget manager if available
+            if self.budget_manager:
+                self.budget_manager.update_budget_limits(daily_limit, monthly_limit)
+                self.logger.info(f"Budget limits updated: daily=${daily_limit}, monthly=${monthly_limit}")
+                return True
+            else:
+                # Initialize budget manager if limits are set for the first time
+                if (daily_limit or monthly_limit) and self.cost_persistence:
+                    alert_threshold = getattr(self.config, 'cost_alert_threshold_percentage', 80.0)
+                    thresholds = BudgetThreshold(
+                        warning_percentage=alert_threshold * 0.9,
+                        critical_percentage=alert_threshold,
+                        exceeded_percentage=100.0
+                    )
+                    
+                    self.budget_manager = BudgetManager(
+                        cost_persistence=self.cost_persistence,
+                        daily_budget_limit=daily_limit,
+                        monthly_budget_limit=monthly_limit,
+                        thresholds=thresholds,
+                        alert_callback=self._handle_budget_alert,
+                        logger=self.logger
+                    )
+                    self.logger.info("Budget manager initialized with new limits")
+                    return True
+            
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Error setting budget limits: {e}")
+            return False
+    
+    def get_research_category_stats(self) -> Dict[str, Any]:
+        """
+        Get research category statistics and performance metrics.
+        
+        Returns:
+            Dict containing research categorization statistics
+        """
+        if not self.research_categorizer:
+            return {'error': 'Research categorization not available'}
+        
+        return self.research_categorizer.get_category_statistics()
+    
+    def start_audit_session(self, 
+                           user_id: Optional[str] = None,
+                           metadata: Optional[Dict[str, Any]] = None) -> Optional[str]:
+        """
+        Start a new audit session for tracking user activity.
+        
+        Args:
+            user_id: User identifier
+            metadata: Additional session metadata
+            
+        Returns:
+            Session ID if successful, None otherwise
+        """
+        if not self.audit_trail:
+            self.logger.warning("Audit trail not available for session tracking")
+            return None
+        
+        try:
+            import uuid
+            session_id = str(uuid.uuid4())
+            self.audit_trail.start_session(session_id, user_id, metadata)
+            self._current_session_id = session_id
+            return session_id
+            
+        except Exception as e:
+            self.logger.error(f"Error starting audit session: {e}")
+            return None
+    
+    def end_audit_session(self) -> bool:
+        """
+        End the current audit session.
+        
+        Returns:
+            bool: True if session was successfully ended
+        """
+        if not self.audit_trail or not self._current_session_id:
+            return False
+        
+        try:
+            self.audit_trail.end_session(self._current_session_id)
+            self._current_session_id = None
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Error ending audit session: {e}")
+            return False
+    
+    def cleanup_old_cost_data(self) -> int:
+        """
+        Clean up old cost data based on retention policy.
+        
+        Returns:
+            int: Number of records deleted, or -1 if cleanup failed
+        """
+        if not self.cost_persistence:
+            return -1
+        
+        try:
+            deleted_count = self.cost_persistence.cleanup_old_data()
+            self.logger.info(f"Cleaned up {deleted_count} old cost records")
+            return deleted_count
+            
+        except Exception as e:
+            self.logger.error(f"Error during cost data cleanup: {e}")
+            return -1
     
     def _update_average_response_time(self, response_time: float) -> None:
         """Update running average of API response times."""
@@ -1452,6 +2069,108 @@ class ClinicalMetabolomicsRAG:
         except Exception as e:
             self.logger.error(f"Document insertion failed: {e}")
             raise ClinicalMetabolomicsRAGError(f"Document insertion failed: {e}") from e
+    
+    def get_api_metrics_summary(self) -> Dict[str, Any]:
+        """
+        Get comprehensive API usage metrics summary.
+        
+        Returns:
+            Dict containing current API metrics and performance data
+        """
+        if not self.api_metrics_logger:
+            return {
+                'error': 'API metrics logging not available',
+                'metrics_available': False
+            }
+        
+        try:
+            performance_summary = self.api_metrics_logger.get_performance_summary()
+            return {
+                'metrics_available': True,
+                'performance_summary': performance_summary,
+                'session_info': {
+                    'session_id': getattr(self.api_metrics_logger, 'session_id', None),
+                    'session_uptime': performance_summary.get('system', {}).get('session_uptime_seconds', 0)
+                }
+            }
+        except Exception as e:
+            self.logger.error(f"Error retrieving API metrics summary: {e}")
+            return {
+                'error': f'Failed to retrieve API metrics: {e}',
+                'metrics_available': False
+            }
+    
+    def log_batch_api_operation(self, 
+                               operation_name: str,
+                               batch_size: int,
+                               total_tokens: int,
+                               total_cost: float,
+                               processing_time_seconds: float,
+                               success_count: int,
+                               error_count: int,
+                               research_category: Optional[str] = None,
+                               metadata: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Log metrics for batch API operations.
+        
+        Args:
+            operation_name: Name of the batch operation
+            batch_size: Number of items in the batch
+            total_tokens: Total tokens consumed
+            total_cost: Total cost in USD
+            processing_time_seconds: Total processing time in seconds
+            success_count: Number of successful operations
+            error_count: Number of failed operations
+            research_category: Research category for the batch
+            metadata: Additional metadata
+        """
+        if self.api_metrics_logger:
+            try:
+                self.api_metrics_logger.log_batch_operation(
+                    operation_name=operation_name,
+                    batch_size=batch_size,
+                    total_tokens=total_tokens,
+                    total_cost=total_cost,
+                    processing_time_ms=processing_time_seconds * 1000,
+                    success_count=success_count,
+                    error_count=error_count,
+                    research_category=research_category,
+                    metadata=metadata
+                )
+                self.logger.debug(f"Batch operation metrics logged: {operation_name}")
+            except Exception as e:
+                self.logger.error(f"Error logging batch operation metrics: {e}")
+    
+    def log_system_event(self, 
+                        event_type: str, 
+                        event_data: Dict[str, Any],
+                        user_id: Optional[str] = None) -> None:
+        """
+        Log system events for monitoring and debugging.
+        
+        Args:
+            event_type: Type of system event
+            event_data: Event data dictionary
+            user_id: Optional user ID for audit purposes
+        """
+        if self.api_metrics_logger:
+            try:
+                self.api_metrics_logger.log_system_event(event_type, event_data, user_id)
+            except Exception as e:
+                self.logger.error(f"Error logging system event: {e}")
+        else:
+            self.logger.info(f"System Event: {event_type} - {event_data}")
+    
+    def close_api_metrics_logger(self) -> None:
+        """
+        Properly close the API metrics logger to ensure all data is written.
+        """
+        if self.api_metrics_logger:
+            try:
+                self.api_metrics_logger.close()
+                self.logger.info("API metrics logger closed successfully")
+            except Exception as e:
+                self.logger.error(f"Error closing API metrics logger: {e}")
     
     def __repr__(self) -> str:
         """String representation for debugging."""

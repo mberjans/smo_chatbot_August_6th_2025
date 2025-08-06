@@ -1,0 +1,415 @@
+2025-08-06 11:55:15,659 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-31/test_create_embedding_function0
+2025-08-06 11:55:15,659 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:55:24,932 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-32/test_create_embedding_function0
+2025-08-06 11:55:24,932 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:55:24,939 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-32/test_create_embedding_function1
+2025-08-06 11:55:24,939 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:55:24,945 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-32/test_embedding_function_docstr0
+2025-08-06 11:55:24,945 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:55:24,950 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-32/test_create_multiple_embedding0
+2025-08-06 11:55:24,950 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:55:24,956 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-32/test_embedding_function_uses_c0
+2025-08-06 11:55:24,956 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:55:30,679 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-33/test_embedding_api_call_succes0
+2025-08-06 11:55:30,679 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:56:44,531 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-34/test_embedding_api_call_succes0
+2025-08-06 11:56:44,531 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:56:49,062 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-35/test_embedding_dimensions_open0
+2025-08-06 11:56:49,062 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:56:49,069 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-35/test_embedding_dimensions_cons0
+2025-08-06 11:56:49,069 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:56:49,076 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-35/test_embedding_single_text_dim0
+2025-08-06 11:56:49,076 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:56:49,083 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-35/test_embedding_large_model_dim0
+2025-08-06 11:56:49,083 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:56:49,089 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-35/test_embedding_return_type_val0
+2025-08-06 11:56:49,089 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:56:54,160 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-36/test_embedding_error_logging0
+2025-08-06 11:56:54,160 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:56:54,161 - clinical_metabolomics_rag - ERROR - Embedding function error: Test embedding error
+2025-08-06 11:57:14,821 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-37/test_embedding_error_logging0
+2025-08-06 11:57:14,822 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:14,823 - clinical_metabolomics_rag - ERROR - Embedding function error: Test embedding error
+2025-08-06 11:57:29,501 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-38/test_embedding_error_logging0
+2025-08-06 11:57:29,501 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:29,502 - clinical_metabolomics_rag - ERROR - Embedding function error: Test embedding error
+2025-08-06 11:57:48,529 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-39/test_embedding_error_logging0
+2025-08-06 11:57:48,529 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:48,530 - clinical_metabolomics_rag - ERROR - Embedding function error: Test embedding error
+2025-08-06 11:57:53,732 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-40/test_embedding_api_error_propa0
+2025-08-06 11:57:53,732 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:53,733 - clinical_metabolomics_rag - ERROR - Embedding function error: OpenAI API error
+2025-08-06 11:57:53,740 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-40/test_embedding_rate_limit_erro0
+2025-08-06 11:57:53,741 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:53,741 - clinical_metabolomics_rag - ERROR - Embedding function error: Rate limit exceeded
+2025-08-06 11:57:53,747 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-40/test_embedding_authentication_0
+2025-08-06 11:57:53,747 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:53,748 - clinical_metabolomics_rag - ERROR - Embedding function error: Invalid API key
+2025-08-06 11:57:53,754 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-40/test_embedding_network_error0
+2025-08-06 11:57:53,754 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:53,755 - clinical_metabolomics_rag - ERROR - Embedding function error: Network connection failed
+2025-08-06 11:57:53,763 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-40/test_embedding_error_logging0
+2025-08-06 11:57:53,763 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:53,764 - clinical_metabolomics_rag - ERROR - Embedding function error: Test embedding error
+2025-08-06 11:57:53,770 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-40/test_embedding_timeout_error0
+2025-08-06 11:57:53,770 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:53,771 - clinical_metabolomics_rag - ERROR - Embedding function error: Request timeout
+2025-08-06 11:57:59,439 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-41/test_batch_embedding_processin0
+2025-08-06 11:57:59,439 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:59,447 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-41/test_empty_batch_processing0
+2025-08-06 11:57:59,447 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:59,453 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-41/test_mixed_length_text_batch0
+2025-08-06 11:57:59,453 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:59,460 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-41/test_batch_processing_preserve0
+2025-08-06 11:57:59,460 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:57:59,466 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-41/test_memory_efficient_batch_pr0
+2025-08-06 11:57:59,467 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:03,950 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-42/test_embedding_function_is_asy0
+2025-08-06 11:58:03,952 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:03,960 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-42/test_concurrent_embedding_call0
+2025-08-06 11:58:03,960 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:03,967 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-42/test_async_error_handling0
+2025-08-06 11:58:03,967 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:03,968 - clinical_metabolomics_rag - ERROR - Embedding function error: Async embedding error
+2025-08-06 11:58:03,974 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-42/test_async_timeout_handling0
+2025-08-06 11:58:03,974 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,130 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_create_embedding_function0
+2025-08-06 11:58:09,130 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,136 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_create_embedding_function1
+2025-08-06 11:58:09,136 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,143 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_function_docstr0
+2025-08-06 11:58:09,143 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,149 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_create_multiple_embedding0
+2025-08-06 11:58:09,149 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,155 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_function_uses_c0
+2025-08-06 11:58:09,155 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,161 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_api_call_succes0
+2025-08-06 11:58:09,161 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,172 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_api_call_with_s0
+2025-08-06 11:58:09,172 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,178 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_api_call_with_e0
+2025-08-06 11:58:09,178 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,185 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_api_respects_mo0
+2025-08-06 11:58:09,185 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,191 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_api_with_differ0
+2025-08-06 11:58:09,191 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,198 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_api_error_propa0
+2025-08-06 11:58:09,198 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,199 - clinical_metabolomics_rag - ERROR - Embedding function error: OpenAI API error
+2025-08-06 11:58:09,205 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_rate_limit_erro0
+2025-08-06 11:58:09,205 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,205 - clinical_metabolomics_rag - ERROR - Embedding function error: Rate limit exceeded
+2025-08-06 11:58:09,212 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_authentication_0
+2025-08-06 11:58:09,212 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,213 - clinical_metabolomics_rag - ERROR - Embedding function error: Invalid API key
+2025-08-06 11:58:09,220 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_network_error0
+2025-08-06 11:58:09,221 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,221 - clinical_metabolomics_rag - ERROR - Embedding function error: Network connection failed
+2025-08-06 11:58:09,227 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_error_logging0
+2025-08-06 11:58:09,227 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,228 - clinical_metabolomics_rag - ERROR - Embedding function error: Test embedding error
+2025-08-06 11:58:09,234 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_timeout_error0
+2025-08-06 11:58:09,234 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,234 - clinical_metabolomics_rag - ERROR - Embedding function error: Request timeout
+2025-08-06 11:58:09,240 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_dimensions_open0
+2025-08-06 11:58:09,240 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,248 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_dimensions_cons0
+2025-08-06 11:58:09,248 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,255 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_single_text_dim0
+2025-08-06 11:58:09,255 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,262 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_large_model_dim0
+2025-08-06 11:58:09,262 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,269 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_return_type_val0
+2025-08-06 11:58:09,269 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,276 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_batch_embedding_processin0
+2025-08-06 11:58:09,276 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,284 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_empty_batch_processing0
+2025-08-06 11:58:09,284 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,291 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_mixed_length_text_batch0
+2025-08-06 11:58:09,291 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,300 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_batch_processing_preserve0
+2025-08-06 11:58:09,301 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,307 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_memory_efficient_batch_pr0
+2025-08-06 11:58:09,307 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,326 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_function_is_asy0
+2025-08-06 11:58:09,326 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,332 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_concurrent_embedding_call0
+2025-08-06 11:58:09,333 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,339 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_async_error_handling0
+2025-08-06 11:58:09,339 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,340 - clinical_metabolomics_rag - ERROR - Embedding function error: Async embedding error
+2025-08-06 11:58:09,347 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_async_timeout_handling0
+2025-08-06 11:58:09,347 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,455 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_uses_config_api0
+2025-08-06 11:58:09,455 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,461 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_uses_config_mod0
+2025-08-06 11:58:09,462 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,469 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_with_unicode_te0
+2025-08-06 11:58:09,469 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,477 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_with_very_long_0
+2025-08-06 11:58:09,477 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,483 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_with_special_ch0
+2025-08-06 11:58:09,483 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,491 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_with_whitespace0
+2025-08-06 11:58:09,491 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,499 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_api_response_va0
+2025-08-06 11:58:09,499 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,505 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_none_response_h0
+2025-08-06 11:58:09,505 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,511 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_full_embedding_workflow0
+2025-08-06 11:58:09,511 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,517 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_with_error_reco0
+2025-08-06 11:58:09,517 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,518 - clinical_metabolomics_rag - ERROR - Embedding function error: Temporary API error
+2025-08-06 11:58:09,525 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_performance_cha0
+2025-08-06 11:58:09,525 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:09,532 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-43/test_embedding_function_lifecy0
+2025-08-06 11:58:09,532 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:33,183 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-45/test_embedding_function_lifecy0
+2025-08-06 11:58:33,184 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:49,052 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-46/test_embedding_config_validati0
+2025-08-06 11:58:49,052 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:49,059 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-46/test_embedding_function_lifecy0
+2025-08-06 11:58:49,059 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,344 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_create_embedding_function0
+2025-08-06 11:58:54,345 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,351 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_create_embedding_function1
+2025-08-06 11:58:54,351 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,357 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_function_docstr0
+2025-08-06 11:58:54,357 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,364 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_create_multiple_embedding0
+2025-08-06 11:58:54,364 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,370 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_function_uses_c0
+2025-08-06 11:58:54,370 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,376 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_api_call_succes0
+2025-08-06 11:58:54,376 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,383 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_api_call_with_s0
+2025-08-06 11:58:54,383 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,394 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_api_call_with_e0
+2025-08-06 11:58:54,394 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,401 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_api_respects_mo0
+2025-08-06 11:58:54,401 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,408 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_api_with_differ0
+2025-08-06 11:58:54,408 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,414 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_api_error_propa0
+2025-08-06 11:58:54,416 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,418 - clinical_metabolomics_rag - ERROR - Embedding function error: OpenAI API error
+2025-08-06 11:58:54,423 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_rate_limit_erro0
+2025-08-06 11:58:54,423 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,424 - clinical_metabolomics_rag - ERROR - Embedding function error: Rate limit exceeded
+2025-08-06 11:58:54,430 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_authentication_0
+2025-08-06 11:58:54,430 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,431 - clinical_metabolomics_rag - ERROR - Embedding function error: Invalid API key
+2025-08-06 11:58:54,436 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_network_error0
+2025-08-06 11:58:54,436 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,437 - clinical_metabolomics_rag - ERROR - Embedding function error: Network connection failed
+2025-08-06 11:58:54,444 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_error_logging0
+2025-08-06 11:58:54,444 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,445 - clinical_metabolomics_rag - ERROR - Embedding function error: Test embedding error
+2025-08-06 11:58:54,451 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_timeout_error0
+2025-08-06 11:58:54,451 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,451 - clinical_metabolomics_rag - ERROR - Embedding function error: Request timeout
+2025-08-06 11:58:54,457 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_dimensions_open0
+2025-08-06 11:58:54,457 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,465 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_dimensions_cons0
+2025-08-06 11:58:54,465 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,471 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_single_text_dim0
+2025-08-06 11:58:54,471 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,478 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_large_model_dim0
+2025-08-06 11:58:54,478 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,484 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_return_type_val0
+2025-08-06 11:58:54,484 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,492 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_batch_embedding_processin0
+2025-08-06 11:58:54,493 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,500 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_empty_batch_processing0
+2025-08-06 11:58:54,500 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,506 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_mixed_length_text_batch0
+2025-08-06 11:58:54,506 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,513 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_batch_processing_preserve0
+2025-08-06 11:58:54,513 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,521 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_memory_efficient_batch_pr0
+2025-08-06 11:58:54,521 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,529 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_function_is_asy0
+2025-08-06 11:58:54,530 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,545 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_concurrent_embedding_call0
+2025-08-06 11:58:54,545 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,552 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_async_error_handling0
+2025-08-06 11:58:54,552 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,553 - clinical_metabolomics_rag - ERROR - Embedding function error: Async embedding error
+2025-08-06 11:58:54,559 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_async_timeout_handling0
+2025-08-06 11:58:54,559 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,675 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_uses_config_api0
+2025-08-06 11:58:54,675 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,684 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_uses_config_mod0
+2025-08-06 11:58:54,684 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,693 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_config_validati0
+2025-08-06 11:58:54,695 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,702 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_with_unicode_te0
+2025-08-06 11:58:54,703 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,712 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_with_very_long_0
+2025-08-06 11:58:54,712 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,718 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_with_special_ch0
+2025-08-06 11:58:54,718 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,724 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_with_whitespace0
+2025-08-06 11:58:54,725 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,730 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_api_response_va0
+2025-08-06 11:58:54,731 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,738 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_none_response_h0
+2025-08-06 11:58:54,738 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,744 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_full_embedding_workflow0
+2025-08-06 11:58:54,744 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,750 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_with_error_reco0
+2025-08-06 11:58:54,750 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,751 - clinical_metabolomics_rag - ERROR - Embedding function error: Temporary API error
+2025-08-06 11:58:54,758 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_performance_cha0
+2025-08-06 11:58:54,759 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 11:58:54,766 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-47/test_embedding_function_lifecy0
+2025-08-06 11:58:54,766 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:13:13,698 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /tmp/test_lightrag
+2025-08-06 12:13:13,699 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,554 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_create_embedding_function0
+2025-08-06 12:18:43,555 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,589 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_create_embedding_function1
+2025-08-06 12:18:43,589 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,602 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_function_docstr0
+2025-08-06 12:18:43,603 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,616 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_create_multiple_embedding0
+2025-08-06 12:18:43,616 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,629 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_function_uses_c0
+2025-08-06 12:18:43,629 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,642 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_api_call_succes0
+2025-08-06 12:18:43,642 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,656 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_api_call_with_s0
+2025-08-06 12:18:43,657 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,670 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_api_call_with_e0
+2025-08-06 12:18:43,670 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,684 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_api_respects_mo0
+2025-08-06 12:18:43,684 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,698 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_api_with_differ0
+2025-08-06 12:18:43,698 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,712 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_api_error_propa0
+2025-08-06 12:18:43,712 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,727 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_rate_limit_erro0
+2025-08-06 12:18:43,727 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,747 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_authentication_0
+2025-08-06 12:18:43,747 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,761 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_network_error0
+2025-08-06 12:18:43,761 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,774 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_error_logging0
+2025-08-06 12:18:43,774 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,789 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_timeout_error0
+2025-08-06 12:18:43,789 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,803 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_dimensions_open0
+2025-08-06 12:18:43,803 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,817 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_dimensions_cons0
+2025-08-06 12:18:43,817 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,831 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_single_text_dim0
+2025-08-06 12:18:43,831 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,845 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_large_model_dim0
+2025-08-06 12:18:43,845 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,858 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_return_type_val0
+2025-08-06 12:18:43,859 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,872 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_batch_embedding_processin0
+2025-08-06 12:18:43,872 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,887 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_empty_batch_processing0
+2025-08-06 12:18:43,887 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,900 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_mixed_length_text_batch0
+2025-08-06 12:18:43,900 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,919 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_batch_processing_preserve0
+2025-08-06 12:18:43,919 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,933 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_memory_efficient_batch_pr0
+2025-08-06 12:18:43,933 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,954 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_function_is_asy0
+2025-08-06 12:18:43,954 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,967 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_concurrent_embedding_call0
+2025-08-06 12:18:43,967 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,981 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_async_error_handling0
+2025-08-06 12:18:43,981 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:43,994 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_async_timeout_handling0
+2025-08-06 12:18:43,994 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,008 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_uses_config_api0
+2025-08-06 12:18:44,009 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,022 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_uses_config_mod0
+2025-08-06 12:18:44,022 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,036 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_config_validati0
+2025-08-06 12:18:44,036 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,048 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_with_unicode_te0
+2025-08-06 12:18:44,048 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,062 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_with_very_long_0
+2025-08-06 12:18:44,062 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,076 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_with_special_ch0
+2025-08-06 12:18:44,076 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,101 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_with_whitespace0
+2025-08-06 12:18:44,101 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,115 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_api_response_va0
+2025-08-06 12:18:44,115 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,129 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_none_response_h0
+2025-08-06 12:18:44,129 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,142 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_full_embedding_workflow0
+2025-08-06 12:18:44,142 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,156 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_with_error_reco0
+2025-08-06 12:18:44,156 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,170 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_performance_cha0
+2025-08-06 12:18:44,170 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:18:44,184 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-49/test_embedding_function_lifecy0
+2025-08-06 12:18:44,184 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:19:19,822 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-50/test_create_embedding_function0
+2025-08-06 12:19:19,823 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:19:33,344 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-51/test_create_embedding_function0
+2025-08-06 12:19:33,344 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:19:33,351 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-51/test_create_embedding_function1
+2025-08-06 12:19:33,351 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:19:33,357 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-51/test_embedding_function_docstr0
+2025-08-06 12:19:33,357 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:19:33,393 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-51/test_create_multiple_embedding0
+2025-08-06 12:19:33,393 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:19:33,398 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-51/test_embedding_function_uses_c0
+2025-08-06 12:19:33,398 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:19:34,180 - clinical_metabolomics_rag - ERROR - Embedding authentication failed - check API key: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:19:34,181 - clinical_metabolomics_rag - ERROR - Embedding function failed after 3 attempts: OpenAI embedding authentication failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:25:24,870 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-52/test_create_embedding_function0
+2025-08-06 12:25:24,870 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:25:30,122 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-53/test_embedding_rate_limit_erro0
+2025-08-06 12:25:30,123 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:25:30,706 - clinical_metabolomics_rag - ERROR - Embedding authentication failed - check API key: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:25:30,707 - clinical_metabolomics_rag - ERROR - Embedding function failed after 3 attempts: OpenAI embedding authentication failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:25:35,593 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-54/test_embedding_cost_calculatio0
+2025-08-06 12:25:35,593 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:25:40,804 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-55/test_batch_with_empty_texts_mi0
+2025-08-06 12:25:40,804 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:25:40,805 - clinical_metabolomics_rag - WARNING - Empty text at index 1, will return zero vector
+2025-08-06 12:25:40,805 - clinical_metabolomics_rag - WARNING - Empty text at index 3, will return zero vector
+2025-08-06 12:25:41,214 - clinical_metabolomics_rag - ERROR - Embedding authentication failed - check API key: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:25:41,217 - clinical_metabolomics_rag - ERROR - Embedding function failed after 3 attempts: OpenAI embedding authentication failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:26:58,904 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-56/test_create_embedding_function0
+2025-08-06 12:26:58,904 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:26:58,910 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-56/test_create_embedding_function1
+2025-08-06 12:26:58,910 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:26:58,916 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-56/test_embedding_function_docstr0
+2025-08-06 12:26:58,916 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:26:58,921 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-56/test_create_multiple_embedding0
+2025-08-06 12:26:58,921 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:26:58,926 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-56/test_embedding_function_uses_c0
+2025-08-06 12:26:58,926 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:26:59,297 - clinical_metabolomics_rag - ERROR - Embedding authentication failed - check API key: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:26:59,299 - clinical_metabolomics_rag - ERROR - Embedding function failed after 3 attempts: OpenAI embedding authentication failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:27:06,489 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-57/test_embedding_cost_calculatio0
+2025-08-06 12:27:06,489 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:27:06,831 - clinical_metabolomics_rag - ERROR - Embedding authentication failed - check API key: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:27:06,833 - clinical_metabolomics_rag - ERROR - Embedding function failed after 3 attempts: OpenAI embedding authentication failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:27:06,966 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-57/test_embedding_cost_tracking_d0
+2025-08-06 12:27:06,966 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:27:07,161 - clinical_metabolomics_rag - ERROR - Embedding authentication failed - check API key: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:27:07,162 - clinical_metabolomics_rag - ERROR - Embedding function failed after 3 attempts: OpenAI embedding authentication failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test-************************************9012. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-08-06 12:27:07,269 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-57/test_embedding_cost_calculatio1
+2025-08-06 12:27:07,269 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:27:14,613 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-58/test_create_embedding_function0
+2025-08-06 12:27:14,613 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:27:14,619 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-58/test_create_embedding_function1
+2025-08-06 12:27:14,619 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:27:14,625 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-58/test_embedding_function_docstr0
+2025-08-06 12:27:14,625 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:27:14,630 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-58/test_create_multiple_embedding0
+2025-08-06 12:27:14,630 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-06 12:27:14,635 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /private/var/folders/4x/rxtn4dp13j702zwgzzf9mxyc0000gn/T/pytest-of-Mark/pytest-58/test_embedding_cost_calculatio0
+2025-08-06 12:27:14,635 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
