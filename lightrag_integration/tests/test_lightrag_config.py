@@ -22,12 +22,14 @@ import os
 import json
 import tempfile
 import shutil
+import logging
+import logging.handlers
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, mock_open
 import pytest
 
 # Note: These imports will work once LightRAGConfig is implemented
-from lightrag_integration.config import LightRAGConfig, LightRAGConfigError
+from lightrag_integration.config import LightRAGConfig, LightRAGConfigError, setup_lightrag_logging
 
 
 class TestLightRAGConfigDefaults:
@@ -3019,6 +3021,551 @@ class TestLightRAGConfigErrorHandling:
         # Should propagate TypeError from dataclass construction
         with pytest.raises(TypeError):
             LightRAGConfig.from_dict(invalid_config_dict)
+
+
+class TestLightRAGConfigLogging:
+    """Test class for logging configuration functionality."""
+
+    def test_default_logging_parameters(self):
+        """Test that logging parameters have correct default values."""
+        config = LightRAGConfig()
+        
+        assert config.log_level == "INFO"
+        assert config.log_dir == Path("logs")
+        assert config.enable_file_logging == True
+        assert config.log_max_bytes == 10485760  # 10MB
+        assert config.log_backup_count == 5
+        assert config.log_filename == "lightrag_integration.log"
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_LOG_LEVEL": "DEBUG",
+        "LIGHTRAG_LOG_DIR": "/custom/logs",
+        "LIGHTRAG_ENABLE_FILE_LOGGING": "false",
+        "LIGHTRAG_LOG_MAX_BYTES": "5242880",
+        "LIGHTRAG_LOG_BACKUP_COUNT": "3"
+    })
+    def test_logging_parameters_from_environment(self):
+        """Test that logging parameters are read from environment variables."""
+        config = LightRAGConfig()
+        
+        assert config.log_level == "DEBUG"
+        assert config.log_dir == Path("/custom/logs")
+        assert config.enable_file_logging == False
+        assert config.log_max_bytes == 5242880  # 5MB
+        assert config.log_backup_count == 3
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_ENABLE_FILE_LOGGING": "true"
+    })
+    def test_enable_file_logging_true_values(self):
+        """Test various truthy values for enable_file_logging."""
+        config = LightRAGConfig()
+        assert config.enable_file_logging == True
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_ENABLE_FILE_LOGGING": "1"
+    })
+    def test_enable_file_logging_numeric_true(self):
+        """Test numeric true value for enable_file_logging."""
+        config = LightRAGConfig()
+        assert config.enable_file_logging == True
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_ENABLE_FILE_LOGGING": "yes"
+    })
+    def test_enable_file_logging_yes_value(self):
+        """Test 'yes' value for enable_file_logging."""
+        config = LightRAGConfig()
+        assert config.enable_file_logging == True
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_ENABLE_FILE_LOGGING": "false"
+    })
+    def test_enable_file_logging_false_values(self):
+        """Test various falsy values for enable_file_logging."""
+        config = LightRAGConfig()
+        assert config.enable_file_logging == False
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_LOG_LEVEL": "invalid_level"
+    })
+    def test_invalid_log_level_normalization(self):
+        """Test that invalid log level is normalized to INFO."""
+        config = LightRAGConfig()
+        assert config.log_level == "INFO"
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_LOG_LEVEL": "debug"
+    })
+    def test_log_level_case_normalization(self):
+        """Test that log level is normalized to uppercase."""
+        config = LightRAGConfig()
+        assert config.log_level == "DEBUG"
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_LOG_LEVEL": ""
+    })
+    def test_empty_log_level_uses_default(self):
+        """Test that empty log level uses default INFO."""
+        config = LightRAGConfig()
+        assert config.log_level == "INFO"
+
+    def test_log_directory_creation_in_post_init(self):
+        """Test that log directory is created automatically when file logging is enabled."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            log_dir = Path(temp_dir) / "test_logs"
+            config = LightRAGConfig(
+                log_dir=log_dir,
+                enable_file_logging=True,
+                auto_create_dirs=True
+            )
+            
+            assert log_dir.exists()
+            assert log_dir.is_dir()
+
+    def test_log_directory_not_created_when_file_logging_disabled(self):
+        """Test that log directory is not created when file logging is disabled."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            log_dir = Path(temp_dir) / "test_logs"
+            config = LightRAGConfig(
+                log_dir=log_dir,
+                enable_file_logging=False,
+                auto_create_dirs=True
+            )
+            
+            # Log directory should not be created when file logging is disabled
+            assert not log_dir.exists()
+
+    def test_custom_log_directory_path(self):
+        """Test configuration with custom log directory path."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            custom_log_dir = Path(temp_dir) / "custom" / "log" / "path"
+            config = LightRAGConfig(
+                log_dir=custom_log_dir,
+                enable_file_logging=True,
+                auto_create_dirs=True
+            )
+            
+            assert config.log_dir == custom_log_dir
+            assert custom_log_dir.exists()
+            assert custom_log_dir.is_dir()
+
+    def test_logging_validation_valid_log_levels(self):
+        """Test that validation passes with valid log levels."""
+        valid_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+        
+        for level in valid_levels:
+            config = LightRAGConfig(
+                api_key="test-key",
+                log_level=level
+            )
+            config.validate()  # Should not raise
+
+    def test_logging_validation_log_max_bytes_positive(self):
+        """Test that validation fails with non-positive log_max_bytes."""
+        config = LightRAGConfig(
+            api_key="test-key",
+            log_max_bytes=0
+        )
+        with pytest.raises(LightRAGConfigError, match="log_max_bytes must be positive"):
+            config.validate()
+
+        config_negative = LightRAGConfig(
+            api_key="test-key",
+            log_max_bytes=-1024
+        )
+        with pytest.raises(LightRAGConfigError, match="log_max_bytes must be positive"):
+            config_negative.validate()
+
+    def test_logging_validation_log_backup_count_non_negative(self):
+        """Test that validation fails with negative log_backup_count."""
+        config = LightRAGConfig(
+            api_key="test-key",
+            log_backup_count=-1
+        )
+        with pytest.raises(LightRAGConfigError, match="log_backup_count must be non-negative"):
+            config.validate()
+
+    def test_logging_validation_log_backup_count_zero_allowed(self):
+        """Test that log_backup_count=0 is allowed (no backup files)."""
+        config = LightRAGConfig(
+            api_key="test-key",
+            log_backup_count=0
+        )
+        config.validate()  # Should not raise
+
+    def test_logging_validation_empty_log_filename(self):
+        """Test that validation fails with empty log filename."""
+        config = LightRAGConfig(
+            api_key="test-key",
+            log_filename=""
+        )
+        with pytest.raises(LightRAGConfigError, match="log_filename cannot be empty"):
+            config.validate()
+
+        config_whitespace = LightRAGConfig(
+            api_key="test-key",
+            log_filename="   "
+        )
+        with pytest.raises(LightRAGConfigError, match="log_filename cannot be empty"):
+            config_whitespace.validate()
+
+    def test_logging_validation_log_filename_extension(self):
+        """Test that validation fails with incorrect log filename extension."""
+        config = LightRAGConfig(
+            api_key="test-key",
+            log_filename="test.txt"
+        )
+        with pytest.raises(LightRAGConfigError, match="log_filename should end with '.log' extension"):
+            config.validate()
+
+
+class TestLightRAGConfigLoggingMethods:
+    """Test class for logging method functionality."""
+
+    def test_setup_lightrag_logging_creates_logger(self):
+        """Test that setup_lightrag_logging creates a logger with correct name."""
+        config = LightRAGConfig(api_key="test-key", enable_file_logging=False)
+        
+        logger = config.setup_lightrag_logging("test_logger")
+        
+        assert logger.name == "test_logger"
+        assert logger.level == logging.INFO
+        assert not logger.propagate
+        assert len(logger.handlers) == 1  # Console handler only
+
+    def test_setup_lightrag_logging_default_name(self):
+        """Test setup_lightrag_logging with default logger name."""
+        config = LightRAGConfig(api_key="test-key", enable_file_logging=False)
+        
+        logger = config.setup_lightrag_logging()
+        
+        assert logger.name == "lightrag_integration"
+
+    def test_setup_lightrag_logging_with_debug_level(self):
+        """Test setup_lightrag_logging with DEBUG log level."""
+        config = LightRAGConfig(
+            api_key="test-key",
+            log_level="DEBUG",
+            enable_file_logging=False
+        )
+        
+        logger = config.setup_lightrag_logging()
+        
+        assert logger.level == logging.DEBUG
+        assert logger.handlers[0].level == logging.DEBUG
+
+    def test_setup_lightrag_logging_clears_existing_handlers(self):
+        """Test that setup_lightrag_logging clears existing handlers."""
+        config = LightRAGConfig(api_key="test-key", enable_file_logging=False)
+        
+        # First setup
+        logger1 = config.setup_lightrag_logging("test_logger")
+        initial_handler_count = len(logger1.handlers)
+        
+        # Second setup should clear previous handlers
+        logger2 = config.setup_lightrag_logging("test_logger")
+        
+        assert logger1 is logger2  # Same logger instance
+        assert len(logger2.handlers) == initial_handler_count  # Not accumulating handlers
+
+    @patch('logging.handlers.RotatingFileHandler')
+    def test_setup_lightrag_logging_with_file_handler(self, mock_file_handler):
+        """Test setup_lightrag_logging creates file handler when enabled."""
+        mock_handler_instance = MagicMock()
+        mock_file_handler.return_value = mock_handler_instance
+        
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = LightRAGConfig(
+                api_key="test-key",
+                log_dir=Path(temp_dir),
+                enable_file_logging=True,
+                log_filename="test.log",
+                log_max_bytes=1048576,
+                log_backup_count=3
+            )
+            
+            logger = config.setup_lightrag_logging()
+            
+            # Verify file handler was created with correct parameters
+            expected_log_path = str(Path(temp_dir) / "test.log")
+            mock_file_handler.assert_called_once_with(
+                filename=expected_log_path,
+                maxBytes=1048576,
+                backupCount=3,
+                encoding="utf-8"
+            )
+            
+            # Verify handler was configured and added
+            mock_handler_instance.setFormatter.assert_called_once()
+            mock_handler_instance.setLevel.assert_called_once_with("INFO")
+            
+            assert len(logger.handlers) == 2  # Console + File
+
+    def test_setup_lightrag_logging_file_creation_error_raises_exception(self):
+        """Test that setup_lightrag_logging raises exception when directory creation fails."""
+        config = LightRAGConfig(
+            api_key="test-key",
+            log_dir=Path("/nonexistent/restricted/path"),
+            enable_file_logging=True
+        )
+        
+        with patch('pathlib.Path.mkdir', side_effect=PermissionError("Permission denied")):
+            with pytest.raises(LightRAGConfigError, match="Failed to set up logging"):
+                config.setup_lightrag_logging()
+
+    @patch('logging.handlers.RotatingFileHandler', side_effect=OSError("File creation failed"))
+    def test_setup_lightrag_logging_file_handler_creation_error(self, mock_file_handler):
+        """Test graceful handling when RotatingFileHandler creation fails."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = LightRAGConfig(
+                api_key="test-key",
+                log_dir=Path(temp_dir),
+                enable_file_logging=True
+            )
+            
+            logger = config.setup_lightrag_logging()
+            
+            # Should log warning and continue with console handler only
+            assert len(logger.handlers) == 1
+            assert isinstance(logger.handlers[0], logging.StreamHandler)
+
+    def test_setup_lightrag_logging_creates_log_directory(self):
+        """Test that setup_lightrag_logging creates log directory if it doesn't exist."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            log_dir = Path(temp_dir) / "nested" / "log" / "dir"
+            config = LightRAGConfig(
+                api_key="test-key",
+                log_dir=log_dir,
+                enable_file_logging=True,
+                auto_create_dirs=False  # Disable auto creation in post_init
+            )
+            
+            # Directory shouldn't exist yet
+            assert not log_dir.exists()
+            
+            config.setup_lightrag_logging()
+            
+            # Directory should be created by setup_lightrag_logging
+            assert log_dir.exists()
+            assert log_dir.is_dir()
+
+    def test_setup_lightrag_logging_exception_handling(self):
+        """Test that setup_lightrag_logging raises LightRAGConfigError on severe failures."""
+        with patch('logging.getLogger', side_effect=Exception("Logger creation failed")):
+            config = LightRAGConfig(api_key="test-key")
+            
+            with pytest.raises(LightRAGConfigError, match="Failed to set up logging"):
+                config.setup_lightrag_logging()
+
+
+class TestStandaloneLightRAGLogging:
+    """Test class for standalone logging function."""
+
+    def test_standalone_setup_lightrag_logging_with_config(self):
+        """Test standalone setup_lightrag_logging function with provided config."""
+        config = LightRAGConfig(
+            api_key="test-key",
+            log_level="DEBUG",
+            enable_file_logging=False
+        )
+        
+        logger = setup_lightrag_logging(config, "standalone_test")
+        
+        assert logger.name == "standalone_test"
+        assert logger.level == logging.DEBUG
+
+    def test_standalone_setup_lightrag_logging_without_config(self):
+        """Test standalone setup_lightrag_logging function creates config from environment."""
+        with patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}):
+            logger = setup_lightrag_logging()
+            
+            assert logger.name == "lightrag_integration"
+            # Should work even without full validation
+
+    def test_standalone_setup_lightrag_logging_default_logger_name(self):
+        """Test standalone setup_lightrag_logging with default logger name."""
+        config = LightRAGConfig(api_key="test-key", enable_file_logging=False)
+        
+        logger = setup_lightrag_logging(config)
+        
+        assert logger.name == "lightrag_integration"
+
+    @patch('lightrag_integration.config.LightRAGConfig.get_config')
+    def test_standalone_setup_lightrag_logging_config_creation(self, mock_get_config):
+        """Test that standalone function creates config with correct parameters."""
+        mock_config = MagicMock()
+        mock_config.setup_lightrag_logging.return_value = MagicMock()
+        mock_get_config.return_value = mock_config
+        
+        setup_lightrag_logging()
+        
+        # Verify config was created with validation disabled and directories not ensured
+        mock_get_config.assert_called_once_with(validate_config=False, ensure_dirs=False)
+        mock_config.setup_lightrag_logging.assert_called_once_with("lightrag_integration")
+
+
+class TestLightRAGConfigSerialization:
+    """Test class for logging fields in serialization."""
+
+    def test_to_dict_includes_logging_fields(self):
+        """Test that to_dict() includes all logging fields."""
+        config = LightRAGConfig(
+            api_key="test-key",
+            log_level="DEBUG",
+            log_dir=Path("/custom/logs"),
+            enable_file_logging=False,
+            log_max_bytes=5242880,
+            log_backup_count=3,
+            log_filename="custom.log"
+        )
+        
+        config_dict = config.to_dict()
+        
+        assert config_dict["log_level"] == "DEBUG"
+        assert config_dict["log_dir"] == "/custom/logs"
+        assert config_dict["enable_file_logging"] == False
+        assert config_dict["log_max_bytes"] == 5242880
+        assert config_dict["log_backup_count"] == 3
+        assert config_dict["log_filename"] == "custom.log"
+
+    def test_from_dict_handles_logging_fields(self):
+        """Test that from_dict() correctly handles logging fields."""
+        config_dict = {
+            "api_key": "test-key",
+            "log_level": "WARNING",
+            "log_dir": "/test/logs",
+            "enable_file_logging": True,
+            "log_max_bytes": 2097152,
+            "log_backup_count": 7,
+            "log_filename": "test_app.log"
+        }
+        
+        config = LightRAGConfig.from_dict(config_dict)
+        
+        assert config.log_level == "WARNING"
+        assert config.log_dir == Path("/test/logs")
+        assert config.enable_file_logging == True
+        assert config.log_max_bytes == 2097152
+        assert config.log_backup_count == 7
+        assert config.log_filename == "test_app.log"
+
+    def test_json_export_import_with_logging_fields(self):
+        """Test JSON export/import preserves logging configuration."""
+        original_config = LightRAGConfig(
+            api_key="test-key",
+            log_level="ERROR",
+            log_dir=Path("/export/logs"),
+            enable_file_logging=True,
+            log_max_bytes=1048576,
+            log_backup_count=2,
+            log_filename="exported.log"
+        )
+        
+        # Export to dict and simulate JSON serialization
+        config_dict = original_config.to_dict()
+        json_str = json.dumps(config_dict)
+        restored_dict = json.loads(json_str)
+        
+        # Import from dict
+        restored_config = LightRAGConfig.from_dict(restored_dict)
+        
+        assert restored_config.log_level == original_config.log_level
+        assert restored_config.log_dir == original_config.log_dir
+        assert restored_config.enable_file_logging == original_config.enable_file_logging
+        assert restored_config.log_max_bytes == original_config.log_max_bytes
+        assert restored_config.log_backup_count == original_config.log_backup_count
+        assert restored_config.log_filename == original_config.log_filename
+
+
+class TestLightRAGConfigEnvironmentLogging:
+    """Test class for logging environment variable integration."""
+
+    @patch.dict(os.environ, {"LIGHTRAG_LOG_LEVEL": "CRITICAL"})
+    def test_log_level_from_environment(self):
+        """Test LIGHTRAG_LOG_LEVEL environment variable."""
+        config = LightRAGConfig()
+        assert config.log_level == "CRITICAL"
+
+    @patch.dict(os.environ, {"LIGHTRAG_LOG_DIR": "/env/logs"})
+    def test_log_dir_from_environment(self):
+        """Test LIGHTRAG_LOG_DIR environment variable."""
+        config = LightRAGConfig()
+        assert config.log_dir == Path("/env/logs")
+
+    @patch.dict(os.environ, {"LIGHTRAG_ENABLE_FILE_LOGGING": "false"})
+    def test_enable_file_logging_false_from_environment(self):
+        """Test LIGHTRAG_ENABLE_FILE_LOGGING=false environment variable."""
+        config = LightRAGConfig()
+        assert config.enable_file_logging == False
+
+    @patch.dict(os.environ, {"LIGHTRAG_ENABLE_FILE_LOGGING": "0"})
+    def test_enable_file_logging_zero_from_environment(self):
+        """Test LIGHTRAG_ENABLE_FILE_LOGGING=0 environment variable."""
+        config = LightRAGConfig()
+        assert config.enable_file_logging == False
+
+    @patch.dict(os.environ, {"LIGHTRAG_ENABLE_FILE_LOGGING": "no"})
+    def test_enable_file_logging_no_from_environment(self):
+        """Test LIGHTRAG_ENABLE_FILE_LOGGING=no environment variable."""
+        config = LightRAGConfig()
+        assert config.enable_file_logging == False
+
+    @patch.dict(os.environ, {"LIGHTRAG_LOG_MAX_BYTES": "20971520"})
+    def test_log_max_bytes_from_environment(self):
+        """Test LIGHTRAG_LOG_MAX_BYTES environment variable."""
+        config = LightRAGConfig()
+        assert config.log_max_bytes == 20971520  # 20MB
+
+    @patch.dict(os.environ, {"LIGHTRAG_LOG_BACKUP_COUNT": "10"})
+    def test_log_backup_count_from_environment(self):
+        """Test LIGHTRAG_LOG_BACKUP_COUNT environment variable."""
+        config = LightRAGConfig()
+        assert config.log_backup_count == 10
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_LOG_LEVEL": "WARNING",
+        "LIGHTRAG_LOG_DIR": "/combined/logs",
+        "LIGHTRAG_ENABLE_FILE_LOGGING": "true",
+        "LIGHTRAG_LOG_MAX_BYTES": "15728640",
+        "LIGHTRAG_LOG_BACKUP_COUNT": "8"
+    })
+    def test_all_logging_environment_variables_combined(self):
+        """Test all logging environment variables together."""
+        config = LightRAGConfig()
+        
+        assert config.log_level == "WARNING"
+        assert config.log_dir == Path("/combined/logs")
+        assert config.enable_file_logging == True
+        assert config.log_max_bytes == 15728640  # 15MB
+        assert config.log_backup_count == 8
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_LOG_MAX_BYTES": "invalid_number"
+    })
+    def test_invalid_log_max_bytes_environment_raises_error(self):
+        """Test that invalid LIGHTRAG_LOG_MAX_BYTES raises ValueError."""
+        with pytest.raises(ValueError):
+            LightRAGConfig()
+
+    @patch.dict(os.environ, {
+        "LIGHTRAG_LOG_BACKUP_COUNT": "not_a_number"
+    })
+    def test_invalid_log_backup_count_environment_raises_error(self):
+        """Test that invalid LIGHTRAG_LOG_BACKUP_COUNT raises ValueError."""
+        with pytest.raises(ValueError):
+            LightRAGConfig()
+
+    def test_missing_logging_environment_variables_use_defaults(self):
+        """Test that missing logging environment variables use default values."""
+        with patch.dict(os.environ, {}, clear=True):
+            config = LightRAGConfig()
+            
+            assert config.log_level == "INFO"
+            assert config.log_dir == Path("logs")
+            assert config.enable_file_logging == True
+            assert config.log_max_bytes == 10485760  # 10MB
+            assert config.log_backup_count == 5
 
 
 # Pytest fixtures for common test setup

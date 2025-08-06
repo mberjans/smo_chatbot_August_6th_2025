@@ -18,14 +18,23 @@ __version__ = "0.1.0"
 __author__ = "SMO Chatbot Development Team"
 __description__ = "LightRAG Integration Module for SMO Chatbot"
 
+# Import main configuration classes and functions
+from .config import (
+    LightRAGConfig,
+    LightRAGConfigError,
+    setup_lightrag_logging
+)
+
 # This module will be expanded with component imports as they are implemented
 # Example future imports:
 # from .lightrag_component import LightRAGComponent
 # from .pdf_processor import PDFProcessor
-# from .config import LightRAGConfig
 
 __all__ = [
     "__version__",
     "__author__", 
-    "__description__"
+    "__description__",
+    "LightRAGConfig",
+    "LightRAGConfigError", 
+    "setup_lightrag_logging"
 ]
