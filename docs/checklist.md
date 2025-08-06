@@ -160,7 +160,7 @@
 - [x] Write tests for embedding function setup and validation
 
 **CMO-LIGHTRAG-005-T04** [CODE]
-- [ ] Implement ClinicalMetabolomicsRAG class structure
+- [x] Implement ClinicalMetabolomicsRAG class structure
 
 **CMO-LIGHTRAG-005-T05** [CODE]
 - [ ] Implement _initialize_rag method with biomedical parameters
