@@ -151,13 +151,13 @@
 ### CMO-LIGHTRAG-005: Core LightRAG Component Implementation
 
 **CMO-LIGHTRAG-005-T01-TEST** [TEST]
-- [ ] Write tests for ClinicalMetabolomicsRAG initialization
+- [x] Write tests for ClinicalMetabolomicsRAG initialization
 
 **CMO-LIGHTRAG-005-T02-TEST** [TEST]
-- [ ] Write tests for LLM function configuration and API calls
+- [x] Write tests for LLM function configuration and API calls
 
 **CMO-LIGHTRAG-005-T03-TEST** [TEST]
-- [ ] Write tests for embedding function setup and validation
+- [x] Write tests for embedding function setup and validation
 
 **CMO-LIGHTRAG-005-T04** [CODE]
 - [ ] Implement ClinicalMetabolomicsRAG class structure
