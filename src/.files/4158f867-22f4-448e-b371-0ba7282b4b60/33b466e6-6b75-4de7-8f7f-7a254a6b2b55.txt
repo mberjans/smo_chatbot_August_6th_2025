@@ -1,0 +1,3 @@
+I'm a chat tool designed to help you stay informed about clinical metabolomics. I can access and understand a large database of scientific publications.
+
+To learn more, checkout the Readme page.

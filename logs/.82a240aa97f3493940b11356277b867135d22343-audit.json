@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/logs/.82a240aa97f3493940b11356277b867135d22343-audit.json",
+    "files": [
+        {
+            "date": 1754467252216,
+            "name": "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/logs/mcp-puppeteer-2025-08-06.log",
+            "hash": "3d015adce4d37e9637d85a2ce4b72845ecbd359cee301b1688c72d3bed1e939c"
+        }
+    ],
+    "hashType": "sha256"
+}

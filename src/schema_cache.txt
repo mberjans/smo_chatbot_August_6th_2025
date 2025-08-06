@@ -1,0 +1,5 @@
+Node properties are the following:
+
+Relationship properties are the following:
+
+The relationships are the following:

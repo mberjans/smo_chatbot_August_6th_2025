@@ -1,0 +1,169 @@
+    1  pyenv versions
+    2  vim ~/.bashrc
+    3  pyenv install 3.9.22
+    4  sudo apt update
+    5  exit
+    6  pyenv install 3.9.22
+    7  pyenv versions
+    8  sudo apt update && sudo apt install -y     make build-essential libssl-dev zlib1g-dev     libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm     libncurses5-dev libncursesw5-dev xz-utils tk-dev \
+    9  sudo apt update && sudo spt install make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev
+   10  exit
+   11  pyenv install 3.9.22
+   12  pyenv install 3.9.13
+   13  sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+   14  exit
+   15  pyenv versions
+   16  pyenv install 3.9.22
+   17  pyenv versions
+   18  apt-get install postgresql
+   19  exit
+   20  sudo su
+   21  exit
+   22  ls
+   23  mkdir cmo
+   24  cd cmo
+   25  mkdir project
+   26  mkdir shared
+   27  mkdir current
+   28  ls
+   29  cd shared
+   30  mkdir logs
+   31  mkdir config
+   32  cd ..
+   33  ls
+   34  pyenv local 3.9.22
+   35  pyenv versions
+   36  cd shared/config
+   37  ~/.pyenv/versions/3.9.22/bin/python -m venv env
+   38  cd ../
+   39  ls
+   40  cd ifcc
+   41  cd cmo
+   42  cd project
+   43  pyenv versions
+   44  apt install npm
+   45  exit
+   46  pyenv versions
+   47  . env/bin/activate
+   48  pip install chainlit==1.0.401
+   49  pip install deep-translator==1.11.4 hanziconv==0.3.2
+   50  pip install hanzidentifier==1.2.0
+   51  pip install lingue-language-detector==2.0.2
+   52  pip install lingua-language-detector==2.0.2
+   53  pip install neo4j==5.18.0
+   54  pip install sentence_transformers==2.5.1 sentencepiece==0.2.0 transformers==4.37.2
+   55  pip install llama_index_llms_groq==0.1.3
+   56  llama-index-core==0.10.31
+   57  llama-index-embeddings-huggingface==0.1.4
+   58  llama-index-embeddings-ollama==0.1.2
+   59  llama-index-graph-stores-neo4j==0.1.3
+   60  llama-index-llms-huggingface==0.1.4
+   61  llama-index-llms-ollama==0.1.2
+   62  llama-index-llms-openai==0.1.16
+   63  llama-index-llms-openrouter==0.1.4
+   64  llama-index-vector-stores-faiss==0.1.2
+   65  llama-index==0.10.20
+   66  pip install lxml_html_clean==0.4.2
+   67  pip install llama-index-core==0.10.31
+   68  pip uninstall llama_index_llms_groq==0.1.3
+   69  pip freeze
+   70  pip uninstall llama-index-core==0.10.31
+   71  pip freeze
+   72  pip uninstall llama-index-llms-openai==0.1.31
+   73  pip uninstall llama-index-llms-openai-like==0.1.3
+   74  pip uninstall llamaindex-py-client==0.1.19
+   75  pip freeze
+   76  pip install asyncpg==0.30.0
+   77  deactivate
+   78  exit
+   79  git clone https://github.com/rwoudstr/feedback-chatbot.git
+   80  ls
+   81  rm -rf feedback-chatbot
+   82  ls
+   83  git clone https://github.com/rwoudstr/feedback-chatbot.git current
+   84  ls
+   85  cd current
+   86  ls
+   87  cd ..
+   88  ls
+   89  cd shared
+   90  ls
+   91  cd config
+   92  ls
+   93  . env/bin/activate
+   94  cd ../..
+   95  cd current
+   96  ls
+   97  pip install -r requirements.txt
+   98  ls
+   99  cd src
+  100  ls
+  101  mv app.py main.py
+  102  ls
+  103  pip install fastapi==0.110.3
+  104  pip uninstall fastapi starlette
+  105  pip uninstall chainlit
+  106  pip install chainlit==1.1.306
+  107  cd ../..
+  108  cd shared/config
+  109  . env/bin/activate
+  110  cd ../../current/src
+  111  nano main.py
+  112  vim main.py
+  113  pip show chainlit
+  114  pip uninstall chainlit
+  115  vim .env
+  116  vim package.json
+  117  rm .env
+  118  ls -a
+  119  vim .env
+  120  which psql
+  121  initdb /usr/bin/psql -E utf8
+  122  sudo -u postgres psql template1
+  123  sudo su
+  124  exit
+  125  cd ..
+  126  source shared/config/env/bin/activate
+  127  cd  current
+  128  ls
+  129  npx prisma migrate deploy
+  130  node -v
+  131  sudo su
+  132  deactivate
+  133  exit
+  134  cd cmo
+  135  ls
+  136  cd project
+  137  ls
+  138  source shared/config/env/bin/activate
+  139  cd current
+  140  npx prisma migrate deploy
+  141  npm -v
+  142  deactivate
+  143  node -c
+  144  node -v
+  145  apt install nodejs
+  146  exit
+  147  cd ../..
+  148  source shared/config/env/bin/activate
+  149  cd current/src
+  150  chainlit run main.py
+  151  pip show chainlit
+  152  vim main.py
+  153  chainlit run main.py
+  154  pip show faiss
+  155  pip install faiss-cpu==1.10.0
+  156  chainlit run main.py
+  157  ls -a
+  158  vim .env
+  159  deactivate
+  160  exit
+  161  source env/bin/activate
+  162  ls
+  163  source bin/activate
+  164  pip install gunicorn
+  165  pip show gunicorn
+  166  deactivate
+  167  exit
+  168  history
+  169  history > history_August_6_2025
