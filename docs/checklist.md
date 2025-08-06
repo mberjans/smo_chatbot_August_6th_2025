@@ -30,7 +30,7 @@
 - [x] Create Python virtual environment for LightRAG integration
 
 **CMO-LIGHTRAG-001-T02** [SETUP]
-- [ ] Install core LightRAG dependencies (lightrag-hku, PyMuPDF, python-dotenv)
+- [x] Install core LightRAG dependencies (lightrag-hku, PyMuPDF, python-dotenv)
 
 **CMO-LIGHTRAG-001-T03** [SETUP]
 - [ ] Install development and testing dependencies (pytest, pytest-asyncio, black, flake8)
