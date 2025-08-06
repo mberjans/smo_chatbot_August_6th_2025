@@ -101,7 +101,7 @@
 - [x] Implement BiomedicalPDFProcessor class structure
 
 **CMO-LIGHTRAG-003-T05** [CODE]
-- [ ] Implement extract_text_from_pdf method with PyMuPDF
+- [x] Implement extract_text_from_pdf method with PyMuPDF
 
 **CMO-LIGHTRAG-003-T06** [CODE]
 - [ ] Add text preprocessing for biomedical content (remove artifacts)
