@@ -1,0 +1,594 @@
+{
+  "benchmark_info": {
+    "timestamp": "2025-08-06T06:07:32.886780",
+    "papers_directory": "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/papers",
+    "processor_config": {
+      "processing_timeout": 300,
+      "memory_limit_mb": 1024,
+      "max_page_text_size": 1000000,
+      "current_memory_mb": 54.8,
+      "system_memory_percent": 83.3,
+      "system_memory_available_mb": 2737.55,
+      "memory_monitor_active": false
+    }
+  },
+  "pdf_files": [
+    {
+      "filename": "Clinical_Metabolomics_paper.pdf",
+      "file_path": "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/papers/Clinical_Metabolomics_paper.pdf",
+      "file_size_mb": 0.27,
+      "validation_time_seconds": 0.044,
+      "validation_result": {
+        "valid": true,
+        "error": null,
+        "file_size_bytes": 287804,
+        "pages": 12,
+        "encrypted": false,
+        "metadata": {
+          "filename": "Clinical_Metabolomics_paper.pdf",
+          "file_path": "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/papers/Clinical_Metabolomics_paper.pdf",
+          "pages": 12,
+          "file_size_bytes": 287804,
+          "title": "OP-CLCH210276 1606..1617",
+          "creator": "Arbortext Advanced Print Publisher 9.0.114/W",
+          "producer": "Acrobat Distiller 8.0.0 (Windows); modified using iTextSharp 4.1.6 by 1T3XT",
+          "creation_date": "2021-11-25T00:05:29",
+          "modification_date": "2025-08-06T08:24:44"
+        }
+      },
+      "valid": true,
+      "pages": 12,
+      "encrypted": false,
+      "validation_error": null,
+      "metadata": {
+        "filename": "Clinical_Metabolomics_paper.pdf",
+        "file_path": "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/papers/Clinical_Metabolomics_paper.pdf",
+        "pages": 12,
+        "file_size_bytes": 287804,
+        "title": "OP-CLCH210276 1606..1617",
+        "creator": "Arbortext Advanced Print Publisher 9.0.114/W",
+        "producer": "Acrobat Distiller 8.0.0 (Windows); modified using iTextSharp 4.1.6 by 1T3XT",
+        "creation_date": "2021-11-25T00:05:29",
+        "modification_date": "2025-08-06T08:24:44"
+      }
+    }
+  ],
+  "performance_metrics": {
+    "processing_times": [
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "configuration": "with_preprocessing",
+        "total_time": 0.135,
+        "characters_extracted": 54792,
+        "pages_processed": 12,
+        "chars_per_second": 406946.17,
+        "pages_per_second": 89.125,
+        "memory_stats": {
+          "initial_mb": 57.41,
+          "final_mb": 57.69,
+          "peak_mb": 57.41,
+          "increase_mb": 0.28,
+          "peak_increase_mb": 0.0,
+          "average_mb": 57.55,
+          "samples_count": 2
+        },
+        "preprocessing_applied": true,
+        "processing_info": {
+          "start_page": 0,
+          "end_page": 12,
+          "pages_processed": 12,
+          "total_characters": 54792,
+          "preprocessing_applied": true,
+          "processing_timestamp": "2025-08-06T06:07:33.066220"
+        }
+      },
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "configuration": "without_preprocessing",
+        "total_time": 0.054,
+        "characters_extracted": 57003,
+        "pages_processed": 12,
+        "chars_per_second": 1054398.01,
+        "pages_per_second": 221.967,
+        "memory_stats": {
+          "initial_mb": 57.69,
+          "final_mb": 57.88,
+          "peak_mb": 57.69,
+          "increase_mb": 0.19,
+          "peak_increase_mb": 0.0,
+          "average_mb": 57.78,
+          "samples_count": 2
+        },
+        "preprocessing_applied": false,
+        "processing_info": {
+          "start_page": 0,
+          "end_page": 12,
+          "pages_processed": 12,
+          "total_characters": 57003,
+          "preprocessing_applied": false,
+          "processing_timestamp": "2025-08-06T06:07:33.120445"
+        }
+      },
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "configuration": "page_range_first_3_pages",
+        "page_range": "0-3",
+        "total_time": 0.033,
+        "characters_extracted": 12535,
+        "pages_processed": 3,
+        "pages_per_second": 91.503,
+        "memory_stats": {
+          "initial_mb": 57.88,
+          "final_mb": 57.88,
+          "peak_mb": 57.88,
+          "increase_mb": 0.0,
+          "peak_increase_mb": 0.0,
+          "average_mb": 57.88,
+          "samples_count": 2
+        }
+      },
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "configuration": "page_range_last_3_pages",
+        "page_range": "9-12",
+        "total_time": 0.051,
+        "characters_extracted": 20732,
+        "pages_processed": 3,
+        "pages_per_second": 58.849,
+        "memory_stats": {
+          "initial_mb": 57.88,
+          "final_mb": 57.88,
+          "peak_mb": 57.88,
+          "increase_mb": 0.0,
+          "peak_increase_mb": 0.0,
+          "average_mb": 57.88,
+          "samples_count": 2
+        }
+      },
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "configuration": "page_range_middle_3_pages",
+        "page_range": "5-8",
+        "total_time": 0.032,
+        "characters_extracted": 12696,
+        "pages_processed": 3,
+        "pages_per_second": 94.982,
+        "memory_stats": {
+          "initial_mb": 57.88,
+          "final_mb": 58.5,
+          "peak_mb": 57.88,
+          "increase_mb": 0.62,
+          "peak_increase_mb": 0.0,
+          "average_mb": 58.19,
+          "samples_count": 2
+        }
+      }
+    ],
+    "throughput_metrics": {},
+    "page_processing_rates": [
+      89.12531143256322,
+      221.96684498110278
+    ],
+    "memory_usage_patterns": [
+      {
+        "initial_mb": 57.41,
+        "final_mb": 57.69,
+        "peak_mb": 57.41,
+        "increase_mb": 0.28,
+        "peak_increase_mb": 0.0,
+        "average_mb": 57.55,
+        "samples_count": 2
+      },
+      {
+        "initial_mb": 57.69,
+        "final_mb": 57.88,
+        "peak_mb": 57.69,
+        "increase_mb": 0.19,
+        "peak_increase_mb": 0.0,
+        "average_mb": 57.78,
+        "samples_count": 2
+      }
+    ],
+    "preprocessing_impact": {},
+    "aggregate_metrics": {
+      "average_processing_time": 0.061,
+      "median_processing_time": 0.051,
+      "min_processing_time": 0.032,
+      "max_processing_time": 0.135,
+      "std_dev_processing_time": 0.043
+    }
+  },
+  "quality_metrics": {
+    "text_completeness": [
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "total_characters": 54792,
+        "total_words": 7336,
+        "total_lines": 23,
+        "pages_with_content": 12,
+        "empty_pages": 0,
+        "average_chars_per_page": 4566.0,
+        "content_extraction_rate": 100.0
+      }
+    ],
+    "preprocessing_effectiveness": [
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "character_reduction": 2211,
+        "character_reduction_percent": 3.88,
+        "raw_line_count": 1510,
+        "processed_line_count": 23,
+        "raw_word_count": 8057,
+        "processed_word_count": 7336,
+        "scientific_notation_preservation": 94.4,
+        "preprocessing_effective": false
+      }
+    ],
+    "metadata_completeness": [
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "required_fields_present": 4,
+        "required_fields_total": 4,
+        "optional_fields_present": 5,
+        "optional_fields_total": 7,
+        "completeness_score": 91.4,
+        "has_title": true,
+        "has_author": false,
+        "has_dates": true
+      }
+    ],
+    "encoding_issues": [
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "issues_detected": 1,
+        "control_characters": 1,
+        "replacement_characters": 0,
+        "suspicious_sequences": 0,
+        "issue_details": [
+          "control_characters: 1"
+        ],
+        "text_length": 54792,
+        "issue_rate_percent": 0.0018
+      }
+    ],
+    "content_analysis": [
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "biomedical_content_detected": true,
+        "total_biomedical_terms": 6332,
+        "biomedical_density_percent": 86.31,
+        "content_categories": {
+          "p_values": {
+            "count": 0,
+            "examples": []
+          },
+          "statistical_values": {
+            "count": 2,
+            "examples": [
+              "mean",
+              "mean"
+            ]
+          },
+          "chemical_formulas": {
+            "count": 7,
+            "examples": [
+              "TX77030",
+              "In2015",
+              "In2016",
+              "In2015",
+              "D801"
+            ]
+          },
+          "units": {
+            "count": 0,
+            "examples": []
+          },
+          "techniques": {
+            "count": 19,
+            "examples": [
+              "NMR",
+              "GC-MS",
+              "GC-MS",
+              "LC-MS",
+              "LC-MS"
+            ]
+          },
+          "genes_proteins": {
+            "count": 6301,
+            "examples": [
+              "Metabolomics",
+              "in",
+              "Clinical",
+              "Practice",
+              "Improving"
+            ]
+          },
+          "citations": {
+            "count": 0,
+            "examples": []
+          },
+          "figures_tables": {
+            "count": 3,
+            "examples": [
+              "Table",
+              "Table",
+              "Table"
+            ]
+          }
+        },
+        "content_quality_score": 100
+      }
+    ]
+  },
+  "error_handling_tests": {
+    "timeout_handling": [
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "expected_timeout": true,
+        "actual_timeout": false,
+        "processing_time": 0.127,
+        "result": "Unexpected success"
+      }
+    ],
+    "memory_limit_handling": [
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "memory_limit_mb": 1,
+        "processing_time": 0.131,
+        "result": "Processing succeeded (may have high memory usage warnings)"
+      }
+    ],
+    "file_corruption_simulation": [],
+    "invalid_input_handling": [
+      {
+        "input_path": "/nonexistent/file.pdf",
+        "description": "Non-existent file",
+        "processing_time": 0.0,
+        "error_type": "FileNotFoundError",
+        "error_message": "PDF file not found: /nonexistent/file.pdf",
+        "result": "Correct error handling",
+        "expected_error": true,
+        "actual_error": true
+      },
+      {
+        "input_path": "",
+        "description": "Empty path",
+        "processing_time": 0.0,
+        "error_type": "PDFValidationError",
+        "error_message": "Path is not a file: .",
+        "result": "Correct error handling",
+        "expected_error": true,
+        "actual_error": true
+      },
+      {
+        "input_path": "/dev/null",
+        "description": "Non-PDF file",
+        "processing_time": 0.0,
+        "error_type": "PDFValidationError",
+        "error_message": "Path is not a file: /dev/null",
+        "result": "Correct error handling",
+        "expected_error": true,
+        "actual_error": true
+      },
+      {
+        "input_path": "papers",
+        "description": "Directory instead of file",
+        "processing_time": 0.0,
+        "error_type": "PDFValidationError",
+        "error_message": "Path is not a file: papers",
+        "result": "Correct error handling",
+        "expected_error": true,
+        "actual_error": true
+      }
+    ],
+    "edge_case_handling": [
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "test_case": "Negative start page",
+        "start_page": -1,
+        "end_page": 1,
+        "processing_time": 0.001,
+        "error_type": "BiomedicalPDFProcessorError",
+        "error_message": "Invalid start_page -1. Must be 0 <= start_page < 12",
+        "result": "Correct error handling",
+        "expected_error": true,
+        "actual_error": true
+      },
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "test_case": "Start page beyond PDF",
+        "start_page": 12,
+        "end_page": 13,
+        "processing_time": 0.0,
+        "error_type": "BiomedicalPDFProcessorError",
+        "error_message": "Invalid start_page 12. Must be 0 <= start_page < 12",
+        "result": "Correct error handling",
+        "expected_error": true,
+        "actual_error": true
+      },
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "test_case": "End page beyond PDF",
+        "start_page": 0,
+        "end_page": 22,
+        "processing_time": 0.0,
+        "error_type": "BiomedicalPDFProcessorError",
+        "error_message": "Invalid end_page 22. Must be 0 < end_page <= 12",
+        "result": "Correct error handling",
+        "expected_error": true,
+        "actual_error": true
+      },
+      {
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "test_case": "Start page > end page",
+        "start_page": 5,
+        "end_page": 2,
+        "processing_time": 0.0,
+        "error_type": "BiomedicalPDFProcessorError",
+        "error_message": "Invalid end_page 2. Must be 5 < end_page <= 12",
+        "result": "Correct error handling",
+        "expected_error": true,
+        "actual_error": true
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "type": "sample_size",
+      "priority": "high",
+      "recommendation": "Only 1 PDF(s) found. For comprehensive benchmarking, obtain 5+ diverse biomedical PDFs.",
+      "suggested_sources": [
+        "PubMed Central (PMC) - https://www.ncbi.nlm.nih.gov/pmc/",
+        "bioRxiv preprints - https://www.biorxiv.org/",
+        "medRxiv preprints - https://www.medrxiv.org/",
+        "PLOS journals - https://plos.org/",
+        "Nature journals - https://www.nature.com/",
+        "Clinical metabolomics journals from major publishers"
+      ]
+    },
+    {
+      "type": "text_quality",
+      "priority": "medium",
+      "recommendation": "1 PDF(s) have text encoding issues. Review character encoding handling.",
+      "action": "Enhance Unicode and special character processing"
+    }
+  ],
+  "summary": {
+    "files_discovered": 1,
+    "files_valid": 1,
+    "files_invalid": 0,
+    "performance_summary": {
+      "total_files_tested": 1,
+      "average_processing_time": 0.061,
+      "fastest_processing_time": 0.032,
+      "slowest_processing_time": 0.135
+    },
+    "error_handling_summary": {
+      "timeout_tests": 1,
+      "memory_tests": 1,
+      "invalid_input_tests": 4,
+      "edge_case_tests": 4
+    },
+    "benchmark_completed": "2025-08-06T06:07:35.504937"
+  },
+  "memory_stress_tests": {
+    "concurrent_processing": [],
+    "repeated_processing": [
+      {
+        "iteration": 1,
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "processing_time": 0.125,
+        "memory_stats": {
+          "initial_mb": 60.28,
+          "final_mb": 60.28,
+          "peak_mb": 60.28,
+          "increase_mb": 0.0,
+          "peak_increase_mb": 0.0,
+          "average_mb": 60.28,
+          "samples_count": 2
+        },
+        "characters_extracted": 54792
+      },
+      {
+        "iteration": 2,
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "processing_time": 0.146,
+        "memory_stats": {
+          "initial_mb": 60.28,
+          "final_mb": 60.41,
+          "peak_mb": 60.28,
+          "increase_mb": 0.12,
+          "peak_increase_mb": 0.0,
+          "average_mb": 60.34,
+          "samples_count": 2
+        },
+        "characters_extracted": 54792
+      },
+      {
+        "iteration": 3,
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "processing_time": 0.16,
+        "memory_stats": {
+          "initial_mb": 60.41,
+          "final_mb": 60.55,
+          "peak_mb": 60.41,
+          "increase_mb": 0.14,
+          "peak_increase_mb": 0.0,
+          "average_mb": 60.48,
+          "samples_count": 2
+        },
+        "characters_extracted": 54792
+      },
+      {
+        "iteration": 4,
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "processing_time": 0.159,
+        "memory_stats": {
+          "initial_mb": 60.55,
+          "final_mb": 61.12,
+          "peak_mb": 60.55,
+          "increase_mb": 0.58,
+          "peak_increase_mb": 0.0,
+          "average_mb": 60.84,
+          "samples_count": 2
+        },
+        "characters_extracted": 54792
+      },
+      {
+        "iteration": 5,
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "processing_time": 0.14,
+        "memory_stats": {
+          "initial_mb": 61.12,
+          "final_mb": 61.84,
+          "peak_mb": 61.12,
+          "increase_mb": 0.72,
+          "peak_increase_mb": 0.0,
+          "average_mb": 61.48,
+          "samples_count": 2
+        },
+        "characters_extracted": 54792
+      }
+    ],
+    "memory_leak_detection": [
+      {
+        "cycle": 1,
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "memory_mb": 61.86,
+        "memory_increase_mb": 0.02
+      },
+      {
+        "cycle": 2,
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "memory_mb": 61.91,
+        "memory_increase_mb": 0.06
+      },
+      {
+        "cycle": 3,
+        "pdf_name": "Clinical_Metabolomics_paper.pdf",
+        "memory_mb": 61.91,
+        "memory_increase_mb": 0.06
+      }
+    ],
+    "memory_analysis": {
+      "initial_memory_mb": 60.28,
+      "final_memory_mb": 61.12,
+      "max_memory_mb": 61.12,
+      "memory_trend": "stable",
+      "potential_memory_leak": false
+    },
+    "memory_leak_analysis": {
+      "initial_memory_mb": 61.84,
+      "final_memory_mb": 61.91,
+      "total_increase_mb": 0.06,
+      "max_memory_mb": 61.91,
+      "potential_leak": false,
+      "memory_progression": [
+        61.84,
+        61.86,
+        61.91,
+        61.91
+      ]
+    }
+  }
+}

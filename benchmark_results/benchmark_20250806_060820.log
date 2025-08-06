@@ -1,0 +1,298 @@
+2025-08-06 06:08:20,504 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Starting comprehensive PDF processing benchmark
+2025-08-06 06:08:20,504 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Papers directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/papers
+2025-08-06 06:08:20,504 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Output directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/benchmark_results
+2025-08-06 06:08:20,504 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Discovering PDF files in papers
+2025-08-06 06:08:20,504 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Found 1 PDF files
+2025-08-06 06:08:20,504 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO -   - Clinical_Metabolomics_paper.pdf (0.27 MB)
+2025-08-06 06:08:20,504 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Validating PDF files and collecting basic information
+2025-08-06 06:08:20,504 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Validating Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,506 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:20,544 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - ✓ Clinical_Metabolomics_paper.pdf - Valid (12 pages)
+2025-08-06 06:08:20,544 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Running performance benchmarks
+2025-08-06 06:08:20,544 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Performance testing Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,544 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:20,544 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,545 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:20,545 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:20,561 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:20,573 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:20,579 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:20,584 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:20,589 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:20,594 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:20,606 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:20,617 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:20,627 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:20,639 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:20,651 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:20,673 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:20,674 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:20,674 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO -   with_preprocessing: 0.130s, 422650 chars/sec
+2025-08-06 06:08:20,674 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:20,674 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,674 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:20,674 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:20,681 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4955 characters from page 0
+2025-08-06 06:08:20,686 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5923 characters from page 1
+2025-08-06 06:08:20,688 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2212 characters from page 2
+2025-08-06 06:08:20,690 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1771 characters from page 3
+2025-08-06 06:08:20,691 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2000 characters from page 4
+2025-08-06 06:08:20,693 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1935 characters from page 5
+2025-08-06 06:08:20,698 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5650 characters from page 6
+2025-08-06 06:08:20,705 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5675 characters from page 7
+2025-08-06 06:08:20,709 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5505 characters from page 8
+2025-08-06 06:08:20,714 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5692 characters from page 9
+2025-08-06 06:08:20,719 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 6170 characters from page 10
+2025-08-06 06:08:20,727 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9492 characters from page 11
+2025-08-06 06:08:20,727 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 57003 characters
+2025-08-06 06:08:20,727 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO -   without_preprocessing: 0.054s, 1064799 chars/sec
+2025-08-06 06:08:20,728 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:20,728 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,728 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:20,728 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 2
+2025-08-06 06:08:20,740 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:20,752 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:20,758 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:20,759 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 3 pages, extracted 12535 characters
+2025-08-06 06:08:20,759 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:20,759 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,759 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:20,759 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 9 to 11
+2025-08-06 06:08:20,772 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:20,785 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:20,807 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:20,807 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 3 pages, extracted 20732 characters
+2025-08-06 06:08:20,807 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:20,807 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,807 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:20,807 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 5 to 7
+2025-08-06 06:08:20,813 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:20,825 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:20,837 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:20,837 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 3 pages, extracted 12696 characters
+2025-08-06 06:08:20,837 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Running text extraction quality assessments
+2025-08-06 06:08:20,837 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Quality assessment for Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,837 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:20,837 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,837 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:20,837 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:20,850 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:20,862 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:20,868 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:20,873 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:20,878 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:20,883 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:20,894 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:20,906 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:20,916 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:20,927 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:20,941 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:20,963 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:20,963 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:20,964 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:20,964 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:20,964 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:20,964 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:20,970 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4955 characters from page 0
+2025-08-06 06:08:20,975 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5923 characters from page 1
+2025-08-06 06:08:20,980 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2212 characters from page 2
+2025-08-06 06:08:20,984 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1771 characters from page 3
+2025-08-06 06:08:20,986 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2000 characters from page 4
+2025-08-06 06:08:20,988 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1935 characters from page 5
+2025-08-06 06:08:20,993 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5650 characters from page 6
+2025-08-06 06:08:20,997 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5675 characters from page 7
+2025-08-06 06:08:21,001 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5505 characters from page 8
+2025-08-06 06:08:21,006 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5692 characters from page 9
+2025-08-06 06:08:21,011 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 6170 characters from page 10
+2025-08-06 06:08:21,019 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9492 characters from page 11
+2025-08-06 06:08:21,020 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 57003 characters
+2025-08-06 06:08:21,037 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Running error handling and robustness tests
+2025-08-06 06:08:21,037 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:21,037 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:21,037 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:21,038 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:21,050 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:21,062 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:21,071 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:21,075 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:21,080 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:21,085 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:21,097 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:21,108 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:21,118 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:21,130 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:21,143 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:21,165 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:21,165 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:21,165 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:21,165 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:21,165 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:21,165 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:21,178 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:21,190 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:21,196 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:21,201 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:21,210 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:21,216 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:21,228 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:21,241 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:21,252 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:21,263 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:21,277 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:21,300 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:21,300 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:21,301 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:21,301 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:21,301 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:21,301 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:21,301 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:21,302 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:21,302 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:21,302 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:21,302 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:21,302 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:21,302 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:21,302 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:21,302 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Running memory stress tests
+2025-08-06 06:08:21,302 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Running repeated processing test (5 iterations)
+2025-08-06 06:08:21,303 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:21,303 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:21,303 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:21,303 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:21,316 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:21,329 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:21,335 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:21,342 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:21,349 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:21,354 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:21,366 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:21,377 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:21,387 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:21,399 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:21,412 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:21,435 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:21,435 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:21,538 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:21,538 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:21,539 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:21,539 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:21,560 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:21,576 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:21,583 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:21,588 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:21,593 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:21,598 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:21,609 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:21,621 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:21,631 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:21,642 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:21,655 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:21,677 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:21,677 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:21,780 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:21,780 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:21,780 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:21,780 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:21,800 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:21,816 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:21,823 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:21,828 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:21,833 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:21,838 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:21,849 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:21,861 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:21,871 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:21,882 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:21,895 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:21,917 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:21,917 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:22,020 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:22,020 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:22,021 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:22,021 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:22,041 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:22,057 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:22,064 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:22,069 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:22,074 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:22,079 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:22,091 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:22,102 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:22,112 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:22,123 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:22,136 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:22,158 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:22,158 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:22,261 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:22,261 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:22,262 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:22,262 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:22,282 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:22,299 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:22,306 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:22,311 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:22,317 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:22,321 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:22,333 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:22,345 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:22,356 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:22,367 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:22,380 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:22,402 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:22,402 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:22,505 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:22,505 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:22,506 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:22,506 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:22,526 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:22,542 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:22,549 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:22,554 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:22,560 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:22,565 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:22,576 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:22,588 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:22,598 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:22,609 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:22,622 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:22,644 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:22,644 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:22,697 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:22,697 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:22,697 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:22,697 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:22,712 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:22,725 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:22,731 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:22,736 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:22,741 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:22,746 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:22,757 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:22,769 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:22,779 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:22,790 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:22,803 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:22,825 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:22,825 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:22,878 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:08:22,878 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:08:22,878 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:08:22,878 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:08:22,893 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:08:22,906 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:08:22,912 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:08:22,917 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:08:22,922 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:08:22,927 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:08:22,938 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:08:22,950 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:08:22,960 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:08:22,971 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:08:22,984 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:08:23,006 - lightrag_integration.benchmark_pdf_processing.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:08:23,006 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:08:23,058 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Generating summary and recommendations
+2025-08-06 06:08:23,059 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Results saved to:
+2025-08-06 06:08:23,059 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO -   JSON: benchmark_results/benchmark_results_20250806_060823.json
+2025-08-06 06:08:23,059 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO -   Report: benchmark_results/benchmark_report_20250806_060823.txt
+2025-08-06 06:08:23,060 - lightrag_integration.benchmark_pdf_processing.benchmark - INFO - Comprehensive benchmark completed successfully

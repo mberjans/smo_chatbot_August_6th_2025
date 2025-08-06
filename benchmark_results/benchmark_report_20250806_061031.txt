@@ -1,0 +1,91 @@
+================================================================================
+BIOMEDICAL PDF PROCESSOR - COMPREHENSIVE BENCHMARK REPORT
+================================================================================
+Generated: 2025-08-06T06:10:29.016309
+Papers Directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/papers
+
+EXECUTIVE SUMMARY
+----------------------------------------
+Total PDF files discovered: 1
+Valid PDF files: 1
+Invalid PDF files: 0
+
+PERFORMANCE HIGHLIGHTS
+----------------------------------------
+Files tested: 1
+Average processing time: 0.06 seconds
+Fastest processing: 0.03 seconds
+Slowest processing: 0.132 seconds
+
+PDF FILES ANALYZED
+----------------------------------------
+Clinical_Metabolomics_paper.pdf: ✓ VALID
+  Size: 0.27 MB
+  Pages: 12
+
+RECOMMENDATIONS
+----------------------------------------
+1. [HIGH] Only 1 PDF(s) found. For comprehensive benchmarking, obtain 5+ diverse biomedical PDFs.
+   Suggested sources:
+     • PubMed Central (PMC) - https://www.ncbi.nlm.nih.gov/pmc/
+     • bioRxiv preprints - https://www.biorxiv.org/
+     • medRxiv preprints - https://www.medrxiv.org/
+     • PLOS journals - https://plos.org/
+     • Nature journals - https://www.nature.com/
+     • Clinical metabolomics journals from major publishers
+
+2. [MEDIUM] 1 PDF(s) have text encoding issues. Review character encoding handling.
+   Action: Enhance Unicode and special character processing
+
+DETAILED PERFORMANCE RESULTS
+----------------------------------------
+File: Clinical_Metabolomics_paper.pdf
+Configuration: with_preprocessing
+Processing time: 0.132 seconds
+Characters extracted: 54,792
+Pages processed: 12
+Throughput: 414348 chars/sec
+Memory usage: 55.52 → 55.52 MB (peak)
+
+File: Clinical_Metabolomics_paper.pdf
+Configuration: without_preprocessing
+Processing time: 0.056 seconds
+Characters extracted: 57,003
+Pages processed: 12
+Throughput: 1015304 chars/sec
+Memory usage: 57.86 → 57.86 MB (peak)
+
+File: Clinical_Metabolomics_paper.pdf
+Configuration: page_range_first_3_pages
+Processing time: 0.032 seconds
+Characters extracted: 12,535
+Pages processed: 3
+Throughput: N/A chars/sec
+Memory usage: 59.86 → 59.86 MB (peak)
+
+File: Clinical_Metabolomics_paper.pdf
+Configuration: page_range_last_3_pages
+Processing time: 0.049 seconds
+Characters extracted: 20,732
+Pages processed: 3
+Throughput: N/A chars/sec
+Memory usage: 60.05 → 60.05 MB (peak)
+
+File: Clinical_Metabolomics_paper.pdf
+Configuration: page_range_middle_3_pages
+Processing time: 0.03 seconds
+Characters extracted: 12,696
+Pages processed: 3
+Throughput: N/A chars/sec
+Memory usage: 60.39 → 60.39 MB (peak)
+
+ERROR HANDLING TEST RESULTS
+----------------------------------------
+Timeout Handling: 1 tests
+Memory Limit Handling: 1 tests
+Invalid Input Handling: 4 tests
+Edge Case Handling: 4 tests
+
+================================================================================
+END OF REPORT
+================================================================================

@@ -1,0 +1,306 @@
+2025-08-06 06:07:20,422 - __main__.benchmark - INFO - Starting comprehensive PDF processing benchmark
+2025-08-06 06:07:20,422 - __main__.benchmark - INFO - Papers directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/papers
+2025-08-06 06:07:20,422 - __main__.benchmark - INFO - Output directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/benchmark_results
+2025-08-06 06:07:20,422 - __main__.benchmark - INFO - Discovering PDF files in papers
+2025-08-06 06:07:20,422 - __main__.benchmark - INFO - Found 1 PDF files
+2025-08-06 06:07:20,422 - __main__.benchmark - INFO -   - Clinical_Metabolomics_paper.pdf (0.27 MB)
+2025-08-06 06:07:20,423 - __main__.benchmark - INFO - Validating PDF files and collecting basic information
+2025-08-06 06:07:20,423 - __main__.benchmark - INFO - Validating Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,424 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:20,462 - __main__.benchmark - INFO - ✓ Clinical_Metabolomics_paper.pdf - Valid (12 pages)
+2025-08-06 06:07:20,462 - __main__.benchmark - INFO - Running performance benchmarks
+2025-08-06 06:07:20,462 - __main__.benchmark - INFO - Performance testing Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,462 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:20,462 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,462 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:20,462 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:20,478 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:20,490 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:20,497 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:20,502 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:20,507 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:20,512 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:20,524 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:20,536 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:20,546 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:20,558 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:20,572 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:20,594 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:20,594 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:20,595 - __main__.benchmark - INFO -   with_preprocessing: 0.133s, 413362 chars/sec
+2025-08-06 06:07:20,595 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:20,595 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,595 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:20,595 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:20,602 - __main__.benchmark - DEBUG - Extracted 4955 characters from page 0
+2025-08-06 06:07:20,607 - __main__.benchmark - DEBUG - Extracted 5923 characters from page 1
+2025-08-06 06:07:20,609 - __main__.benchmark - DEBUG - Extracted 2212 characters from page 2
+2025-08-06 06:07:20,611 - __main__.benchmark - DEBUG - Extracted 1771 characters from page 3
+2025-08-06 06:07:20,612 - __main__.benchmark - DEBUG - Extracted 2000 characters from page 4
+2025-08-06 06:07:20,614 - __main__.benchmark - DEBUG - Extracted 1935 characters from page 5
+2025-08-06 06:07:20,619 - __main__.benchmark - DEBUG - Extracted 5650 characters from page 6
+2025-08-06 06:07:20,623 - __main__.benchmark - DEBUG - Extracted 5675 characters from page 7
+2025-08-06 06:07:20,628 - __main__.benchmark - DEBUG - Extracted 5505 characters from page 8
+2025-08-06 06:07:20,632 - __main__.benchmark - DEBUG - Extracted 5692 characters from page 9
+2025-08-06 06:07:20,638 - __main__.benchmark - DEBUG - Extracted 6170 characters from page 10
+2025-08-06 06:07:20,646 - __main__.benchmark - DEBUG - Extracted 9492 characters from page 11
+2025-08-06 06:07:20,646 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 57003 characters
+2025-08-06 06:07:20,646 - __main__.benchmark - INFO -   without_preprocessing: 0.051s, 1109482 chars/sec
+2025-08-06 06:07:20,646 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:20,646 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,646 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:20,646 - __main__.benchmark - INFO - Processing pages 0 to 2
+2025-08-06 06:07:20,659 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:20,671 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:20,677 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:20,677 - __main__.benchmark - INFO - Successfully processed 3 pages, extracted 12535 characters
+2025-08-06 06:07:20,677 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:20,677 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,677 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:20,678 - __main__.benchmark - INFO - Processing pages 9 to 11
+2025-08-06 06:07:20,690 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:20,703 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:20,725 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:20,725 - __main__.benchmark - INFO - Successfully processed 3 pages, extracted 20732 characters
+2025-08-06 06:07:20,726 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:20,726 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,726 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:20,726 - __main__.benchmark - INFO - Processing pages 5 to 7
+2025-08-06 06:07:20,732 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:20,744 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:20,755 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:20,755 - __main__.benchmark - INFO - Successfully processed 3 pages, extracted 12696 characters
+2025-08-06 06:07:20,756 - __main__.benchmark - INFO - Running text extraction quality assessments
+2025-08-06 06:07:20,756 - __main__.benchmark - INFO - Quality assessment for Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,756 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:20,756 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,756 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:20,756 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:20,768 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:20,780 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:20,786 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:20,791 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:20,796 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:20,801 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:20,813 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:20,824 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:20,835 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:20,847 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:20,860 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:20,882 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:20,882 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:20,882 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:20,882 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,883 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:20,883 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:20,889 - __main__.benchmark - DEBUG - Extracted 4955 characters from page 0
+2025-08-06 06:07:20,894 - __main__.benchmark - DEBUG - Extracted 5923 characters from page 1
+2025-08-06 06:07:20,897 - __main__.benchmark - DEBUG - Extracted 2212 characters from page 2
+2025-08-06 06:07:20,898 - __main__.benchmark - DEBUG - Extracted 1771 characters from page 3
+2025-08-06 06:07:20,900 - __main__.benchmark - DEBUG - Extracted 2000 characters from page 4
+2025-08-06 06:07:20,902 - __main__.benchmark - DEBUG - Extracted 1935 characters from page 5
+2025-08-06 06:07:20,907 - __main__.benchmark - DEBUG - Extracted 5650 characters from page 6
+2025-08-06 06:07:20,912 - __main__.benchmark - DEBUG - Extracted 5675 characters from page 7
+2025-08-06 06:07:20,916 - __main__.benchmark - DEBUG - Extracted 5505 characters from page 8
+2025-08-06 06:07:20,920 - __main__.benchmark - DEBUG - Extracted 5692 characters from page 9
+2025-08-06 06:07:20,926 - __main__.benchmark - DEBUG - Extracted 6170 characters from page 10
+2025-08-06 06:07:20,934 - __main__.benchmark - DEBUG - Extracted 9492 characters from page 11
+2025-08-06 06:07:20,934 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 57003 characters
+2025-08-06 06:07:20,952 - __main__.benchmark - INFO - Running error handling and robustness tests
+2025-08-06 06:07:20,952 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:20,952 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:20,952 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:20,952 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:20,965 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:20,977 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:20,983 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:20,988 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:20,993 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:20,998 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:21,009 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:21,021 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:21,031 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:21,043 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:21,055 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:21,077 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:21,078 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:21,078 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:21,078 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:21,079 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:21,079 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:21,091 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:21,103 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:21,109 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:21,114 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:21,119 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:21,124 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:21,136 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:21,147 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:21,157 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:21,169 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:21,181 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:21,203 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:21,204 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:21,204 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:21,205 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:21,205 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:21,205 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:21,205 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:21,205 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:21,206 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:21,206 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:21,206 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:21,206 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:21,206 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:21,206 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:21,206 - __main__.benchmark - INFO - Running memory stress tests
+2025-08-06 06:07:21,206 - __main__.benchmark - INFO - Running repeated processing test (5 iterations)
+2025-08-06 06:07:21,206 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:21,206 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:21,207 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:21,207 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:21,220 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:21,232 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:21,238 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:21,243 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:21,248 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:21,253 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:21,265 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:21,276 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:21,286 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:21,298 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:21,310 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:21,332 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:21,333 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:21,435 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:21,436 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:21,436 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:21,437 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:21,457 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:21,473 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:21,480 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:21,485 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:21,490 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:21,495 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:21,507 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:21,518 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:21,528 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:21,539 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:21,552 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:21,574 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:21,574 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:21,677 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:21,677 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:21,678 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:21,678 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:21,698 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:21,714 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:21,721 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:21,726 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:21,732 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:21,737 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:21,749 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:21,760 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:21,770 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:21,781 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:21,794 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:21,816 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:21,817 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:21,919 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:21,919 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:21,920 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:21,920 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:21,941 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:21,957 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:21,964 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:21,969 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:21,974 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:21,979 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:21,991 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:22,002 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:22,012 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:22,023 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:22,036 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:22,058 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:22,058 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:22,161 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:22,161 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:22,162 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:22,162 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:22,182 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:22,198 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:22,205 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:22,210 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:22,215 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:22,220 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:22,232 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:22,243 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:22,253 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:22,265 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:22,277 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:22,299 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:22,300 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:22,402 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:22,402 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:22,403 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:22,403 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:22,421 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:22,438 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:22,445 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:22,450 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:22,456 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:22,461 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:22,472 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:22,484 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:22,494 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:22,505 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:22,518 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:22,540 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:22,540 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:22,593 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:22,593 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:22,593 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:22,593 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:22,608 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:22,622 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:22,628 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:22,632 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:22,637 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:22,642 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:22,654 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:22,665 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:22,675 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:22,687 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:22,700 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:22,722 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:22,722 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:22,774 - __main__.benchmark - DEBUG - PDF file validation passed: papers/Clinical_Metabolomics_paper.pdf (287804 bytes)
+2025-08-06 06:07:22,774 - __main__.benchmark - INFO - Opening PDF file: papers/Clinical_Metabolomics_paper.pdf
+2025-08-06 06:07:22,775 - __main__.benchmark - INFO - PDF has 12 pages
+2025-08-06 06:07:22,775 - __main__.benchmark - INFO - Processing pages 0 to 11
+2025-08-06 06:07:22,790 - __main__.benchmark - DEBUG - Extracted 4726 characters from page 0
+2025-08-06 06:07:22,803 - __main__.benchmark - DEBUG - Extracted 5696 characters from page 1
+2025-08-06 06:07:22,809 - __main__.benchmark - DEBUG - Extracted 2109 characters from page 2
+2025-08-06 06:07:22,814 - __main__.benchmark - DEBUG - Extracted 1656 characters from page 3
+2025-08-06 06:07:22,819 - __main__.benchmark - DEBUG - Extracted 1861 characters from page 4
+2025-08-06 06:07:22,824 - __main__.benchmark - DEBUG - Extracted 1793 characters from page 5
+2025-08-06 06:07:22,836 - __main__.benchmark - DEBUG - Extracted 5437 characters from page 6
+2025-08-06 06:07:22,847 - __main__.benchmark - DEBUG - Extracted 5462 characters from page 7
+2025-08-06 06:07:22,858 - __main__.benchmark - DEBUG - Extracted 5302 characters from page 8
+2025-08-06 06:07:22,869 - __main__.benchmark - DEBUG - Extracted 5491 characters from page 9
+2025-08-06 06:07:22,882 - __main__.benchmark - DEBUG - Extracted 5965 characters from page 10
+2025-08-06 06:07:22,904 - __main__.benchmark - DEBUG - Extracted 9271 characters from page 11
+2025-08-06 06:07:22,905 - __main__.benchmark - INFO - Successfully processed 12 pages, extracted 54792 characters
+2025-08-06 06:07:22,957 - __main__.benchmark - INFO - Generating summary and recommendations
+2025-08-06 06:07:22,958 - __main__.benchmark - ERROR - Benchmark failed with error: Unknown format code 'f' for object of type 'str'
+2025-08-06 06:07:22,959 - __main__.benchmark - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/benchmark_pdf_processing.py", line 215, in run_comprehensive_benchmark
+    await self._save_results()
+  File "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/benchmark_pdf_processing.py", line 944, in _save_results
+    f.write(self._generate_human_readable_report())
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/benchmark_pdf_processing.py", line 1020, in _generate_human_readable_report
+    report.append(f"Throughput: {result.get('chars_per_second', 'N/A'):.0f} chars/sec")
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Unknown format code 'f' for object of type 'str'
+
