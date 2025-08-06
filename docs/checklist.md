@@ -27,7 +27,7 @@
 ### CMO-LIGHTRAG-001: Environment Setup and Dependency Management
 
 **CMO-LIGHTRAG-001-T01** [SETUP]
-- [ ] Create Python virtual environment for LightRAG integration
+- [x] Create Python virtual environment for LightRAG integration
 
 **CMO-LIGHTRAG-001-T02** [SETUP]
 - [ ] Install core LightRAG dependencies (lightrag-hku, PyMuPDF, python-dotenv)
