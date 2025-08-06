@@ -138,10 +138,10 @@
 - [x] Implement error recovery for failed PDF processing
 
 **CMO-LIGHTRAG-004-T06** [CODE]
-- [ ] Add memory management for large document collections
+- [x] Add memory management for large document collections
 
 **CMO-LIGHTRAG-004-T07** [TEST]
-- [ ] Execute batch processing tests with 10+ PDF files
+- [x] Execute batch processing tests with 10+ PDF files
 
 **CMO-LIGHTRAG-004-T08** [VALIDATE]
 - [ ] Verify dependency on CMO-LIGHTRAG-003 completion
