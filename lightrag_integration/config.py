@@ -49,6 +49,7 @@ class LightRAGConfig:
         graph_storage_dir: Graph storage directory (derived from working_dir / "lightrag")
         max_async: Maximum async operations (from LIGHTRAG_MAX_ASYNC env var, default: 16)
         max_tokens: Maximum token limit (from LIGHTRAG_MAX_TOKENS env var, default: 32768)
+        auto_create_dirs: Whether to automatically create directories in __post_init__ (default: True)
     """
     
     api_key: Optional[str] = field(default_factory=lambda: os.getenv("OPENAI_API_KEY"))
@@ -58,6 +59,7 @@ class LightRAGConfig:
     graph_storage_dir: Optional[Path] = None
     max_async: int = field(default_factory=lambda: int(os.getenv("LIGHTRAG_MAX_ASYNC", "16")))
     max_tokens: int = field(default_factory=lambda: int(os.getenv("LIGHTRAG_MAX_TOKENS", "32768")))
+    auto_create_dirs: bool = True
     
     def __post_init__(self):
         """Post-initialization processing to handle Path objects and derived values."""
@@ -78,6 +80,20 @@ class LightRAGConfig:
             self.model = "gpt-4o-mini"
         if self.embedding_model is None:
             self.embedding_model = "text-embedding-3-small"
+        
+        # Automatically create necessary directories if requested
+        if self.auto_create_dirs:
+            try:
+                # Create working directory
+                self.working_dir.mkdir(parents=True, exist_ok=True)
+                
+                # Create graph storage directory
+                self.graph_storage_dir.mkdir(parents=True, exist_ok=True)
+            except (OSError, PermissionError, ValueError, TypeError) as e:
+                # Handle errors gracefully but don't raise - let validation handle this
+                # This allows the config to be created even if directories can't be created immediately
+                # ValueError/TypeError can occur with invalid path characters
+                pass
     
     def validate(self) -> None:
         """
@@ -198,15 +214,16 @@ class LightRAGConfig:
         """
         try:
             # Determine source and create base configuration
+            # Set auto_create_dirs based on ensure_dirs parameter
             if source is None:
                 # Load from environment variables
-                config = cls.from_environment()
+                config = cls.from_environment(auto_create_dirs=ensure_dirs)
             elif isinstance(source, (str, Path)):
                 # Load from file
-                config = cls.from_file(source)
+                config = cls.from_file(source, auto_create_dirs=ensure_dirs)
             elif isinstance(source, dict):
                 # Load from dictionary
-                config = cls.from_dict(source)
+                config = cls.from_dict(source, auto_create_dirs=ensure_dirs)
             else:
                 raise TypeError(
                     f"Unsupported source type: {type(source)}. "
@@ -264,7 +281,7 @@ class LightRAGConfig:
             ) from e
 
     @classmethod
-    def from_environment(cls) -> 'LightRAGConfig':
+    def from_environment(cls, auto_create_dirs: bool = True) -> 'LightRAGConfig':
         """
         Create a LightRAGConfig instance from environment variables.
         
@@ -272,41 +289,49 @@ class LightRAGConfig:
         environment variables. It's equivalent to calling the default constructor
         but makes the intent explicit.
         
+        Args:
+            auto_create_dirs: Whether to automatically create directories during initialization
+        
         Returns:
             LightRAGConfig: Configuration instance with values from environment
         """
-        return cls()
+        return cls(auto_create_dirs=auto_create_dirs)
     
     @classmethod
-    def from_dict(cls, config_dict: Dict[str, Any]) -> 'LightRAGConfig':
+    def from_dict(cls, config_dict: Dict[str, Any], auto_create_dirs: bool = True) -> 'LightRAGConfig':
         """
         Create a LightRAGConfig instance from a dictionary.
         
         Args:
             config_dict: Dictionary containing configuration values
+            auto_create_dirs: Whether to automatically create directories during initialization
         
         Returns:
             LightRAGConfig: Configuration instance with values from dictionary
         """
         # Handle Path objects in the dictionary
+        config_dict = config_dict.copy()  # Don't modify original
+        
         if 'working_dir' in config_dict:
-            config_dict = config_dict.copy()  # Don't modify original
             config_dict['working_dir'] = Path(config_dict['working_dir'])
         
         if 'graph_storage_dir' in config_dict:
-            if config_dict not in locals():  # Only copy if we haven't already
-                config_dict = config_dict.copy()
             config_dict['graph_storage_dir'] = Path(config_dict['graph_storage_dir'])
+        
+        # Set auto_create_dirs if not already specified in the dictionary
+        if 'auto_create_dirs' not in config_dict:
+            config_dict['auto_create_dirs'] = auto_create_dirs
         
         return cls(**config_dict)
     
     @classmethod
-    def from_file(cls, file_path: Union[str, Path]) -> 'LightRAGConfig':
+    def from_file(cls, file_path: Union[str, Path], auto_create_dirs: bool = True) -> 'LightRAGConfig':
         """
         Create a LightRAGConfig instance from a JSON configuration file.
         
         Args:
             file_path: Path to the JSON configuration file
+            auto_create_dirs: Whether to automatically create directories during initialization
         
         Returns:
             LightRAGConfig: Configuration instance with values from file
@@ -327,7 +352,7 @@ class LightRAGConfig:
         except json.JSONDecodeError as e:
             raise LightRAGConfigError(f"Invalid JSON in configuration file {file_path}: {e}")
         
-        return cls.from_dict(config_dict)
+        return cls.from_dict(config_dict, auto_create_dirs=auto_create_dirs)
     
     def to_dict(self) -> Dict[str, Any]:
         """
@@ -343,7 +368,8 @@ class LightRAGConfig:
             'working_dir': str(self.working_dir),
             'graph_storage_dir': str(self.graph_storage_dir),
             'max_async': self.max_async,
-            'max_tokens': self.max_tokens
+            'max_tokens': self.max_tokens,
+            'auto_create_dirs': self.auto_create_dirs
         }
     
     def copy(self) -> 'LightRAGConfig':
@@ -371,7 +397,8 @@ class LightRAGConfig:
             f"working_dir={self.working_dir}, "
             f"graph_storage_dir={self.graph_storage_dir}, "
             f"max_async={self.max_async}, "
-            f"max_tokens={self.max_tokens})"
+            f"max_tokens={self.max_tokens}, "
+            f"auto_create_dirs={self.auto_create_dirs})"
         )
     
     def __repr__(self) -> str:
@@ -390,5 +417,6 @@ class LightRAGConfig:
             f"working_dir=Path('{self.working_dir}'), "
             f"graph_storage_dir=Path('{self.graph_storage_dir}'), "
             f"max_async={self.max_async}, "
-            f"max_tokens={self.max_tokens})"
+            f"max_tokens={self.max_tokens}, "
+            f"auto_create_dirs={self.auto_create_dirs})"
         )

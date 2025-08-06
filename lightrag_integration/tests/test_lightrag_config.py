@@ -395,7 +395,8 @@ class TestLightRAGConfigDirectories:
             nested_path = Path(temp_dir) / "level1" / "level2" / "level3" / "working"
             config = LightRAGConfig(
                 api_key="test-key",
-                working_dir=nested_path
+                working_dir=nested_path,
+                auto_create_dirs=False
             )
             
             # Verify directories don't exist initially
@@ -420,7 +421,8 @@ class TestLightRAGConfigDirectories:
             config = LightRAGConfig(
                 api_key="test-key",
                 working_dir=working_dir,
-                graph_storage_dir=graph_dir
+                graph_storage_dir=graph_dir,
+                auto_create_dirs=False
             )
             
             # Verify directories don't exist initially
@@ -658,7 +660,8 @@ class TestLightRAGConfigDirectories:
             non_existent_dir = Path(temp_dir) / "will_be_created_and_removed"
             config = LightRAGConfig(
                 api_key="test-key",
-                working_dir=non_existent_dir
+                working_dir=non_existent_dir,
+                auto_create_dirs=False
             )
             
             # This should fail because validation creates the dir, removes it, then checks if it's a dir
@@ -840,6 +843,144 @@ class TestLightRAGConfigDirectories:
             assert mode & stat.S_IRUSR  # Owner read
             assert mode & stat.S_IWUSR  # Owner write
             assert mode & stat.S_IXUSR  # Owner execute (needed for directory access)
+    
+    def test_post_init_creates_directories_automatically(self):
+        """Test that __post_init__ automatically creates directories when LightRAGConfig is instantiated."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Define custom directory paths that don't exist yet
+            working_dir = Path(temp_dir) / "auto_created_working"
+            graph_storage_dir = Path(temp_dir) / "auto_created_graph"
+            
+            # Verify directories don't exist before instantiation
+            assert not working_dir.exists()
+            assert not graph_storage_dir.exists()
+            
+            # Simply instantiate the config - directories should be created automatically
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir,
+                graph_storage_dir=graph_storage_dir
+            )
+            
+            # Verify both directories were automatically created during instantiation
+            assert working_dir.exists()
+            assert working_dir.is_dir()
+            assert graph_storage_dir.exists()
+            assert graph_storage_dir.is_dir()
+            
+            # Verify the config has the correct paths set
+            assert config.working_dir == working_dir
+            assert config.graph_storage_dir == graph_storage_dir
+    
+    def test_post_init_creates_default_graph_storage_dir_automatically(self):
+        """Test that __post_init__ automatically creates default graph_storage_dir when only working_dir is specified."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Define custom working directory that doesn't exist yet
+            working_dir = Path(temp_dir) / "auto_working"
+            expected_graph_dir = working_dir / "lightrag"
+            
+            # Verify directories don't exist before instantiation
+            assert not working_dir.exists()
+            assert not expected_graph_dir.exists()
+            
+            # Instantiate config with only working_dir - graph_storage_dir should default and be created
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir
+            )
+            
+            # Verify both working_dir and default graph_storage_dir were created automatically
+            assert working_dir.exists()
+            assert working_dir.is_dir()
+            assert expected_graph_dir.exists()
+            assert expected_graph_dir.is_dir()
+            
+            # Verify the config has the correct paths set
+            assert config.working_dir == working_dir
+            assert config.graph_storage_dir == expected_graph_dir
+    
+    def test_post_init_creates_nested_directories_automatically(self):
+        """Test that __post_init__ creates deeply nested directory structures automatically."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Define deeply nested paths that don't exist
+            nested_working = Path(temp_dir) / "level1" / "level2" / "level3" / "working"
+            nested_graph = Path(temp_dir) / "graph" / "storage" / "deep" / "location"
+            
+            # Verify no part of the nested structure exists
+            assert not nested_working.exists()
+            assert not nested_working.parent.exists()
+            assert not nested_graph.exists()
+            assert not nested_graph.parent.exists()
+            
+            # Instantiate config - all parent directories should be created automatically
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=nested_working,
+                graph_storage_dir=nested_graph
+            )
+            
+            # Verify the entire nested structure was created
+            assert nested_working.exists()
+            assert nested_working.is_dir()
+            assert nested_working.parent.exists()  # level3
+            assert nested_working.parent.parent.exists()  # level2
+            assert nested_working.parent.parent.parent.exists()  # level1
+            
+            assert nested_graph.exists()
+            assert nested_graph.is_dir()
+            assert nested_graph.parent.exists()  # location
+            assert nested_graph.parent.parent.exists()  # deep
+            assert nested_graph.parent.parent.parent.exists()  # storage
+    
+    def test_post_init_handles_existing_directories_gracefully(self):
+        """Test that __post_init__ handles existing directories without errors."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Pre-create the directories
+            working_dir = Path(temp_dir) / "existing_working"
+            graph_storage_dir = Path(temp_dir) / "existing_graph"
+            working_dir.mkdir(parents=True)
+            graph_storage_dir.mkdir(parents=True)
+            
+            # Add some existing content
+            existing_file = working_dir / "existing_file.txt"
+            existing_file.write_text("existing content")
+            
+            # Instantiate config with existing directories - should not cause errors
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir,
+                graph_storage_dir=graph_storage_dir
+            )
+            
+            # Verify directories still exist and content is preserved
+            assert working_dir.exists()
+            assert working_dir.is_dir()
+            assert graph_storage_dir.exists()
+            assert graph_storage_dir.is_dir()
+            assert existing_file.exists()
+            assert existing_file.read_text() == "existing content"
+    
+    def test_post_init_gracefully_handles_directory_creation_errors(self):
+        """Test that __post_init__ handles directory creation errors gracefully without raising."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create a file where we want to create a directory (this will cause mkdir to fail)
+            blocking_file = Path(temp_dir) / "blocking_file"
+            blocking_file.touch()
+            
+            # Instantiate config with a path that conflicts with existing file
+            # This should NOT raise an exception during instantiation
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=blocking_file  # This will fail to create as directory but shouldn't raise
+            )
+            
+            # Config should be created successfully even though directory creation failed
+            assert config.api_key == "test-key"
+            assert config.working_dir == blocking_file
+            
+            # The blocking file should still exist (directory creation failed but was handled gracefully)
+            assert blocking_file.exists()
+            assert blocking_file.is_file()  # Still a file, not a directory
 
 
 class TestLightRAGConfigFactory:

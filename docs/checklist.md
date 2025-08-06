@@ -64,16 +64,16 @@
 - [x] Implement LightRAGConfig dataclass with environment variable loading
 
 **CMO-LIGHTRAG-002-T04-TEST** [TEST]
-- [ ] Write tests for configuration validation and error handling
+- [x] Write tests for configuration validation and error handling
 
 **CMO-LIGHTRAG-002-T05** [CODE]
-- [ ] Implement get_config() factory function with validation
+- [x] Implement get_config() factory function with validation
 
 **CMO-LIGHTRAG-002-T06-TEST** [TEST]
-- [ ] Write tests for directory creation and path validation
+- [x] Write tests for directory creation and path validation
 
 **CMO-LIGHTRAG-002-T07** [CODE]
-- [ ] Implement automatic directory creation in __post_init__
+- [x] Implement automatic directory creation in __post_init__
 
 **CMO-LIGHTRAG-002-T08** [CODE]
 - [ ] Set up logging configuration with appropriate levels
