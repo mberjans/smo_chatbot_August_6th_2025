@@ -2,8 +2,9 @@
 BiomedicalPDFProcessor for Clinical Metabolomics Oracle - LightRAG integration.
 
 This module provides specialized PDF processing capabilities for biomedical documents
-using PyMuPDF (fitz). It includes text extraction, metadata retrieval, and 
-preprocessing specifically tailored for clinical metabolomics and biomedical literature.
+using PyMuPDF (fitz). It includes text extraction, metadata retrieval, preprocessing
+specifically tailored for clinical metabolomics and biomedical literature, and 
+comprehensive error recovery mechanisms.
 
 Classes:
     - BiomedicalPDFProcessorError: Base custom exception for PDF processing errors
@@ -12,24 +13,33 @@ Classes:
     - PDFMemoryError: Exception for memory-related processing issues
     - PDFFileAccessError: Exception for file access problems (locks, permissions)
     - PDFContentError: Exception for content extraction and encoding issues
+    - ErrorRecoveryConfig: Configuration for error recovery and retry mechanisms
     - BiomedicalPDFProcessor: Main class for processing biomedical PDF documents
 
 The processor handles:
     - Text extraction from PDF documents using PyMuPDF
     - Metadata extraction (creation date, modification date, title, author, etc.)
     - Text preprocessing for biomedical content
-    - Comprehensive error handling for various edge cases:
+    - Comprehensive error handling and recovery for various edge cases:
       * MIME type validation and PDF header verification
       * Memory pressure monitoring during processing
-      * Processing timeout protection
-      * Enhanced file locking and permission detection
+      * Processing timeout protection with dynamic timeout adjustment
+      * Enhanced file locking and permission detection with retry logic
       * Zero-byte file handling
       * Malformed PDF structure detection
       * Character encoding issue resolution
       * Large text block protection
+    - Advanced error recovery mechanisms:
+      * Automatic retry with exponential backoff
+      * Error classification (recoverable vs non-recoverable)
+      * Memory recovery through garbage collection
+      * File lock recovery with progressive delays
+      * Timeout recovery with dynamic timeout increase
+      * Comprehensive retry statistics and logging
     - Page-by-page processing with optional page range specification
     - Cleaning and normalization of extracted text
     - Processing statistics and monitoring capabilities
+    - Batch processing with graceful degradation
 """
 
 import re
@@ -40,11 +50,18 @@ import psutil
 import signal
 import time
 import threading
+import gc
+import random
 from pathlib import Path
-from typing import Optional, Dict, Any, List, Union, Tuple
+from typing import Optional, Dict, Any, List, Union, Tuple, TYPE_CHECKING
 from datetime import datetime
 from contextlib import contextmanager
 import fitz  # PyMuPDF
+
+# Use TYPE_CHECKING to avoid circular imports
+if TYPE_CHECKING:
+    from .progress_config import ProgressTrackingConfig
+    from .progress_tracker import PDFProcessingProgressTracker
 
 
 class BiomedicalPDFProcessorError(Exception):
@@ -77,17 +94,78 @@ class PDFContentError(BiomedicalPDFProcessorError):
     pass
 
 
+class ErrorRecoveryConfig:
+    """
+    Configuration for error recovery and retry mechanisms.
+    
+    This class defines parameters for retry strategies, error classification,
+    and recovery actions for different types of failures.
+    """
+    
+    def __init__(self,
+                 max_retries: int = 3,
+                 base_delay: float = 1.0,
+                 max_delay: float = 60.0,
+                 exponential_base: float = 2.0,
+                 jitter: bool = True,
+                 memory_recovery_enabled: bool = True,
+                 file_lock_retry_enabled: bool = True,
+                 timeout_retry_enabled: bool = True):
+        """
+        Initialize error recovery configuration.
+        
+        Args:
+            max_retries: Maximum number of retry attempts per file (default: 3)
+            base_delay: Base delay between retries in seconds (default: 1.0)
+            max_delay: Maximum delay between retries in seconds (default: 60.0)
+            exponential_base: Base for exponential backoff calculation (default: 2.0)
+            jitter: Whether to add random jitter to retry delays (default: True)
+            memory_recovery_enabled: Whether to attempt memory recovery (default: True)
+            file_lock_retry_enabled: Whether to retry on file lock errors (default: True)
+            timeout_retry_enabled: Whether to retry on timeout errors (default: True)
+        """
+        self.max_retries = max_retries
+        self.base_delay = base_delay
+        self.max_delay = max_delay
+        self.exponential_base = exponential_base
+        self.jitter = jitter
+        self.memory_recovery_enabled = memory_recovery_enabled
+        self.file_lock_retry_enabled = file_lock_retry_enabled
+        self.timeout_retry_enabled = timeout_retry_enabled
+    
+    def calculate_delay(self, attempt: int) -> float:
+        """
+        Calculate delay for retry attempt using exponential backoff.
+        
+        Args:
+            attempt: Current attempt number (0-based)
+            
+        Returns:
+            float: Delay in seconds before next retry
+        """
+        # Calculate exponential backoff
+        delay = min(self.base_delay * (self.exponential_base ** attempt), self.max_delay)
+        
+        # Add jitter if enabled (up to 25% of delay)
+        if self.jitter:
+            jitter_amount = delay * 0.25 * random.random()
+            delay += jitter_amount
+        
+        return delay
+
+
 class BiomedicalPDFProcessor:
     """
-    Specialized PDF processor for biomedical documents.
+    Specialized PDF processor for biomedical documents with comprehensive error recovery.
     
     This class provides comprehensive PDF processing capabilities specifically
     designed for biomedical and clinical metabolomics literature. It uses
     PyMuPDF for robust PDF handling and includes specialized text preprocessing
-    for scientific content.
+    for scientific content, along with advanced error recovery mechanisms.
     
     Attributes:
         logger: Logger instance for tracking processing activities
+        error_recovery: Configuration for error recovery and retry mechanisms
         
     Example:
         processor = BiomedicalPDFProcessor()
@@ -99,35 +177,235 @@ class BiomedicalPDFProcessor:
                  logger: Optional[logging.Logger] = None,
                  processing_timeout: int = 300,  # 5 minutes default
                  memory_limit_mb: int = 1024,    # 1GB default
-                 max_page_text_size: int = 1000000):  # 1MB per page default
+                 max_page_text_size: int = 1000000,  # 1MB per page default
+                 error_recovery_config: Optional[ErrorRecoveryConfig] = None):
         """
-        Initialize the BiomedicalPDFProcessor.
+        Initialize the BiomedicalPDFProcessor with error recovery capabilities.
         
         Args:
             logger: Optional logger instance. If None, creates a default logger.
             processing_timeout: Maximum processing time in seconds (default: 300)
             memory_limit_mb: Maximum memory usage in MB (default: 1024)
             max_page_text_size: Maximum text size per page in characters (default: 1000000)
+            error_recovery_config: Optional error recovery configuration (creates default if None)
         """
         self.logger = logger or logging.getLogger(__name__)
         self.processing_timeout = processing_timeout
         self.memory_limit_mb = memory_limit_mb
         self.max_page_text_size = max_page_text_size
+        self.error_recovery = error_recovery_config or ErrorRecoveryConfig()
         self._processing_start_time = None
         self._memory_monitor_active = False
+        
+        # Error recovery tracking
+        self._retry_stats: Dict[str, Dict[str, Any]] = {}
+        self._recovery_actions_attempted: Dict[str, int] = {}
     
+    def _classify_error(self, error: Exception) -> Tuple[bool, str, str]:
+        """
+        Classify an error to determine if it's recoverable and what recovery strategy to use.
+        
+        Args:
+            error: Exception that occurred during processing
+            
+        Returns:
+            Tuple[bool, str, str]: (is_recoverable, error_category, recovery_strategy)
+        """
+        error_type = type(error).__name__
+        error_msg = str(error).lower()
+        
+        # Memory-related errors (recoverable with memory cleanup)
+        if isinstance(error, (PDFMemoryError, MemoryError)):
+            return True, "memory", "memory_cleanup"
+        
+        if "memory" in error_msg or "allocation" in error_msg:
+            return True, "memory", "memory_cleanup"
+        
+        # Timeout errors (recoverable with timeout increase)
+        if isinstance(error, PDFProcessingTimeoutError):
+            return True, "timeout", "timeout_retry"
+        
+        if "timeout" in error_msg or "time" in error_msg:
+            return True, "timeout", "timeout_retry"
+        
+        # File access errors (recoverable with retry)
+        if isinstance(error, PDFFileAccessError):
+            if "locked" in error_msg or "in use" in error_msg:
+                return True, "file_lock", "file_lock_retry"
+            elif "permission" in error_msg:
+                return False, "permission", "skip"  # Usually not recoverable
+            else:
+                return True, "file_access", "simple_retry"
+        
+        # Validation errors - some recoverable, some not
+        if isinstance(error, PDFValidationError):
+            if "corrupted" in error_msg or "invalid" in error_msg:
+                return False, "corruption", "skip"  # Not recoverable
+            else:
+                return True, "validation", "simple_retry"
+        
+        # Content errors (usually not recoverable)
+        if isinstance(error, PDFContentError):
+            return False, "content", "skip"
+        
+        # Network/IO related errors (recoverable)
+        if isinstance(error, (IOError, OSError)):
+            if "no space" in error_msg:
+                return False, "disk_space", "skip"  # Usually not recoverable
+            else:
+                return True, "io_error", "simple_retry"
+        
+        # PyMuPDF specific errors
+        if "fitz" in error_type.lower() or "mupdf" in error_msg:
+            if "timeout" in error_msg:
+                return True, "fitz_timeout", "timeout_retry"
+            elif "memory" in error_msg:
+                return True, "fitz_memory", "memory_cleanup"
+            else:
+                return True, "fitz_error", "simple_retry"
+        
+        # Unknown errors - try once with simple retry
+        return True, "unknown", "simple_retry"
+    
+    def _attempt_error_recovery(self, error_category: str, recovery_strategy: str, 
+                               file_path: Path, attempt: int) -> bool:
+        """
+        Attempt to recover from an error using the specified strategy.
+        
+        Args:
+            error_category: Category of the error
+            recovery_strategy: Strategy to use for recovery
+            file_path: Path to the file being processed
+            attempt: Current attempt number
+            
+        Returns:
+            bool: True if recovery action was attempted, False if not applicable
+        """
+        self.logger.info(f"Attempting recovery for {error_category} error using {recovery_strategy} strategy (attempt {attempt + 1})")
+        
+        # Track recovery attempts
+        recovery_key = f"{error_category}_{recovery_strategy}"
+        self._recovery_actions_attempted[recovery_key] = self._recovery_actions_attempted.get(recovery_key, 0) + 1
+        
+        if recovery_strategy == "memory_cleanup":
+            return self._attempt_memory_recovery()
+        elif recovery_strategy == "file_lock_retry":
+            return self._attempt_file_lock_recovery(file_path, attempt)
+        elif recovery_strategy == "timeout_retry":
+            return self._attempt_timeout_recovery(attempt)
+        elif recovery_strategy == "simple_retry":
+            return self._attempt_simple_recovery(attempt)
+        elif recovery_strategy == "skip":
+            self.logger.warning(f"Skipping file due to non-recoverable {error_category} error: {file_path}")
+            return False
+        else:
+            self.logger.warning(f"Unknown recovery strategy: {recovery_strategy}")
+            return False
+    
+    def _attempt_memory_recovery(self) -> bool:
+        """
+        Attempt to recover from memory-related errors.
+        
+        Returns:
+            bool: True if recovery action was attempted
+        """
+        if not self.error_recovery.memory_recovery_enabled:
+            return False
+        
+        self.logger.info("Attempting memory recovery: running garbage collection and clearing caches")
+        
+        try:
+            # Force garbage collection
+            gc.collect()
+            
+            # Wait a brief moment for memory to be freed
+            time.sleep(0.5)
+            
+            # Check current memory usage
+            current_memory = psutil.Process().memory_info().rss / 1024 / 1024
+            self.logger.info(f"Memory recovery completed. Current memory usage: {current_memory:.2f} MB")
+            
+            return True
+            
+        except Exception as e:
+            self.logger.warning(f"Memory recovery failed: {e}")
+            return False
+    
+    def _attempt_file_lock_recovery(self, file_path: Path, attempt: int) -> bool:
+        """
+        Attempt to recover from file lock errors.
+        
+        Args:
+            file_path: Path to the locked file
+            attempt: Current attempt number
+            
+        Returns:
+            bool: True if recovery action was attempted
+        """
+        if not self.error_recovery.file_lock_retry_enabled:
+            return False
+        
+        # Calculate delay with longer waits for file locks
+        base_delay = max(2.0, self.error_recovery.base_delay)
+        delay = min(base_delay * (2 ** attempt), 30.0)  # Max 30s for file locks
+        
+        self.logger.info(f"File appears to be locked: {file_path}. Waiting {delay:.1f}s before retry")
+        time.sleep(delay)
+        
+        return True
+    
+    def _attempt_timeout_recovery(self, attempt: int) -> bool:
+        """
+        Attempt to recover from timeout errors.
+        
+        Args:
+            attempt: Current attempt number
+            
+        Returns:
+            bool: True if recovery action was attempted
+        """
+        if not self.error_recovery.timeout_retry_enabled:
+            return False
+        
+        # For timeout recovery, we'll increase the timeout for the next attempt
+        timeout_multiplier = 1.5 ** (attempt + 1)
+        new_timeout = min(self.processing_timeout * timeout_multiplier, self.processing_timeout * 3)
+        
+        self.logger.info(f"Timeout occurred. Increasing timeout to {new_timeout:.1f}s for retry")
+        
+        # Temporarily increase timeout (will be restored after processing)
+        self._original_timeout = getattr(self, '_original_timeout', self.processing_timeout)
+        self.processing_timeout = int(new_timeout)
+        
+        return True
+    
+    def _attempt_simple_recovery(self, attempt: int) -> bool:
+        """
+        Attempt simple recovery with exponential backoff delay.
+        
+        Args:
+            attempt: Current attempt number
+            
+        Returns:
+            bool: True if recovery action was attempted
+        """
+        delay = self.error_recovery.calculate_delay(attempt)
+        self.logger.info(f"Simple recovery: waiting {delay:.1f}s before retry")
+        time.sleep(delay)
+        return True
+
     def extract_text_from_pdf(self, 
                              pdf_path: Union[str, Path],
                              start_page: Optional[int] = None,
                              end_page: Optional[int] = None,
                              preprocess_text: bool = True) -> Dict[str, Any]:
         """
-        Extract text and metadata from a biomedical PDF document.
+        Extract text and metadata from a biomedical PDF document with comprehensive error recovery.
         
-        This method processes the entire PDF or a specified page range,
-        extracting both text content and document metadata. The extracted
-        text can be optionally preprocessed to improve quality for
-        downstream LightRAG processing.
+        This method now includes comprehensive error recovery mechanisms with
+        retry logic, error classification, and recovery strategies. It processes 
+        the entire PDF or a specified page range, extracting both text content 
+        and document metadata.
         
         Args:
             pdf_path: Path to the PDF file (string or Path object)
@@ -138,26 +416,136 @@ class BiomedicalPDFProcessor:
         Returns:
             Dict[str, Any]: Dictionary containing:
                 - 'text': Extracted text content (str)
-                - 'metadata': PDF metadata including:
-                  - 'filename': Original filename
-                  - 'file_path': Full file path
-                  - 'pages': Total number of pages
-                  - 'pages_processed': Number of pages actually processed
-                  - 'creation_date': PDF creation date (if available)
-                  - 'modification_date': PDF modification date (if available)
-                  - 'title': Document title (if available)
-                  - 'author': Document author (if available)
-                  - 'subject': Document subject (if available)
-                  - 'creator': PDF creator application (if available)
-                  - 'producer': PDF producer (if available)
-                  - 'file_size_bytes': File size in bytes
+                - 'metadata': PDF metadata including retry information
                 - 'page_texts': List of text from each processed page (List[str])
-                - 'processing_info': Dictionary with processing statistics
+                - 'processing_info': Dictionary with processing statistics including retry info
                 
         Raises:
-            BiomedicalPDFProcessorError: If PDF cannot be processed
+            BiomedicalPDFProcessorError: If PDF cannot be processed after all retry attempts
             FileNotFoundError: If PDF file doesn't exist
             PermissionError: If file cannot be accessed
+        """
+        return self._extract_text_with_retry(pdf_path, start_page, end_page, preprocess_text)
+    
+    def _extract_text_with_retry(self, pdf_path: Union[str, Path], 
+                                start_page: Optional[int] = None,
+                                end_page: Optional[int] = None,
+                                preprocess_text: bool = True) -> Dict[str, Any]:
+        """
+        Extract text from PDF with retry mechanisms and error recovery.
+        
+        Args:
+            pdf_path: Path to the PDF file
+            start_page: Starting page number (0-indexed)
+            end_page: Ending page number (0-indexed, exclusive)
+            preprocess_text: Whether to apply biomedical text preprocessing
+            
+        Returns:
+            Dict[str, Any]: Extraction result with text, metadata, and processing info
+            
+        Raises:
+            BiomedicalPDFProcessorError: If all retry attempts fail
+        """
+        pdf_path = Path(pdf_path)
+        last_error = None
+        retry_info = {
+            'total_attempts': 0,
+            'recoverable_attempts': 0,
+            'recovery_actions': [],
+            'error_history': []
+        }
+        
+        # Store original timeout for restoration
+        original_timeout = self.processing_timeout
+        
+        try:
+            for attempt in range(self.error_recovery.max_retries + 1):  # +1 for initial attempt
+                retry_info['total_attempts'] = attempt + 1
+                
+                try:
+                    # Log retry attempt
+                    if attempt > 0:
+                        self.logger.info(f"Retry attempt {attempt} for {pdf_path.name}")
+                    
+                    # Attempt extraction using the original method logic
+                    result = self._extract_text_internal(pdf_path, start_page, end_page, preprocess_text)
+                    
+                    # Add retry information to result
+                    result['processing_info']['retry_info'] = retry_info
+                    
+                    # Success - restore timeout and return
+                    self.processing_timeout = original_timeout
+                    return result
+                    
+                except Exception as e:
+                    last_error = e
+                    error_type = type(e).__name__
+                    
+                    # Record error in retry info
+                    retry_info['error_history'].append({
+                        'attempt': attempt + 1,
+                        'error_type': error_type,
+                        'error_message': str(e)[:200]  # Truncate long messages
+                    })
+                    
+                    # Classify error and determine recovery strategy
+                    is_recoverable, error_category, recovery_strategy = self._classify_error(e)
+                    
+                    # Log error details
+                    self.logger.warning(
+                        f"Attempt {attempt + 1} failed for {pdf_path.name}: {error_type} - {str(e)[:200]}{'...' if len(str(e)) > 200 else ''}"
+                    )
+                    
+                    # If not recoverable or out of retries, break
+                    if not is_recoverable or attempt >= self.error_recovery.max_retries:
+                        if not is_recoverable:
+                            self.logger.error(f"Non-recoverable error for {pdf_path.name}: {error_category}")
+                        break
+                    
+                    # Attempt recovery
+                    retry_info['recoverable_attempts'] += 1
+                    recovery_attempted = self._attempt_error_recovery(error_category, recovery_strategy, pdf_path, attempt)
+                    
+                    if recovery_attempted:
+                        retry_info['recovery_actions'].append({
+                            'attempt': attempt + 1,
+                            'strategy': recovery_strategy,
+                            'category': error_category
+                        })
+                    
+                    # Continue to next attempt
+                    continue
+            
+            # All retry attempts failed
+            self.logger.error(f"All retry attempts failed for {pdf_path.name} after {retry_info['total_attempts']} attempts")
+            
+            # Record retry statistics
+            file_key = str(pdf_path)
+            self._retry_stats[file_key] = retry_info
+            
+            raise last_error
+            
+        finally:
+            # Always restore original timeout
+            self.processing_timeout = original_timeout
+    
+    def _extract_text_internal(self, 
+                              pdf_path: Union[str, Path],
+                              start_page: Optional[int] = None,
+                              end_page: Optional[int] = None,
+                              preprocess_text: bool = True) -> Dict[str, Any]:
+        """
+        Internal method that contains the original PDF extraction logic.
+        This is separated to allow the retry mechanism to call it multiple times.
+        
+        Args:
+            pdf_path: Path to the PDF file
+            start_page: Starting page number (0-indexed)
+            end_page: Ending page number (0-indexed, exclusive)
+            preprocess_text: Whether to apply biomedical text preprocessing
+            
+        Returns:
+            Dict[str, Any]: Extraction result with text, metadata, and processing info
         """
         pdf_path = Path(pdf_path)
         
@@ -1040,16 +1428,21 @@ class BiomedicalPDFProcessor:
                 raise PDFProcessingTimeoutError(f"Timeout getting page count: {e}")
             raise BiomedicalPDFProcessorError(f"Failed to get page count: {e}")
     
-    async def process_all_pdfs(self, papers_dir: Union[str, Path] = "papers/") -> List[Tuple[str, Dict[str, Any]]]:
+    async def process_all_pdfs(self, 
+                              papers_dir: Union[str, Path] = "papers/",
+                              progress_config: Optional['ProgressTrackingConfig'] = None,
+                              progress_tracker: Optional['PDFProcessingProgressTracker'] = None) -> List[Tuple[str, Dict[str, Any]]]:
         """
-        Asynchronously process all PDF files in the specified directory.
+        Asynchronously process all PDF files in the specified directory with comprehensive progress tracking.
         
         This method scans the papers directory for PDF files and processes them
-        using the extract_text_from_pdf method. It includes progress tracking,
-        error recovery, and detailed logging for batch processing operations.
+        using the extract_text_from_pdf method. It includes advanced progress tracking,
+        performance monitoring, detailed logging, and error recovery capabilities.
         
         Args:
             papers_dir: Directory containing PDF files (default: "papers/")
+            progress_config: Optional progress tracking configuration
+            progress_tracker: Optional existing progress tracker instance
             
         Returns:
             List[Tuple[str, Dict[str, Any]]]: List of tuples containing:
@@ -1059,7 +1452,7 @@ class BiomedicalPDFProcessor:
         Note:
             This method continues processing even if individual PDFs fail,
             logging errors and moving to the next file. Failed PDFs are
-            skipped but logged for review.
+            tracked and logged for comprehensive reporting.
         """
         papers_path = Path(papers_dir)
         documents = []
@@ -1074,56 +1467,175 @@ class BiomedicalPDFProcessor:
             self.logger.info(f"No PDF files found in directory: {papers_path}")
             return documents
         
+        # Initialize progress tracking if not provided
+        if progress_tracker is None:
+            # Import here to avoid circular imports
+            from .progress_config import ProgressTrackingConfig
+            from .progress_tracker import PDFProcessingProgressTracker
+            
+            if progress_config is None:
+                progress_config = ProgressTrackingConfig()
+            
+            progress_tracker = PDFProcessingProgressTracker(
+                config=progress_config,
+                logger=self.logger
+            )
+        
+        # Start batch processing with progress tracking
+        progress_tracker.start_batch_processing(len(pdf_files), pdf_files)
+        
         self.logger.info(f"Found {len(pdf_files)} PDF files to process in {papers_path}")
         
-        # Process each PDF file
-        processed_count = 0
-        failed_count = 0
-        
-        for pdf_file in pdf_files:
+        # Process each PDF file with progress tracking
+        for file_index, pdf_file in enumerate(pdf_files):
             try:
-                self.logger.info(f"Processing PDF {processed_count + 1}/{len(pdf_files)}: {pdf_file.name}")
-                
-                # Extract text and metadata with enhanced error handling
-                result = self.extract_text_from_pdf(pdf_file)
-                
-                # Combine metadata and processing info for return
-                combined_metadata = result['metadata'].copy()
-                combined_metadata.update(result['processing_info'])
-                combined_metadata['page_texts_count'] = len(result['page_texts'])
-                
-                # Add to results
-                documents.append((result['text'], combined_metadata))
-                processed_count += 1
-                
-                self.logger.info(
-                    f"Successfully processed {pdf_file.name}: "
-                    f"{combined_metadata['total_characters']} characters, "
-                    f"{combined_metadata['pages_processed']} pages"
-                )
-                
-                # Add small delay to prevent overwhelming the system
-                await asyncio.sleep(0.1)
-                
+                with progress_tracker.track_file_processing(pdf_file, file_index) as file_info:
+                    # Extract text and metadata with enhanced error handling
+                    result = self.extract_text_from_pdf(pdf_file)
+                    
+                    # Combine metadata and processing info for return
+                    combined_metadata = result['metadata'].copy()
+                    combined_metadata.update(result['processing_info'])
+                    combined_metadata['page_texts_count'] = len(result['page_texts'])
+                    
+                    # Record successful processing in tracker
+                    progress_tracker.record_file_success(
+                        pdf_file,
+                        combined_metadata['total_characters'],
+                        combined_metadata['pages_processed']
+                    )
+                    
+                    # Add to results
+                    documents.append((result['text'], combined_metadata))
+                    
+                    # Add small delay to prevent overwhelming the system
+                    await asyncio.sleep(0.1)
+                    
             except (PDFValidationError, PDFProcessingTimeoutError, PDFMemoryError, 
                    PDFFileAccessError, PDFContentError) as e:
-                failed_count += 1
-                self.logger.error(f"PDF processing error for {pdf_file.name}: {e}")
+                # Enhanced error logging with retry information
+                error_info = self._get_enhanced_error_info(pdf_file, e)
+                self.logger.error(f"Failed to process {pdf_file.name} after all retry attempts: {error_info}")
+                
+                # Progress tracker already handles the error logging in the context manager
                 # Continue processing other files
                 continue
             except Exception as e:
-                failed_count += 1
-                self.logger.error(f"Unexpected error processing {pdf_file.name}: {e}")
+                # Enhanced error logging for unexpected errors
+                error_info = self._get_enhanced_error_info(pdf_file, e)
+                self.logger.error(f"Unexpected error processing {pdf_file.name}: {error_info}")
+                
+                # Progress tracker already handles the error logging in the context manager
                 # Continue processing other files
                 continue
         
-        # Log final summary
+        # Complete batch processing and get final metrics
+        final_metrics = progress_tracker.finish_batch_processing()
+        
+        # Log final summary with enhanced metrics
         self.logger.info(
-            f"Batch processing completed: {processed_count} successful, "
-            f"{failed_count} failed out of {len(pdf_files)} total files"
+            f"Batch processing completed: {final_metrics.completed_files} successful, "
+            f"{final_metrics.failed_files} failed, {final_metrics.skipped_files} skipped "
+            f"out of {final_metrics.total_files} total files"
         )
         
+        # Log additional performance metrics if available
+        if final_metrics.total_characters > 0:
+            self.logger.info(
+                f"Performance summary: {final_metrics.total_characters:,} total characters, "
+                f"{final_metrics.total_pages:,} total pages, "
+                f"{final_metrics.processing_time:.2f}s total time, "
+                f"{final_metrics.average_processing_time:.2f}s average per file"
+            )
+        
+        # Log error recovery statistics if there were any retries
+        if self._retry_stats or self._recovery_actions_attempted:
+            self._log_error_recovery_summary()
+        
         return documents
+    
+    def _log_error_recovery_summary(self) -> None:
+        """Log a summary of error recovery actions taken during batch processing."""
+        if not (self._retry_stats or self._recovery_actions_attempted):
+            return
+        
+        total_files_with_retries = len(self._retry_stats)
+        total_recovery_actions = sum(self._recovery_actions_attempted.values())
+        
+        self.logger.info(f"Error recovery summary: {total_files_with_retries} files required retries, {total_recovery_actions} total recovery actions")
+        
+        # Log recovery action breakdown
+        if self._recovery_actions_attempted:
+            recovery_breakdown = ", ".join([f"{action}: {count}" for action, count in self._recovery_actions_attempted.items()])
+            self.logger.info(f"Recovery actions breakdown: {recovery_breakdown}")
+        
+        # Log most problematic files
+        if self._retry_stats:
+            files_by_attempts = sorted(self._retry_stats.items(), key=lambda x: x[1]['total_attempts'], reverse=True)
+            top_problematic = files_by_attempts[:3]  # Top 3 most problematic files
+            
+            for file_path, retry_info in top_problematic:
+                file_name = Path(file_path).name
+                self.logger.warning(
+                    f"Problematic file: {file_name} required {retry_info['total_attempts']} attempts, "
+                    f"{retry_info['recoverable_attempts']} with recovery actions"
+                )
+    
+    def get_error_recovery_stats(self) -> Dict[str, Any]:
+        """
+        Get comprehensive error recovery statistics.
+        
+        Returns:
+            Dict[str, Any]: Dictionary containing error recovery statistics
+        """
+        return {
+            'files_with_retries': len(self._retry_stats),
+            'total_recovery_actions': sum(self._recovery_actions_attempted.values()),
+            'recovery_actions_by_type': self._recovery_actions_attempted.copy(),
+            'retry_details_by_file': self._retry_stats.copy(),
+            'error_recovery_config': {
+                'max_retries': self.error_recovery.max_retries,
+                'base_delay': self.error_recovery.base_delay,
+                'max_delay': self.error_recovery.max_delay,
+                'memory_recovery_enabled': self.error_recovery.memory_recovery_enabled,
+                'file_lock_retry_enabled': self.error_recovery.file_lock_retry_enabled,
+                'timeout_retry_enabled': self.error_recovery.timeout_retry_enabled
+            }
+        }
+    
+    def reset_error_recovery_stats(self) -> None:
+        """Reset error recovery statistics for a new batch processing session."""
+        self._retry_stats.clear()
+        self._recovery_actions_attempted.clear()
+        self.logger.debug("Error recovery statistics reset")
+    
+    def _get_enhanced_error_info(self, pdf_file: Path, error: Exception) -> str:
+        """
+        Get enhanced error information including retry details.
+        
+        Args:
+            pdf_file: Path to the PDF file that failed
+            error: Exception that occurred
+            
+        Returns:
+            str: Enhanced error information string
+        """
+        error_info = f"{type(error).__name__}: {str(error)[:200]}"
+        
+        # Add retry information if available
+        file_key = str(pdf_file)
+        if file_key in self._retry_stats:
+            retry_info = self._retry_stats[file_key]
+            error_info += f" (Attempts: {retry_info['total_attempts']}"
+            
+            if retry_info['recovery_actions']:
+                strategies = [action['strategy'] for action in retry_info['recovery_actions']]
+                unique_strategies = list(set(strategies))
+                error_info += f", Recovery strategies used: {', '.join(unique_strategies)}"
+            
+            error_info += ")"
+        
+        return error_info
     
     def get_processing_stats(self) -> Dict[str, Any]:
         """
@@ -1135,6 +1647,13 @@ class BiomedicalPDFProcessor:
         current_memory = psutil.Process().memory_info().rss / 1024 / 1024  # MB
         system_memory = psutil.virtual_memory()
         
+        # Get basic error recovery stats
+        error_recovery_summary = {
+            'files_with_retries': len(self._retry_stats),
+            'total_recovery_actions': sum(self._recovery_actions_attempted.values()),
+            'error_recovery_enabled': self.error_recovery.max_retries > 0
+        }
+        
         return {
             'processing_timeout': self.processing_timeout,
             'memory_limit_mb': self.memory_limit_mb,
@@ -1142,5 +1661,6 @@ class BiomedicalPDFProcessor:
             'current_memory_mb': round(current_memory, 2),
             'system_memory_percent': round(system_memory.percent, 1),
             'system_memory_available_mb': round(system_memory.available / 1024 / 1024, 2),
-            'memory_monitor_active': self._memory_monitor_active
+            'memory_monitor_active': self._memory_monitor_active,
+            'error_recovery': error_recovery_summary
         }
