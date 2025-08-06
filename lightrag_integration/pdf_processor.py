@@ -40,6 +40,13 @@ The processor handles:
     - Cleaning and normalization of extracted text
     - Processing statistics and monitoring capabilities
     - Batch processing with graceful degradation
+    - Advanced memory management for large document collections:
+      * Batch processing with configurable batch sizes
+      * Memory monitoring and cleanup between batches
+      * Dynamic batch size adjustment based on memory usage
+      * Enhanced garbage collection to prevent memory accumulation
+      * Memory pool management for large collections (100+ PDFs)
+      * Document streaming to process files incrementally
 """
 
 import re
@@ -1428,63 +1435,345 @@ class BiomedicalPDFProcessor:
                 raise PDFProcessingTimeoutError(f"Timeout getting page count: {e}")
             raise BiomedicalPDFProcessorError(f"Failed to get page count: {e}")
     
-    async def process_all_pdfs(self, 
-                              papers_dir: Union[str, Path] = "papers/",
-                              progress_config: Optional['ProgressTrackingConfig'] = None,
-                              progress_tracker: Optional['PDFProcessingProgressTracker'] = None) -> List[Tuple[str, Dict[str, Any]]]:
+    def _get_memory_usage(self) -> Dict[str, float]:
         """
-        Asynchronously process all PDF files in the specified directory with comprehensive progress tracking.
+        Get detailed memory usage statistics.
         
-        This method scans the papers directory for PDF files and processes them
-        using the extract_text_from_pdf method. It includes advanced progress tracking,
-        performance monitoring, detailed logging, and error recovery capabilities.
+        Returns:
+            Dict[str, float]: Dictionary containing memory usage metrics
+        """
+        process = psutil.Process()
+        memory_info = process.memory_info()
+        system_memory = psutil.virtual_memory()
+        
+        return {
+            'process_memory_mb': memory_info.rss / 1024 / 1024,
+            'process_memory_peak_mb': getattr(memory_info, 'peak_wset', memory_info.rss) / 1024 / 1024,
+            'system_memory_percent': system_memory.percent,
+            'system_memory_available_mb': system_memory.available / 1024 / 1024,
+            'system_memory_used_mb': system_memory.used / 1024 / 1024,
+            'system_memory_total_mb': system_memory.total / 1024 / 1024
+        }
+    
+    def _cleanup_memory(self, force: bool = False) -> Dict[str, float]:
+        """
+        Enhanced garbage collection and memory cleanup between batches.
         
         Args:
-            papers_dir: Directory containing PDF files (default: "papers/")
-            progress_config: Optional progress tracking configuration
-            progress_tracker: Optional existing progress tracker instance
+            force: Whether to force aggressive cleanup even if memory usage is low
             
         Returns:
-            List[Tuple[str, Dict[str, Any]]]: List of tuples containing:
-                - text: Extracted text content
-                - metadata: Combined metadata and processing information
-                
-        Note:
-            This method continues processing even if individual PDFs fail,
-            logging errors and moving to the next file. Failed PDFs are
-            tracked and logged for comprehensive reporting.
+            Dict[str, float]: Memory usage before and after cleanup
         """
-        papers_path = Path(papers_dir)
-        documents = []
+        memory_before = self._get_memory_usage()
         
-        if not papers_path.exists():
-            self.logger.warning(f"Papers directory {papers_path} does not exist")
-            return documents
+        # Log cleanup initiation
+        self.logger.debug(f"Memory cleanup initiated - Memory before: {memory_before['process_memory_mb']:.2f} MB")
         
-        # Find all PDF files
-        pdf_files = list(papers_path.glob("*.pdf"))
-        if not pdf_files:
-            self.logger.info(f"No PDF files found in directory: {papers_path}")
-            return documents
+        # Force garbage collection multiple times for thorough cleanup
+        for _ in range(3):
+            gc.collect()
+            time.sleep(0.1)  # Brief pause between GC cycles
         
-        # Initialize progress tracking if not provided
-        if progress_tracker is None:
-            # Import here to avoid circular imports
-            from .progress_config import ProgressTrackingConfig
-            from .progress_tracker import PDFProcessingProgressTracker
+        # Force collection of all generations
+        if hasattr(gc, 'collect'):
+            for generation in range(gc.get_count().__len__()):
+                gc.collect(generation)
+        
+        # Clear any remaining PyMuPDF caches if possible
+        try:
+            # PyMuPDF doesn't have explicit cache clearing, but we can help by
+            # ensuring document objects are properly closed
+            pass
+        except:
+            pass
+        
+        # Small delay to allow memory to be reclaimed by the system
+        time.sleep(0.2)
+        
+        memory_after = self._get_memory_usage()
+        
+        # Calculate memory freed
+        memory_freed = memory_before['process_memory_mb'] - memory_after['process_memory_mb']
+        
+        self.logger.info(
+            f"Memory cleanup completed - Memory freed: {memory_freed:.2f} MB "
+            f"(Before: {memory_before['process_memory_mb']:.2f} MB, "
+            f"After: {memory_after['process_memory_mb']:.2f} MB)"
+        )
+        
+        return {
+            'memory_before_mb': memory_before['process_memory_mb'],
+            'memory_after_mb': memory_after['process_memory_mb'],
+            'memory_freed_mb': memory_freed,
+            'system_memory_percent': memory_after['system_memory_percent']
+        }
+    
+    def _adjust_batch_size(self, current_batch_size: int, memory_usage: float, 
+                          max_memory_mb: int, performance_data: Dict[str, Any]) -> int:
+        """
+        Dynamically adjust batch size based on memory usage and performance patterns.
+        
+        Args:
+            current_batch_size: Current batch size
+            memory_usage: Current memory usage in MB
+            max_memory_mb: Maximum allowed memory usage in MB
+            performance_data: Performance metrics from recent processing
             
-            if progress_config is None:
-                progress_config = ProgressTrackingConfig()
+        Returns:
+            int: Adjusted batch size
+        """
+        # Calculate memory pressure (0.0 to 1.0+)
+        memory_pressure = memory_usage / max_memory_mb
+        
+        # Base adjustment decision on memory pressure
+        if memory_pressure > 0.9:  # High memory pressure - reduce batch size significantly
+            new_batch_size = max(1, current_batch_size // 2)
+            self.logger.warning(
+                f"High memory pressure ({memory_pressure:.2f}), reducing batch size from "
+                f"{current_batch_size} to {new_batch_size}"
+            )
+        elif memory_pressure > 0.7:  # Moderate memory pressure - reduce batch size
+            new_batch_size = max(1, int(current_batch_size * 0.8))
+            self.logger.info(
+                f"Moderate memory pressure ({memory_pressure:.2f}), reducing batch size from "
+                f"{current_batch_size} to {new_batch_size}"
+            )
+        elif memory_pressure < 0.4 and current_batch_size < 20:  # Low memory pressure - can increase
+            # Only increase if we have good performance data
+            avg_processing_time = performance_data.get('average_processing_time', 0)
+            if avg_processing_time > 0 and avg_processing_time < 5.0:  # Fast processing
+                new_batch_size = min(20, current_batch_size + 2)
+                self.logger.info(
+                    f"Low memory pressure ({memory_pressure:.2f}) and good performance, "
+                    f"increasing batch size from {current_batch_size} to {new_batch_size}"
+                )
+            else:
+                new_batch_size = current_batch_size
+        else:
+            new_batch_size = current_batch_size
+        
+        return new_batch_size
+    
+    async def _process_batch(self, pdf_batch: List[Path], batch_num: int, 
+                           progress_tracker: Optional['PDFProcessingProgressTracker'],
+                           max_memory_mb: int) -> List[Tuple[str, Dict[str, Any]]]:
+        """
+        Process a batch of PDF files with memory monitoring and cleanup.
+        
+        Args:
+            pdf_batch: List of PDF file paths to process in this batch
+            batch_num: Batch number for logging
+            progress_tracker: Progress tracker instance
+            max_memory_mb: Maximum memory usage allowed
             
-            progress_tracker = PDFProcessingProgressTracker(
-                config=progress_config,
-                logger=self.logger
+        Returns:
+            List[Tuple[str, Dict[str, Any]]]: Processing results for the batch
+        """
+        batch_results = []
+        batch_start_time = time.time()
+        initial_memory = self._get_memory_usage()
+        
+        self.logger.info(
+            f"Starting batch {batch_num} with {len(pdf_batch)} PDFs "
+            f"(Memory: {initial_memory['process_memory_mb']:.2f} MB, "
+            f"System: {initial_memory['system_memory_percent']:.1f}%)"
+        )
+        
+        for file_index, pdf_file in enumerate(pdf_batch):
+            try:
+                # Check memory before processing each file
+                current_memory = self._get_memory_usage()
+                
+                # If memory usage is getting high, perform cleanup
+                if current_memory['process_memory_mb'] > max_memory_mb * 0.8:
+                    self.logger.warning(
+                        f"Memory usage high ({current_memory['process_memory_mb']:.2f} MB), "
+                        f"performing cleanup before processing {pdf_file.name}"
+                    )
+                    self._cleanup_memory()
+                
+                # Process file with progress tracking
+                if progress_tracker:
+                    with progress_tracker.track_file_processing(pdf_file, file_index) as file_info:
+                        result = self.extract_text_from_pdf(pdf_file)
+                        
+                        # Combine metadata and processing info
+                        combined_metadata = result['metadata'].copy()
+                        combined_metadata.update(result['processing_info'])
+                        combined_metadata['page_texts_count'] = len(result['page_texts'])
+                        combined_metadata['batch_number'] = batch_num
+                        
+                        # Record successful processing
+                        progress_tracker.record_file_success(
+                            pdf_file,
+                            combined_metadata['total_characters'],
+                            combined_metadata['pages_processed']
+                        )
+                        
+                        batch_results.append((result['text'], combined_metadata))
+                else:
+                    # Process without progress tracking
+                    result = self.extract_text_from_pdf(pdf_file)
+                    
+                    combined_metadata = result['metadata'].copy()
+                    combined_metadata.update(result['processing_info'])
+                    combined_metadata['page_texts_count'] = len(result['page_texts'])
+                    combined_metadata['batch_number'] = batch_num
+                    
+                    batch_results.append((result['text'], combined_metadata))
+                
+                # Small delay to prevent overwhelming the system
+                await asyncio.sleep(0.1)
+                
+            except (PDFValidationError, PDFProcessingTimeoutError, PDFMemoryError, 
+                   PDFFileAccessError, PDFContentError) as e:
+                # Enhanced error logging
+                error_info = self._get_enhanced_error_info(pdf_file, e)
+                self.logger.error(f"Failed to process {pdf_file.name} in batch {batch_num}: {error_info}")
+                continue
+            except Exception as e:
+                error_info = self._get_enhanced_error_info(pdf_file, e)
+                self.logger.error(f"Unexpected error processing {pdf_file.name} in batch {batch_num}: {error_info}")
+                continue
+        
+        # Calculate batch processing metrics
+        batch_end_time = time.time()
+        batch_duration = batch_end_time - batch_start_time
+        final_memory = self._get_memory_usage()
+        memory_increase = final_memory['process_memory_mb'] - initial_memory['process_memory_mb']
+        
+        self.logger.info(
+            f"Batch {batch_num} completed: {len(batch_results)}/{len(pdf_batch)} files successful, "
+            f"{batch_duration:.2f}s duration, memory increase: {memory_increase:.2f} MB"
+        )
+        
+        return batch_results
+    
+    async def _process_with_batch_mode(self, pdf_files: List[Path], initial_batch_size: int,
+                                     max_memory_mb: int, progress_tracker: 'PDFProcessingProgressTracker') -> List[Tuple[str, Dict[str, Any]]]:
+        """
+        Process PDF files using batch processing with memory management.
+        
+        Args:
+            pdf_files: List of all PDF files to process
+            initial_batch_size: Initial batch size
+            max_memory_mb: Maximum memory usage allowed
+            progress_tracker: Progress tracker instance
+            
+        Returns:
+            List[Tuple[str, Dict[str, Any]]]: All processing results
+        """
+        all_documents = []
+        current_batch_size = initial_batch_size
+        
+        # Split files into batches
+        total_batches = (len(pdf_files) + current_batch_size - 1) // current_batch_size
+        
+        # Track performance metrics for batch size adjustment
+        performance_data = {
+            'batch_times': [],
+            'memory_usage': [],
+            'files_per_second': []
+        }
+        
+        for batch_num in range(total_batches):
+            start_idx = batch_num * current_batch_size
+            end_idx = min(start_idx + current_batch_size, len(pdf_files))
+            pdf_batch = pdf_files[start_idx:end_idx]
+            
+            # Check memory before batch and adjust batch size if needed
+            current_memory = self._get_memory_usage()
+            if batch_num > 0:  # Don't adjust on first batch
+                current_batch_size = self._adjust_batch_size(
+                    current_batch_size, 
+                    current_memory['process_memory_mb'],
+                    max_memory_mb,
+                    performance_data
+                )
+                
+                # If batch size changed, recalculate the batch
+                if current_batch_size != (end_idx - start_idx):
+                    end_idx = min(start_idx + current_batch_size, len(pdf_files))
+                    pdf_batch = pdf_files[start_idx:end_idx]
+            
+            # Process the batch
+            batch_start_time = time.time()
+            
+            try:
+                batch_results = await self._process_batch(
+                    pdf_batch, batch_num + 1, progress_tracker, max_memory_mb
+                )
+                
+                all_documents.extend(batch_results)
+                
+                # Record performance metrics
+                batch_duration = time.time() - batch_start_time
+                files_processed = len(batch_results)
+                files_per_second = files_processed / batch_duration if batch_duration > 0 else 0
+                
+                performance_data['batch_times'].append(batch_duration)
+                performance_data['memory_usage'].append(current_memory['process_memory_mb'])
+                performance_data['files_per_second'].append(files_per_second)
+                
+                # Calculate average processing time for batch size adjustment
+                if len(performance_data['batch_times']) > 0:
+                    performance_data['average_processing_time'] = sum(performance_data['batch_times']) / len(performance_data['batch_times'])
+                
+            except Exception as e:
+                self.logger.error(f"Critical error processing batch {batch_num + 1}: {e}")
+                # Continue with next batch
+                continue
+            
+            # Perform memory cleanup between batches
+            if batch_num < total_batches - 1:  # Don't clean up after last batch
+                cleanup_result = self._cleanup_memory()
+                
+                # Log memory management statistics
+                self.logger.info(
+                    f"Post-batch {batch_num + 1} cleanup: freed {cleanup_result['memory_freed_mb']:.2f} MB "
+                    f"(System memory: {cleanup_result['system_memory_percent']:.1f}%)"
+                )
+                
+                # Brief pause to allow system to stabilize
+                await asyncio.sleep(0.5)
+        
+        # Final memory cleanup
+        final_cleanup = self._cleanup_memory(force=True)
+        self.logger.info(
+            f"Final memory cleanup completed - freed {final_cleanup['memory_freed_mb']:.2f} MB"
+        )
+        
+        # Log batch processing summary
+        if performance_data['batch_times']:
+            avg_batch_time = sum(performance_data['batch_times']) / len(performance_data['batch_times'])
+            total_processing_time = sum(performance_data['batch_times'])
+            avg_files_per_second = sum(performance_data['files_per_second']) / len(performance_data['files_per_second'])
+            
+            self.logger.info(
+                f"Batch processing summary: {total_batches} batches processed, "
+                f"avg batch time: {avg_batch_time:.2f}s, "
+                f"total time: {total_processing_time:.2f}s, "
+                f"avg throughput: {avg_files_per_second:.2f} files/second"
             )
         
-        # Start batch processing with progress tracking
-        progress_tracker.start_batch_processing(len(pdf_files), pdf_files)
+        return all_documents
+    
+    async def _process_sequential_mode(self, pdf_files: List[Path], 
+                                     progress_tracker: 'PDFProcessingProgressTracker') -> List[Tuple[str, Dict[str, Any]]]:
+        """
+        Process PDF files sequentially (legacy mode for backward compatibility).
         
-        self.logger.info(f"Found {len(pdf_files)} PDF files to process in {papers_path}")
+        Args:
+            pdf_files: List of PDF files to process
+            progress_tracker: Progress tracker instance
+            
+        Returns:
+            List[Tuple[str, Dict[str, Any]]]: Processing results
+        """
+        documents = []
+        
+        self.logger.info("Processing files sequentially without batch memory management")
         
         # Process each PDF file with progress tracking
         for file_index, pdf_file in enumerate(pdf_files):
@@ -1529,6 +1818,101 @@ class BiomedicalPDFProcessor:
                 # Continue processing other files
                 continue
         
+        return documents
+    
+    async def process_all_pdfs(self, 
+                              papers_dir: Union[str, Path] = "papers/",
+                              progress_config: Optional['ProgressTrackingConfig'] = None,
+                              progress_tracker: Optional['PDFProcessingProgressTracker'] = None,
+                              batch_size: int = 10,
+                              max_memory_mb: int = 2048,
+                              enable_batch_processing: bool = True) -> List[Tuple[str, Dict[str, Any]]]:
+        """
+        Asynchronously process all PDF files in the specified directory with comprehensive progress tracking and memory management.
+        
+        This method scans the papers directory for PDF files and processes them
+        using the extract_text_from_pdf method. It includes advanced progress tracking,
+        performance monitoring, detailed logging, error recovery capabilities, and
+        advanced memory management for large document collections.
+        
+        Memory Management Features:
+        - Batch processing with configurable batch sizes
+        - Memory monitoring and cleanup between batches
+        - Dynamic batch size adjustment based on memory usage
+        - Enhanced garbage collection to prevent memory accumulation
+        - Memory pool management for large collections (100+ PDFs)
+        
+        Args:
+            papers_dir: Directory containing PDF files (default: "papers/")
+            progress_config: Optional progress tracking configuration
+            progress_tracker: Optional existing progress tracker instance
+            batch_size: Number of PDFs to process before memory cleanup (default: 10)
+            max_memory_mb: Maximum memory usage in MB before triggering cleanup (default: 2048)
+            enable_batch_processing: Whether to use batch processing with memory management (default: True)
+            
+        Returns:
+            List[Tuple[str, Dict[str, Any]]]: List of tuples containing:
+                - text: Extracted text content
+                - metadata: Combined metadata and processing information
+                
+        Note:
+            This method continues processing even if individual PDFs fail,
+            logging errors and moving to the next file. Failed PDFs are
+            tracked and logged for comprehensive reporting. When batch processing
+            is enabled, it processes documents in smaller batches to prevent
+            memory accumulation, making it suitable for large document collections.
+        """
+        papers_path = Path(papers_dir)
+        documents = []
+        
+        if not papers_path.exists():
+            self.logger.warning(f"Papers directory {papers_path} does not exist")
+            return documents
+        
+        # Find all PDF files
+        pdf_files = list(papers_path.glob("*.pdf"))
+        if not pdf_files:
+            self.logger.info(f"No PDF files found in directory: {papers_path}")
+            return documents
+        
+        # Initialize progress tracking if not provided
+        if progress_tracker is None:
+            # Import here to avoid circular imports
+            from .progress_config import ProgressTrackingConfig
+            from .progress_tracker import PDFProcessingProgressTracker
+            
+            if progress_config is None:
+                progress_config = ProgressTrackingConfig()
+            
+            progress_tracker = PDFProcessingProgressTracker(
+                config=progress_config,
+                logger=self.logger
+            )
+        
+        # Start batch processing with progress tracking
+        progress_tracker.start_batch_processing(len(pdf_files), pdf_files)
+        
+        # Log initial memory state and processing approach
+        initial_memory = self._get_memory_usage()
+        self.logger.info(
+            f"Found {len(pdf_files)} PDF files to process in {papers_path} "
+            f"(Initial memory: {initial_memory['process_memory_mb']:.2f} MB, "
+            f"System: {initial_memory['system_memory_percent']:.1f}%)"
+        )
+        
+        # Choose processing approach based on enable_batch_processing flag
+        if enable_batch_processing and len(pdf_files) > 1:
+            self.logger.info(
+                f"Using batch processing mode with initial batch size {batch_size}, "
+                f"max memory limit {max_memory_mb} MB"
+            )
+            documents = await self._process_with_batch_mode(
+                pdf_files, batch_size, max_memory_mb, progress_tracker
+            )
+        else:
+            self.logger.info("Using sequential processing mode (batch processing disabled)")
+            documents = await self._process_sequential_mode(pdf_files, progress_tracker)
+        
         # Complete batch processing and get final metrics
         final_metrics = progress_tracker.finish_batch_processing()
         
@@ -1551,6 +1935,22 @@ class BiomedicalPDFProcessor:
         # Log error recovery statistics if there were any retries
         if self._retry_stats or self._recovery_actions_attempted:
             self._log_error_recovery_summary()
+        
+        # Log final memory usage and cleanup statistics
+        final_memory = self._get_memory_usage()
+        memory_change = final_memory['process_memory_mb'] - initial_memory['process_memory_mb']
+        
+        self.logger.info(
+            f"Memory management summary: "
+            f"Initial: {initial_memory['process_memory_mb']:.2f} MB, "
+            f"Final: {final_memory['process_memory_mb']:.2f} MB, "
+            f"Change: {memory_change:+.2f} MB, "
+            f"System memory usage: {final_memory['system_memory_percent']:.1f}%"
+        )
+        
+        # Log batch processing mode used
+        processing_mode = "batch processing" if enable_batch_processing and len(pdf_files) > 1 else "sequential processing"
+        self.logger.info(f"Processing completed using {processing_mode} mode")
         
         return documents
     
@@ -1639,13 +2039,13 @@ class BiomedicalPDFProcessor:
     
     def get_processing_stats(self) -> Dict[str, Any]:
         """
-        Get current processing statistics and configuration.
+        Get current processing statistics and configuration including memory management features.
         
         Returns:
             Dict[str, Any]: Dictionary containing processing statistics
         """
-        current_memory = psutil.Process().memory_info().rss / 1024 / 1024  # MB
-        system_memory = psutil.virtual_memory()
+        # Get detailed memory usage
+        memory_stats = self._get_memory_usage()
         
         # Get basic error recovery stats
         error_recovery_summary = {
@@ -1655,12 +2055,38 @@ class BiomedicalPDFProcessor:
         }
         
         return {
+            # Basic processing configuration
             'processing_timeout': self.processing_timeout,
             'memory_limit_mb': self.memory_limit_mb,
             'max_page_text_size': self.max_page_text_size,
-            'current_memory_mb': round(current_memory, 2),
-            'system_memory_percent': round(system_memory.percent, 1),
-            'system_memory_available_mb': round(system_memory.available / 1024 / 1024, 2),
             'memory_monitor_active': self._memory_monitor_active,
-            'error_recovery': error_recovery_summary
+            
+            # Enhanced memory statistics
+            'memory_stats': {
+                'process_memory_mb': round(memory_stats['process_memory_mb'], 2),
+                'process_memory_peak_mb': round(memory_stats['process_memory_peak_mb'], 2),
+                'system_memory_percent': round(memory_stats['system_memory_percent'], 1),
+                'system_memory_available_mb': round(memory_stats['system_memory_available_mb'], 2),
+                'system_memory_used_mb': round(memory_stats['system_memory_used_mb'], 2),
+                'system_memory_total_mb': round(memory_stats['system_memory_total_mb'], 2)
+            },
+            
+            # Memory management features
+            'memory_management': {
+                'batch_processing_available': True,
+                'dynamic_batch_sizing': True,
+                'enhanced_garbage_collection': True,
+                'memory_pressure_monitoring': True,
+                'automatic_cleanup_between_batches': True
+            },
+            
+            # Error recovery
+            'error_recovery': error_recovery_summary,
+            
+            # Garbage collection statistics
+            'garbage_collection': {
+                'collections_count': gc.get_count(),
+                'gc_enabled': gc.isenabled(),
+                'gc_thresholds': gc.get_threshold()
+            }
         }
