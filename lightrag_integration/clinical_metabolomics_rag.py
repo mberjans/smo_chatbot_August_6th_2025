@@ -215,7 +215,7 @@ class ClinicalMetabolomicsRAG:
         
         # Initialize LightRAG
         try:
-            self._initialize_lightrag()
+            self._initialize_rag()
             self.is_initialized = True
             self.logger.info("ClinicalMetabolomicsRAG initialized successfully")
         except Exception as e:
@@ -350,8 +350,13 @@ class ClinicalMetabolomicsRAG:
         
         return embedding_function
     
-    def _initialize_lightrag(self) -> None:
-        """Initialize the LightRAG instance with biomedical configuration."""
+    def _initialize_rag(self) -> None:
+        """Initialize the LightRAG instance with biomedical parameters for clinical metabolomics.
+        
+        This method configures LightRAG with specialized biomedical parameters optimized for
+        clinical metabolomics research, including entity extraction, relationship mapping,
+        and domain-specific optimization for metabolite, protein, and pathway analysis.
+        """
         try:
             # Create LLM and embedding functions
             llm_func = self._create_llm_function()
@@ -546,7 +551,7 @@ class ClinicalMetabolomicsRAG:
             return
         
         try:
-            self._initialize_lightrag()
+            self._initialize_rag()
             self.is_initialized = True
             self.logger.info("RAG system re-initialized successfully")
         except Exception as e:
