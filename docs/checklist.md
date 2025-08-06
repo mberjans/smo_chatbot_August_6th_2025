@@ -42,7 +42,7 @@
 - [x] Set up .env.example file with required environment variables
 
 **CMO-LIGHTRAG-001-T06** [TEST]
-- [ ] Verify OpenAI API connectivity with test script
+- [x] Verify OpenAI API connectivity with test script PARTIALLY COMPLETED
 
 **CMO-LIGHTRAG-001-T07** [DOC]
 - [ ] Create setup documentation in README_lightrag.md
