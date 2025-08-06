@@ -587,25 +587,249 @@ class ClinicalMetabolomicsRAG:
         total_cost = prompt_cost + completion_cost
         return total_cost
     
-    def _create_embedding_function(self) -> EmbeddingFunc:
-        """Create embedding function for LightRAG using OpenAI."""
-        async def embedding_function(texts: List[str]) -> List[List[float]]:
-            """Embedding function that wraps OpenAI embedding API calls."""
-            try:
-                # Use LightRAG's OpenAI embedding wrapper
-                embeddings = await openai_embedding(
-                    texts,
-                    model=self.config.embedding_model,
-                    api_key=self.config.api_key
-                )
-                
-                return embeddings
-                
-            except Exception as e:
-                self.logger.error(f"Embedding function error: {e}")
-                raise
+    def _get_embedding_function(self) -> EmbeddingFunc:
+        """
+        Get embedding function for LightRAG with enhanced OpenAI integration.
         
-        return embedding_function
+        This method creates a robust embedding function with comprehensive error handling,
+        API cost monitoring, batch processing support, and biomedical optimization.
+        It follows the same pattern as _get_llm_function for consistency.
+        
+        Returns:
+            EmbeddingFunc: Async function that handles embedding requests with the signature:
+                async (texts: List[str]) -> List[List[float]]
+        
+        Features:
+            - Enhanced error handling for API failures, rate limits, and timeouts
+            - Real-time API cost monitoring and logging
+            - Automatic retry logic with exponential backoff
+            - Batch processing support for multiple texts
+            - Empty text input validation
+            - Embedding dimension validation
+            - Support for both LightRAG and direct OpenAI integration
+        """
+        async def enhanced_embedding_function(texts: List[str]) -> List[List[float]]:
+            """
+            Enhanced embedding function with comprehensive error handling and cost monitoring.
+            
+            Args:
+                texts: List of text strings to embed
+            
+            Returns:
+                List[List[float]]: List of embedding vectors (1536 dimensions for text-embedding-3-small)
+            
+            Raises:
+                openai.RateLimitError: When API rate limits are exceeded
+                openai.AuthenticationError: When API key is invalid or missing
+                openai.APITimeoutError: When request times out
+                openai.BadRequestError: When model is unavailable or request is malformed
+                ClinicalMetabolomicsRAGError: For other API or processing errors
+            """
+            import openai
+            
+            # Validate inputs
+            if not texts:
+                self.logger.warning("Empty texts list provided to embedding function")
+                return []
+            
+            # Filter out empty texts and track original indices
+            non_empty_texts = []
+            original_indices = []
+            for i, text in enumerate(texts):
+                if text and text.strip():
+                    non_empty_texts.append(text.strip())
+                    original_indices.append(i)
+                else:
+                    self.logger.warning(f"Empty text at index {i}, will return zero vector")
+            
+            if not non_empty_texts:
+                self.logger.warning("All texts are empty, returning zero vectors")
+                return [[0.0] * 1536 for _ in texts]  # Return zero vectors for text-embedding-3-small
+            
+            # Use configured embedding model
+            model = self.config.embedding_model or "text-embedding-3-small"
+            
+            # Validate model for biomedical tasks
+            if model not in ['text-embedding-3-small', 'text-embedding-3-large', 'text-embedding-ada-002']:
+                self.logger.warning(f"Embedding model {model} may not be optimal for biomedical tasks")
+            
+            # Define retry strategy with exponential backoff (if tenacity is available)
+            if TENACITY_AVAILABLE:
+                @retry(
+                    stop=stop_after_attempt(self.retry_config['max_attempts']),
+                    wait=wait_exponential(multiplier=self.retry_config['backoff_factor'], max=self.retry_config['max_wait_time']),
+                    retry=retry_if_exception_type((
+                        openai.RateLimitError,
+                        openai.APITimeoutError,
+                        openai.InternalServerError,
+                        openai.APIConnectionError
+                    ))
+                )
+                async def make_api_call():
+                    return await _make_single_embedding_call()
+            else:
+                # Simple retry logic without tenacity
+                async def make_api_call():
+                    last_exception = None
+                    for attempt in range(self.retry_config['max_attempts']):
+                        try:
+                            return await _make_single_embedding_call()
+                        except (openai.RateLimitError, openai.APITimeoutError, 
+                               openai.InternalServerError, openai.APIConnectionError) as e:
+                            last_exception = e
+                            if attempt < self.retry_config['max_attempts'] - 1:
+                                wait_time = min(self.retry_config['backoff_factor'] ** attempt, 
+                                              self.retry_config['max_wait_time'])
+                                self.logger.warning(f"Embedding API call failed (attempt {attempt + 1}), retrying in {wait_time}s: {e}")
+                                await asyncio.sleep(wait_time)
+                            else:
+                                raise
+                        except Exception as e:
+                            # Don't retry for other exceptions
+                            raise
+                    
+                    if last_exception:
+                        raise last_exception
+            
+            async def _make_single_embedding_call():
+                start_time = time.time()
+                
+                try:
+                    if LIGHTRAG_AVAILABLE:
+                        # Use LightRAG's OpenAI embedding wrapper with enhanced parameters
+                        embeddings = await openai_embedding(
+                            non_empty_texts,
+                            model=model,
+                            api_key=self.config.api_key,
+                            timeout=30.0,  # 30 second timeout
+                        )
+                        
+                        # Validate embedding dimensions
+                        expected_dim = 1536 if "3-small" in model else (3072 if "3-large" in model else 1536)
+                        if embeddings and len(embeddings[0]) != expected_dim:
+                            self.logger.warning(f"Unexpected embedding dimension: {len(embeddings[0])}, expected {expected_dim}")
+                        
+                        # Calculate token usage for embeddings (approximate)
+                        total_tokens = sum(len(text.split()) for text in non_empty_texts)
+                        token_usage = {
+                            'total_tokens': total_tokens,
+                            'embedding_tokens': total_tokens,
+                            'prompt_tokens': 0,
+                            'completion_tokens': 0
+                        }
+                        
+                    else:
+                        # Use OpenAI client directly for testing and development
+                        response = await self.openai_client.embeddings.create(
+                            model=model,
+                            input=non_empty_texts,
+                            timeout=30.0
+                        )
+                        
+                        embeddings = [data.embedding for data in response.data]
+                        
+                        # Validate embedding dimensions
+                        expected_dim = 1536 if "3-small" in model else (3072 if "3-large" in model else 1536)
+                        if embeddings and len(embeddings[0]) != expected_dim:
+                            self.logger.warning(f"Unexpected embedding dimension: {len(embeddings[0])}, expected {expected_dim}")
+                        
+                        # Extract actual token usage from response
+                        token_usage = {
+                            'total_tokens': response.usage.total_tokens,
+                            'embedding_tokens': response.usage.total_tokens,
+                            'prompt_tokens': 0,
+                            'completion_tokens': 0
+                        }
+                    
+                    # Calculate API cost for embeddings
+                    api_cost = self._calculate_embedding_cost(model, token_usage)
+                    processing_time = time.time() - start_time
+                    
+                    # Track cost and usage if enabled
+                    if self.cost_tracking_enabled:
+                        self.track_api_cost(api_cost, token_usage)
+                        self.logger.debug(
+                            f"Embedding call completed: {processing_time:.2f}s, "
+                            f"${api_cost:.4f}, {len(non_empty_texts)} texts, {token_usage['embedding_tokens']} tokens"
+                        )
+                    
+                    # Reconstruct full embedding list with zero vectors for empty texts
+                    full_embeddings = []
+                    non_empty_idx = 0
+                    zero_vector = [0.0] * (len(embeddings[0]) if embeddings else 1536)
+                    
+                    for i in range(len(texts)):
+                        if i in original_indices:
+                            full_embeddings.append(embeddings[non_empty_idx])
+                            non_empty_idx += 1
+                        else:
+                            full_embeddings.append(zero_vector)
+                    
+                    return full_embeddings
+                    
+                except openai.RateLimitError as e:
+                    self.logger.warning(f"Embedding rate limit exceeded: {e}")
+                    raise
+                    
+                except openai.AuthenticationError as e:
+                    self.logger.error(f"Embedding authentication failed - check API key: {e}")
+                    raise ClinicalMetabolomicsRAGError(f"OpenAI embedding authentication failed: {e}") from e
+                    
+                except openai.APITimeoutError as e:
+                    self.logger.warning(f"Embedding API timeout: {e}")
+                    raise
+                    
+                except openai.BadRequestError as e:
+                    self.logger.error(f"Invalid embedding request - model {model} may be unavailable: {e}")
+                    raise ClinicalMetabolomicsRAGError(f"Invalid embedding API request: {e}") from e
+                    
+                except openai.InternalServerError as e:
+                    self.logger.warning(f"OpenAI embedding server error (will retry): {e}")
+                    raise
+                    
+                except openai.APIConnectionError as e:
+                    self.logger.warning(f"Embedding API connection error (will retry): {e}")
+                    raise
+                    
+                except Exception as e:
+                    self.logger.error(f"Unexpected embedding function error: {e}")
+                    raise ClinicalMetabolomicsRAGError(f"Embedding function failed: {e}") from e
+            
+            try:
+                return await make_api_call()
+            except Exception as e:
+                # Final error handling after all retries exhausted
+                self.logger.error(f"Embedding function failed after {self.retry_config['max_attempts']} attempts: {e}")
+                raise ClinicalMetabolomicsRAGError(f"Embedding function failed permanently: {e}") from e
+        
+        return enhanced_embedding_function
+    
+    def _calculate_embedding_cost(self, model: str, token_usage: Dict[str, int]) -> float:
+        """
+        Calculate the API cost for embedding calls.
+        
+        Args:
+            model: The embedding model used
+            token_usage: Dictionary with embedding_tokens
+            
+        Returns:
+            float: Estimated cost in USD
+        """
+        # Current OpenAI embedding pricing (as of 2025)
+        embedding_pricing = {
+            'text-embedding-3-small': 0.00002,  # per 1K tokens
+            'text-embedding-3-large': 0.00013,  # per 1K tokens
+            'text-embedding-ada-002': 0.0001    # per 1K tokens
+        }
+        
+        # Default pricing if model not found
+        default_pricing = 0.0001
+        
+        price_per_1k = embedding_pricing.get(model, default_pricing)
+        embedding_tokens = token_usage.get('embedding_tokens', 0)
+        
+        total_cost = (embedding_tokens / 1000.0) * price_per_1k
+        return total_cost
     
     def _initialize_rag(self) -> None:
         """Initialize the LightRAG instance with biomedical parameters for clinical metabolomics.
@@ -617,7 +841,7 @@ class ClinicalMetabolomicsRAG:
         try:
             # Create LLM and embedding functions using enhanced implementations
             llm_func = self._get_llm_function()
-            embedding_func = self._create_embedding_function()
+            embedding_func = self._get_embedding_function()
             
             # Create LightRAG instance with biomedical-optimized parameters
             self.lightrag_instance = LightRAG(
