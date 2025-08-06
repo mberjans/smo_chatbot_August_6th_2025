@@ -19,6 +19,7 @@ before the actual LightRAGConfig implementation.
 """
 
 import os
+import json
 import tempfile
 import shutil
 from pathlib import Path
@@ -1377,6 +1378,626 @@ class TestLightRAGConfigDirectoryAdvanced:
             # At least most operations should succeed
             assert success_count[0] >= 6  # Allow for some concurrent conflicts
             assert shared_working.exists()
+
+
+class TestLightRAGConfigGetConfig:
+    """Comprehensive test class for the get_config() factory function."""
+
+    def test_get_config_default_environment_loading(self):
+        """Test get_config() with default environment variable loading."""
+        with patch.dict(os.environ, {
+            "OPENAI_API_KEY": "env-api-key",
+            "LIGHTRAG_MODEL": "gpt-4",
+            "LIGHTRAG_MAX_ASYNC": "24"
+        }, clear=True):
+            with tempfile.TemporaryDirectory() as temp_dir:
+                with patch.dict(os.environ, {"LIGHTRAG_WORKING_DIR": temp_dir}):
+                    config = LightRAGConfig.get_config()
+                    
+                    assert config.api_key == "env-api-key"
+                    assert config.model == "gpt-4"
+                    assert config.max_async == 24
+                    assert config.working_dir == Path(temp_dir)
+                    assert config.graph_storage_dir == Path(temp_dir) / "lightrag"
+                    
+                    # Directories should be created by default
+                    assert config.working_dir.exists()
+                    assert config.graph_storage_dir.exists()
+
+    def test_get_config_from_dict_source(self):
+        """Test get_config() loading from dictionary source."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config_dict = {
+                "api_key": "dict-api-key",
+                "model": "gpt-3.5-turbo",
+                "max_tokens": 4096,
+                "working_dir": temp_dir
+            }
+            
+            config = LightRAGConfig.get_config(source=config_dict)
+            
+            assert config.api_key == "dict-api-key"
+            assert config.model == "gpt-3.5-turbo"
+            assert config.max_tokens == 4096
+            assert config.working_dir == Path(temp_dir)
+            
+            # Should have validated and created directories
+            assert config.working_dir.exists()
+            assert config.graph_storage_dir.exists()
+
+    def test_get_config_from_file_source(self):
+        """Test get_config() loading from JSON file source."""
+        config_data = {
+            "api_key": "file-api-key",
+            "model": "gpt-4-turbo",
+            "embedding_model": "text-embedding-3-large",
+            "max_async": 32
+        }
+        
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+            json.dump(config_data, f)
+            temp_file = f.name
+        
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                config = LightRAGConfig.get_config(
+                    source=temp_file,
+                    working_dir=temp_dir
+                )
+                
+                assert config.api_key == "file-api-key"
+                assert config.model == "gpt-4-turbo"
+                assert config.embedding_model == "text-embedding-3-large"
+                assert config.max_async == 32
+                assert config.working_dir == Path(temp_dir)
+                
+                # Directories should exist
+                assert config.working_dir.exists()
+                assert config.graph_storage_dir.exists()
+        finally:
+            os.unlink(temp_file)
+
+    def test_get_config_from_path_object_source(self):
+        """Test get_config() with Path object as file source."""
+        config_data = {
+            "api_key": "path-api-key",
+            "model": "gpt-4o"
+        }
+        
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+            json.dump(config_data, f)
+            temp_file_path = Path(f.name)
+        
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                config = LightRAGConfig.get_config(
+                    source=temp_file_path,
+                    working_dir=temp_dir
+                )
+                
+                assert config.api_key == "path-api-key"
+                assert config.model == "gpt-4o"
+                assert config.working_dir == Path(temp_dir)
+        finally:
+            temp_file_path.unlink()
+
+    def test_get_config_with_parameter_overrides(self):
+        """Test get_config() with parameter overrides via **kwargs."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Start with environment values
+            with patch.dict(os.environ, {
+                "OPENAI_API_KEY": "env-api-key",
+                "LIGHTRAG_MODEL": "gpt-3.5-turbo"
+            }, clear=True):
+                config = LightRAGConfig.get_config(
+                    model="gpt-4-overridden",  # Override environment
+                    max_async=64,             # Override default
+                    working_dir=temp_dir      # Override default
+                )
+                
+                assert config.api_key == "env-api-key"  # From environment
+                assert config.model == "gpt-4-overridden"  # Overridden
+                assert config.max_async == 64  # Overridden
+                assert config.working_dir == Path(temp_dir)  # Overridden
+
+    def test_get_config_dict_source_with_overrides(self):
+        """Test get_config() combining dict source with parameter overrides."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config_dict = {
+                "api_key": "dict-api-key",
+                "model": "gpt-3.5-turbo",
+                "max_tokens": 2048
+            }
+            
+            config = LightRAGConfig.get_config(
+                source=config_dict,
+                model="gpt-4-final",     # Override dict value
+                max_async=48,           # Add new parameter
+                working_dir=temp_dir    # Add new parameter
+            )
+            
+            assert config.api_key == "dict-api-key"  # From dict
+            assert config.model == "gpt-4-final"     # Overridden
+            assert config.max_tokens == 2048         # From dict
+            assert config.max_async == 48            # Override
+            assert config.working_dir == Path(temp_dir)  # Override
+
+    def test_get_config_file_source_with_overrides(self):
+        """Test get_config() combining file source with parameter overrides."""
+        config_data = {
+            "api_key": "file-api-key",
+            "model": "gpt-4",
+            "max_async": 16
+        }
+        
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+            json.dump(config_data, f)
+            temp_file = f.name
+        
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                config = LightRAGConfig.get_config(
+                    source=temp_file,
+                    max_async=96,           # Override file value
+                    max_tokens=16384,       # Add new parameter
+                    working_dir=temp_dir    # Add new parameter
+                )
+                
+                assert config.api_key == "file-api-key"  # From file
+                assert config.model == "gpt-4"           # From file
+                assert config.max_async == 96            # Overridden
+                assert config.max_tokens == 16384        # Override
+                assert config.working_dir == Path(temp_dir)  # Override
+        finally:
+            os.unlink(temp_file)
+
+    def test_get_config_validate_false(self):
+        """Test get_config() with validation disabled."""
+        config_dict = {
+            "api_key": "",  # Invalid - empty API key
+            "max_async": -5  # Invalid - negative value
+        }
+        
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Should not raise validation errors when validate_config=False
+            config = LightRAGConfig.get_config(
+                source=config_dict,
+                validate_config=False,
+                working_dir=temp_dir
+            )
+            
+            assert config.api_key == ""
+            assert config.max_async == -5
+            # Should still create directories even with invalid config
+            assert config.working_dir.exists()
+            assert config.graph_storage_dir.exists()
+
+    def test_get_config_ensure_dirs_false(self):
+        """Test get_config() with directory creation disabled."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Use an existing directory to avoid validation issues
+            working_dir = Path(temp_dir) / "existing_working_dir"
+            working_dir.mkdir()  # Create it first
+            
+            # Remove the graph storage directory if it exists
+            graph_dir = working_dir / "lightrag"
+            if graph_dir.exists():
+                graph_dir.rmdir()
+            
+            config = LightRAGConfig.get_config(
+                api_key="test-key",
+                working_dir=working_dir,
+                ensure_dirs=False
+            )
+            
+            assert config.working_dir == working_dir
+            # Working directory should exist (we created it)
+            assert working_dir.exists()
+            # Graph directory should not exist since ensure_dirs=False
+            assert not config.graph_storage_dir.exists()
+
+    def test_get_config_both_validate_and_ensure_dirs_false(self):
+        """Test get_config() with both validation and directory creation disabled."""
+        config_dict = {
+            "api_key": "",  # Invalid
+            "max_tokens": 0,  # Invalid
+            "working_dir": "/nonexistent/path"
+        }
+        
+        # Should not raise any errors
+        config = LightRAGConfig.get_config(
+            source=config_dict,
+            validate_config=False,
+            ensure_dirs=False
+        )
+        
+        assert config.api_key == ""
+        assert config.max_tokens == 0
+        assert config.working_dir == Path("/nonexistent/path")
+        assert not config.working_dir.exists()
+
+    def test_get_config_invalid_source_type_error(self):
+        """Test get_config() with invalid source type."""
+        invalid_sources = [
+            123,          # int
+            ["list"],     # list
+            {"set"},      # set (not dict)
+            object(),     # arbitrary object
+        ]
+        
+        for invalid_source in invalid_sources:
+            with pytest.raises(TypeError) as exc_info:
+                LightRAGConfig.get_config(source=invalid_source)
+            
+            error_message = str(exc_info.value)
+            assert "Unsupported source type" in error_message
+            assert "Expected None, str, Path, or dict" in error_message
+
+    def test_get_config_invalid_override_parameter_error(self):
+        """Test get_config() with invalid parameter names in overrides."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with pytest.raises(LightRAGConfigError) as exc_info:
+                LightRAGConfig.get_config(
+                    api_key="test-key",
+                    working_dir=temp_dir,
+                    invalid_parameter="invalid_value"
+                )
+            
+            error_message = str(exc_info.value)
+            assert "Invalid configuration parameter: 'invalid_parameter'" in error_message
+            assert "Valid parameters are:" in error_message
+
+    def test_get_config_multiple_invalid_override_parameters(self):
+        """Test get_config() error reporting with multiple invalid parameters."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with pytest.raises(LightRAGConfigError) as exc_info:
+                LightRAGConfig.get_config(
+                    api_key="test-key",
+                    working_dir=temp_dir,
+                    first_invalid="value1",
+                    second_invalid="value2"
+                )
+            
+            error_message = str(exc_info.value)
+            # Should report the first invalid parameter encountered
+            assert "Invalid configuration parameter:" in error_message
+            assert ("first_invalid" in error_message or "second_invalid" in error_message)
+
+    def test_get_config_file_not_found_error(self):
+        """Test get_config() with nonexistent file source."""
+        nonexistent_file = "/path/that/definitely/does/not/exist.json"
+        
+        with pytest.raises(FileNotFoundError) as exc_info:
+            LightRAGConfig.get_config(source=nonexistent_file)
+        
+        error_message = str(exc_info.value)
+        assert "Configuration file not found" in error_message
+        assert nonexistent_file in error_message
+
+    def test_get_config_invalid_json_error(self):
+        """Test get_config() with invalid JSON file."""
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+            f.write('{"api_key": "test", invalid json}')
+            temp_file = f.name
+        
+        try:
+            with pytest.raises(LightRAGConfigError) as exc_info:
+                LightRAGConfig.get_config(source=temp_file)
+            
+            error_message = str(exc_info.value)
+            assert "Invalid JSON in configuration file" in error_message
+            assert temp_file in error_message
+        finally:
+            os.unlink(temp_file)
+
+    def test_get_config_validation_error_propagation(self):
+        """Test that validation errors are properly propagated from get_config()."""
+        config_dict = {
+            "api_key": "",  # Invalid
+            "max_async": -1  # Invalid
+        }
+        
+        with pytest.raises(LightRAGConfigError) as exc_info:
+            LightRAGConfig.get_config(
+                source=config_dict,
+                validate_config=True  # Explicit validation enabled
+            )
+        
+        # Should get validation error, not creation error
+        error_message = str(exc_info.value)
+        assert "API key is required" in error_message
+
+    def test_get_config_directory_creation_error_handling(self):
+        """Test get_config() error handling when directory creation fails."""
+        # Try to create directory in a location that should fail
+        invalid_path = Path("/root/definitely_cannot_create_here")
+        
+        with pytest.raises(LightRAGConfigError) as exc_info:
+            LightRAGConfig.get_config(
+                api_key="test-key",
+                working_dir=invalid_path,
+                ensure_dirs=True
+            )
+        
+        error_message = str(exc_info.value)
+        assert "Failed to create required directories" in error_message
+
+    def test_get_config_integration_with_existing_factory_methods(self):
+        """Test that get_config() integrates properly with existing factory methods."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Test that get_config() produces same result as direct factory methods
+            
+            # Test environment loading
+            with patch.dict(os.environ, {
+                "OPENAI_API_KEY": "integration-key",
+                "LIGHTRAG_MODEL": "gpt-4"
+            }):
+                direct_config = LightRAGConfig.from_environment()
+                direct_config.working_dir = Path(temp_dir)
+                direct_config.ensure_directories()
+                direct_config.validate()
+                
+                get_config_result = LightRAGConfig.get_config(
+                    working_dir=temp_dir
+                )
+                
+                assert direct_config.api_key == get_config_result.api_key
+                assert direct_config.model == get_config_result.model
+                assert direct_config.working_dir == get_config_result.working_dir
+
+    def test_get_config_dict_integration(self):
+        """Test get_config() dict source integration with from_dict factory."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config_dict = {
+                "api_key": "dict-integration-key",
+                "model": "gpt-3.5-turbo",
+                "working_dir": temp_dir
+            }
+            
+            # Compare direct from_dict with get_config
+            direct_config = LightRAGConfig.from_dict(config_dict)
+            direct_config.ensure_directories()
+            direct_config.validate()
+            
+            get_config_result = LightRAGConfig.get_config(source=config_dict)
+            
+            assert direct_config.api_key == get_config_result.api_key
+            assert direct_config.model == get_config_result.model
+            assert direct_config.working_dir == get_config_result.working_dir
+
+    def test_get_config_file_integration(self):
+        """Test get_config() file source integration with from_file factory."""
+        config_data = {
+            "api_key": "file-integration-key",
+            "model": "gpt-4-turbo",
+            "max_tokens": 8192
+        }
+        
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+            json.dump(config_data, f)
+            temp_file = f.name
+        
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                # Compare direct from_file with get_config
+                direct_config = LightRAGConfig.from_file(temp_file)
+                direct_config.working_dir = Path(temp_dir)
+                direct_config.ensure_directories()
+                direct_config.validate()
+                
+                get_config_result = LightRAGConfig.get_config(
+                    source=temp_file,
+                    working_dir=temp_dir
+                )
+                
+                assert direct_config.api_key == get_config_result.api_key
+                assert direct_config.model == get_config_result.model
+                assert direct_config.max_tokens == get_config_result.max_tokens
+                assert get_config_result.working_dir == Path(temp_dir)
+        finally:
+            os.unlink(temp_file)
+
+    def test_get_config_complex_override_scenarios(self):
+        """Test get_config() with complex parameter override scenarios."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Test Path object override
+            working_dir = Path(temp_dir) / "custom"
+            graph_dir = Path(temp_dir) / "graph_custom"
+            
+            config = LightRAGConfig.get_config(
+                api_key="complex-test-key",
+                working_dir=working_dir,
+                graph_storage_dir=graph_dir,
+                max_async=128,
+                max_tokens=65536
+            )
+            
+            assert config.working_dir == working_dir
+            assert config.graph_storage_dir == graph_dir
+            assert config.max_async == 128
+            assert config.max_tokens == 65536
+            
+            # All directories should be created
+            assert working_dir.exists()
+            assert graph_dir.exists()
+
+    def test_get_config_string_path_conversion(self):
+        """Test that get_config() properly converts string paths to Path objects."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            working_str = str(Path(temp_dir) / "string_working")
+            graph_str = str(Path(temp_dir) / "string_graph")
+            
+            config = LightRAGConfig.get_config(
+                api_key="string-path-key",
+                working_dir=working_str,
+                graph_storage_dir=graph_str
+            )
+            
+            assert isinstance(config.working_dir, Path)
+            assert isinstance(config.graph_storage_dir, Path)
+            assert config.working_dir == Path(working_str)
+            assert config.graph_storage_dir == Path(graph_str)
+            
+            # Should have created directories
+            assert config.working_dir.exists()
+            assert config.graph_storage_dir.exists()
+
+    def test_get_config_error_context_preservation(self):
+        """Test that get_config() preserves error context in exception chains."""
+        # Test file error context
+        with pytest.raises(FileNotFoundError) as exc_info:
+            LightRAGConfig.get_config(source="/nonexistent/file.json")
+        
+        # Should be original FileNotFoundError, not wrapped
+        assert isinstance(exc_info.value, FileNotFoundError)
+        
+        # Test validation error context
+        with pytest.raises(LightRAGConfigError) as exc_info:
+            LightRAGConfig.get_config(
+                api_key="",  # Invalid
+                validate_config=True
+            )
+        
+        # Should be original LightRAGConfigError
+        assert isinstance(exc_info.value, LightRAGConfigError)
+        assert "API key is required" in str(exc_info.value)
+
+    def test_get_config_exception_wrapping_for_unexpected_errors(self):
+        """Test that get_config() wraps unexpected exceptions in LightRAGConfigError."""
+        # Create a scenario that would cause an unexpected error
+        with patch.object(LightRAGConfig, 'from_environment', side_effect=RuntimeError("Unexpected error")):
+            with pytest.raises(LightRAGConfigError) as exc_info:
+                LightRAGConfig.get_config()
+            
+            error_message = str(exc_info.value)
+            assert "Failed to create configuration" in error_message
+            assert "Unexpected error" in error_message
+            
+            # Should have original exception as cause
+            assert isinstance(exc_info.value.__cause__, RuntimeError)
+
+    def test_get_config_performance_with_large_overrides(self):
+        """Test get_config() performance and correctness with many parameter overrides."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Test with many override parameters (but all valid)
+            overrides = {
+                "api_key": "performance-test-key",
+                "model": "gpt-4-performance",
+                "embedding_model": "text-embedding-performance",
+                "working_dir": temp_dir,
+                "max_async": 256,
+                "max_tokens": 131072
+            }
+            
+            config = LightRAGConfig.get_config(**overrides)
+            
+            # All overrides should be applied correctly
+            for key, expected_value in overrides.items():
+                actual_value = getattr(config, key)
+                if key == "working_dir":
+                    # working_dir should be converted to Path in __post_init__
+                    assert actual_value == Path(expected_value)
+                else:
+                    assert actual_value == expected_value
+
+    def test_get_config_source_priority_order(self):
+        """Test that parameter overrides take priority over all source types."""
+        config_data = {
+            "api_key": "file-key",
+            "model": "file-model",
+            "max_async": 32
+        }
+        
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+            json.dump(config_data, f)
+            temp_file = f.name
+        
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                # Test that overrides take priority over file source
+                config = LightRAGConfig.get_config(
+                    source=temp_file,
+                    api_key="override-key",      # Override file value
+                    model="override-model",      # Override file value
+                    max_tokens=16384,           # New parameter
+                    working_dir=temp_dir        # New parameter
+                )
+                
+                # Overrides should win
+                assert config.api_key == "override-key"
+                assert config.model == "override-model"
+                assert config.max_tokens == 16384
+                assert config.working_dir == Path(temp_dir)
+                
+                # Non-overridden file values should remain
+                assert config.max_async == 32
+        finally:
+            os.unlink(temp_file)
+
+    def test_get_config_with_none_source_explicit(self):
+        """Test get_config() with explicitly passed None source."""
+        with patch.dict(os.environ, {
+            "OPENAI_API_KEY": "explicit-none-key",
+            "LIGHTRAG_MODEL": "gpt-4-explicit"
+        }):
+            with tempfile.TemporaryDirectory() as temp_dir:
+                config = LightRAGConfig.get_config(
+                    source=None,  # Explicit None
+                    working_dir=temp_dir
+                )
+                
+                assert config.api_key == "explicit-none-key"
+                assert config.model == "gpt-4-explicit"
+                assert config.working_dir == Path(temp_dir)
+
+    def test_get_config_comprehensive_integration_test(self):
+        """Comprehensive integration test covering all get_config() features."""
+        # Prepare environment
+        with patch.dict(os.environ, {
+            "OPENAI_API_KEY": "integration-env-key",
+            "LIGHTRAG_MODEL": "gpt-3.5-turbo",
+            "LIGHTRAG_MAX_ASYNC": "8"
+        }):
+            # Prepare file
+            config_data = {
+                "api_key": "integration-file-key",
+                "model": "gpt-4-file",
+                "max_tokens": 4096,
+                "embedding_model": "text-embedding-file"
+            }
+            
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+                json.dump(config_data, f)
+                temp_file = f.name
+            
+            try:
+                with tempfile.TemporaryDirectory() as temp_dir:
+                    # Test comprehensive configuration
+                    config = LightRAGConfig.get_config(
+                        source=temp_file,                    # Load from file
+                        model="gpt-4-final-override",        # Override file value
+                        max_async=64,                        # Override environment value
+                        working_dir=temp_dir,                # New parameter
+                        validate_config=True,               # Enable validation
+                        ensure_dirs=True                     # Enable directory creation
+                    )
+                    
+                    # Verify final configuration
+                    assert config.api_key == "integration-file-key"     # From file
+                    assert config.model == "gpt-4-final-override"       # Override wins
+                    assert config.max_tokens == 4096                    # From file
+                    assert config.embedding_model == "text-embedding-file"  # From file
+                    assert config.max_async == 64                       # Override wins
+                    assert config.working_dir == Path(temp_dir)         # Override
+                    
+                    # Verify validation and directory creation occurred
+                    assert config.working_dir.exists()
+                    assert config.graph_storage_dir.exists()
+                    
+                    # Should be able to validate again
+                    config.validate()  # Should not raise
+            finally:
+                os.unlink(temp_file)
 
 
 class TestLightRAGConfigErrorHandling:

@@ -151,6 +151,119 @@ class LightRAGConfig:
             return (self.working_dir / path_obj).resolve()
     
     @classmethod
+    def get_config(cls, 
+                   source: Optional[Union[str, Path, Dict[str, Any]]] = None,
+                   validate_config: bool = True,
+                   ensure_dirs: bool = True,
+                   **overrides) -> 'LightRAGConfig':
+        """
+        Primary factory function for creating and configuring LightRAGConfig instances.
+        
+        This is the recommended entry point for creating LightRAG configurations.
+        It provides intelligent source detection, automatic validation, and
+        directory creation with comprehensive error handling.
+        
+        Args:
+            source: Configuration source. Can be:
+                - None: Load from environment variables (default)
+                - str/Path: Load from JSON file
+                - dict: Load from dictionary
+            validate_config: Whether to validate the configuration before returning
+            ensure_dirs: Whether to ensure directories exist before returning
+            **overrides: Additional configuration values to override
+        
+        Returns:
+            LightRAGConfig: Fully configured and validated instance
+        
+        Raises:
+            LightRAGConfigError: If configuration is invalid or cannot be created
+            FileNotFoundError: If source file doesn't exist
+            TypeError: If source type is unsupported
+        
+        Examples:
+            # Load from environment with defaults
+            config = LightRAGConfig.get_config()
+            
+            # Load from file with overrides
+            config = LightRAGConfig.get_config(
+                source="/path/to/config.json",
+                max_async=32
+            )
+            
+            # Load from dict with validation disabled
+            config = LightRAGConfig.get_config(
+                source={"api_key": "test"},
+                validate_config=False
+            )
+        """
+        try:
+            # Determine source and create base configuration
+            if source is None:
+                # Load from environment variables
+                config = cls.from_environment()
+            elif isinstance(source, (str, Path)):
+                # Load from file
+                config = cls.from_file(source)
+            elif isinstance(source, dict):
+                # Load from dictionary
+                config = cls.from_dict(source)
+            else:
+                raise TypeError(
+                    f"Unsupported source type: {type(source)}. "
+                    f"Expected None, str, Path, or dict."
+                )
+            
+            # Apply any override values
+            if overrides:
+                working_dir_overridden = False
+                for key, value in overrides.items():
+                    if hasattr(config, key):
+                        setattr(config, key, value)
+                        if key == "working_dir":
+                            working_dir_overridden = True
+                    else:
+                        raise LightRAGConfigError(
+                            f"Invalid configuration parameter: '{key}'. "
+                            f"Valid parameters are: {', '.join(config.__dataclass_fields__.keys())}"
+                        )
+                
+                # If working_dir was overridden and graph_storage_dir wasn't explicitly set,
+                # reset graph_storage_dir to None so it gets recalculated based on new working_dir
+                if working_dir_overridden and "graph_storage_dir" not in overrides:
+                    config.graph_storage_dir = None
+                
+                # Re-run post-init processing to handle any Path conversions
+                # and derived values after applying overrides
+                config.__post_init__()
+            
+            # Ensure directories exist if requested
+            if ensure_dirs:
+                try:
+                    config.ensure_directories()
+                except OSError as e:
+                    raise LightRAGConfigError(
+                        f"Failed to create required directories: {e}"
+                    ) from e
+            
+            # Validate configuration if requested
+            if validate_config:
+                config.validate()
+            
+            return config
+            
+        except (FileNotFoundError, TypeError) as e:
+            # Re-raise these as they are already appropriate
+            raise
+        except LightRAGConfigError as e:
+            # Re-raise LightRAGConfigError as-is
+            raise
+        except Exception as e:
+            # Wrap any other exceptions in LightRAGConfigError
+            raise LightRAGConfigError(
+                f"Failed to create configuration: {e}"
+            ) from e
+
+    @classmethod
     def from_environment(cls) -> 'LightRAGConfig':
         """
         Create a LightRAGConfig instance from environment variables.
