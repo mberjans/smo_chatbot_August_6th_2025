@@ -20,8 +20,9 @@ The processor handles:
 
 import re
 import logging
+import asyncio
 from pathlib import Path
-from typing import Optional, Dict, Any, List, Union
+from typing import Optional, Dict, Any, List, Union, Tuple
 from datetime import datetime
 import fitz  # PyMuPDF
 
@@ -209,17 +210,20 @@ class BiomedicalPDFProcessor:
             self.logger.error(f"Unexpected error processing PDF {pdf_path}: {e}")
             raise BiomedicalPDFProcessorError(f"Failed to process PDF: {e}")
     
-    def _extract_metadata(self, doc: fitz.Document, pdf_path: Path) -> Dict[str, Any]:
+    def _extract_metadata(self, doc: fitz.Document, pdf_path: Union[str, Path]) -> Dict[str, Any]:
         """
         Extract comprehensive metadata from the PDF document.
         
         Args:
             doc: Opened PyMuPDF document
-            pdf_path: Path to the PDF file
+            pdf_path: Path to the PDF file (string or Path object)
             
         Returns:
             Dict[str, Any]: Dictionary containing all available metadata
         """
+        # Ensure pdf_path is a Path object
+        pdf_path = Path(pdf_path)
+        
         metadata = {
             'filename': pdf_path.name,
             'file_path': str(pdf_path.absolute()),
@@ -230,34 +234,37 @@ class BiomedicalPDFProcessor:
         # Extract PDF metadata
         pdf_metadata = doc.metadata
         
-        # Map PDF metadata fields with safe extraction
-        metadata_fields = {
-            'title': pdf_metadata.get('title', '').strip(),
-            'author': pdf_metadata.get('author', '').strip(),
-            'subject': pdf_metadata.get('subject', '').strip(),
-            'creator': pdf_metadata.get('creator', '').strip(),
-            'producer': pdf_metadata.get('producer', '').strip(),
-            'keywords': pdf_metadata.get('keywords', '').strip()
-        }
+        # Map PDF metadata fields with safe extraction (handle None values)
+        metadata_fields = {}
+        field_names = ['title', 'author', 'subject', 'creator', 'producer', 'keywords']
         
-        # Only include non-empty metadata fields
-        for field, value in metadata_fields.items():
-            if value:
-                metadata[field] = value
+        for field in field_names:
+            value = pdf_metadata.get(field, '')
+            if value is not None:
+                value = str(value).strip()
+                if value:  # Only include non-empty values
+                    metadata_fields[field] = value
+        
+        # Add valid metadata fields to the result
+        metadata.update(metadata_fields)
         
         # Handle creation and modification dates
         try:
             creation_date = pdf_metadata.get('creationDate', '')
             if creation_date:
                 # PyMuPDF returns dates in format: D:YYYYMMDDHHmmSSOHH'mm'
-                metadata['creation_date'] = self._parse_pdf_date(creation_date)
+                parsed_date = self._parse_pdf_date(creation_date)
+                if parsed_date:  # Only add if parsing succeeded
+                    metadata['creation_date'] = parsed_date
         except Exception as e:
             self.logger.debug(f"Could not parse creation date: {e}")
         
         try:
             mod_date = pdf_metadata.get('modDate', '')
             if mod_date:
-                metadata['modification_date'] = self._parse_pdf_date(mod_date)
+                parsed_date = self._parse_pdf_date(mod_date)
+                if parsed_date:  # Only add if parsing succeeded
+                    metadata['modification_date'] = parsed_date
         except Exception as e:
             self.logger.debug(f"Could not parse modification date: {e}")
         
@@ -456,3 +463,82 @@ class BiomedicalPDFProcessor:
             raise BiomedicalPDFProcessorError(f"Invalid or corrupted PDF: {e}")
         except Exception as e:
             raise BiomedicalPDFProcessorError(f"Failed to get page count: {e}")
+    
+    async def process_all_pdfs(self, papers_dir: Union[str, Path] = "papers/") -> List[Tuple[str, Dict[str, Any]]]:
+        """
+        Asynchronously process all PDF files in the specified directory.
+        
+        This method scans the papers directory for PDF files and processes them
+        using the extract_text_from_pdf method. It includes progress tracking,
+        error recovery, and detailed logging for batch processing operations.
+        
+        Args:
+            papers_dir: Directory containing PDF files (default: "papers/")
+            
+        Returns:
+            List[Tuple[str, Dict[str, Any]]]: List of tuples containing:
+                - text: Extracted text content
+                - metadata: Combined metadata and processing information
+                
+        Note:
+            This method continues processing even if individual PDFs fail,
+            logging errors and moving to the next file. Failed PDFs are
+            skipped but logged for review.
+        """
+        papers_path = Path(papers_dir)
+        documents = []
+        
+        if not papers_path.exists():
+            self.logger.warning(f"Papers directory {papers_path} does not exist")
+            return documents
+        
+        # Find all PDF files
+        pdf_files = list(papers_path.glob("*.pdf"))
+        if not pdf_files:
+            self.logger.info(f"No PDF files found in directory: {papers_path}")
+            return documents
+        
+        self.logger.info(f"Found {len(pdf_files)} PDF files to process in {papers_path}")
+        
+        # Process each PDF file
+        processed_count = 0
+        failed_count = 0
+        
+        for pdf_file in pdf_files:
+            try:
+                self.logger.info(f"Processing PDF {processed_count + 1}/{len(pdf_files)}: {pdf_file.name}")
+                
+                # Extract text and metadata
+                result = self.extract_text_from_pdf(pdf_file)
+                
+                # Combine metadata and processing info for return
+                combined_metadata = result['metadata'].copy()
+                combined_metadata.update(result['processing_info'])
+                combined_metadata['page_texts_count'] = len(result['page_texts'])
+                
+                # Add to results
+                documents.append((result['text'], combined_metadata))
+                processed_count += 1
+                
+                self.logger.info(
+                    f"Successfully processed {pdf_file.name}: "
+                    f"{combined_metadata['total_characters']} characters, "
+                    f"{combined_metadata['pages_processed']} pages"
+                )
+                
+                # Add small delay to prevent overwhelming the system
+                await asyncio.sleep(0.1)
+                
+            except Exception as e:
+                failed_count += 1
+                self.logger.error(f"Failed to process {pdf_file.name}: {e}")
+                # Continue processing other files
+                continue
+        
+        # Log final summary
+        self.logger.info(
+            f"Batch processing completed: {processed_count} successful, "
+            f"{failed_count} failed out of {len(pdf_files)} total files"
+        )
+        
+        return documents

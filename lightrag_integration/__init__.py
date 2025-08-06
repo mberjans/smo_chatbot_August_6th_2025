@@ -25,10 +25,15 @@ from .config import (
     setup_lightrag_logging
 )
 
+# Import PDF processing classes and functions
+from .pdf_processor import (
+    BiomedicalPDFProcessor,
+    BiomedicalPDFProcessorError
+)
+
 # This module will be expanded with component imports as they are implemented
 # Example future imports:
 # from .lightrag_component import LightRAGComponent
-# from .pdf_processor import PDFProcessor
 
 __all__ = [
     "__version__",
@@ -36,5 +41,7 @@ __all__ = [
     "__description__",
     "LightRAGConfig",
     "LightRAGConfigError", 
-    "setup_lightrag_logging"
+    "setup_lightrag_logging",
+    "BiomedicalPDFProcessor",
+    "BiomedicalPDFProcessorError"
 ]
