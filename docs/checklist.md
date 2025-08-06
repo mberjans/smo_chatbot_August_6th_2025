@@ -172,7 +172,7 @@
 - [x] Implement _get_embedding_function with OpenAI embeddings
 
 **CMO-LIGHTRAG-005-T08** [CODE]
-- [ ] Add error handling for API failures and rate limits
+- [x] Add error handling for API failures and rate limits
 
 **CMO-LIGHTRAG-005-T09** [CODE]
 - [ ] Implement API cost monitoring and logging
