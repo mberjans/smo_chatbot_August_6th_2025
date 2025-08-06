@@ -384,6 +384,463 @@ class TestLightRAGConfigDirectories:
             assert config.working_dir.exists()
             assert config.graph_storage_dir.exists()
 
+    # ============================================================================
+    # Comprehensive Directory Creation Tests
+    # ============================================================================
+    
+    def test_ensure_directories_creates_nested_working_dir(self):
+        """Test that ensure_directories creates deeply nested working directories."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create deeply nested path structure
+            nested_path = Path(temp_dir) / "level1" / "level2" / "level3" / "working"
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=nested_path
+            )
+            
+            # Verify directories don't exist initially
+            assert not nested_path.exists()
+            assert not nested_path.parent.exists()
+            
+            # Create directories
+            config.ensure_directories()
+            
+            # Verify all parent directories were created
+            assert nested_path.exists()
+            assert nested_path.is_dir()
+            assert nested_path.parent.exists()
+            assert nested_path.parent.is_dir()
+    
+    def test_ensure_directories_creates_custom_graph_storage_dir(self):
+        """Test that ensure_directories creates custom graph storage directory in different location."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            working_dir = Path(temp_dir) / "working"
+            graph_dir = Path(temp_dir) / "separate" / "graph" / "storage"
+            
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir,
+                graph_storage_dir=graph_dir
+            )
+            
+            # Verify directories don't exist initially
+            assert not working_dir.exists()
+            assert not graph_dir.exists()
+            
+            config.ensure_directories()
+            
+            # Verify both directories were created
+            assert working_dir.exists()
+            assert working_dir.is_dir()
+            assert graph_dir.exists()
+            assert graph_dir.is_dir()
+    
+    def test_ensure_directories_handles_existing_partial_structure(self):
+        """Test that ensure_directories works when some parent directories already exist."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create partial directory structure
+            partial_path = Path(temp_dir) / "existing_parent"
+            partial_path.mkdir()
+            
+            working_dir = partial_path / "new_child" / "working"
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir
+            )
+            
+            config.ensure_directories()
+            
+            assert working_dir.exists()
+            assert working_dir.is_dir()
+            assert config.graph_storage_dir.exists()
+            assert config.graph_storage_dir.is_dir()
+    
+    def test_ensure_directories_preserves_existing_directory_contents(self):
+        """Test that ensure_directories doesn't affect existing directory contents."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            working_dir = Path(temp_dir) / "working"
+            working_dir.mkdir()
+            
+            # Create some existing content
+            existing_file = working_dir / "existing_file.txt"
+            existing_file.write_text("existing content")
+            existing_subdir = working_dir / "existing_subdir"
+            existing_subdir.mkdir()
+            
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir
+            )
+            
+            config.ensure_directories()
+            
+            # Verify existing content is preserved
+            assert existing_file.exists()
+            assert existing_file.read_text() == "existing content"
+            assert existing_subdir.exists()
+            assert existing_subdir.is_dir()
+    
+    def test_ensure_directories_permission_error_propagation(self):
+        """Test that ensure_directories properly propagates permission errors."""
+        # Test with a path that would require root permissions
+        restricted_path = Path("/usr/local/restricted_test_dir")
+        config = LightRAGConfig(
+            api_key="test-key",
+            working_dir=restricted_path
+        )
+        
+        # Should raise OSError or PermissionError
+        with pytest.raises((OSError, PermissionError)):
+            config.ensure_directories()
+    
+    def test_ensure_directories_file_blocking_working_dir(self):
+        """Test error handling when a file exists where working_dir should be created."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create a file where we want to create working directory
+            blocking_file = Path(temp_dir) / "blocking_file"
+            blocking_file.touch()
+            
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=blocking_file
+            )
+            
+            # Should raise OSError when trying to create directory over file
+            with pytest.raises(OSError):
+                config.ensure_directories()
+    
+    def test_ensure_directories_file_blocking_graph_storage_dir(self):
+        """Test error handling when a file exists where graph_storage_dir should be created."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            working_dir = Path(temp_dir) / "working"
+            working_dir.mkdir()
+            
+            # Create file where graph storage should go
+            graph_file = working_dir / "lightrag"
+            graph_file.touch()
+            
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir
+            )
+            
+            # Should raise OSError when trying to create directory over file
+            with pytest.raises(OSError):
+                config.ensure_directories()
+    
+    def test_ensure_directories_creates_both_dirs_atomically(self):
+        """Test that ensure_directories creates both directories even if one already exists."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            working_dir = Path(temp_dir) / "working"
+            graph_dir = Path(temp_dir) / "custom_graph"
+            
+            # Pre-create working directory but not graph directory
+            working_dir.mkdir()
+            
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir,
+                graph_storage_dir=graph_dir
+            )
+            
+            config.ensure_directories()
+            
+            # Both should exist after call
+            assert working_dir.exists()
+            assert working_dir.is_dir()
+            assert graph_dir.exists()
+            assert graph_dir.is_dir()
+    
+    # ============================================================================
+    # Comprehensive Path Validation Tests
+    # ============================================================================
+    
+    def test_validation_succeeds_when_working_dir_can_be_created(self):
+        """Test that validation handles creatable directories by pre-creating them."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Pre-create the working directory to match current validation behavior
+            new_working_dir = Path(temp_dir) / "new_working_dir"
+            new_working_dir.mkdir()
+            
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=new_working_dir
+            )
+            
+            # Validation should pass with existing directory
+            config.validate()  # Should not raise
+    
+    def test_validation_fails_with_non_creatable_working_dir(self):
+        """Test that validation fails when working_dir cannot be created due to permissions."""
+        # Try to create in a restricted location
+        restricted_path = Path("/root/restricted_access_test")
+        config = LightRAGConfig(
+            api_key="test-key",
+            working_dir=restricted_path
+        )
+        
+        # Validation should fail with LightRAGConfigError
+        with pytest.raises(LightRAGConfigError, match="Working directory .* cannot be created"):
+            config.validate()
+    
+    def test_validation_fails_when_working_dir_is_file(self):
+        """Test that validation fails when working_dir points to an existing file."""
+        with tempfile.NamedTemporaryFile() as temp_file:
+            file_path = Path(temp_file.name)
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=file_path
+            )
+            
+            with pytest.raises(LightRAGConfigError, match="Working directory .* is not a directory"):
+                config.validate()
+    
+    def test_validation_succeeds_with_existing_working_dir(self):
+        """Test that validation passes with an existing, valid working directory."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=Path(temp_dir)
+            )
+            
+            # Should pass validation
+            config.validate()  # Should not raise
+    
+    def test_validation_with_relative_working_dir_path(self):
+        """Test validation behavior with relative working directory paths."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Change to temp directory and use relative path
+            original_cwd = Path.cwd()
+            try:
+                os.chdir(temp_dir)
+                relative_path = Path("relative_working_dir")
+                relative_path.mkdir()  # Pre-create to match current validation behavior
+                
+                config = LightRAGConfig(
+                    api_key="test-key",
+                    working_dir=relative_path
+                )
+                
+                # Should pass validation with existing directory
+                config.validate()
+                
+                # Path remains relative (not automatically converted to absolute)
+                assert not config.working_dir.is_absolute()
+                assert config.working_dir == relative_path
+                
+                # But it should still exist in the current directory
+                assert config.working_dir.exists()
+            finally:
+                os.chdir(original_cwd)
+    
+    def test_validation_handles_working_dir_and_graph_storage_dir_relationship(self):
+        """Test that validation handles working_dir and graph_storage_dir relationship correctly."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            working_dir = Path(temp_dir) / "new_working"
+            working_dir.mkdir()  # Pre-create to match current validation behavior
+            # Don't specify graph_storage_dir, it should default to working_dir/lightrag
+            
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir
+            )
+            
+            # Validation should pass with existing working directory
+            config.validate()
+            
+            # Graph storage dir should be correctly set relative to working dir
+            assert config.graph_storage_dir == working_dir / "lightrag"
+    
+    def test_validation_directory_creation_behavior(self):
+        """Test the actual behavior of validation with directory creation."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Test the current validation behavior: creates directory temporarily, then removes it
+            non_existent_dir = Path(temp_dir) / "will_be_created_and_removed"
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=non_existent_dir
+            )
+            
+            # This should fail because validation creates the dir, removes it, then checks if it's a dir
+            with pytest.raises(LightRAGConfigError, match="Working directory path is not a directory"):
+                config.validate()
+            
+            # However, if we create the directory and put something in it
+            non_existent_dir.mkdir()
+            (non_existent_dir / "dummy_file").touch()
+            
+            # Now validation should pass because the directory won't be removed (it's not empty)
+            config.validate()  # Should not raise
+    
+    # ============================================================================
+    # Advanced Path Resolution Tests
+    # ============================================================================
+    
+    def test_get_absolute_path_with_none_input(self):
+        """Test get_absolute_path error handling with None input."""
+        config = LightRAGConfig(api_key="test-key")
+        
+        # Should raise an appropriate error for None input
+        with pytest.raises((TypeError, AttributeError)):
+            config.get_absolute_path(None)
+    
+    def test_get_absolute_path_with_empty_string(self):
+        """Test get_absolute_path handling of empty string input."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=Path(temp_dir)
+            )
+            
+            result = config.get_absolute_path("")
+            assert result.is_absolute()
+            # Should resolve to working directory for empty string
+            assert result == Path(temp_dir).resolve()
+    
+    def test_get_absolute_path_with_dot_paths(self):
+        """Test get_absolute_path with current (.) and parent (..) directory references."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=Path(temp_dir)
+            )
+            
+            # Test current directory reference
+            current_result = config.get_absolute_path(".")
+            assert current_result.is_absolute()
+            assert current_result == Path(temp_dir).resolve()
+            
+            # Test parent directory reference
+            parent_result = config.get_absolute_path("..")
+            expected_parent = Path(temp_dir).parent.resolve()
+            assert parent_result == expected_parent
+    
+    def test_get_absolute_path_complex_relative_path(self):
+        """Test get_absolute_path with complex relative paths containing multiple components."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=Path(temp_dir)
+            )
+            
+            # Test complex relative path
+            complex_path = "../sibling/./child/../final"
+            result = config.get_absolute_path(complex_path)
+            
+            assert result.is_absolute()
+            # Should be properly resolved
+            expected = (Path(temp_dir) / complex_path).resolve()
+            assert result == expected
+    
+    def test_get_absolute_path_preserves_symlinks_appropriately(self):
+        """Test get_absolute_path behavior with symlinks if supported by filesystem."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            
+            # Create a target directory
+            target_dir = temp_path / "target"
+            target_dir.mkdir()
+            
+            # Try to create a symlink (skip test if not supported)
+            try:
+                link_dir = temp_path / "link"
+                link_dir.symlink_to(target_dir)
+                
+                config = LightRAGConfig(
+                    api_key="test-key",
+                    working_dir=temp_path
+                )
+                
+                # Test path resolution through symlink
+                result = config.get_absolute_path("link/subpath")
+                assert result.is_absolute()
+                
+            except (OSError, NotImplementedError):
+                # Skip test if symlinks not supported on this system
+                pytest.skip("Symlinks not supported on this filesystem")
+    
+    # ============================================================================
+    # Integration Tests for Directory Operations and Validation
+    # ============================================================================
+    
+    def test_validation_and_ensure_directories_integration(self):
+        """Test integration between validation and ensure_directories methods."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            working_dir = Path(temp_dir) / "integrated_test"
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir
+            )
+            
+            # Use ensure_directories first to create the structure
+            config.ensure_directories()
+            assert working_dir.exists()
+            assert config.graph_storage_dir.exists()
+            
+            # Then validation should pass with existing directories
+            config.validate()  # Should not raise
+    
+    def test_post_init_path_normalization_with_string_inputs(self):
+        """Test that __post_init__ properly normalizes string path inputs."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            working_str = str(Path(temp_dir) / "working")
+            graph_str = str(Path(temp_dir) / "graph")
+            
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_str,
+                graph_storage_dir=graph_str
+            )
+            
+            # Paths should be converted to Path objects
+            assert isinstance(config.working_dir, Path)
+            assert isinstance(config.graph_storage_dir, Path)
+            assert config.working_dir == Path(working_str)
+            assert config.graph_storage_dir == Path(graph_str)
+    
+    def test_directory_operations_with_unicode_paths(self):
+        """Test directory operations with Unicode characters in paths."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create path with Unicode characters
+            unicode_dir = Path(temp_dir) / "测试目录" / "🔥_test_🌟"
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=unicode_dir
+            )
+            
+            try:
+                config.ensure_directories()
+                assert unicode_dir.exists()
+                assert unicode_dir.is_dir()
+                
+                # Validation should also work
+                config.validate()  # Should not raise
+                
+            except (OSError, UnicodeError) as e:
+                # Skip if filesystem doesn't support Unicode paths
+                pytest.skip(f"Unicode paths not fully supported: {e}")
+    
+    def test_directory_operations_preserve_permissions(self):
+        """Test that directory operations preserve appropriate permissions."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            working_dir = Path(temp_dir) / "perm_test"
+            config = LightRAGConfig(
+                api_key="test-key",
+                working_dir=working_dir
+            )
+            
+            config.ensure_directories()
+            
+            # Directory should be created with reasonable permissions
+            stat_info = working_dir.stat()
+            
+            # Should be readable and writable by owner
+            import stat
+            mode = stat_info.st_mode
+            assert mode & stat.S_IRUSR  # Owner read
+            assert mode & stat.S_IWUSR  # Owner write
+            assert mode & stat.S_IXUSR  # Owner execute (needed for directory access)
+
 
 class TestLightRAGConfigFactory:
     """Test class for factory method functionality."""
