@@ -37,3 +37,7 @@ transformers==4.37.2
 
 # for feedback database
 asyncpg==0.30.0
+
+# for enhanced PDF processing error handling
+psutil==5.9.8
+PyMuPDF==1.23.26

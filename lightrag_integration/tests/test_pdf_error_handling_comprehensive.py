@@ -50,7 +50,15 @@ from pathlib import Path
 from unittest.mock import Mock, patch, MagicMock, mock_open, call
 import fitz  # PyMuPDF
 
-from lightrag_integration.pdf_processor import BiomedicalPDFProcessor, BiomedicalPDFProcessorError
+from lightrag_integration.pdf_processor import (
+    BiomedicalPDFProcessor, 
+    BiomedicalPDFProcessorError,
+    PDFValidationError,
+    PDFProcessingTimeoutError,
+    PDFMemoryError,
+    PDFFileAccessError,
+    PDFContentError
+)
 
 
 class TestCorruptedPDFHandling:
@@ -75,7 +83,8 @@ class TestCorruptedPDFHandling:
             with pytest.raises(BiomedicalPDFProcessorError) as exc_info:
                 self.processor.extract_text_from_pdf(tmp_path)
             
-            assert "corrupted" in str(exc_info.value).lower() or "invalid" in str(exc_info.value).lower()
+            # Enhanced error handling detects zero-byte files earlier with specific message
+            assert "empty" in str(exc_info.value).lower() or "0 bytes" in str(exc_info.value).lower()
             
         finally:
             tmp_path.unlink(missing_ok=True)
@@ -219,17 +228,17 @@ class TestCorruptedPDFHandling:
             assert result['metadata']['pages'] == 4
             assert len(result['page_texts']) == 4
             
-            # Check that good pages were processed
-            assert "Page 0: This page works fine" in result['page_texts'][0]
-            assert "Page 2: This page also works" in result['page_texts'][2]
+            # Check that good pages were processed (text preprocessing may remove page numbers as artifacts)
+            assert "This page works fine" in result['page_texts'][0]
+            assert "This page also works" in result['page_texts'][2]
             
             # Check that corrupted pages have empty content
             assert result['page_texts'][1] == ""  # Corrupted page 1
             assert result['page_texts'][3] == ""  # Corrupted page 3
             
             # Combined text should only contain the good pages
-            assert "Page 0: This page works fine" in result['text']
-            assert "Page 2: This page also works" in result['text']
+            assert "This page works fine" in result['text']
+            assert "This page also works" in result['text']
             assert "Page 1 is corrupted" not in result['text']
             
         finally:
@@ -490,10 +499,12 @@ class TestSystemLevelFailures:
             tmp_path = Path(tmp_file.name)
         
         try:
-            # MemoryError should be re-raised since it's not a PyMuPDF-specific error
-            # and not caught by PermissionError handler, so it will be re-raised by the generic handler
-            with pytest.raises(MemoryError):
+            # Enhanced error handling wraps MemoryError in PDFValidationError at the open stage  
+            # with more specific error message indicating the failure reason
+            with pytest.raises(PDFValidationError) as exc_info:
                 self.processor.extract_text_from_pdf(tmp_path)
+                
+            assert "memory" in str(exc_info.value).lower() or "allocate" in str(exc_info.value).lower()
             
         finally:
             tmp_path.unlink(missing_ok=True)
@@ -567,9 +578,12 @@ class TestSystemLevelFailures:
             tmp_path = Path(tmp_file.name)
         
         try:
-            # TimeoutError should be re-raised since it's not a PyMuPDF-specific error
-            with pytest.raises(TimeoutError):
+            # Enhanced error handling wraps TimeoutError in PDFValidationError at the open stage
+            # with descriptive error message indicating the failure reason
+            with pytest.raises(PDFValidationError) as exc_info:
                 self.processor.extract_text_from_pdf(tmp_path)
+                
+            assert "timeout" in str(exc_info.value).lower() or "large" in str(exc_info.value).lower()
             
         finally:
             tmp_path.unlink(missing_ok=True)
@@ -594,9 +608,13 @@ class TestSystemLevelFailures:
             for error in io_errors:
                 mock_fitz_open.side_effect = error
                 
-                # These errors should be re-raised since they're not PyMuPDF-specific
-                with pytest.raises(type(error)):
+                # Enhanced error handling wraps I/O errors in PDFValidationError at the open stage
+                # with descriptive error message indicating the failure reason
+                with pytest.raises(PDFValidationError) as exc_info:
                     self.processor.extract_text_from_pdf(tmp_path)
+                    
+                # Verify the original error message is preserved
+                assert str(error) in str(exc_info.value)
                 
         finally:
             tmp_path.unlink(missing_ok=True)
@@ -629,9 +647,13 @@ class TestSystemLevelFailures:
             for error in resource_errors:
                 mock_fitz_open.side_effect = error
                 
-                # These errors should be re-raised since they're not PyMuPDF-specific
-                with pytest.raises(type(error)):
+                # Enhanced error handling wraps resource errors in PDFValidationError at the open stage
+                # with descriptive error message indicating the failure reason
+                with pytest.raises(PDFValidationError) as exc_info:
                     self.processor.extract_text_from_pdf(tmp_path)
+                    
+                # Verify the original error message is preserved
+                assert str(error) in str(exc_info.value)
                 
         finally:
             tmp_path.unlink(missing_ok=True)
@@ -746,17 +768,18 @@ class TestErrorHandlingIntegration:
             assert result['metadata']['pages'] == 4
             assert len(result['page_texts']) == 4
             
-            # Successful pages should have content
-            assert "Content from page 0" in result['page_texts'][0]
-            assert "Content from page 2" in result['page_texts'][2]
+            # Successful pages should have content (text preprocessing may remove page numbers as artifacts)
+            assert "Content from page" in result['page_texts'][0]
+            assert "Content from page" in result['page_texts'][2]
             
             # Failed pages should be empty
             assert result['page_texts'][1] == ""
             assert result['page_texts'][3] == ""
             
             # Combined text should only contain successful pages
-            assert "Content from page 0" in result['text']
-            assert "Content from page 2" in result['text']
+            assert "Content from page" in result['text']
+            # Should have content from both working pages
+            assert result['text'].count("Content from page") == 2
             
             # Should have logged warnings about page failures
             warning_logs = [msg for msg in self.log_messages if "Failed to extract text from page" in msg]
@@ -773,26 +796,26 @@ class TestErrorHandlingIntegration:
             tmp_path = Path(tmp_file.name)
         
         try:
-            # Test FileDataError - should be wrapped in BiomedicalPDFProcessorError
+            # Test FileDataError - should be wrapped in PDFValidationError (which inherits from BiomedicalPDFProcessorError)
             mock_fitz_open.side_effect = fitz.FileDataError("corrupted")
-            with pytest.raises(BiomedicalPDFProcessorError) as exc_info:
+            with pytest.raises(PDFValidationError) as exc_info:
                 self.processor.extract_text_from_pdf(tmp_path)
             
             error_msg = str(exc_info.value)
             assert error_msg.startswith("Invalid or corrupted PDF file"), \
                 f"Error message '{error_msg}' should start with 'Invalid or corrupted PDF file'"
             
-            # Test generic Exception - these get re-raised due to exception handler structure
+            # Test generic Exception - enhanced error handling wraps these in PDFValidationError
             mock_fitz_open.side_effect = Exception("unexpected error")
-            with pytest.raises(Exception) as exc_info:
+            with pytest.raises(PDFValidationError) as exc_info:
                 self.processor.extract_text_from_pdf(tmp_path)
-            assert str(exc_info.value) == "unexpected error"
+            assert "Failed to open PDF: unexpected error" in str(exc_info.value)
             
-            # Test PermissionError - also gets re-raised
+            # Test PermissionError - also gets wrapped in PDFValidationError  
             mock_fitz_open.side_effect = PermissionError("access denied")
-            with pytest.raises(PermissionError) as exc_info:
+            with pytest.raises(PDFValidationError) as exc_info:
                 self.processor.extract_text_from_pdf(tmp_path)
-            assert str(exc_info.value) == "access denied"
+            assert "Failed to open PDF: access denied" in str(exc_info.value)
                 
         finally:
             tmp_path.unlink(missing_ok=True)
