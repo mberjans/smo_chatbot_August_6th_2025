@@ -3,9 +3,9 @@
 ## Progress Tracking
 
 ### Phase 1 MVP Progress
-- **Total Tasks**: 7/64 (11%)
+- **Total Tasks**: 8/64 (13%)
 - **Setup Tasks**: 5/8 (63%)
-- **Test Tasks**: 0/16 (0%)
+- **Test Tasks**: 1/16 (6%)
 - **Code Tasks**: 0/32 (0%)
 - **Documentation Tasks**: 1/6 (17%)
 - **Validation Tasks**: 1/2 (50%)
@@ -18,7 +18,7 @@
 - **Documentation Tasks**: 0/6 (0%)
 - **Validation Tasks**: 0/2 (0%)
 
-**Overall Progress**: 7/116 tasks completed (6%)
+**Overall Progress**: 8/116 tasks completed (7%)
 
 ---
 
@@ -89,7 +89,7 @@
 ### CMO-LIGHTRAG-003: Biomedical PDF Text Extraction
 
 **CMO-LIGHTRAG-003-T01-TEST** [TEST]
-- [ ] Write unit tests for PDF text extraction with sample biomedical PDF
+- [x] Write unit tests for PDF text extraction with sample biomedical PDF
 
 **CMO-LIGHTRAG-003-T02-TEST** [TEST]
 - [ ] Write tests for metadata extraction from PDF files
