@@ -104,7 +104,7 @@
 - [x] Implement extract_text_from_pdf method with PyMuPDF
 
 **CMO-LIGHTRAG-003-T06** [CODE]
-- [ ] Add text preprocessing for biomedical content (remove artifacts)
+- [x] Add text preprocessing for biomedical content (remove artifacts)
 
 **CMO-LIGHTRAG-003-T07** [CODE]
 - [ ] Implement metadata extraction (filename, pages, creation date)
