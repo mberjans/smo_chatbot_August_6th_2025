@@ -1,0 +1,58 @@
+# LightRAG Integration Requirements
+# Generated for CMO-LIGHTRAG-001-T04
+# Python 3.13.5 virtual environment: lightrag_env
+# Project: Clinical Metabolomics Oracle - LightRAG Integration
+# Date: 2025-08-06
+
+# ==============================================================================
+# Core LightRAG Dependencies
+# ==============================================================================
+lightrag-hku==1.4.6
+PyMuPDF==1.26.3
+python-dotenv==1.1.1
+
+# ==============================================================================
+# Data Processing and Analytics
+# ==============================================================================
+numpy==2.3.2
+pandas==2.3.1
+networkx==3.5
+tiktoken==0.10.0
+nano-vectordb==0.0.4.3
+
+# ==============================================================================
+# HTTP Client and Async Support
+# ==============================================================================
+aiohttp==3.12.15
+aiosignal==1.4.0
+aiohappyeyeballs==2.6.1
+requests==2.32.4
+
+# ==============================================================================
+# Development and Code Quality
+# ==============================================================================
+black==25.1.0
+flake8==7.3.0
+
+# ==============================================================================
+# Testing Framework
+# ==============================================================================
+pytest==8.4.1
+pytest-asyncio==1.1.0
+
+# ==============================================================================
+# Utility Libraries
+# ==============================================================================
+click==8.2.1
+tenacity==9.1.2
+regex==2025.7.34
+xlsxwriter==3.2.5
+
+# ==============================================================================
+# Installation Instructions
+# ==============================================================================
+# To install these dependencies in a new environment:
+# 1. Create virtual environment: python -m venv lightrag_env
+# 2. Activate environment: source lightrag_env/bin/activate (Unix) or lightrag_env\Scripts\activate (Windows)
+# 3. Install requirements: pip install -r requirements_lightrag.txt
+# 4. Verify installation: pip list

@@ -36,7 +36,7 @@
 - [x] Install development and testing dependencies (pytest, pytest-asyncio, black, flake8)
 
 **CMO-LIGHTRAG-001-T04** [SETUP]
-- [ ] Create requirements_lightrag.txt with pinned versions
+- [x] Create requirements_lightrag.txt with pinned versions
 
 **CMO-LIGHTRAG-001-T05** [SETUP]
 - [ ] Set up .env.example file with required environment variables
