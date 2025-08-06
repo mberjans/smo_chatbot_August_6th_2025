@@ -95,7 +95,7 @@
 - [x] Write tests for metadata extraction from PDF files
 
 **CMO-LIGHTRAG-003-T03-TEST** [TEST]
-- [ ] Write tests for error handling (corrupted, encrypted PDFs)
+- [x] Write tests for error handling (corrupted, encrypted PDFs)
 
 **CMO-LIGHTRAG-003-T04** [CODE]
 - [ ] Implement BiomedicalPDFProcessor class structure
