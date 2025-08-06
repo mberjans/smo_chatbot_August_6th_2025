@@ -311,8 +311,18 @@ class BiomedicalPDFProcessor:
         """
         Preprocess extracted text for biomedical content analysis.
         
-        This method applies specialized cleaning and normalization techniques
-        suitable for biomedical and clinical metabolomics literature.
+        This method applies comprehensive cleaning and normalization techniques
+        specifically designed for biomedical and clinical metabolomics literature.
+        It handles common PDF extraction artifacts while preserving scientific 
+        notation, chemical formulas, statistical values, and biomedical terminology.
+        
+        Processing steps:
+        1. Remove common PDF artifacts (headers, footers, page numbers)
+        2. Fix text extraction issues (broken words, spacing problems)
+        3. Preserve scientific notation (p-values, chemical formulas, units)
+        4. Handle biomedical formatting (references, citations, figure captions)
+        5. Clean up text flow while maintaining document structure
+        6. Normalize special biomedical terms and notations
         
         Args:
             text: Raw extracted text from PDF
@@ -323,36 +333,280 @@ class BiomedicalPDFProcessor:
         if not text:
             return ""
         
-        # Remove excessive whitespace and normalize line breaks
+        # Step 1: Remove common PDF artifacts
+        text = self._remove_pdf_artifacts(text)
+        
+        # Step 2: Fix text extraction issues
+        text = self._fix_text_extraction_issues(text)
+        
+        # Step 3: Preserve scientific notation
+        text = self._preserve_scientific_notation(text)
+        
+        # Step 4: Handle biomedical formatting
+        text = self._handle_biomedical_formatting(text)
+        
+        # Step 5: Clean up text flow
+        text = self._clean_text_flow(text)
+        
+        # Step 6: Handle special biomedical terms
+        text = self._normalize_biomedical_terms(text)
+        
+        # Final cleanup: normalize whitespace and trim
         text = re.sub(r'\s+', ' ', text)
-        text = re.sub(r'\n\s*\n', '\n\n', text)
+        text = re.sub(r'\n\s*\n\s*\n+', '\n\n', text)  # Max 2 consecutive line breaks
         
-        # Clean up common PDF extraction artifacts
-        text = re.sub(r'-\s*\n\s*', '', text)  # Remove hyphenation across lines
-        text = re.sub(r'\s*\n\s*([a-z])', r' \1', text)  # Join broken words
-        
-        # Normalize chemical formulas and compound names
-        text = re.sub(r'([A-Z][a-z]?)(\d+)', r'\1\2', text)  # Ensure proper chemical notation
-        
-        # Preserve important biomedical formatting
-        text = re.sub(r'\bp\s*<\s*0\.\d+', lambda m: m.group(0).replace(' ', ''), text)  # p-values
-        text = re.sub(r'\bp\s*=\s*0\.\d+', lambda m: m.group(0).replace(' ', ''), text)  # p-values
-        
-        # Clean up reference markers while preserving structure
-        text = re.sub(r'\[\s*(\d+(?:\s*,\s*\d+)*)\s*\]', r'[\1]', text)
-        
-        # Normalize units and measurements
-        text = re.sub(r'(\d+)\s*(mg|kg|g|ml|l|mol|M)\b', r'\1 \2', text)
-        
-        # Remove header/footer artifacts (page numbers, etc.)
-        text = re.sub(r'\n\s*\d+\s*\n', '\n', text)
-        
-        # Clean up excessive punctuation
-        text = re.sub(r'[.]{3,}', '...', text)
-        text = re.sub(r'[-]{2,}', '--', text)
-        
-        # Trim whitespace and return
         return text.strip()
+    
+    def _remove_pdf_artifacts(self, text: str) -> str:
+        """
+        Remove common PDF extraction artifacts like headers, footers, and watermarks.
+        
+        Args:
+            text: Input text with potential PDF artifacts
+            
+        Returns:
+            str: Text with PDF artifacts removed
+        """
+        # Remove page numbers (standalone numbers on their own lines or at start/end)
+        # Be more careful not to remove numbers that are part of scientific content
+        text = re.sub(r'\n\s*\d+\s*\n', '\n', text)
+        text = re.sub(r'^\s*\d+\s*$', '', text, flags=re.MULTILINE)
+        text = re.sub(r'^\s*Page\s+\d+\s*', '', text, flags=re.MULTILINE | re.IGNORECASE)
+        # Only remove trailing numbers that are likely page numbers (not preceded by decimal point)
+        text = re.sub(r'(?<![0-9.])\s*\d+\s*$', '', text, flags=re.MULTILINE)
+        
+        # Remove common header/footer patterns
+        text = re.sub(r'\n\s*Page\s+\d+\s*of\s+\d+\s*\n', '\n', text, flags=re.IGNORECASE)
+        text = re.sub(r'\n\s*\d+\s*/\s*\d+\s*\n', '\n', text)
+        
+        # Remove journal headers and footers (common patterns)
+        text = re.sub(r'\n\s*.*?Journal.*?\d{4}.*?\n', '\n', text, flags=re.IGNORECASE)
+        text = re.sub(r'\n\s*doi:\s*\S+\s*\n', '\n', text, flags=re.IGNORECASE)
+        text = re.sub(r'\n\s*©\s*\d{4}.*?\n', '\n', text, flags=re.IGNORECASE)
+        
+        # Remove repetitive horizontal lines or dots
+        text = re.sub(r'\n\s*[._-]{5,}\s*\n', '\n', text)
+        text = re.sub(r'\n\s*[.]{5,}\s*\n', '\n', text)
+        
+        # Remove "Downloaded from" or "Accessed" lines
+        text = re.sub(r'\n\s*Downloaded\s+from.*?\n', '\n', text, flags=re.IGNORECASE)
+        text = re.sub(r'Downloaded\s+from.*?(?:\n|$)', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'\n\s*Accessed\s+on.*?\n', '\n', text, flags=re.IGNORECASE)
+        
+        return text
+    
+    def _fix_text_extraction_issues(self, text: str) -> str:
+        """
+        Fix common text extraction issues like broken words and incorrect spacing.
+        
+        Args:
+            text: Input text with extraction issues
+            
+        Returns:
+            str: Text with extraction issues fixed
+        """
+        # Fix hyphenated words broken across lines
+        text = re.sub(r'-\s*\n\s*([a-z])', r'\1', text)
+        
+        # Fix words broken across lines (common in PDF extraction)
+        text = re.sub(r'([a-z])\s*\n\s*([a-z])', r'\1\2', text)
+        
+        # Fix broken sentences (lowercase letter after line break)
+        text = re.sub(r'\n\s*([a-z])', r' \1', text)
+        
+        # Fix missing spaces after periods
+        text = re.sub(r'\.([A-Z][a-z])', r'. \1', text)
+        
+        # Fix missing spaces before parentheses
+        text = re.sub(r'([a-z])(\([A-Z])', r'\1 \2', text)
+        
+        # Fix excessive spacing around punctuation
+        text = re.sub(r'\s+([.,;:!?])', r'\1', text)
+        text = re.sub(r'([.,;:!?])\s+', r'\1 ', text)
+        
+        # Fix spacing around brackets and parentheses
+        text = re.sub(r'\s*\[\s*', r' [', text)
+        text = re.sub(r'\s*\]\s*', r'] ', text)
+        text = re.sub(r'\s*\(\s*', r' (', text)
+        text = re.sub(r'\s*\)\s*', r') ', text)
+        
+        return text
+    
+    def _preserve_scientific_notation(self, text: str) -> str:
+        """
+        Preserve and normalize scientific notation, statistical values, and units.
+        
+        Args:
+            text: Input text containing scientific notation
+            
+        Returns:
+            str: Text with preserved and normalized scientific notation
+        """
+        # Preserve p-values with proper spacing
+        text = re.sub(r'\bp\s*[<>=]\s*0\.\d+', lambda m: re.sub(r'\s+', '', m.group(0)), text)
+        text = re.sub(r'\bp\s*-\s*value\s*[<>=]\s*0\.\d+', lambda m: re.sub(r'\s+', '', m.group(0).replace(' - ', '-').replace('- ', '-').replace(' -', '-')), text)
+        
+        # Preserve R-squared values
+        text = re.sub(r'\bR\s*2\s*=\s*0\.\d+', lambda m: re.sub(r'\s+', '', m.group(0)), text)
+        text = re.sub(r'\bR\s*-\s*squared\s*=\s*0\.\d+', lambda m: re.sub(r'\s+', ' ', m.group(0)), text)
+        
+        # Preserve confidence intervals
+        text = re.sub(r'95\s*%\s*CI\s*[:\[]', '95% CI:', text, flags=re.IGNORECASE)
+        text = re.sub(r'\[\s*(\d+\.?\d*)\s*-\s*(\d+\.?\d*)\s*\]', r'[\1-\2]', text)
+        
+        # Preserve scientific notation (e.g., 1.5 × 10⁻³, 1.5e-3)
+        text = re.sub(r'(\d+\.?\d*)\s*[×x]\s*10\s*[⁻−-]\s*(\d+)', r'\1×10⁻\2', text)
+        text = re.sub(r'(\d+\.?\d*)\s*e\s*[⁻−-]\s*(\d+)', r'\1e-\2', text)
+        
+        # Preserve chemical formulas with proper spacing (e.g., H 2 O → H2O)
+        text = re.sub(r'([A-Z][a-z]?)\s*(\d+)', r'\1\2', text)
+        text = re.sub(r'([A-Z][a-z]?)\s+([A-Z][a-z]?)\s*(\d+)', r'\1\2\3', text)  # For compounds like Ca Cl 2
+        
+        # Preserve molecular weights and concentrations
+        text = re.sub(r'(\d+\.?\d*)\s*(kDa|Da|MW)\b', r'\1 \2', text, flags=re.IGNORECASE)
+        text = re.sub(r'(\d+\.?\d*)\s*(μM|mM|nM|pM|M)\b', r'\1 \2', text)
+        
+        # Preserve temperature and pH values
+        text = re.sub(r'(\d+\.?\d*)\s*°\s*C\b', r'\1°C', text)
+        text = re.sub(r'\bpH\s*(\d+\.?\d*)', r'pH \1', text)
+        
+        # Preserve units and measurements with proper spacing
+        units = ['mg', 'kg', 'g', 'ml', 'μl', 'l', 'mol', 'mmol', 'μmol', 'min', 'h', 'hr', 's', 'Hz', 'rpm']
+        for unit in units:
+            text = re.sub(rf'(\d+\.?\d*)\s*{unit}\b', rf'\1 {unit}', text, flags=re.IGNORECASE)
+        
+        # Fix spaced-out technique abbreviations (e.g., H P L C → HPLC)
+        techniques = ['HPLC', 'LCMS', 'GCMS', 'MALDI', 'ESI', 'FTICR', 'qPCR', 'rtPCR']
+        for technique in techniques:
+            spaced = ' '.join(list(technique))  # Convert HPLC to H P L C
+            text = re.sub(rf'\b{re.escape(spaced)}\b', technique, text, flags=re.IGNORECASE)
+        
+        return text
+    
+    def _handle_biomedical_formatting(self, text: str) -> str:
+        """
+        Handle biomedical-specific formatting like references, citations, and captions.
+        
+        Args:
+            text: Input text with biomedical formatting
+            
+        Returns:
+            str: Text with cleaned biomedical formatting
+        """
+        # Clean up reference citations while preserving structure
+        text = re.sub(r'\[\s*(\d+(?:\s*[-,]\s*\d+)*)\s*\]', r'[\1]', text)
+        text = re.sub(r'\(\s*(\d+(?:\s*[-,]\s*\d+)*)\s*\)', r'(\1)', text)
+        
+        # Handle author citations (e.g., "Smith et al., 2020")
+        text = re.sub(r'([A-Z][a-z]+)\s+et\s+al\.\s*,?\s*(\d{4})', r'\1 et al., \2', text)
+        
+        # Clean up figure and table references
+        text = re.sub(r'\bFig\.?\s+(\d+[a-zA-Z]?)\b', r'Fig. \1', text, flags=re.IGNORECASE)
+        text = re.sub(r'\bFigure\s+(\d+[a-zA-Z]?)\b', r'Figure \1', text, flags=re.IGNORECASE)
+        text = re.sub(r'\bTable\s+(\d+[a-zA-Z]?)\b', r'Table \1', text, flags=re.IGNORECASE)
+        text = re.sub(r'\bSupplementary\s+Figure\s+(\d+[a-zA-Z]?)\b', r'Supplementary Figure \1', text, flags=re.IGNORECASE)
+        
+        # Handle equation references
+        text = re.sub(r'\bEq\.?\s*(\d+)\b', r'Eq. \1', text, flags=re.IGNORECASE)
+        text = re.sub(r'\bEquation\s*(\d+)\b', r'Equation \1', text, flags=re.IGNORECASE)
+        
+        # Clean up section references
+        text = re.sub(r'\bSection\s*(\d+(?:\.\d+)*)\b', r'Section \1', text, flags=re.IGNORECASE)
+        
+        # Handle institutional affiliations (remove excessive spacing)
+        text = re.sub(r'\n\s*\d+\s*[A-Z][a-z]+.*?University.*?\n', '\n', text)
+        text = re.sub(r'\n\s*\d+\s*Department.*?\n', '\n', text)
+        
+        return text
+    
+    def _clean_text_flow(self, text: str) -> str:
+        """
+        Clean up text flow while maintaining document structure.
+        
+        Args:
+            text: Input text with flow issues
+            
+        Returns:
+            str: Text with improved flow
+        """
+        # Normalize paragraph breaks
+        text = re.sub(r'\n\s*\n\s*\n+', '\n\n', text)
+        
+        # Fix section headers (ensure proper spacing)
+        text = re.sub(r'\n\s*([A-Z][A-Z\s]+[A-Z])\s*\n', r'\n\n\1\n\n', text)
+        
+        # Handle bulleted and numbered lists
+        text = re.sub(r'\n\s*([•·▪▫])\s*', r'\n• ', text)
+        text = re.sub(r'\n\s*(\d+\.)\s*', r'\n\1 ', text)
+        text = re.sub(r'\n\s*([a-z]\))\s*', r'\n\1 ', text)
+        
+        # Fix spacing around colons in titles/headers
+        text = re.sub(r'([A-Z][a-z\s]+):\s*\n', r'\1:\n', text)
+        
+        # Clean up excessive punctuation while preserving ellipses
+        text = re.sub(r'[.]{4,}', '...', text)
+        text = re.sub(r'[-]{3,}', '--', text)
+        
+        # Remove orphaned punctuation
+        text = re.sub(r'\n\s*[,;.]\s*\n', '\n', text)
+        
+        return text
+    
+    def _normalize_biomedical_terms(self, text: str) -> str:
+        """
+        Normalize special biomedical terms and gene/protein names.
+        
+        Args:
+            text: Input text with biomedical terms
+            
+        Returns:
+            str: Text with normalized biomedical terms
+        """
+        # Fix spaced-out nucleic acid abbreviations (e.g., m r n a → mRNA)
+        spaced_abbrevs = {
+            'm r n a': 'mRNA', 'd n a': 'DNA', 'r n a': 'RNA',
+            'q p c r': 'qPCR', 'r t p c r': 'rtPCR', 'p c r': 'PCR'
+        }
+        
+        for spaced, standard in spaced_abbrevs.items():
+            text = re.sub(rf'\b{re.escape(spaced)}\b', standard, text, flags=re.IGNORECASE)
+        
+        # Standardize gene names (typically uppercase/italics indicators)
+        text = re.sub(r'\b([A-Z]{2,})\s*gene\b', r'\1 gene', text)
+        text = re.sub(r'\b([A-Z]{2,})\s*protein\b', r'\1 protein', text)
+        
+        # Standardize common biomedical abbreviations
+        abbrevs = {
+            'DNA': 'DNA', 'RNA': 'RNA', 'mRNA': 'mRNA', 'PCR': 'PCR', 'qPCR': 'qPCR',
+            'ELISA': 'ELISA', 'Western blot': 'Western blot', 'SDS-PAGE': 'SDS-PAGE',
+            'HPLC': 'HPLC', 'LC-MS': 'LC-MS', 'GC-MS': 'GC-MS', 'NMR': 'NMR'
+        }
+        
+        for abbrev, standard in abbrevs.items():
+            text = re.sub(rf'\b{re.escape(abbrev.lower())}\b', standard, text, flags=re.IGNORECASE)
+        
+        # Standardize statistical terms
+        text = re.sub(r'\bstd\.?\s*dev\.?\b', 'standard deviation', text, flags=re.IGNORECASE)
+        text = re.sub(r'\bstd\.?\s*err\.?\b', 'standard error', text, flags=re.IGNORECASE)
+        text = re.sub(r'\bsem\b', 'SEM', text, flags=re.IGNORECASE)
+        
+        # Standardize concentration units
+        text = re.sub(r'\bmg\s*/\s*ml\b', 'mg/mL', text, flags=re.IGNORECASE)
+        text = re.sub(r'\bug\s*/\s*ml\b', 'μg/mL', text, flags=re.IGNORECASE)
+        text = re.sub(r'\bng\s*/\s*ml\b', 'ng/mL', text, flags=re.IGNORECASE)
+        
+        # Handle Greek letters commonly used in biochemistry (with proper spacing)
+        greek_letters = {
+            'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ', 'epsilon': 'ε',
+            'theta': 'θ', 'lambda': 'λ', 'mu': 'μ', 'sigma': 'σ', 'omega': 'ω'
+        }
+        
+        for greek, symbol in greek_letters.items():
+            # Handle both spaced (alpha - ketoglutarate) and non-spaced versions
+            text = re.sub(rf'\b{greek}\s*-\s*', rf'{symbol}-', text, flags=re.IGNORECASE)
+            text = re.sub(rf'\b{greek}\b', symbol, text, flags=re.IGNORECASE)
+        
+        return text
     
     def validate_pdf(self, pdf_path: Union[str, Path]) -> Dict[str, Any]:
         """

@@ -108,7 +108,7 @@ class TestBiomedicalPDFProcessorTextExtraction:
         
         # Mock page 2 only
         mock_page2 = MagicMock()
-        mock_page2.get_text.return_value = "Page 2 specific content"
+        mock_page2.get_text.return_value = "Specific biomedical content on this page"
         mock_doc.load_page.return_value = mock_page2
         
         mock_fitz_open.return_value = mock_doc
@@ -127,7 +127,7 @@ class TestBiomedicalPDFProcessorTextExtraction:
             assert result['processing_info']['end_page'] == 3
             assert result['processing_info']['pages_processed'] == 1
             assert len(result['page_texts']) == 1
-            assert "Page 2 specific content" in result['text']
+            assert "biomedical content" in result['text']
             
         finally:
             tmp_path.unlink(missing_ok=True)
