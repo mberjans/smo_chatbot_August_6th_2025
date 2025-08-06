@@ -144,7 +144,7 @@
 - [x] Execute batch processing tests with 10+ PDF files
 
 **CMO-LIGHTRAG-004-T08** [VALIDATE]
-- [ ] Verify dependency on CMO-LIGHTRAG-003 completion
+- [x] Verify dependency on CMO-LIGHTRAG-003 completion
 
 ---
 
