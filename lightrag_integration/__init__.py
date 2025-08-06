@@ -31,9 +31,18 @@ from .pdf_processor import (
     BiomedicalPDFProcessorError
 )
 
-# This module will be expanded with component imports as they are implemented
-# Example future imports:
-# from .lightrag_component import LightRAGComponent
+# Import main RAG component and error handling classes
+from .clinical_metabolomics_rag import (
+    ClinicalMetabolomicsRAG,
+    ClinicalMetabolomicsRAGError,
+    CostSummary,
+    QueryResponse,
+    CircuitBreaker,
+    CircuitBreakerError,
+    RateLimiter,
+    RequestQueue,
+    add_jitter
+)
 
 __all__ = [
     "__version__",
@@ -43,5 +52,14 @@ __all__ = [
     "LightRAGConfigError", 
     "setup_lightrag_logging",
     "BiomedicalPDFProcessor",
-    "BiomedicalPDFProcessorError"
+    "BiomedicalPDFProcessorError",
+    "ClinicalMetabolomicsRAG",
+    "ClinicalMetabolomicsRAGError",
+    "CostSummary",
+    "QueryResponse",
+    "CircuitBreaker",
+    "CircuitBreakerError",
+    "RateLimiter",
+    "RequestQueue",
+    "add_jitter"
 ]

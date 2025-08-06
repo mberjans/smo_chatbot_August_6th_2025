@@ -36,6 +36,7 @@ Version: 1.0.0
 import asyncio
 import logging
 import time
+import random
 from typing import Dict, Any, List, Optional, Union, Callable
 from pathlib import Path
 import openai
@@ -106,6 +107,164 @@ except ImportError:
 # Local imports
 from .config import LightRAGConfig, LightRAGConfigError
 from .pdf_processor import BiomedicalPDFProcessor, BiomedicalPDFProcessorError
+
+
+class CircuitBreakerError(Exception):
+    """Exception raised when circuit breaker is open."""
+    pass
+
+
+class CircuitBreaker:
+    """
+    Circuit breaker pattern implementation for API failure protection.
+    
+    Prevents cascading failures by temporarily disabling API calls when
+    failure rate exceeds threshold. Automatically recovers after timeout.
+    """
+    
+    def __init__(self, failure_threshold: int = 5, recovery_timeout: float = 60.0, 
+                 expected_exception: type = Exception):
+        """
+        Initialize circuit breaker.
+        
+        Args:
+            failure_threshold: Number of consecutive failures before opening circuit
+            recovery_timeout: Seconds to wait before attempting recovery
+            expected_exception: Exception type to count as failures
+        """
+        self.failure_threshold = failure_threshold
+        self.recovery_timeout = recovery_timeout
+        self.expected_exception = expected_exception
+        
+        self.failure_count = 0
+        self.last_failure_time = None
+        self.state = 'closed'  # 'closed', 'open', 'half-open'
+    
+    async def call(self, func: Callable, *args, **kwargs):
+        """Execute function with circuit breaker protection."""
+        if self.state == 'open':
+            if time.time() - self.last_failure_time < self.recovery_timeout:
+                raise CircuitBreakerError("Circuit breaker is open")
+            else:
+                self.state = 'half-open'
+        
+        try:
+            result = await func(*args, **kwargs) if asyncio.iscoroutinefunction(func) else func(*args, **kwargs)
+            self._on_success()
+            return result
+        except self.expected_exception as e:
+            self._on_failure()
+            raise
+    
+    def _on_success(self):
+        """Reset circuit breaker on successful call."""
+        self.failure_count = 0
+        self.state = 'closed'
+    
+    def _on_failure(self):
+        """Handle failure and potentially open circuit."""
+        self.failure_count += 1
+        self.last_failure_time = time.time()
+        
+        if self.failure_count >= self.failure_threshold:
+            self.state = 'open'
+
+
+class RateLimiter:
+    """
+    Token bucket rate limiter for API request throttling.
+    
+    Implements token bucket algorithm with configurable refill rate
+    and burst capacity to prevent API rate limit violations.
+    """
+    
+    def __init__(self, max_requests: int = 60, time_window: float = 60.0):
+        """
+        Initialize rate limiter.
+        
+        Args:
+            max_requests: Maximum requests allowed in time window
+            time_window: Time window in seconds
+        """
+        self.max_requests = max_requests
+        self.time_window = time_window
+        self.tokens = max_requests
+        self.last_refill = time.time()
+        self._lock = asyncio.Lock()
+    
+    async def acquire(self) -> bool:
+        """
+        Acquire a token for rate limiting.
+        
+        Returns:
+            bool: True if token acquired, False if rate limited
+        """
+        async with self._lock:
+            now = time.time()
+            # Refill tokens based on elapsed time
+            elapsed = now - self.last_refill
+            self.tokens = min(self.max_requests, 
+                            self.tokens + elapsed * (self.max_requests / self.time_window))
+            self.last_refill = now
+            
+            if self.tokens >= 1:
+                self.tokens -= 1
+                return True
+            return False
+    
+    async def wait_for_token(self):
+        """Wait until a token is available."""
+        while not await self.acquire():
+            await asyncio.sleep(0.1)
+
+
+class RequestQueue:
+    """
+    Async request queue for managing concurrent API operations.
+    
+    Provides priority queuing and concurrency control to prevent
+    overwhelming the API with too many simultaneous requests.
+    """
+    
+    def __init__(self, max_concurrent: int = 5):
+        """
+        Initialize request queue.
+        
+        Args:
+            max_concurrent: Maximum concurrent requests allowed
+        """
+        self.max_concurrent = max_concurrent
+        self.semaphore = asyncio.Semaphore(max_concurrent)
+        self.active_requests = 0
+        self._lock = asyncio.Lock()
+    
+    async def execute(self, func: Callable, *args, **kwargs):
+        """Execute function with concurrency control."""
+        async with self.semaphore:
+            async with self._lock:
+                self.active_requests += 1
+            
+            try:
+                result = await func(*args, **kwargs) if asyncio.iscoroutinefunction(func) else func(*args, **kwargs)
+                return result
+            finally:
+                async with self._lock:
+                    self.active_requests -= 1
+
+
+def add_jitter(wait_time: float, jitter_factor: float = 0.1) -> float:
+    """
+    Add jitter to wait time to prevent thundering herd problems.
+    
+    Args:
+        wait_time: Base wait time in seconds
+        jitter_factor: Maximum jitter as fraction of wait_time (0.0-1.0)
+    
+    Returns:
+        float: Wait time with added jitter
+    """
+    jitter = wait_time * jitter_factor * (random.random() * 2 - 1)  # -jitter_factor to +jitter_factor
+    return max(0.1, wait_time + jitter)  # Ensure minimum wait time
 
 
 @dataclass
@@ -232,9 +391,45 @@ class ClinicalMetabolomicsRAG:
         # Set up OpenAI client
         self.openai_client = self._setup_openai_client()
         
-        # Initialize rate limiting and retry configuration
-        self.rate_limiter = self._setup_rate_limiter(kwargs.get('rate_limiter'))
+        # Initialize enhanced error handling components
+        self.rate_limiter_config = self._setup_rate_limiter(kwargs.get('rate_limiter'))
         self.retry_config = self._setup_retry_config(kwargs.get('retry_config'))
+        self.circuit_breaker_config = kwargs.get('circuit_breaker', {})
+        
+        # Initialize error handling components
+        self.rate_limiter = RateLimiter(
+            max_requests=self.rate_limiter_config['requests_per_minute'],
+            time_window=60.0
+        )
+        self.request_queue = RequestQueue(
+            max_concurrent=self.rate_limiter_config['max_concurrent_requests']
+        )
+        self.llm_circuit_breaker = CircuitBreaker(
+            failure_threshold=self.circuit_breaker_config.get('failure_threshold', 5),
+            recovery_timeout=self.circuit_breaker_config.get('recovery_timeout', 60.0),
+            expected_exception=Exception  # Use base Exception for compatibility
+        )
+        self.embedding_circuit_breaker = CircuitBreaker(
+            failure_threshold=self.circuit_breaker_config.get('failure_threshold', 5),
+            recovery_timeout=self.circuit_breaker_config.get('recovery_timeout', 60.0),
+            expected_exception=Exception  # Use base Exception for compatibility
+        )
+        
+        # Enhanced monitoring
+        self.error_metrics = {
+            'rate_limit_events': 0,
+            'circuit_breaker_trips': 0,
+            'retry_attempts': 0,
+            'recovery_events': 0,
+            'last_rate_limit': None,
+            'last_circuit_break': None,
+            'api_call_stats': {
+                'total_calls': 0,
+                'successful_calls': 0,
+                'failed_calls': 0,
+                'average_response_time': 0.0
+            }
+        }
         
         # Store optional components
         self.pdf_processor = kwargs.get('pdf_processor')
@@ -440,24 +635,39 @@ class ClinicalMetabolomicsRAG:
                 async def make_api_call():
                     return await _make_single_api_call()
             else:
-                # Simple retry logic without tenacity
+                # Enhanced retry logic without tenacity (with jitter and monitoring)
                 async def make_api_call():
                     last_exception = None
                     for attempt in range(self.retry_config['max_attempts']):
                         try:
+                            # Track retry attempts
+                            if attempt > 0:
+                                self.error_metrics['retry_attempts'] += 1
+                            
                             return await _make_single_api_call()
                         except (openai.RateLimitError, openai.APITimeoutError, 
                                openai.InternalServerError, openai.APIConnectionError) as e:
                             last_exception = e
+                            self.error_metrics['api_call_stats']['failed_calls'] += 1
+                            
+                            # Track rate limit events
+                            if isinstance(e, openai.RateLimitError):
+                                self.error_metrics['rate_limit_events'] += 1
+                                self.error_metrics['last_rate_limit'] = time.time()
+                            
                             if attempt < self.retry_config['max_attempts'] - 1:
-                                wait_time = min(self.retry_config['backoff_factor'] ** attempt, 
-                                              self.retry_config['max_wait_time'])
-                                self.logger.warning(f"API call failed (attempt {attempt + 1}), retrying in {wait_time}s: {e}")
+                                base_wait_time = min(self.retry_config['backoff_factor'] ** attempt, 
+                                                   self.retry_config['max_wait_time'])
+                                # Add jitter to prevent thundering herd
+                                wait_time = add_jitter(base_wait_time, jitter_factor=0.1)
+                                
+                                self.logger.warning(f"LLM API call failed (attempt {attempt + 1}), retrying in {wait_time:.2f}s: {e}")
                                 await asyncio.sleep(wait_time)
                             else:
                                 raise
                         except Exception as e:
                             # Don't retry for other exceptions
+                            self.error_metrics['api_call_stats']['failed_calls'] += 1
                             raise
                     
                     if last_exception:
@@ -465,6 +675,12 @@ class ClinicalMetabolomicsRAG:
             
             async def _make_single_api_call():
                 start_time = time.time()
+                
+                # Wait for rate limiter token
+                await self.rate_limiter.wait_for_token()
+                
+                # Track API call
+                self.error_metrics['api_call_stats']['total_calls'] += 1
                 
                 try:
                     if LIGHTRAG_AVAILABLE:
@@ -509,6 +725,10 @@ class ClinicalMetabolomicsRAG:
                     api_cost = self._calculate_api_cost(model, token_usage)
                     processing_time = time.time() - start_time
                     
+                    # Track successful API call
+                    self.error_metrics['api_call_stats']['successful_calls'] += 1
+                    self._update_average_response_time(processing_time)
+                    
                     # Track cost and usage if enabled
                     if self.cost_tracking_enabled:
                         self.track_api_cost(api_cost, token_usage)
@@ -548,7 +768,16 @@ class ClinicalMetabolomicsRAG:
                     raise ClinicalMetabolomicsRAGError(f"LLM function failed: {e}") from e
             
             try:
-                return await make_api_call()
+                # Wrap with circuit breaker and request queue
+                return await self.request_queue.execute(
+                    self.llm_circuit_breaker.call,
+                    make_api_call
+                )
+            except CircuitBreakerError as e:
+                self.error_metrics['circuit_breaker_trips'] += 1
+                self.error_metrics['last_circuit_break'] = time.time()
+                self.logger.error(f"LLM circuit breaker is open: {e}")
+                raise ClinicalMetabolomicsRAGError(f"LLM service temporarily unavailable: {e}") from e
             except Exception as e:
                 # Final error handling after all retries exhausted
                 self.logger.error(f"LLM function failed after {self.retry_config['max_attempts']} attempts: {e}")
@@ -668,24 +897,39 @@ class ClinicalMetabolomicsRAG:
                 async def make_api_call():
                     return await _make_single_embedding_call()
             else:
-                # Simple retry logic without tenacity
+                # Enhanced retry logic without tenacity (with jitter and monitoring)
                 async def make_api_call():
                     last_exception = None
                     for attempt in range(self.retry_config['max_attempts']):
                         try:
+                            # Track retry attempts
+                            if attempt > 0:
+                                self.error_metrics['retry_attempts'] += 1
+                            
                             return await _make_single_embedding_call()
                         except (openai.RateLimitError, openai.APITimeoutError, 
                                openai.InternalServerError, openai.APIConnectionError) as e:
                             last_exception = e
+                            self.error_metrics['api_call_stats']['failed_calls'] += 1
+                            
+                            # Track rate limit events
+                            if isinstance(e, openai.RateLimitError):
+                                self.error_metrics['rate_limit_events'] += 1
+                                self.error_metrics['last_rate_limit'] = time.time()
+                            
                             if attempt < self.retry_config['max_attempts'] - 1:
-                                wait_time = min(self.retry_config['backoff_factor'] ** attempt, 
-                                              self.retry_config['max_wait_time'])
-                                self.logger.warning(f"Embedding API call failed (attempt {attempt + 1}), retrying in {wait_time}s: {e}")
+                                base_wait_time = min(self.retry_config['backoff_factor'] ** attempt, 
+                                                   self.retry_config['max_wait_time'])
+                                # Add jitter to prevent thundering herd
+                                wait_time = add_jitter(base_wait_time, jitter_factor=0.1)
+                                
+                                self.logger.warning(f"Embedding API call failed (attempt {attempt + 1}), retrying in {wait_time:.2f}s: {e}")
                                 await asyncio.sleep(wait_time)
                             else:
                                 raise
                         except Exception as e:
                             # Don't retry for other exceptions
+                            self.error_metrics['api_call_stats']['failed_calls'] += 1
                             raise
                     
                     if last_exception:
@@ -693,6 +937,12 @@ class ClinicalMetabolomicsRAG:
             
             async def _make_single_embedding_call():
                 start_time = time.time()
+                
+                # Wait for rate limiter token
+                await self.rate_limiter.wait_for_token()
+                
+                # Track API call
+                self.error_metrics['api_call_stats']['total_calls'] += 1
                 
                 try:
                     if LIGHTRAG_AVAILABLE:
@@ -745,6 +995,10 @@ class ClinicalMetabolomicsRAG:
                     api_cost = self._calculate_embedding_cost(model, token_usage)
                     processing_time = time.time() - start_time
                     
+                    # Track successful API call
+                    self.error_metrics['api_call_stats']['successful_calls'] += 1
+                    self._update_average_response_time(processing_time)
+                    
                     # Track cost and usage if enabled
                     if self.cost_tracking_enabled:
                         self.track_api_cost(api_cost, token_usage)
@@ -796,7 +1050,16 @@ class ClinicalMetabolomicsRAG:
                     raise ClinicalMetabolomicsRAGError(f"Embedding function failed: {e}") from e
             
             try:
-                return await make_api_call()
+                # Wrap with circuit breaker and request queue
+                return await self.request_queue.execute(
+                    self.embedding_circuit_breaker.call,
+                    make_api_call
+                )
+            except CircuitBreakerError as e:
+                self.error_metrics['circuit_breaker_trips'] += 1
+                self.error_metrics['last_circuit_break'] = time.time()
+                self.logger.error(f"Embedding circuit breaker is open: {e}")
+                raise ClinicalMetabolomicsRAGError(f"Embedding service temporarily unavailable: {e}") from e
             except Exception as e:
                 # Final error handling after all retries exhausted
                 self.logger.error(f"Embedding function failed after {self.retry_config['max_attempts']} attempts: {e}")
@@ -970,6 +1233,137 @@ class ClinicalMetabolomicsRAG:
         })
         
         self.logger.debug(f"Tracked API cost: ${cost:.4f}, Total: ${self.total_cost:.4f}")
+    
+    def _update_average_response_time(self, response_time: float) -> None:
+        """Update running average of API response times."""
+        stats = self.error_metrics['api_call_stats']
+        total_calls = stats['successful_calls']
+        
+        if total_calls == 1:
+            stats['average_response_time'] = response_time
+        else:
+            # Calculate running average
+            current_avg = stats['average_response_time']
+            stats['average_response_time'] = ((current_avg * (total_calls - 1)) + response_time) / total_calls
+    
+    def get_error_metrics(self) -> Dict[str, Any]:
+        """
+        Get comprehensive error handling metrics and health information.
+        
+        Returns:
+            Dict containing detailed error handling metrics, circuit breaker states,
+            rate limiting information, and API performance statistics.
+        """
+        now = time.time()
+        
+        return {
+            'error_counts': {
+                'rate_limit_events': self.error_metrics['rate_limit_events'],
+                'circuit_breaker_trips': self.error_metrics['circuit_breaker_trips'],
+                'retry_attempts': self.error_metrics['retry_attempts'],
+                'recovery_events': self.error_metrics['recovery_events']
+            },
+            'api_performance': {
+                'total_calls': self.error_metrics['api_call_stats']['total_calls'],
+                'successful_calls': self.error_metrics['api_call_stats']['successful_calls'],
+                'failed_calls': self.error_metrics['api_call_stats']['failed_calls'],
+                'success_rate': (
+                    self.error_metrics['api_call_stats']['successful_calls'] / 
+                    max(1, self.error_metrics['api_call_stats']['total_calls'])
+                ),
+                'average_response_time': self.error_metrics['api_call_stats']['average_response_time']
+            },
+            'circuit_breaker_status': {
+                'llm_circuit_state': self.llm_circuit_breaker.state,
+                'llm_failure_count': self.llm_circuit_breaker.failure_count,
+                'embedding_circuit_state': self.embedding_circuit_breaker.state,
+                'embedding_failure_count': self.embedding_circuit_breaker.failure_count
+            },
+            'rate_limiting': {
+                'current_tokens': self.rate_limiter.tokens,
+                'max_requests': self.rate_limiter.max_requests,
+                'time_window': self.rate_limiter.time_window,
+                'active_requests': self.request_queue.active_requests,
+                'max_concurrent': self.request_queue.max_concurrent
+            },
+            'last_events': {
+                'last_rate_limit': self.error_metrics['last_rate_limit'],
+                'last_circuit_break': self.error_metrics['last_circuit_break'],
+                'time_since_last_rate_limit': (
+                    now - self.error_metrics['last_rate_limit'] 
+                    if self.error_metrics['last_rate_limit'] else None
+                ),
+                'time_since_last_circuit_break': (
+                    now - self.error_metrics['last_circuit_break'] 
+                    if self.error_metrics['last_circuit_break'] else None
+                )
+            },
+            'health_indicators': {
+                'is_healthy': self._assess_system_health(),
+                'rate_limit_recovery_ready': (
+                    self.error_metrics['last_rate_limit'] is None or 
+                    now - self.error_metrics['last_rate_limit'] > 60
+                ),
+                'circuit_breakers_closed': (
+                    self.llm_circuit_breaker.state == 'closed' and 
+                    self.embedding_circuit_breaker.state == 'closed'
+                )
+            }
+        }
+    
+    def _assess_system_health(self) -> bool:
+        """
+        Assess overall system health based on error rates and circuit breaker states.
+        
+        Returns:
+            bool: True if system is healthy, False otherwise
+        """
+        stats = self.error_metrics['api_call_stats']
+        
+        # Consider system unhealthy if success rate is below 80%
+        if stats['total_calls'] > 10:
+            success_rate = stats['successful_calls'] / stats['total_calls']
+            if success_rate < 0.8:
+                return False
+        
+        # Consider unhealthy if any circuit breaker is open
+        if (self.llm_circuit_breaker.state == 'open' or 
+            self.embedding_circuit_breaker.state == 'open'):
+            return False
+        
+        # Consider unhealthy if too many recent rate limit events
+        now = time.time()
+        if (self.error_metrics['last_rate_limit'] and 
+            now - self.error_metrics['last_rate_limit'] < 30):  # Within last 30 seconds
+            if self.error_metrics['rate_limit_events'] > 5:
+                return False
+        
+        return True
+    
+    def reset_error_metrics(self) -> None:
+        """Reset error handling metrics (useful for testing and monitoring)."""
+        self.error_metrics = {
+            'rate_limit_events': 0,
+            'circuit_breaker_trips': 0,
+            'retry_attempts': 0,
+            'recovery_events': 0,
+            'last_rate_limit': None,
+            'last_circuit_break': None,
+            'api_call_stats': {
+                'total_calls': 0,
+                'successful_calls': 0,
+                'failed_calls': 0,
+                'average_response_time': 0.0
+            }
+        }
+        
+        # Reset circuit breakers
+        self.llm_circuit_breaker.failure_count = 0
+        self.llm_circuit_breaker.state = 'closed'
+        self.embedding_circuit_breaker.failure_count = 0
+        self.embedding_circuit_breaker.state = 'closed'
+        
+        self.logger.info("Error handling metrics reset")
     
     def get_cost_summary(self) -> CostSummary:
         """

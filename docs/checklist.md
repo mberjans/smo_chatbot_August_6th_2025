@@ -163,13 +163,13 @@
 - [x] Implement ClinicalMetabolomicsRAG class structure
 
 **CMO-LIGHTRAG-005-T05** [CODE]
-- [ ] Implement _initialize_rag method with biomedical parameters
+- [x] Implement _initialize_rag method with biomedical parameters
 
 **CMO-LIGHTRAG-005-T06** [CODE]
-- [ ] Implement _get_llm_function with OpenAI integration
+- [x] Implement _get_llm_function with OpenAI integration
 
 **CMO-LIGHTRAG-005-T07** [CODE]
-- [ ] Implement _get_embedding_function with OpenAI embeddings
+- [x] Implement _get_embedding_function with OpenAI embeddings
 
 **CMO-LIGHTRAG-005-T08** [CODE]
 - [ ] Add error handling for API failures and rate limits
