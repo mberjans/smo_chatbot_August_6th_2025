@@ -33,7 +33,7 @@
 - [x] Install core LightRAG dependencies (lightrag-hku, PyMuPDF, python-dotenv)
 
 **CMO-LIGHTRAG-001-T03** [SETUP]
-- [ ] Install development and testing dependencies (pytest, pytest-asyncio, black, flake8)
+- [x] Install development and testing dependencies (pytest, pytest-asyncio, black, flake8)
 
 **CMO-LIGHTRAG-001-T04** [SETUP]
 - [ ] Create requirements_lightrag.txt with pinned versions
