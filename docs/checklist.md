@@ -123,13 +123,13 @@
 ### CMO-LIGHTRAG-004: Batch PDF Processing Pipeline
 
 **CMO-LIGHTRAG-004-T01-TEST** [TEST]
-- [ ] Write tests for async batch processing with multiple PDFs
+- [x] Write tests for async batch processing with multiple PDFs
 
 **CMO-LIGHTRAG-004-T02-TEST** [TEST]
-- [ ] Write tests for progress tracking and logging functionality
+- [x] Write tests for progress tracking and logging functionality
 
 **CMO-LIGHTRAG-004-T03** [CODE]
-- [ ] Implement process_all_pdfs async method
+- [x] Implement process_all_pdfs async method
 
 **CMO-LIGHTRAG-004-T04** [CODE]
 - [ ] Add progress tracking with detailed logging
