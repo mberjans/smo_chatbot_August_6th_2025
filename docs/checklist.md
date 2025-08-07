@@ -253,13 +253,13 @@
 ### CMO-LIGHTRAG-008: MVP Testing Framework
 
 **CMO-LIGHTRAG-008-T01** [SETUP]
-- [ ] Set up pytest configuration for async testing
+- [x] Set up pytest configuration for async testing
 
 **CMO-LIGHTRAG-008-T02** [SETUP]
-- [ ] Create test fixtures and mock data for biomedical content
+- [x] Create test fixtures and mock data for biomedical content
 
 **CMO-LIGHTRAG-008-T03-TEST** [TEST]
-- [ ] Write primary success test: "What is clinical metabolomics?" query
+- [x] Write primary success test: "What is clinical metabolomics?" query
 
 **CMO-LIGHTRAG-008-T04-TEST** [TEST]
 - [ ] Write integration tests for end-to-end PDF to query workflow
