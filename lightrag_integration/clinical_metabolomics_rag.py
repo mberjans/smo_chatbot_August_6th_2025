@@ -53,6 +53,9 @@ from .enhanced_logging import (
     performance_logged, PerformanceTracker
 )
 
+# Clinical Metabolomics Relevance Scoring
+from .relevance_scorer import ClinicalMetabolomicsRelevanceScorer
+
 # Tenacity for retry logic - graceful fallback if not available
 try:
     from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
@@ -868,15 +871,17 @@ class BiomedicalResponseFormatter:
     - Configurable formatting options
     """
     
-    def __init__(self, formatting_config: Optional[Dict[str, Any]] = None):
+    def __init__(self, formatting_config: Optional[Dict[str, Any]] = None, relevance_scorer: Optional['ClinicalMetabolomicsRelevanceScorer'] = None):
         """
         Initialize the biomedical response formatter.
         
         Args:
             formatting_config: Configuration dictionary for formatting options
+            relevance_scorer: Optional ClinicalMetabolomicsRelevanceScorer instance for enhanced quality assessment
         """
         self.config = formatting_config or self._get_default_config()
         self.logger = logging.getLogger(__name__)
+        self.relevance_scorer = relevance_scorer
         
         # Compile regex patterns for performance
         self._compile_patterns()
@@ -2002,8 +2007,25 @@ class BiomedicalResponseFormatter:
             # Assess completeness
             quality_assessment['completeness_score'] = self._assess_content_completeness(content)
             
-            # Assess clinical metabolomics relevance
-            quality_assessment['relevance_score'] = self._assess_metabolomics_relevance(content, formatted_response)
+            # Assess clinical metabolomics relevance - enhanced with relevance scorer if available
+            if self.relevance_scorer:
+                try:
+                    # Use the query if available from metadata
+                    query_text = formatted_response.get('query', '') or 'general metabolomics query'
+                    
+                    # Use synchronous relevance assessment based on the relevance scorer's patterns
+                    # This extracts some of the logic without requiring async calls
+                    quality_assessment['relevance_score'] = self._assess_enhanced_metabolomics_relevance(content, query_text, formatted_response)
+                    
+                    # Add note that full relevance scoring happens at query level
+                    quality_assessment['relevance_note'] = "Enhanced relevance assessment applied. Full relevance scoring available in query results."
+                    
+                except Exception as e:
+                    self.logger.warning(f"Enhanced relevance assessment failed: {e}. Using basic assessment.")
+                    quality_assessment['relevance_score'] = self._assess_metabolomics_relevance(content, formatted_response)
+            else:
+                # Use basic metabolomics relevance assessment
+                quality_assessment['relevance_score'] = self._assess_metabolomics_relevance(content, formatted_response)
             
             # Assess logical consistency
             quality_assessment['consistency_score'] = self._assess_logical_consistency(content)
@@ -2470,6 +2492,64 @@ class BiomedicalResponseFormatter:
         relevance_score += clinical_indicators.get('overall_relevance_score', 0) * 0.2
         
         return min(1.0, relevance_score)
+    
+    def _assess_enhanced_metabolomics_relevance(self, content: str, query: str, formatted_response: Dict[str, Any]) -> float:
+        """
+        Enhanced metabolomics relevance assessment using relevance scorer patterns.
+        
+        This method leverages the relevance scorer's classification and scoring logic
+        without requiring async calls.
+        """
+        if not self.relevance_scorer:
+            return self._assess_metabolomics_relevance(content, formatted_response)
+        
+        # Use the query classifier to determine query type
+        query_type = self.relevance_scorer.query_classifier.classify_query(query)
+        
+        # Get appropriate weights for this query type
+        weights = self.relevance_scorer.weighting_manager.get_weights(query_type)
+        
+        # Calculate basic dimension scores synchronously
+        scores = {}
+        
+        # Metabolomics relevance (using patterns from the scorer)
+        metabolomics_terms = []
+        for category_terms in self.relevance_scorer.biomedical_keywords.values():
+            metabolomics_terms.extend(category_terms)
+        
+        content_lower = content.lower()
+        term_matches = sum(1 for term in metabolomics_terms if term in content_lower)
+        scores['metabolomics_relevance'] = min(100.0, (term_matches / len(metabolomics_terms)) * 100)
+        
+        # Query alignment (basic keyword overlap)
+        query_words = set(query.lower().split())
+        content_words = set(content.lower().split())
+        if query_words:
+            overlap_ratio = len(query_words.intersection(content_words)) / len(query_words)
+            scores['query_alignment'] = overlap_ratio * 100
+        else:
+            scores['query_alignment'] = 50.0
+        
+        # Clinical applicability
+        clinical_terms = self.relevance_scorer.biomedical_keywords.get('clinical_terms', [])
+        clinical_matches = sum(1 for term in clinical_terms if term in content_lower)
+        scores['clinical_applicability'] = min(100.0, (clinical_matches / max(len(clinical_terms), 1)) * 100 + 30)
+        
+        # Calculate weighted score
+        weighted_score = 0.0
+        total_weight = 0.0
+        for dimension, weight in weights.items():
+            if dimension in scores:
+                weighted_score += scores[dimension] * weight
+                total_weight += weight
+        
+        if total_weight > 0:
+            final_score = weighted_score / total_weight
+        else:
+            final_score = sum(scores.values()) / len(scores) if scores else 50.0
+        
+        # Convert to 0-1 scale for consistency with other quality assessments
+        return min(1.0, max(0.0, final_score / 100.0))
     
     def _assess_logical_consistency(self, content: str) -> float:
         """Assess logical consistency of the content."""
@@ -6367,13 +6447,36 @@ class ClinicalMetabolomicsRAG:
         # Initialize biomedical parameters
         self.biomedical_params = self._initialize_biomedical_params()
         
-        # Initialize biomedical response formatter
+        # Initialize biomedical response formatter (will be updated after relevance scorer is initialized)
         formatter_config = self.biomedical_params.get('response_formatting', {})
         self.response_formatter = BiomedicalResponseFormatter(formatter_config) if formatter_config.get('enabled', True) else None
         
         # Initialize response validator
         validation_config = self.biomedical_params.get('response_validation', {})
         self.response_validator = ResponseValidator(validation_config) if validation_config.get('enabled', True) else None
+        
+        # Initialize relevance scorer
+        self.relevance_scorer = None
+        if getattr(config, 'enable_relevance_scoring', True):
+            try:
+                relevance_config = {
+                    'enable_caching': True,
+                    'cache_ttl_seconds': 3600,
+                    'parallel_processing': getattr(config, 'enable_parallel_relevance_processing', True),
+                    'confidence_threshold': getattr(config, 'relevance_confidence_threshold', 70.0),
+                    'minimum_relevance_threshold': getattr(config, 'relevance_minimum_threshold', 50.0),
+                    'scoring_mode': getattr(config, 'relevance_scoring_mode', 'comprehensive')
+                }
+                self.relevance_scorer = ClinicalMetabolomicsRelevanceScorer(config=relevance_config)
+                self.logger.info("Clinical Metabolomics Relevance Scorer initialized successfully")
+                
+                # Update response formatter with relevance scorer
+                if self.response_formatter:
+                    self.response_formatter.relevance_scorer = self.relevance_scorer
+                    
+            except Exception as e:
+                self.logger.warning(f"Failed to initialize relevance scorer: {e}. Continuing without relevance scoring.")
+                self.relevance_scorer = None
         
         # Set up OpenAI client
         self.openai_client = self._setup_openai_client()
@@ -8407,6 +8510,52 @@ class ClinicalMetabolomicsRAG:
                     )
             else:
                 result['validation'] = None
+            
+            # Add relevance scoring if enabled
+            if self.relevance_scorer:
+                try:
+                    relevance_result = await self.relevance_scorer.calculate_relevance_score(
+                        query=query,
+                        response=response,
+                        metadata={
+                            'mode': mode,
+                            'processing_time': processing_time,
+                            'formatted_response': formatted_response_data,
+                            'validation_results': validation_results
+                        }
+                    )
+                    result['relevance_scoring'] = {
+                        'overall_score': relevance_result.overall_score,
+                        'relevance_grade': relevance_result.relevance_grade,
+                        'dimension_scores': relevance_result.dimension_scores,
+                        'query_type': relevance_result.query_type,
+                        'confidence_score': relevance_result.confidence_score,
+                        'processing_time_ms': relevance_result.processing_time_ms,
+                        'explanation': relevance_result.explanation,
+                        'metadata': relevance_result.metadata
+                    }
+                    
+                    # Update overall metadata confidence with relevance confidence if available
+                    if relevance_result.confidence_score > 0:
+                        combined_confidence = (
+                            result['metadata']['confidence'] * 0.6 + 
+                            (relevance_result.confidence_score / 100.0) * 0.4
+                        )
+                        result['metadata']['confidence'] = combined_confidence
+                    
+                    self.logger.info(
+                        f"Relevance scoring completed: {relevance_result.overall_score:.1f}/100 "
+                        f"({relevance_result.relevance_grade}) for query type '{relevance_result.query_type}'"
+                    )
+                    
+                except Exception as e:
+                    self.logger.warning(f"Relevance scoring failed: {e}. Continuing without relevance metrics.")
+                    result['relevance_scoring'] = {
+                        'error': str(e),
+                        'overall_score': None
+                    }
+            else:
+                result['relevance_scoring'] = None
             
             self.logger.info(f"Query processed successfully in {processing_time:.2f}s using {mode} mode")
             return result

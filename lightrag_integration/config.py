@@ -90,6 +90,13 @@ class LightRAGConfig:
     cost_report_frequency: str = field(default_factory=lambda: os.getenv("LIGHTRAG_COST_REPORT_FREQUENCY", "daily"))
     max_cost_retention_days: int = field(default_factory=lambda: int(os.getenv("LIGHTRAG_MAX_COST_RETENTION_DAYS", "365")))
     
+    # Relevance Scoring Configuration
+    enable_relevance_scoring: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_RELEVANCE_SCORING", "true").lower() in ("true", "1", "yes", "t", "on"))
+    relevance_scoring_mode: str = field(default_factory=lambda: os.getenv("LIGHTRAG_RELEVANCE_SCORING_MODE", "comprehensive"))
+    relevance_confidence_threshold: float = field(default_factory=lambda: float(os.getenv("LIGHTRAG_RELEVANCE_CONFIDENCE_THRESHOLD", "70.0")))
+    relevance_minimum_threshold: float = field(default_factory=lambda: float(os.getenv("LIGHTRAG_RELEVANCE_MINIMUM_THRESHOLD", "50.0")))
+    enable_parallel_relevance_processing: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_PARALLEL_RELEVANCE_PROCESSING", "true").lower() in ("true", "1", "yes", "t", "on"))
+    
     def __post_init__(self):
         """Post-initialization processing to handle Path objects and derived values."""
         # Ensure working_dir is a Path object
@@ -218,6 +225,17 @@ class LightRAGConfig:
         valid_frequencies = {"hourly", "daily", "weekly", "monthly"}
         if self.cost_report_frequency not in valid_frequencies:
             raise LightRAGConfigError(f"cost_report_frequency must be one of {valid_frequencies}, got: {self.cost_report_frequency}")
+        
+        # Validate relevance scoring configuration
+        valid_scoring_modes = {"basic", "comprehensive", "fast"}
+        if self.relevance_scoring_mode not in valid_scoring_modes:
+            raise LightRAGConfigError(f"relevance_scoring_mode must be one of {valid_scoring_modes}, got: {self.relevance_scoring_mode}")
+        
+        if not (0 <= self.relevance_confidence_threshold <= 100):
+            raise LightRAGConfigError("relevance_confidence_threshold must be between 0 and 100")
+        
+        if not (0 <= self.relevance_minimum_threshold <= 100):
+            raise LightRAGConfigError("relevance_minimum_threshold must be between 0 and 100")
         
         # Validate working directory
         if not self.working_dir.exists():
@@ -565,7 +583,12 @@ class LightRAGConfig:
             'enable_research_categorization': self.enable_research_categorization,
             'enable_audit_trail': self.enable_audit_trail,
             'cost_report_frequency': self.cost_report_frequency,
-            'max_cost_retention_days': self.max_cost_retention_days
+            'max_cost_retention_days': self.max_cost_retention_days,
+            'enable_relevance_scoring': self.enable_relevance_scoring,
+            'relevance_scoring_mode': self.relevance_scoring_mode,
+            'relevance_confidence_threshold': self.relevance_confidence_threshold,
+            'relevance_minimum_threshold': self.relevance_minimum_threshold,
+            'enable_parallel_relevance_processing': self.enable_parallel_relevance_processing
         }
     
     def copy(self) -> 'LightRAGConfig':
