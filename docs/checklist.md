@@ -237,7 +237,7 @@
 - [x] Add response formatting and post-processing
 
 **CMO-LIGHTRAG-007-T07** [CODE]
-- [ ] Implement error handling for query failures
+- [x] Implement error handling for query failures
 
 **CMO-LIGHTRAG-007-T08** [CODE]
 - [ ] Optimize QueryParam settings for biomedical content
