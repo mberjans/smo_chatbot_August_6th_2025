@@ -234,7 +234,7 @@
 - [x] Implement get_context_only method for context retrieval
 
 **CMO-LIGHTRAG-007-T06** [CODE]
-- [ ] Add response formatting and post-processing
+- [x] Add response formatting and post-processing
 
 **CMO-LIGHTRAG-007-T07** [CODE]
 - [ ] Implement error handling for query failures
