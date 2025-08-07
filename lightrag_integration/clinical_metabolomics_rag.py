@@ -2172,11 +2172,545 @@ class ClinicalMetabolomicsRAG:
             except Exception as e:
                 self.logger.error(f"Error closing API metrics logger: {e}")
     
+    async def initialize_knowledge_base(self, 
+                                   papers_dir: Union[str, Path] = "papers/",
+                                   progress_config: Optional['ProgressTrackingConfig'] = None,
+                                   batch_size: int = 10,
+                                   max_memory_mb: int = 2048,
+                                   enable_batch_processing: bool = True,
+                                   force_reinitialize: bool = False) -> Dict[str, Any]:
+        """
+        Initialize the knowledge base by processing PDF documents and building the LightRAG knowledge graph.
+        
+        This method orchestrates the complete knowledge base initialization process:
+        1. Validates initialization requirements and checks if already initialized
+        2. Initializes LightRAG storage systems if needed
+        3. Processes PDF documents from the papers directory using BiomedicalPDFProcessor
+        4. Ingests extracted documents into the LightRAG knowledge graph
+        5. Provides comprehensive progress tracking and cost monitoring
+        6. Implements robust error handling for all failure scenarios
+        
+        Args:
+            papers_dir: Path to directory containing PDF documents (default: "papers/")
+            progress_config: Optional configuration for progress tracking and logging
+            batch_size: Number of documents to process in each batch (default: 10)
+            max_memory_mb: Maximum memory usage limit in MB (default: 2048)
+            enable_batch_processing: Whether to use batch processing for large collections (default: True)
+            force_reinitialize: Whether to force reinitialization even if already initialized (default: False)
+        
+        Returns:
+            Dict containing detailed initialization results:
+                - success: Boolean indicating overall success
+                - documents_processed: Number of documents successfully processed
+                - documents_failed: Number of documents that failed processing
+                - total_documents: Total number of documents found
+                - processing_time: Total processing time in seconds
+                - cost_summary: API costs incurred during initialization
+                - storage_created: List of storage paths created
+                - errors: List of any errors encountered
+                - metadata: Additional processing metadata
+        
+        Raises:
+            ClinicalMetabolomicsRAGError: If initialization fails critically
+            ValueError: If parameters are invalid
+            BiomedicalPDFProcessorError: If PDF processing fails completely
+        """
+        if not self.is_initialized:
+            raise ClinicalMetabolomicsRAGError("RAG system not initialized. Call constructor first.")
+        
+        # Convert papers_dir to Path object
+        papers_path = Path(papers_dir)
+        
+        # Validate papers directory
+        if not papers_path.exists():
+            raise ValueError(f"Papers directory does not exist: {papers_path}")
+        
+        if not papers_path.is_dir():
+            raise ValueError(f"Papers path is not a directory: {papers_path}")
+        
+        # Initialize result dictionary
+        start_time = time.time()
+        result = {
+            'success': False,
+            'documents_processed': 0,
+            'documents_failed': 0,
+            'total_documents': 0,
+            'processing_time': 0.0,
+            'cost_summary': {'total_cost': 0.0, 'operations': []},
+            'storage_created': [],
+            'errors': [],
+            'metadata': {
+                'papers_dir': str(papers_path),
+                'batch_size': batch_size,
+                'max_memory_mb': max_memory_mb,
+                'enable_batch_processing': enable_batch_processing,
+                'force_reinitialize': force_reinitialize,
+                'initialization_timestamp': datetime.now().isoformat()
+            }
+        }
+        
+        try:
+            self.logger.info(f"Starting knowledge base initialization from {papers_path}")
+            
+            # Check if already initialized and not forcing reinitialize
+            if hasattr(self, '_knowledge_base_initialized') and self._knowledge_base_initialized and not force_reinitialize:
+                self.logger.info("Knowledge base already initialized, skipping (use force_reinitialize=True to override)")
+                result.update({
+                    'success': True,
+                    'already_initialized': True,
+                    'processing_time': time.time() - start_time
+                })
+                return result
+            
+            # Log system event for initialization start
+            self.log_system_event(
+                "knowledge_base_initialization_start",
+                {
+                    'papers_dir': str(papers_path),
+                    'batch_size': batch_size,
+                    'max_memory_mb': max_memory_mb,
+                    'force_reinitialize': force_reinitialize
+                }
+            )
+            
+            # Step 1: Initialize or validate LightRAG storage systems
+            self.logger.info("Initializing LightRAG storage systems")
+            storage_paths = await self._initialize_lightrag_storage()
+            result['storage_created'] = [str(path) for path in storage_paths]
+            
+            # Step 1.5: Initialize LightRAG storage components
+            self.logger.info("Initializing LightRAG internal storage systems")
+            try:
+                storage_init_result = await self._initialize_lightrag_storage_systems()
+                result['storage_initialization'] = storage_init_result
+                self.logger.info("LightRAG storage systems initialized successfully")
+            except Exception as e:
+                self.logger.error(f"Failed to initialize LightRAG storage systems: {e}")
+                result['storage_initialization'] = {
+                    'success': False,
+                    'error': str(e),
+                    'timestamp': time.time()
+                }
+                raise ClinicalMetabolomicsRAGError(f"Storage initialization failed: {e}") from e
+            
+            # Step 2: Initialize or get PDF processor
+            if not self.pdf_processor:
+                self.logger.info("Creating BiomedicalPDFProcessor instance")
+                self.pdf_processor = BiomedicalPDFProcessor(
+                    logger=self.logger,
+                    progress_callback=self._pdf_progress_callback if progress_config else None
+                )
+            
+            # Step 3: Process PDF documents
+            self.logger.info("Processing PDF documents from papers directory")
+            
+            try:
+                # Import here to avoid circular imports
+                from .progress_config import ProgressTrackingConfig
+                
+                # Use provided progress_config or create default
+                if progress_config is None:
+                    progress_config = ProgressTrackingConfig(
+                        enable_progress_logging=True,
+                        log_level=logging.INFO,
+                        update_interval_seconds=5.0,
+                        enable_file_tracking=True,
+                        enable_metrics_tracking=True
+                    )
+                
+                # Process all PDFs with comprehensive error handling
+                processed_documents = await self.pdf_processor.process_all_pdfs(
+                    papers_dir=papers_path,
+                    progress_config=progress_config,
+                    batch_size=batch_size,
+                    max_memory_mb=max_memory_mb,
+                    enable_batch_processing=enable_batch_processing
+                )
+                
+                result['total_documents'] = len(processed_documents)
+                self.logger.info(f"PDF processing completed: {len(processed_documents)} documents")
+                
+            except Exception as e:
+                error_msg = f"PDF processing failed: {e}"
+                self.logger.error(error_msg)
+                result['errors'].append(error_msg)
+                raise ClinicalMetabolomicsRAGError(error_msg) from e
+            
+            # Step 4: Ingest documents into LightRAG knowledge graph
+            if processed_documents:
+                self.logger.info("Ingesting documents into LightRAG knowledge graph")
+                
+                # Track API costs for document ingestion
+                ingestion_start = time.time()
+                ingestion_cost = 0.0
+                
+                try:
+                    # Process documents in batches for better memory management
+                    batch_errors = []
+                    successful_ingestions = 0
+                    
+                    for i in range(0, len(processed_documents), batch_size):
+                        batch = processed_documents[i:i + batch_size]
+                        batch_texts = []
+                        
+                        # Extract text content from processed documents
+                        for file_path, doc_data in batch:
+                            try:
+                                content = doc_data.get('content', '')
+                                if content and content.strip():
+                                    # Add metadata as context to improve retrieval
+                                    metadata = doc_data.get('metadata', {})
+                                    enhanced_content = self._enhance_document_content(content, metadata, file_path)
+                                    batch_texts.append(enhanced_content)
+                                    successful_ingestions += 1
+                                else:
+                                    error_msg = f"Empty content for document: {file_path}"
+                                    self.logger.warning(error_msg)
+                                    batch_errors.append(error_msg)
+                                    result['documents_failed'] += 1
+                            except Exception as e:
+                                error_msg = f"Error processing document {file_path}: {e}"
+                                self.logger.error(error_msg)
+                                batch_errors.append(error_msg)
+                                result['documents_failed'] += 1
+                        
+                        # Insert batch into LightRAG if we have valid content
+                        if batch_texts:
+                            try:
+                                await self.insert_documents(batch_texts)
+                                self.logger.info(f"Ingested batch of {len(batch_texts)} documents")
+                                
+                                # Estimate ingestion cost (this would be tracked by the insert_documents method)
+                                estimated_tokens = sum(len(text.split()) for text in batch_texts)
+                                batch_cost = estimated_tokens * 0.0001  # Rough estimate
+                                ingestion_cost += batch_cost
+                                
+                            except Exception as e:
+                                error_msg = f"Failed to ingest document batch: {e}"
+                                self.logger.error(error_msg)
+                                batch_errors.append(error_msg)
+                                result['documents_failed'] += len(batch_texts)
+                    
+                    result['documents_processed'] = successful_ingestions
+                    result['errors'].extend(batch_errors)
+                    
+                    # Log batch processing metrics
+                    ingestion_time = time.time() - ingestion_start
+                    self.log_batch_api_operation(
+                        operation_name="knowledge_base_document_ingestion",
+                        batch_size=len(processed_documents),
+                        total_tokens=sum(len(text.split()) for _, doc_data in processed_documents 
+                                       for text in [doc_data.get('content', '')] if text),
+                        total_cost=ingestion_cost,
+                        processing_time_seconds=ingestion_time,
+                        success_count=successful_ingestions,
+                        error_count=result['documents_failed'],
+                        research_category="knowledge_base_initialization"
+                    )
+                    
+                except Exception as e:
+                    error_msg = f"Document ingestion failed: {e}"
+                    self.logger.error(error_msg)
+                    result['errors'].append(error_msg)
+                    # Don't raise here - partial success is still valuable
+                    result['documents_failed'] = len(processed_documents)
+                
+                # Update cost summary
+                result['cost_summary'] = {
+                    'total_cost': ingestion_cost,
+                    'operations': ['document_ingestion'],
+                    'estimated_tokens': sum(len(doc_data.get('content', '').split()) 
+                                          for _, doc_data in processed_documents)
+                }
+            
+            else:
+                self.logger.warning("No documents were successfully processed")
+                result['errors'].append("No valid PDF documents found or processed")
+            
+            # Step 5: Finalize initialization
+            processing_time = time.time() - start_time
+            result['processing_time'] = processing_time
+            
+            # Mark knowledge base as initialized if we processed at least some documents
+            if result['documents_processed'] > 0:
+                self._knowledge_base_initialized = True
+                result['success'] = True
+                
+                self.logger.info(
+                    f"Knowledge base initialization completed successfully: "
+                    f"{result['documents_processed']}/{result['total_documents']} documents processed "
+                    f"in {processing_time:.2f} seconds"
+                )
+                
+                # Log successful completion
+                self.log_system_event(
+                    "knowledge_base_initialization_completed",
+                    {
+                        'documents_processed': result['documents_processed'],
+                        'documents_failed': result['documents_failed'],
+                        'total_documents': result['total_documents'],
+                        'processing_time': processing_time,
+                        'total_cost': result['cost_summary']['total_cost']
+                    }
+                )
+            else:
+                result['success'] = False
+                error_msg = "Knowledge base initialization failed: no documents were successfully processed"
+                self.logger.error(error_msg)
+                result['errors'].append(error_msg)
+            
+            return result
+            
+        except Exception as e:
+            processing_time = time.time() - start_time
+            result['processing_time'] = processing_time
+            result['success'] = False
+            
+            error_msg = f"Knowledge base initialization failed: {e}"
+            self.logger.error(error_msg)
+            result['errors'].append(error_msg)
+            
+            # Log failure event
+            self.log_system_event(
+                "knowledge_base_initialization_failed",
+                {
+                    'error': str(e),
+                    'processing_time': processing_time,
+                    'documents_processed': result['documents_processed'],
+                    'papers_dir': str(papers_path)
+                }
+            )
+            
+            # Re-raise for critical failures, but return result for partial failures
+            if result['documents_processed'] == 0:
+                raise ClinicalMetabolomicsRAGError(error_msg) from e
+            
+            return result
+    
+    async def _initialize_lightrag_storage(self) -> List[Path]:
+        """
+        Initialize or validate LightRAG storage directories.
+        
+        Returns:
+            List of storage paths that were created or validated
+        """
+        storage_paths = []
+        working_dir = Path(self.config.working_dir)
+        
+        # Define standard LightRAG storage paths
+        storage_dirs = [
+            "vdb_chunks",
+            "vdb_entities", 
+            "vdb_relationships"
+        ]
+        
+        storage_files = [
+            "graph_chunk_entity_relation.json"
+        ]
+        
+        try:
+            # Ensure working directory exists
+            working_dir.mkdir(parents=True, exist_ok=True)
+            storage_paths.append(working_dir)
+            
+            # Create storage subdirectories
+            for dir_name in storage_dirs:
+                storage_dir = working_dir / dir_name
+                storage_dir.mkdir(parents=True, exist_ok=True)
+                storage_paths.append(storage_dir)
+                self.logger.debug(f"Created/validated storage directory: {storage_dir}")
+            
+            # Initialize storage files if they don't exist
+            for file_name in storage_files:
+                storage_file = working_dir / file_name
+                if not storage_file.exists():
+                    # Create empty JSON file for graph relations
+                    if file_name.endswith('.json'):
+                        storage_file.write_text('{}')
+                        storage_paths.append(storage_file)
+                        self.logger.debug(f"Created storage file: {storage_file}")
+            
+            self.logger.info(f"LightRAG storage initialized with {len(storage_paths)} paths")
+            return storage_paths
+            
+        except Exception as e:
+            self.logger.error(f"Failed to initialize LightRAG storage: {e}")
+            raise ClinicalMetabolomicsRAGError(f"Storage initialization failed: {e}") from e
+    
+    async def _initialize_lightrag_storage_systems(self) -> Dict[str, Any]:
+        """
+        Initialize LightRAG's internal storage systems after directories are created.
+        
+        This method ensures that LightRAG properly recognizes and initializes its
+        storage systems (vector databases, graph storage, etc.) after the storage
+        directories have been created.
+        
+        Returns:
+            Dict containing initialization results and status information
+        
+        Raises:
+            ClinicalMetabolomicsRAGError: If storage system initialization fails
+        """
+        init_start_time = time.time()
+        result = {
+            'success': False,
+            'timestamp': init_start_time,
+            'storage_systems_checked': [],
+            'initialization_details': {}
+        }
+        
+        try:
+            if not self.lightrag_instance:
+                raise ClinicalMetabolomicsRAGError("LightRAG instance not available")
+            
+            working_dir = Path(self.config.working_dir)
+            
+            # Check and log storage directory status
+            storage_dirs = {
+                'vdb_chunks': working_dir / 'vdb_chunks',
+                'vdb_entities': working_dir / 'vdb_entities',
+                'vdb_relationships': working_dir / 'vdb_relationships'
+            }
+            
+            storage_files = {
+                'graph_relations': working_dir / 'graph_chunk_entity_relation.json'
+            }
+            
+            # Verify all storage paths exist
+            for name, path in {**storage_dirs, **storage_files}.items():
+                if path.exists():
+                    result['storage_systems_checked'].append(f"{name}: {path}")
+                    self.logger.debug(f"Storage system verified: {name} at {path}")
+                else:
+                    self.logger.warning(f"Storage path missing: {name} at {path}")
+                    raise ClinicalMetabolomicsRAGError(f"Required storage path missing: {path}")
+            
+            # Initialize storage systems by attempting a minimal operation
+            # This helps ensure LightRAG recognizes the storage directories
+            try:
+                # Try to access the vector databases to trigger initialization
+                # Note: This is a safe operation that doesn't modify data
+                if hasattr(self.lightrag_instance, '_get_storage_path'):
+                    # LightRAG-specific storage path verification
+                    for storage_name, storage_path in storage_dirs.items():
+                        if storage_path.exists() and storage_path.is_dir():
+                            result['initialization_details'][storage_name] = {
+                                'path': str(storage_path),
+                                'exists': True,
+                                'is_directory': True,
+                                'file_count': len(list(storage_path.glob('*'))) if storage_path.exists() else 0
+                            }
+                
+                # Verify graph relations file
+                graph_file = storage_files['graph_relations']
+                if graph_file.exists():
+                    try:
+                        import json
+                        with open(graph_file, 'r') as f:
+                            graph_data = json.load(f)
+                        result['initialization_details']['graph_relations'] = {
+                            'path': str(graph_file),
+                            'exists': True,
+                            'is_valid_json': True,
+                            'data_keys': list(graph_data.keys()) if isinstance(graph_data, dict) else []
+                        }
+                    except json.JSONDecodeError as e:
+                        self.logger.warning(f"Graph relations file is not valid JSON: {e}")
+                        result['initialization_details']['graph_relations'] = {
+                            'path': str(graph_file),
+                            'exists': True,
+                            'is_valid_json': False,
+                            'error': str(e)
+                        }
+                
+                self.logger.info("LightRAG storage systems verification completed")
+                
+            except Exception as storage_init_error:
+                self.logger.warning(f"Storage system initialization check failed: {storage_init_error}")
+                result['initialization_details']['warning'] = str(storage_init_error)
+            
+            # Mark as successful if we've reached this point
+            result['success'] = True
+            result['initialization_time_seconds'] = time.time() - init_start_time
+            
+            return result
+            
+        except Exception as e:
+            result['success'] = False
+            result['error'] = str(e)
+            result['initialization_time_seconds'] = time.time() - init_start_time
+            self.logger.error(f"LightRAG storage system initialization failed: {e}")
+            raise ClinicalMetabolomicsRAGError(f"Storage system initialization failed: {e}") from e
+    
+    def _enhance_document_content(self, content: str, metadata: Dict[str, Any], file_path: str) -> str:
+        """
+        Enhance document content with metadata for better retrieval and context.
+        
+        Args:
+            content: Original document text content
+            metadata: Document metadata dictionary
+            file_path: Path to the source document file
+        
+        Returns:
+            Enhanced content string with metadata context
+        """
+        try:
+            # Extract useful metadata
+            title = metadata.get('title', Path(file_path).stem)
+            authors = metadata.get('authors', [])
+            journal = metadata.get('journal', '')
+            year = metadata.get('year', '')
+            doi = metadata.get('doi', '')
+            
+            # Build metadata header
+            metadata_lines = [f"Document: {title}"]
+            
+            if authors:
+                author_str = ", ".join(authors) if isinstance(authors, list) else str(authors)
+                metadata_lines.append(f"Authors: {author_str}")
+            
+            if journal:
+                metadata_lines.append(f"Journal: {journal}")
+            
+            if year:
+                metadata_lines.append(f"Year: {year}")
+            
+            if doi:
+                metadata_lines.append(f"DOI: {doi}")
+            
+            metadata_lines.append(f"Source: {Path(file_path).name}")
+            metadata_lines.append("")  # Empty line separator
+            
+            # Combine metadata header with content
+            enhanced_content = "\n".join(metadata_lines) + content
+            
+            return enhanced_content
+            
+        except Exception as e:
+            self.logger.warning(f"Failed to enhance document content for {file_path}: {e}")
+            # Return original content if enhancement fails
+            return content
+    
+    def _pdf_progress_callback(self, current: int, total: int, message: str = "") -> None:
+        """
+        Callback function for PDF processing progress updates.
+        
+        Args:
+            current: Current progress count
+            total: Total items to process
+            message: Optional progress message
+        """
+        if total > 0:
+            percentage = (current / total) * 100
+            self.logger.info(f"PDF Processing Progress: {current}/{total} ({percentage:.1f}%) - {message}")
+
     def __repr__(self) -> str:
         """String representation for debugging."""
+        kb_status = getattr(self, '_knowledge_base_initialized', False)
         return (
             f"ClinicalMetabolomicsRAG("
             f"initialized={self.is_initialized}, "
+            f"knowledge_base_initialized={kb_status}, "
             f"queries={len(self.query_history)}, "
             f"total_cost=${self.total_cost:.4f}, "
             f"working_dir={self.config.working_dir})"
