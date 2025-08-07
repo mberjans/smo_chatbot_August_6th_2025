@@ -42,6 +42,8 @@ from pathlib import Path
 import openai
 from dataclasses import dataclass
 import json
+import time
+from datetime import datetime
 
 # Tenacity for retry logic - graceful fallback if not available
 try:
@@ -2178,7 +2180,9 @@ class ClinicalMetabolomicsRAG:
                                    batch_size: int = 10,
                                    max_memory_mb: int = 2048,
                                    enable_batch_processing: bool = True,
-                                   force_reinitialize: bool = False) -> Dict[str, Any]:
+                                   force_reinitialize: bool = False,
+                                   enable_unified_progress_tracking: bool = True,
+                                   progress_callback: Optional[Callable] = None) -> Dict[str, Any]:
         """
         Initialize the knowledge base by processing PDF documents and building the LightRAG knowledge graph.
         
@@ -2197,6 +2201,8 @@ class ClinicalMetabolomicsRAG:
             max_memory_mb: Maximum memory usage limit in MB (default: 2048)
             enable_batch_processing: Whether to use batch processing for large collections (default: True)
             force_reinitialize: Whether to force reinitialization even if already initialized (default: False)
+            enable_unified_progress_tracking: Whether to enable unified progress tracking (default: True)
+            progress_callback: Optional callback for progress updates
         
         Returns:
             Dict containing detailed initialization results:
@@ -2249,6 +2255,28 @@ class ClinicalMetabolomicsRAG:
             }
         }
         
+        # Initialize unified progress tracking if enabled
+        unified_progress_tracker = None
+        if enable_unified_progress_tracking:
+            try:
+                # Import here to avoid circular imports
+                from .progress_integration import create_unified_progress_tracker
+                from .unified_progress_tracker import KnowledgeBasePhase
+                
+                unified_progress_tracker = create_unified_progress_tracker(
+                    progress_config=progress_config,
+                    logger=self.logger,
+                    progress_callback=progress_callback,
+                    enable_console_output=progress_callback is None  # Enable console if no callback provided
+                )
+                
+                # Start initialization tracking
+                unified_progress_tracker.start_initialization(total_documents=0)  # Will update after counting PDFs
+                
+            except Exception as e:
+                self.logger.warning(f"Failed to initialize unified progress tracking: {e}")
+                unified_progress_tracker = None
+
         try:
             self.logger.info(f"Starting knowledge base initialization from {papers_path}")
             
@@ -2274,16 +2302,45 @@ class ClinicalMetabolomicsRAG:
             )
             
             # Step 1: Initialize or validate LightRAG storage systems
+            if unified_progress_tracker:
+                unified_progress_tracker.start_phase(
+                    KnowledgeBasePhase.STORAGE_INIT,
+                    "Initializing LightRAG storage systems",
+                    estimated_duration=10.0
+                )
+            
             self.logger.info("Initializing LightRAG storage systems")
             storage_paths = await self._initialize_lightrag_storage()
             result['storage_created'] = [str(path) for path in storage_paths]
             
+            if unified_progress_tracker:
+                unified_progress_tracker.update_phase_progress(
+                    KnowledgeBasePhase.STORAGE_INIT,
+                    0.5,
+                    "Storage directories created",
+                    {'storage_paths': len(storage_paths)}
+                )
+            
             # Step 1.5: Initialize LightRAG storage components
             self.logger.info("Initializing LightRAG internal storage systems")
             try:
+                if unified_progress_tracker:
+                    unified_progress_tracker.update_phase_progress(
+                        KnowledgeBasePhase.STORAGE_INIT,
+                        0.8,
+                        "Initializing internal storage systems"
+                    )
+                
                 storage_init_result = await self._initialize_lightrag_storage_systems()
                 result['storage_initialization'] = storage_init_result
                 self.logger.info("LightRAG storage systems initialized successfully")
+                
+                if unified_progress_tracker:
+                    unified_progress_tracker.complete_phase(
+                        KnowledgeBasePhase.STORAGE_INIT,
+                        "Storage systems initialized successfully"
+                    )
+                    
             except Exception as e:
                 self.logger.error(f"Failed to initialize LightRAG storage systems: {e}")
                 result['storage_initialization'] = {
@@ -2291,6 +2348,13 @@ class ClinicalMetabolomicsRAG:
                     'error': str(e),
                     'timestamp': time.time()
                 }
+                
+                if unified_progress_tracker:
+                    unified_progress_tracker.fail_phase(
+                        KnowledgeBasePhase.STORAGE_INIT,
+                        f"Storage initialization failed: {e}"
+                    )
+                
                 raise ClinicalMetabolomicsRAGError(f"Storage initialization failed: {e}") from e
             
             # Step 2: Initialize or get PDF processor
@@ -2302,6 +2366,18 @@ class ClinicalMetabolomicsRAG:
                 )
             
             # Step 3: Process PDF documents
+            if unified_progress_tracker:
+                # Count PDFs to provide better progress tracking
+                pdf_files = list(papers_path.glob("*.pdf"))
+                total_pdfs = len(pdf_files)
+                unified_progress_tracker.update_document_counts(total=total_pdfs)
+                
+                unified_progress_tracker.start_phase(
+                    KnowledgeBasePhase.PDF_PROCESSING,
+                    f"Processing {total_pdfs} PDF documents",
+                    estimated_duration=total_pdfs * 30.0  # Estimate 30s per PDF
+                )
+            
             self.logger.info("Processing PDF documents from papers directory")
             
             try:
@@ -2311,11 +2387,11 @@ class ClinicalMetabolomicsRAG:
                 # Use provided progress_config or create default
                 if progress_config is None:
                     progress_config = ProgressTrackingConfig(
-                        enable_progress_logging=True,
-                        log_level=logging.INFO,
-                        update_interval_seconds=5.0,
-                        enable_file_tracking=True,
-                        enable_metrics_tracking=True
+                        enable_progress_tracking=True,
+                        progress_log_level="INFO",
+                        log_progress_interval=5,
+                        enable_timing_details=True,
+                        enable_memory_monitoring=True
                     )
                 
                 # Process all PDFs with comprehensive error handling
@@ -2330,14 +2406,40 @@ class ClinicalMetabolomicsRAG:
                 result['total_documents'] = len(processed_documents)
                 self.logger.info(f"PDF processing completed: {len(processed_documents)} documents")
                 
+                if unified_progress_tracker:
+                    # Update document counts
+                    successful_docs = len([doc for doc in processed_documents if doc[1].get('content', '').strip()])
+                    failed_docs = len(processed_documents) - successful_docs
+                    unified_progress_tracker.update_document_counts(processed=successful_docs, failed=failed_docs)
+                    
+                    # Complete PDF processing phase
+                    unified_progress_tracker.complete_phase(
+                        KnowledgeBasePhase.PDF_PROCESSING,
+                        f"Processed {successful_docs}/{len(processed_documents)} documents successfully"
+                    )
+                
             except Exception as e:
                 error_msg = f"PDF processing failed: {e}"
                 self.logger.error(error_msg)
                 result['errors'].append(error_msg)
+                
+                if unified_progress_tracker:
+                    unified_progress_tracker.fail_phase(
+                        KnowledgeBasePhase.PDF_PROCESSING,
+                        error_msg
+                    )
+                
                 raise ClinicalMetabolomicsRAGError(error_msg) from e
             
             # Step 4: Ingest documents into LightRAG knowledge graph
             if processed_documents:
+                if unified_progress_tracker:
+                    unified_progress_tracker.start_phase(
+                        KnowledgeBasePhase.DOCUMENT_INGESTION,
+                        f"Ingesting {len(processed_documents)} documents into knowledge graph",
+                        estimated_duration=len(processed_documents) * 5.0  # Estimate 5s per document
+                    )
+                
                 self.logger.info("Ingesting documents into LightRAG knowledge graph")
                 
                 # Track API costs for document ingestion
@@ -2349,9 +2451,23 @@ class ClinicalMetabolomicsRAG:
                     batch_errors = []
                     successful_ingestions = 0
                     
-                    for i in range(0, len(processed_documents), batch_size):
+                    total_batches = (len(processed_documents) + batch_size - 1) // batch_size
+                    for batch_idx, i in enumerate(range(0, len(processed_documents), batch_size)):
                         batch = processed_documents[i:i + batch_size]
                         batch_texts = []
+                        
+                        if unified_progress_tracker:
+                            batch_progress = batch_idx / total_batches
+                            unified_progress_tracker.update_phase_progress(
+                                KnowledgeBasePhase.DOCUMENT_INGESTION,
+                                batch_progress,
+                                f"Processing batch {batch_idx + 1}/{total_batches}",
+                                {
+                                    'current_batch': batch_idx + 1,
+                                    'total_batches': total_batches,
+                                    'documents_in_batch': len(batch)
+                                }
+                            )
                         
                         # Extract text content from processed documents
                         for file_path, doc_data in batch:
@@ -2394,6 +2510,12 @@ class ClinicalMetabolomicsRAG:
                     result['documents_processed'] = successful_ingestions
                     result['errors'].extend(batch_errors)
                     
+                    if unified_progress_tracker:
+                        unified_progress_tracker.complete_phase(
+                            KnowledgeBasePhase.DOCUMENT_INGESTION,
+                            f"Successfully ingested {successful_ingestions} documents"
+                        )
+                    
                     # Log batch processing metrics
                     ingestion_time = time.time() - ingestion_start
                     self.log_batch_api_operation(
@@ -2414,6 +2536,12 @@ class ClinicalMetabolomicsRAG:
                     result['errors'].append(error_msg)
                     # Don't raise here - partial success is still valuable
                     result['documents_failed'] = len(processed_documents)
+                    
+                    if unified_progress_tracker:
+                        unified_progress_tracker.fail_phase(
+                            KnowledgeBasePhase.DOCUMENT_INGESTION,
+                            error_msg
+                        )
                 
                 # Update cost summary
                 result['cost_summary'] = {
@@ -2428,6 +2556,13 @@ class ClinicalMetabolomicsRAG:
                 result['errors'].append("No valid PDF documents found or processed")
             
             # Step 5: Finalize initialization
+            if unified_progress_tracker:
+                unified_progress_tracker.start_phase(
+                    KnowledgeBasePhase.FINALIZATION,
+                    "Finalizing knowledge base initialization",
+                    estimated_duration=2.0
+                )
+            
             processing_time = time.time() - start_time
             result['processing_time'] = processing_time
             
@@ -2453,11 +2588,33 @@ class ClinicalMetabolomicsRAG:
                         'total_cost': result['cost_summary']['total_cost']
                     }
                 )
+                
+                if unified_progress_tracker:
+                    unified_progress_tracker.complete_phase(
+                        KnowledgeBasePhase.FINALIZATION,
+                        f"Knowledge base initialized successfully - {result['documents_processed']} documents processed"
+                    )
             else:
                 result['success'] = False
                 error_msg = "Knowledge base initialization failed: no documents were successfully processed"
                 self.logger.error(error_msg)
                 result['errors'].append(error_msg)
+                
+                if unified_progress_tracker:
+                    unified_progress_tracker.fail_phase(
+                        KnowledgeBasePhase.FINALIZATION,
+                        error_msg
+                    )
+            
+            # Add unified progress tracking results to the output
+            if unified_progress_tracker:
+                result['unified_progress'] = {
+                    'enabled': True,
+                    'final_state': unified_progress_tracker.get_current_state().to_dict(),
+                    'summary': unified_progress_tracker.get_progress_summary()
+                }
+            else:
+                result['unified_progress'] = {'enabled': False}
             
             return result
             

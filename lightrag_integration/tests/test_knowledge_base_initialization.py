@@ -73,6 +73,14 @@ from lightrag_integration.pdf_processor import (
 )
 from lightrag_integration.progress_tracker import PDFProcessingProgressTracker
 from lightrag_integration.progress_config import ProgressTrackingConfig
+from lightrag_integration.unified_progress_tracker import (
+    KnowledgeBaseProgressTracker,
+    KnowledgeBasePhase, 
+    PhaseWeights,
+    PhaseProgressInfo,
+    UnifiedProgressState,
+    UnifiedProgressCallback
+)
 
 
 # =====================================================================
@@ -306,6 +314,74 @@ def temp_knowledge_base_dir():
 def mock_progress_tracker():
     """Provide mock progress tracker for testing."""
     return MockProgressTracker()
+
+
+@pytest.fixture
+def unified_progress_config():
+    """Provide configuration for unified progress tracking testing."""
+    return ProgressTrackingConfig(
+        enable_progress_tracking=True,
+        enable_unified_progress_tracking=True,
+        enable_phase_based_progress=True,
+        save_unified_progress_to_file=True,
+        unified_progress_file_path=None,  # Will be set in tests
+        enable_progress_callbacks=True,
+        progress_log_level="INFO"
+    )
+
+
+@pytest.fixture
+def progress_callback_capture():
+    """Fixture to capture progress callback invocations."""
+    captured_calls = []
+    
+    def callback(state: UnifiedProgressState, details: Dict[str, Any] = None):
+        captured_calls.append({
+            'timestamp': time.time(),
+            'phase': state.current_phase.value if state.current_phase else None,
+            'overall_progress': state.overall_progress,
+            'total_documents': state.total_documents,
+            'processed_documents': state.processed_documents,
+            'failed_documents': state.failed_documents,
+            'details': details or {}
+        })
+    
+    callback.captured_calls = captured_calls
+    return callback
+
+
+@pytest.fixture
+def mock_unified_progress_tracker():
+    """Provide mock unified progress tracker for testing."""
+    tracker = MagicMock(spec=KnowledgeBaseProgressTracker)
+    
+    # Mock state
+    mock_state = UnifiedProgressState(
+        current_phase=KnowledgeBasePhase.STORAGE_INIT,
+        overall_progress=0.0,
+        total_documents=0,
+        processed_documents=0,
+        failed_documents=0
+    )
+    
+    # Setup methods
+    tracker.get_current_state.return_value = mock_state
+    tracker.start_initialization = Mock()
+    tracker.start_phase = Mock()
+    tracker.update_phase_progress = Mock()
+    tracker.complete_phase = Mock()
+    tracker.fail_phase = Mock()
+    tracker.update_document_counts = Mock()
+    tracker.get_progress_summary = Mock(return_value={
+        'overall_progress': 0.0,
+        'current_phase': 'storage_init',
+        'phase_progress': 0.0,
+        'documents_processed': 0,
+        'documents_failed': 0,
+        'total_documents': 0
+    })
+    
+    return tracker
 
 
 # =====================================================================
@@ -846,6 +922,186 @@ class TestKnowledgeBaseProgressTracking:
     """Test class for progress tracking functionality during initialization."""
     
     @pytest.mark.asyncio
+    async def test_initialize_knowledge_base_with_unified_progress_tracking(
+        self, knowledge_base_config, temp_knowledge_base_dir, unified_progress_config, progress_callback_capture, mock_unified_progress_tracker
+    ):
+        """Test initialize_knowledge_base method with unified progress tracking enabled."""
+        knowledge_base_config.working_dir = temp_knowledge_base_dir
+        
+        # Create test papers directory with mock PDF files
+        papers_dir = temp_knowledge_base_dir / "papers"
+        papers_dir.mkdir(exist_ok=True)
+        
+        # Create mock PDF files
+        test_pdf1 = papers_dir / "test1.pdf"
+        test_pdf2 = papers_dir / "test2.pdf"
+        test_pdf1.touch()
+        test_pdf2.touch()
+        
+        with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+             patch('lightrag_integration.clinical_metabolomics_rag.BiomedicalPDFProcessor') as mock_pdf_processor_class:
+            
+            # Setup LightRAG mock
+            mock_instance = MagicMock()
+            mock_instance.ainsert = AsyncMock()
+            mock_lightrag.return_value = mock_instance
+            
+            # Setup PDF processor mock
+            mock_pdf_processor = MagicMock()
+            mock_pdf_processor.process_all_pdfs = AsyncMock(return_value=[
+                (test_pdf1, {'content': 'Test PDF 1 content about metabolomics', 'metadata': {'title': 'Test 1'}}),
+                (test_pdf2, {'content': 'Test PDF 2 content about biomarkers', 'metadata': {'title': 'Test 2'}})
+            ])
+            mock_pdf_processor_class.return_value = mock_pdf_processor
+            
+            # Mock the progress integration
+            with patch('lightrag_integration.progress_integration.create_unified_progress_tracker') as mock_create_tracker:
+                mock_tracker = mock_unified_progress_tracker
+                mock_create_tracker.return_value = mock_tracker
+                
+                # Initialize RAG system
+                rag = ClinicalMetabolomicsRAG(config=knowledge_base_config)
+                
+                # Call initialize_knowledge_base with progress tracking
+                result = await rag.initialize_knowledge_base(
+                    papers_dir=papers_dir,
+                    progress_config=unified_progress_config,
+                    enable_unified_progress_tracking=True,
+                    progress_callback=progress_callback_capture
+                )
+                
+                # Verify overall result
+                assert result['success'] == True
+                assert result['documents_processed'] == 2
+                assert result['total_documents'] == 2
+                assert result['processing_time'] > 0
+                assert 'unified_progress' in result
+                assert result['unified_progress']['enabled'] == True
+                
+                # Verify unified progress tracker was created and used
+                mock_create_tracker.assert_called_once()
+                
+                # Verify progress tracking phases were called
+                mock_tracker.start_initialization.assert_called_once()
+                assert mock_tracker.start_phase.call_count >= 3  # At least storage, pdf, ingestion phases
+                
+                # Verify specific phase calls
+                phase_calls = [call.args[0] for call in mock_tracker.start_phase.call_args_list]
+                assert KnowledgeBasePhase.STORAGE_INIT in phase_calls
+                assert KnowledgeBasePhase.PDF_PROCESSING in phase_calls
+                assert KnowledgeBasePhase.DOCUMENT_INGESTION in phase_calls
+                
+                # Verify progress updates were made
+                assert mock_tracker.update_phase_progress.call_count > 0
+                
+                # Verify document counts were updated
+                mock_tracker.update_document_counts.assert_called()
+                
+                # Verify some phases were completed
+                assert mock_tracker.complete_phase.call_count >= 1
+    
+    @pytest.mark.asyncio
+    async def test_initialize_knowledge_base_with_progress_callback(
+        self, knowledge_base_config, temp_knowledge_base_dir, progress_callback_capture, mock_unified_progress_tracker
+    ):
+        """Test initialize_knowledge_base method with progress callback validation."""
+        knowledge_base_config.working_dir = temp_knowledge_base_dir
+        
+        # Create test papers directory with mock PDF files
+        papers_dir = temp_knowledge_base_dir / "papers"
+        papers_dir.mkdir(exist_ok=True)
+        
+        # Create mock PDF file
+        test_pdf = papers_dir / "test.pdf"
+        test_pdf.touch()
+        
+        with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+             patch('lightrag_integration.clinical_metabolomics_rag.BiomedicalPDFProcessor') as mock_pdf_processor_class, \
+             patch('lightrag_integration.progress_integration.create_unified_progress_tracker') as mock_create_tracker:
+            
+            # Setup mocks
+            mock_instance = MagicMock()
+            mock_instance.ainsert = AsyncMock()
+            mock_lightrag.return_value = mock_instance
+            
+            mock_pdf_processor = MagicMock()
+            mock_pdf_processor.process_all_pdfs = AsyncMock(return_value=[
+                (test_pdf, {'content': 'Test content', 'metadata': {'title': 'Test'}})
+            ])
+            mock_pdf_processor_class.return_value = mock_pdf_processor
+            
+            # Mock unified progress tracker
+            mock_tracker = mock_unified_progress_tracker
+            mock_create_tracker.return_value = mock_tracker
+            
+            # Initialize RAG system
+            rag = ClinicalMetabolomicsRAG(config=knowledge_base_config)
+            
+            # Call initialize_knowledge_base with progress callback
+            result = await rag.initialize_knowledge_base(
+                papers_dir=papers_dir,
+                progress_callback=progress_callback_capture,
+                enable_unified_progress_tracking=True
+            )
+            
+            # Verify callback was passed to unified progress tracker creation
+            mock_create_tracker.assert_called_once()
+            create_args = mock_create_tracker.call_args
+            assert create_args.kwargs['progress_callback'] == progress_callback_capture
+            
+            # Verify result contains unified progress information
+            assert result['success'] == True
+            assert 'unified_progress' in result
+            assert result['unified_progress']['enabled'] == True
+    
+    @pytest.mark.asyncio
+    async def test_initialize_knowledge_base_with_disabled_progress_tracking(
+        self, knowledge_base_config, temp_knowledge_base_dir
+    ):
+        """Test initialize_knowledge_base method with progress tracking disabled."""
+        knowledge_base_config.working_dir = temp_knowledge_base_dir
+        
+        # Create test papers directory with mock PDF files
+        papers_dir = temp_knowledge_base_dir / "papers"
+        papers_dir.mkdir(exist_ok=True)
+        
+        # Create mock PDF file
+        test_pdf = papers_dir / "test.pdf"
+        test_pdf.touch()
+        
+        with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+             patch('lightrag_integration.clinical_metabolomics_rag.BiomedicalPDFProcessor') as mock_pdf_processor_class, \
+             patch('lightrag_integration.progress_integration.create_unified_progress_tracker') as mock_create_tracker:
+            
+            # Setup mocks
+            mock_instance = MagicMock()
+            mock_instance.ainsert = AsyncMock()
+            mock_lightrag.return_value = mock_instance
+            
+            mock_pdf_processor = MagicMock()
+            mock_pdf_processor.process_all_pdfs = AsyncMock(return_value=[
+                (test_pdf, {'content': 'Test content', 'metadata': {'title': 'Test'}})
+            ])
+            mock_pdf_processor_class.return_value = mock_pdf_processor
+            
+            # Initialize RAG system
+            rag = ClinicalMetabolomicsRAG(config=knowledge_base_config)
+            
+            # Call initialize_knowledge_base with progress tracking disabled
+            result = await rag.initialize_knowledge_base(
+                papers_dir=papers_dir,
+                enable_unified_progress_tracking=False
+            )
+            
+            # Verify unified progress tracker was NOT created
+            mock_create_tracker.assert_not_called()
+            
+            # Verify result shows progress tracking is disabled
+            assert result['success'] == True
+            assert 'unified_progress' in result
+            assert result['unified_progress']['enabled'] == False
+    
+    @pytest.mark.asyncio
     async def test_progress_tracking_during_initialization(
         self, knowledge_base_config, temp_knowledge_base_dir, mock_progress_tracker
     ):
@@ -869,6 +1125,114 @@ class TestKnowledgeBaseProgressTracking:
             # Verify progress was tracked
             assert mock_progress_tracker.progress == 100.0
             assert len(mock_progress_tracker.events) == 3
+    
+    @pytest.mark.asyncio
+    async def test_initialize_knowledge_base_with_progress_tracking_errors(
+        self, knowledge_base_config, temp_knowledge_base_dir, progress_callback_capture, mock_unified_progress_tracker
+    ):
+        """Test initialize_knowledge_base method with progress tracking when errors occur."""
+        knowledge_base_config.working_dir = temp_knowledge_base_dir
+        
+        # Create test papers directory with mock PDF files
+        papers_dir = temp_knowledge_base_dir / "papers"
+        papers_dir.mkdir(exist_ok=True)
+        
+        # Create mock PDF file
+        test_pdf = papers_dir / "test.pdf"
+        test_pdf.touch()
+        
+        with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+             patch('lightrag_integration.clinical_metabolomics_rag.BiomedicalPDFProcessor') as mock_pdf_processor_class, \
+             patch('lightrag_integration.progress_integration.create_unified_progress_tracker') as mock_create_tracker:
+            
+            # Setup LightRAG mock
+            mock_instance = MagicMock()
+            mock_instance.ainsert = AsyncMock(side_effect=Exception("Document ingestion failed"))
+            mock_lightrag.return_value = mock_instance
+            
+            # Setup PDF processor mock to succeed
+            mock_pdf_processor = MagicMock()
+            mock_pdf_processor.process_all_pdfs = AsyncMock(return_value=[
+                (test_pdf, {'content': 'Test content', 'metadata': {'title': 'Test'}})
+            ])
+            mock_pdf_processor_class.return_value = mock_pdf_processor
+            
+            # Mock unified progress tracker
+            mock_tracker = mock_unified_progress_tracker
+            mock_create_tracker.return_value = mock_tracker
+            
+            # Initialize RAG system
+            rag = ClinicalMetabolomicsRAG(config=knowledge_base_config)
+            
+            # Call initialize_knowledge_base - expect it to handle errors gracefully
+            result = await rag.initialize_knowledge_base(
+                papers_dir=papers_dir,
+                enable_unified_progress_tracking=True,
+                progress_callback=progress_callback_capture
+            )
+            
+            # Verify result shows the mixed outcome (PDF processing succeeded, ingestion failed)
+            # The method still returns success=True if documents were processed, even if ingestion failed
+            assert result['success'] == True  # Overall success if PDFs were processed
+            assert result['documents_failed'] > 0  # But some documents failed ingestion
+            assert len(result['errors']) > 0  # And there were errors
+            assert 'unified_progress' in result
+            
+            # Verify that phases were attempted  
+            assert mock_tracker.start_phase.call_count >= 3  # Storage, PDF, and ingestion phases
+            # Note: The method may not call fail_phase if it handles errors gracefully
+    
+    @pytest.mark.asyncio
+    async def test_initialize_knowledge_base_with_pdf_processing_errors(
+        self, knowledge_base_config, temp_knowledge_base_dir, progress_callback_capture, mock_unified_progress_tracker
+    ):
+        """Test initialize_knowledge_base method with PDF processing errors and progress tracking."""
+        knowledge_base_config.working_dir = temp_knowledge_base_dir
+        
+        # Create test papers directory with mock PDF files
+        papers_dir = temp_knowledge_base_dir / "papers"
+        papers_dir.mkdir(exist_ok=True)
+        
+        # Create mock PDF files
+        test_pdf1 = papers_dir / "test1.pdf"
+        test_pdf2 = papers_dir / "test2.pdf"
+        test_pdf1.touch()
+        test_pdf2.touch()
+        
+        with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+             patch('lightrag_integration.clinical_metabolomics_rag.BiomedicalPDFProcessor') as mock_pdf_processor_class, \
+             patch('lightrag_integration.progress_integration.create_unified_progress_tracker') as mock_create_tracker:
+            
+            # Setup LightRAG mock
+            mock_instance = MagicMock()
+            mock_instance.ainsert = AsyncMock()
+            mock_lightrag.return_value = mock_instance
+            
+            # Setup PDF processor mock to fail
+            mock_pdf_processor = MagicMock()
+            mock_pdf_processor.process_all_pdfs = AsyncMock(
+                side_effect=BiomedicalPDFProcessorError("PDF processing failed")
+            )
+            mock_pdf_processor_class.return_value = mock_pdf_processor
+            
+            # Mock unified progress tracker
+            mock_tracker = mock_unified_progress_tracker
+            mock_create_tracker.return_value = mock_tracker
+            
+            # Initialize RAG system
+            rag = ClinicalMetabolomicsRAG(config=knowledge_base_config)
+            
+            # Call initialize_knowledge_base - expect it to raise error for complete PDF failure
+            with pytest.raises(ClinicalMetabolomicsRAGError, match="PDF processing failed"):
+                await rag.initialize_knowledge_base(
+                    papers_dir=papers_dir,
+                    enable_unified_progress_tracking=True,
+                    progress_callback=progress_callback_capture
+                )
+            
+            # Verify that storage phase succeeded but PDF processing phase failed
+            assert mock_tracker.start_phase.call_count >= 2  # Storage + PDF phases
+            assert mock_tracker.fail_phase.call_count >= 1   # PDF processing should have failed
     
     @pytest.mark.asyncio
     async def test_progress_tracking_with_errors(
@@ -1312,6 +1676,107 @@ class TestKnowledgeBaseIntegration:
             mock_instance.aquery.assert_called_once()
     
     @pytest.mark.asyncio
+    async def test_complete_knowledge_base_workflow_with_progress_tracking(
+        self, knowledge_base_config, temp_knowledge_base_dir, unified_progress_config, progress_callback_capture, mock_unified_progress_tracker
+    ):
+        """Test complete knowledge base workflow including initialize_knowledge_base with progress tracking."""
+        knowledge_base_config.working_dir = temp_knowledge_base_dir
+        
+        # Create test papers directory with mock PDF files
+        papers_dir = temp_knowledge_base_dir / "papers"
+        papers_dir.mkdir(exist_ok=True)
+        
+        # Create mock PDF files
+        test_pdf1 = papers_dir / "metabolomics_study.pdf"
+        test_pdf2 = papers_dir / "biomarkers_research.pdf"
+        test_pdf1.touch()
+        test_pdf2.touch()
+        
+        with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+             patch('lightrag_integration.clinical_metabolomics_rag.BiomedicalPDFProcessor') as mock_pdf_processor_class, \
+             patch('lightrag_integration.progress_integration.create_unified_progress_tracker') as mock_create_tracker:
+            
+            # Setup LightRAG mock
+            mock_instance = MagicMock()
+            mock_instance.ainsert = AsyncMock()
+            mock_instance.aquery = AsyncMock(return_value="Metabolomics analysis results")
+            mock_lightrag.return_value = mock_instance
+            
+            # Setup PDF processor mock
+            mock_pdf_processor = MagicMock()
+            mock_pdf_processor.process_all_pdfs = AsyncMock(return_value=[
+                (test_pdf1, {
+                    'content': 'Clinical metabolomics study showing glucose and lactate biomarkers in diabetes patients.',
+                    'metadata': {'title': 'Diabetes Metabolomics Study', 'doi': '10.1000/test.001'}
+                }),
+                (test_pdf2, {
+                    'content': 'Biomarker identification using mass spectrometry in liver disease progression.',
+                    'metadata': {'title': 'Liver Disease Biomarkers', 'doi': '10.1000/test.002'}
+                })
+            ])
+            mock_pdf_processor_class.return_value = mock_pdf_processor
+            
+            # Mock unified progress tracker
+            mock_tracker = mock_unified_progress_tracker
+            mock_create_tracker.return_value = mock_tracker
+            
+            # Initialize RAG system
+            rag = ClinicalMetabolomicsRAG(config=knowledge_base_config)
+            
+            # Step 1: Initialize knowledge base with progress tracking
+            init_result = await rag.initialize_knowledge_base(
+                papers_dir=papers_dir,
+                progress_config=unified_progress_config,
+                enable_unified_progress_tracking=True,
+                progress_callback=progress_callback_capture
+            )
+            
+            # Verify initialization succeeded with progress tracking
+            assert init_result['success'] == True
+            assert init_result['documents_processed'] == 2
+            assert init_result['total_documents'] == 2
+            assert 'unified_progress' in init_result
+            assert init_result['unified_progress']['enabled'] == True
+            
+            # Verify progress tracking was properly used during initialization
+            mock_create_tracker.assert_called_once()
+            mock_tracker.start_initialization.assert_called_once()
+            
+            # Verify all major phases were executed
+            phase_calls = [call.args[0] for call in mock_tracker.start_phase.call_args_list]
+            expected_phases = [
+                KnowledgeBasePhase.STORAGE_INIT,
+                KnowledgeBasePhase.PDF_PROCESSING,
+                KnowledgeBasePhase.DOCUMENT_INGESTION,
+                KnowledgeBasePhase.FINALIZATION
+            ]
+            for expected_phase in expected_phases:
+                assert expected_phase in phase_calls, f"Expected phase {expected_phase} not found in {phase_calls}"
+            
+            # Verify progress updates and completions
+            assert mock_tracker.update_phase_progress.call_count > 0
+            assert mock_tracker.complete_phase.call_count >= 3  # At least storage, PDF, ingestion phases completed
+            
+            # Step 2: Execute a query to test the complete workflow
+            query_result = await rag.query("What metabolites are associated with diabetes?")
+            
+            # Verify query executed successfully
+            assert 'content' in query_result
+            assert query_result['content'] == "Metabolomics analysis results"
+            assert len(rag.query_history) == 1
+            
+            # Step 3: Verify document ingestion occurred during initialization
+            mock_instance.ainsert.assert_called_once()
+            ingested_docs = mock_instance.ainsert.call_args[0][0]
+            assert len(ingested_docs) == 2
+            
+            # Verify the enhanced content includes both text and metadata
+            for doc in ingested_docs:
+                assert 'metabolomics' in doc.lower() or 'biomarker' in doc.lower()
+                # Enhanced content should include title and DOI information
+                assert ('Document:' in doc or 'DOI:' in doc or 'Source:' in doc), f"Enhanced content missing metadata in: {doc[:100]}..."
+    
+    @pytest.mark.asyncio
     async def test_knowledge_base_with_real_file_operations(
         self, knowledge_base_config, temp_knowledge_base_dir
     ):
@@ -1336,6 +1801,149 @@ class TestKnowledgeBaseIntegration:
             # Cleanup should preserve user files but clean up internal state
             await rag.cleanup()
             assert test_file.exists()  # User files should remain
+    
+    @pytest.mark.asyncio
+    async def test_initialize_knowledge_base_backward_compatibility(
+        self, knowledge_base_config, temp_knowledge_base_dir
+    ):
+        """Test that initialize_knowledge_base maintains backward compatibility with existing code."""
+        knowledge_base_config.working_dir = temp_knowledge_base_dir
+        
+        # Create test papers directory with mock PDF files
+        papers_dir = temp_knowledge_base_dir / "papers"
+        papers_dir.mkdir(exist_ok=True)
+        test_pdf = papers_dir / "test.pdf"
+        test_pdf.touch()
+        
+        with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+             patch('lightrag_integration.clinical_metabolomics_rag.BiomedicalPDFProcessor') as mock_pdf_processor_class:
+            
+            # Setup mocks
+            mock_instance = MagicMock()
+            mock_instance.ainsert = AsyncMock()
+            mock_lightrag.return_value = mock_instance
+            
+            mock_pdf_processor = MagicMock()
+            mock_pdf_processor.process_all_pdfs = AsyncMock(return_value=[
+                (test_pdf, {'content': 'Test content', 'metadata': {'title': 'Test'}})
+            ])
+            mock_pdf_processor_class.return_value = mock_pdf_processor
+            
+            # Initialize RAG system
+            rag = ClinicalMetabolomicsRAG(config=knowledge_base_config)
+            
+            # Test 1: Call with minimal parameters (backward compatible)
+            result1 = await rag.initialize_knowledge_base(papers_dir=papers_dir)
+            
+            # Should succeed with default values
+            assert result1['success'] == True
+            assert result1['documents_processed'] >= 0
+            assert 'unified_progress' in result1
+            assert result1['unified_progress']['enabled'] == True  # Default is True
+            
+            # Test 2: Call with explicit parameters
+            result2 = await rag.initialize_knowledge_base(
+                papers_dir=papers_dir,
+                batch_size=5,
+                max_memory_mb=1024,
+                enable_batch_processing=True,
+                force_reinitialize=True,
+                enable_unified_progress_tracking=False,
+                progress_callback=None
+            )
+            
+            # Should succeed with explicit values
+            assert result2['success'] == True
+            assert result2['unified_progress']['enabled'] == False  # Explicitly disabled
+            
+            # Test 3: Call with old-style parameters only (no progress tracking params)
+            result3 = await rag.initialize_knowledge_base(
+                papers_dir=papers_dir,
+                batch_size=10,
+                force_reinitialize=True
+            )
+            
+            # Should succeed with defaults for new parameters
+            assert result3['success'] == True
+            assert 'unified_progress' in result3  # New field should be present
+    
+    @pytest.mark.asyncio
+    async def test_initialize_knowledge_base_parameter_validation(
+        self, knowledge_base_config, temp_knowledge_base_dir, progress_callback_capture
+    ):
+        """Test parameter validation for initialize_knowledge_base method."""
+        knowledge_base_config.working_dir = temp_knowledge_base_dir
+        
+        # Create test papers directory
+        papers_dir = temp_knowledge_base_dir / "papers"
+        papers_dir.mkdir(exist_ok=True)
+        test_pdf = papers_dir / "test.pdf"
+        test_pdf.touch()
+        
+        with patch('lightrag_integration.clinical_metabolomics_rag.LightRAG') as mock_lightrag, \
+             patch('lightrag_integration.clinical_metabolomics_rag.BiomedicalPDFProcessor') as mock_pdf_processor_class:
+            
+            # Setup mocks
+            mock_instance = MagicMock()
+            mock_instance.ainsert = AsyncMock()
+            mock_lightrag.return_value = mock_instance
+            
+            mock_pdf_processor = MagicMock()
+            mock_pdf_processor.process_all_pdfs = AsyncMock(return_value=[
+                (test_pdf, {'content': 'Test content', 'metadata': {'title': 'Test'}})
+            ])
+            mock_pdf_processor_class.return_value = mock_pdf_processor
+            
+            # Initialize RAG system
+            rag = ClinicalMetabolomicsRAG(config=knowledge_base_config)
+            
+            # Test invalid papers directory
+            with pytest.raises(ValueError, match="Papers directory does not exist"):
+                await rag.initialize_knowledge_base(papers_dir="nonexistent_directory")
+            
+            # Test with papers directory that is actually a file
+            invalid_papers_path = temp_knowledge_base_dir / "not_a_directory.txt"
+            invalid_papers_path.touch()
+            with pytest.raises(ValueError, match="Papers path is not a directory"):
+                await rag.initialize_knowledge_base(papers_dir=invalid_papers_path)
+            
+            # Test with valid parameters and different configurations
+            config_tests = [
+                # Test with ProgressTrackingConfig
+                {'progress_config': unified_progress_config},
+                # Test with progress callback
+                {'progress_callback': progress_callback_capture},
+                # Test with both
+                {'progress_config': unified_progress_config, 'progress_callback': progress_callback_capture},
+                # Test with different batch sizes
+                {'batch_size': 1},
+                {'batch_size': 100},
+                # Test with different memory limits
+                {'max_memory_mb': 512},
+                {'max_memory_mb': 4096},
+                # Test with various boolean combinations
+                {'enable_batch_processing': False},
+                {'force_reinitialize': True},
+                {'enable_unified_progress_tracking': False},
+            ]
+            
+            for i, test_config in enumerate(config_tests):
+                # Force reinitialize for each test
+                test_config['force_reinitialize'] = True
+                
+                result = await rag.initialize_knowledge_base(
+                    papers_dir=papers_dir,
+                    **test_config
+                )
+                
+                # All configurations should succeed
+                assert result['success'] == True, f"Configuration test {i} failed: {test_config}"
+                assert 'unified_progress' in result
+                
+                # Check progress tracking enabled/disabled state based on configuration
+                if 'enable_unified_progress_tracking' in test_config:
+                    expected_enabled = test_config['enable_unified_progress_tracking']
+                    assert result['unified_progress']['enabled'] == expected_enabled
 
 
 # =====================================================================

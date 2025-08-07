@@ -225,6 +225,26 @@ class ProgressTrackingConfig:
         default_factory=lambda: Path(os.getenv("LIGHTRAG_PROGRESS_FILE_PATH", "logs/processing_progress.json")) if os.getenv("LIGHTRAG_SAVE_PROGRESS_TO_FILE", "false").lower() in ("true", "1", "yes", "t", "on") else None
     )
     
+    # Knowledge base progress tracking extensions
+    enable_unified_progress_tracking: bool = field(
+        default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_UNIFIED_PROGRESS", "true").lower() in ("true", "1", "yes", "t", "on")
+    )
+    enable_phase_based_progress: bool = field(
+        default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_PHASE_PROGRESS", "true").lower() in ("true", "1", "yes", "t", "on")
+    )
+    phase_progress_update_interval: float = field(
+        default_factory=lambda: float(os.getenv("LIGHTRAG_PHASE_UPDATE_INTERVAL", "2.0"))
+    )
+    enable_progress_callbacks: bool = field(
+        default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_PROGRESS_CALLBACKS", "false").lower() in ("true", "1", "yes", "t", "on")
+    )
+    save_unified_progress_to_file: bool = field(
+        default_factory=lambda: os.getenv("LIGHTRAG_SAVE_UNIFIED_PROGRESS", "true").lower() in ("true", "1", "yes", "t", "on")
+    )
+    unified_progress_file_path: Optional[Path] = field(
+        default_factory=lambda: Path(os.getenv("LIGHTRAG_UNIFIED_PROGRESS_FILE_PATH", "logs/knowledge_base_progress.json")) if os.getenv("LIGHTRAG_SAVE_UNIFIED_PROGRESS", "true").lower() in ("true", "1", "yes", "t", "on") else None
+    )
+    
     def __post_init__(self):
         """Post-initialization processing to handle log level validation and path conversion."""
         # Normalize and validate log levels
@@ -249,6 +269,10 @@ class ProgressTrackingConfig:
         if isinstance(self.progress_file_path, str):
             self.progress_file_path = Path(self.progress_file_path)
         
+        # Convert unified_progress_file_path to Path object if it's a string
+        if isinstance(self.unified_progress_file_path, str):
+            self.unified_progress_file_path = Path(self.unified_progress_file_path)
+        
         # Validate numerical parameters
         if self.log_progress_interval <= 0:
             self.log_progress_interval = 5
@@ -258,6 +282,9 @@ class ProgressTrackingConfig:
         
         if self.max_error_details_length <= 0:
             self.max_error_details_length = 500
+        
+        if self.phase_progress_update_interval <= 0:
+            self.phase_progress_update_interval = 2.0
     
     def get_log_level_value(self, level_name: str) -> int:
         """
@@ -322,6 +349,9 @@ class ProgressTrackingConfig:
         """Ensure the progress file directory exists if progress saving is enabled."""
         if self.save_progress_to_file and self.progress_file_path:
             self.progress_file_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        if self.save_unified_progress_to_file and self.unified_progress_file_path:
+            self.unified_progress_file_path.parent.mkdir(parents=True, exist_ok=True)
     
     def to_dict(self) -> Dict[str, Any]:
         """
@@ -344,7 +374,13 @@ class ProgressTrackingConfig:
             'memory_check_interval': self.memory_check_interval,
             'enable_timing_details': self.enable_timing_details,
             'save_progress_to_file': self.save_progress_to_file,
-            'progress_file_path': str(self.progress_file_path) if self.progress_file_path else None
+            'progress_file_path': str(self.progress_file_path) if self.progress_file_path else None,
+            'enable_unified_progress_tracking': self.enable_unified_progress_tracking,
+            'enable_phase_based_progress': self.enable_phase_based_progress,
+            'phase_progress_update_interval': self.phase_progress_update_interval,
+            'enable_progress_callbacks': self.enable_progress_callbacks,
+            'save_unified_progress_to_file': self.save_unified_progress_to_file,
+            'unified_progress_file_path': str(self.unified_progress_file_path) if self.unified_progress_file_path else None
         }
     
     @classmethod
@@ -363,6 +399,10 @@ class ProgressTrackingConfig:
         # Convert progress_file_path to Path object if present
         if 'progress_file_path' in config_dict and config_dict['progress_file_path']:
             config_dict['progress_file_path'] = Path(config_dict['progress_file_path'])
+        
+        # Convert unified_progress_file_path to Path object if present
+        if 'unified_progress_file_path' in config_dict and config_dict['unified_progress_file_path']:
+            config_dict['unified_progress_file_path'] = Path(config_dict['unified_progress_file_path'])
         
         return cls(**config_dict)
     
