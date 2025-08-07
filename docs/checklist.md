@@ -219,13 +219,13 @@
 ### CMO-LIGHTRAG-007: Query Processing and Response Generation
 
 **CMO-LIGHTRAG-007-T01-TEST** [TEST]
-- [ ] Write tests for query method with different modes
+- [x] Write tests for query method with different modes
 
 **CMO-LIGHTRAG-007-T02-TEST** [TEST]
-- [ ] Write tests for context-only retrieval functionality
+- [x] Write tests for context-only retrieval functionality
 
 **CMO-LIGHTRAG-007-T03-TEST** [TEST]
-- [ ] Write performance tests for query response time (<30 seconds)
+- [x] Write performance tests for query response time (<30 seconds)
 
 **CMO-LIGHTRAG-007-T04** [CODE]
 - [ ] Implement query method with QueryParam configuration
