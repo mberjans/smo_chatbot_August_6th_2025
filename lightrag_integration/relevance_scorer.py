@@ -214,58 +214,64 @@ class WeightingSchemeManager:
     def __init__(self):
         self.weighting_schemes = {
             'basic_definition': {
-                'metabolomics_relevance': 0.30,
-                'query_alignment': 0.20,
-                'scientific_rigor': 0.15,
-                'clinical_applicability': 0.12,
-                'biomedical_context_depth': 0.05,
-                'response_length_quality': 0.08,
-                'response_structure_quality': 0.10
+                'metabolomics_relevance': 0.26,
+                'query_alignment': 0.18,
+                'scientific_rigor': 0.13,
+                'clinical_applicability': 0.11,
+                'biomedical_context_depth': 0.04,
+                'response_length_quality': 0.07,
+                'response_structure_quality': 0.09,
+                'factual_accuracy': 0.12
             },
             'clinical_application': {
-                'clinical_applicability': 0.25,
-                'metabolomics_relevance': 0.20,
-                'query_alignment': 0.18,
-                'scientific_rigor': 0.12,
-                'biomedical_context_depth': 0.08,
-                'response_length_quality': 0.07,
-                'response_structure_quality': 0.10
+                'clinical_applicability': 0.22,
+                'metabolomics_relevance': 0.18,
+                'query_alignment': 0.16,
+                'scientific_rigor': 0.11,
+                'biomedical_context_depth': 0.07,
+                'response_length_quality': 0.06,
+                'response_structure_quality': 0.08,
+                'factual_accuracy': 0.12
             },
             'analytical_method': {
-                'metabolomics_relevance': 0.35,
-                'query_alignment': 0.20,
-                'scientific_rigor': 0.18,
-                'biomedical_context_depth': 0.08,
+                'metabolomics_relevance': 0.31,
+                'query_alignment': 0.18,
+                'scientific_rigor': 0.16,
+                'biomedical_context_depth': 0.07,
                 'clinical_applicability': 0.04,
-                'response_length_quality': 0.08,
-                'response_structure_quality': 0.07
+                'response_length_quality': 0.07,
+                'response_structure_quality': 0.06,
+                'factual_accuracy': 0.11
             },
             'research_design': {
-                'scientific_rigor': 0.25,
-                'metabolomics_relevance': 0.20,
-                'query_alignment': 0.18,
-                'biomedical_context_depth': 0.12,
-                'clinical_applicability': 0.08,
-                'response_length_quality': 0.07,
-                'response_structure_quality': 0.10
+                'scientific_rigor': 0.22,
+                'metabolomics_relevance': 0.18,
+                'query_alignment': 0.16,
+                'biomedical_context_depth': 0.11,
+                'clinical_applicability': 0.07,
+                'response_length_quality': 0.06,
+                'response_structure_quality': 0.08,
+                'factual_accuracy': 0.12
             },
             'disease_specific': {
-                'clinical_applicability': 0.25,
-                'biomedical_context_depth': 0.20,
-                'metabolomics_relevance': 0.18,
-                'query_alignment': 0.12,
-                'scientific_rigor': 0.08,
-                'response_length_quality': 0.07,
-                'response_structure_quality': 0.10
+                'clinical_applicability': 0.22,
+                'biomedical_context_depth': 0.18,
+                'metabolomics_relevance': 0.16,
+                'query_alignment': 0.11,
+                'scientific_rigor': 0.07,
+                'response_length_quality': 0.06,
+                'response_structure_quality': 0.08,
+                'factual_accuracy': 0.12
             },
             'general': {
-                'query_alignment': 0.20,
-                'metabolomics_relevance': 0.20,
-                'clinical_applicability': 0.18,
-                'scientific_rigor': 0.12,
-                'biomedical_context_depth': 0.12,
-                'response_length_quality': 0.08,
-                'response_structure_quality': 0.10
+                'query_alignment': 0.18,
+                'metabolomics_relevance': 0.18,
+                'clinical_applicability': 0.16,
+                'scientific_rigor': 0.11,
+                'biomedical_context_depth': 0.11,
+                'response_length_quality': 0.07,
+                'response_structure_quality': 0.09,
+                'factual_accuracy': 0.10
             }
         }
     
@@ -404,6 +410,12 @@ class ClinicalMetabolomicsRelevanceScorer:
         self.weighting_manager = WeightingSchemeManager()
         self.domain_validator = DomainExpertiseValidator()
         
+        # Initialize factual accuracy components if available
+        self._factual_validator = None
+        self._claim_extractor = None
+        self._document_indexer = None
+        self._initialize_factual_accuracy_components()
+        
         # Biomedical keywords for relevance assessment
         self.biomedical_keywords = {
             'metabolomics_core': [
@@ -459,8 +471,83 @@ class ClinicalMetabolomicsRelevanceScorer:
             'cache_ttl_seconds': 3600,
             'parallel_processing': True,
             'confidence_threshold': 70.0,
-            'minimum_relevance_threshold': 50.0
+            'minimum_relevance_threshold': 50.0,
+            'factual_accuracy_enabled': True,
+            'factual_accuracy_fallback_enabled': True
         }
+    
+    def _initialize_factual_accuracy_components(self):
+        """Initialize factual accuracy validation components if available."""
+        try:
+            if self.config.get('factual_accuracy_enabled', True):
+                # Try to import and initialize factual accuracy components
+                try:
+                    from .claim_extractor import BiomedicalClaimExtractor
+                    self._claim_extractor = BiomedicalClaimExtractor()
+                    logger.info("BiomedicalClaimExtractor initialized successfully")
+                except ImportError:
+                    logger.warning("BiomedicalClaimExtractor not available - using fallback methods")
+                
+                try:
+                    from .factual_accuracy_validator import FactualAccuracyValidator
+                    self._factual_validator = FactualAccuracyValidator()
+                    logger.info("FactualAccuracyValidator initialized successfully")
+                except ImportError:
+                    logger.warning("FactualAccuracyValidator not available - using fallback methods")
+                
+                try:
+                    from .document_indexer import DocumentIndexer
+                    self._document_indexer = DocumentIndexer()
+                    logger.info("DocumentIndexer initialized successfully")
+                except ImportError:
+                    logger.warning("DocumentIndexer not available - using fallback methods")
+                
+                # Check if we have a complete pipeline
+                if (self._claim_extractor and self._factual_validator and 
+                    hasattr(self._factual_validator, 'document_indexer')):
+                    logger.info("Complete factual accuracy pipeline initialized")
+                else:
+                    logger.info("Partial factual accuracy pipeline initialized - using hybrid approach")
+            else:
+                logger.info("Factual accuracy validation disabled in configuration")
+        except Exception as e:
+            logger.error(f"Error initializing factual accuracy components: {str(e)}")
+            # Continue without factual accuracy components
+    
+    def enable_factual_accuracy_validation(self, 
+                                         claim_extractor=None, 
+                                         factual_validator=None,
+                                         document_indexer=None):
+        """
+        Enable factual accuracy validation with provided components.
+        
+        Args:
+            claim_extractor: BiomedicalClaimExtractor instance
+            factual_validator: FactualAccuracyValidator instance  
+            document_indexer: DocumentIndexer instance
+        """
+        if claim_extractor:
+            self._claim_extractor = claim_extractor
+            logger.info("External BiomedicalClaimExtractor enabled")
+        
+        if factual_validator:
+            self._factual_validator = factual_validator
+            logger.info("External FactualAccuracyValidator enabled")
+        
+        if document_indexer:
+            self._document_indexer = document_indexer
+            logger.info("External DocumentIndexer enabled")
+        
+        # Update configuration
+        self.config['factual_accuracy_enabled'] = True
+    
+    def disable_factual_accuracy_validation(self):
+        """Disable factual accuracy validation components."""
+        self._claim_extractor = None
+        self._factual_validator = None
+        self._document_indexer = None
+        self.config['factual_accuracy_enabled'] = False
+        logger.info("Factual accuracy validation disabled")
     
     async def calculate_relevance_score(self,
                                      query: str,
@@ -531,7 +618,7 @@ class ClinicalMetabolomicsRelevanceScorer:
             )
     
     async def _calculate_all_dimensions(self, query: str, response: str, metadata: Optional[Dict]) -> Dict[str, float]:
-        """Calculate all relevance dimensions efficiently."""
+        """Calculate all relevance dimensions efficiently, including factual accuracy."""
         if self.config.get('parallel_processing', True):
             # Run dimension calculations concurrently
             tasks = [
@@ -541,7 +628,8 @@ class ClinicalMetabolomicsRelevanceScorer:
                 self._calculate_scientific_rigor(response),
                 self._calculate_biomedical_context_depth(response),
                 self._calculate_response_length_quality(query, response),
-                self._calculate_response_structure_quality(response)
+                self._calculate_response_structure_quality(response),
+                self._calculate_factual_accuracy(query, response, metadata)
             ]
             
             results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -550,7 +638,7 @@ class ClinicalMetabolomicsRelevanceScorer:
             dimension_names = [
                 'metabolomics_relevance', 'clinical_applicability', 'query_alignment',
                 'scientific_rigor', 'biomedical_context_depth',
-                'response_length_quality', 'response_structure_quality'
+                'response_length_quality', 'response_structure_quality', 'factual_accuracy'
             ]
             
             dimension_scores = {}
@@ -571,7 +659,8 @@ class ClinicalMetabolomicsRelevanceScorer:
                 'scientific_rigor': await self._calculate_scientific_rigor(response),
                 'biomedical_context_depth': await self._calculate_biomedical_context_depth(response),
                 'response_length_quality': await self._calculate_response_length_quality(query, response),
-                'response_structure_quality': await self._calculate_response_structure_quality(response)
+                'response_structure_quality': await self._calculate_response_structure_quality(response),
+                'factual_accuracy': await self._calculate_factual_accuracy(query, response, metadata)
             }
     
     async def _calculate_metabolomics_relevance(self, query: str, response: str) -> float:
@@ -984,6 +1073,228 @@ class ClinicalMetabolomicsRelevanceScorer:
         found_terms = sum(1 for term in translational_terms if term in response_lower)
         
         return min(100.0, found_terms * 18 + 25)
+    
+    async def _calculate_factual_accuracy(self, query: str, response: str, metadata: Optional[Dict]) -> float:
+        """
+        Calculate factual accuracy score for the response.
+        
+        This method integrates with the factual accuracy validation pipeline
+        to assess the truthfulness and verifiability of claims in the response.
+        
+        Assesses:
+        - Factual claim accuracy (40%)
+        - Evidence support strength (25%) 
+        - Source credibility (20%)
+        - Verification confidence (15%)
+        
+        Args:
+            query: Original user query for context
+            response: Response to evaluate for factual accuracy
+            metadata: Optional metadata that may contain accuracy results
+            
+        Returns:
+            Factual accuracy score (0-100)
+        """
+        try:
+            # Check if factual accuracy results are already provided in metadata
+            if metadata and 'factual_accuracy_results' in metadata:
+                return await self._process_existing_accuracy_results(metadata['factual_accuracy_results'])
+            
+            # Check if factual validation components are available
+            if not hasattr(self, '_factual_validator') or not hasattr(self, '_claim_extractor'):
+                return await self._calculate_basic_factual_accuracy(query, response)
+            
+            # Full factual accuracy validation pipeline
+            return await self._calculate_comprehensive_factual_accuracy(query, response)
+            
+        except Exception as e:
+            logger.warning(f"Error calculating factual accuracy: {str(e)}")
+            # Fallback to basic assessment
+            return await self._calculate_basic_factual_accuracy(query, response)
+    
+    async def _process_existing_accuracy_results(self, accuracy_results: Dict[str, Any]) -> float:
+        """Process factual accuracy results from metadata."""
+        try:
+            # If we have a comprehensive accuracy score from the factual accuracy scorer
+            if 'overall_score' in accuracy_results:
+                return float(accuracy_results['overall_score'])
+            
+            # If we have verification results, calculate score
+            if 'verification_results' in accuracy_results:
+                verification_results = accuracy_results['verification_results']
+                if not verification_results:
+                    return 50.0  # Neutral score for no results
+                
+                # Calculate score from verification results
+                total_score = 0.0
+                total_weight = 0.0
+                
+                for result in verification_results:
+                    if result.get('verification_status') == 'SUPPORTED':
+                        score = 90.0
+                    elif result.get('verification_status') == 'NEUTRAL':
+                        score = 60.0
+                    elif result.get('verification_status') == 'NOT_FOUND':
+                        score = 40.0
+                    elif result.get('verification_status') == 'CONTRADICTED':
+                        score = 10.0
+                    else:  # ERROR status
+                        score = 0.0
+                    
+                    confidence = result.get('verification_confidence', 50.0) / 100.0
+                    weight = confidence
+                    
+                    total_score += score * weight
+                    total_weight += weight
+                
+                return total_score / max(total_weight, 1.0)
+            
+            return 50.0  # Default neutral score
+            
+        except Exception as e:
+            logger.warning(f"Error processing existing accuracy results: {str(e)}")
+            return 50.0
+    
+    async def _calculate_basic_factual_accuracy(self, query: str, response: str) -> float:
+        """
+        Calculate basic factual accuracy score without full validation pipeline.
+        
+        Uses heuristic-based assessment of factual reliability indicators.
+        """
+        base_score = 60.0  # Start with neutral base
+        
+        # Evidence indicators (positive)
+        evidence_indicators = [
+            'studies show', 'research indicates', 'data demonstrates',
+            'according to', 'evidence suggests', 'meta-analysis',
+            'clinical trial', 'peer-reviewed', 'published research'
+        ]
+        
+        evidence_count = sum(1 for indicator in evidence_indicators 
+                           if indicator.lower() in response.lower())
+        evidence_bonus = min(20.0, evidence_count * 4.0)
+        
+        # Uncertainty acknowledgment (positive for scientific accuracy)
+        uncertainty_indicators = [
+            'may', 'might', 'could', 'suggests', 'indicates', 'appears',
+            'preliminary', 'requires further research', 'limited evidence'
+        ]
+        
+        uncertainty_count = sum(1 for indicator in uncertainty_indicators 
+                              if indicator.lower() in response.lower())
+        uncertainty_bonus = min(10.0, uncertainty_count * 2.0)
+        
+        # Overconfident claims (negative)
+        overconfident_indicators = [
+            'always', 'never', 'completely', 'absolutely', 'definitely',
+            'proven fact', 'undeniable', 'without doubt', 'guaranteed'
+        ]
+        
+        overconfident_count = sum(1 for indicator in overconfident_indicators 
+                                if indicator.lower() in response.lower())
+        overconfident_penalty = min(15.0, overconfident_count * 5.0)
+        
+        # Specific numeric claims (require higher scrutiny)
+        numeric_claims = len(re.findall(r'\d+(?:\.\d+)?%|\d+(?:\.\d+)?\s*(?:mg|kg|ml|µM|nM|fold)', response))
+        if numeric_claims > 0:
+            if evidence_count > 0:
+                numeric_bonus = min(10.0, numeric_claims * 2.0)  # Bonus if supported
+            else:
+                numeric_bonus = -min(10.0, numeric_claims * 2.0)  # Penalty if unsupported
+        else:
+            numeric_bonus = 0.0
+        
+        # Biomedical terminology appropriateness
+        biomedical_terms_count = sum(1 for term_list in self.biomedical_keywords.values() 
+                                   for term in term_list 
+                                   if term.lower() in response.lower())
+        terminology_bonus = min(10.0, biomedical_terms_count * 1.0)
+        
+        # Calculate final score
+        final_score = (base_score + evidence_bonus + uncertainty_bonus + 
+                      numeric_bonus + terminology_bonus - overconfident_penalty)
+        
+        return min(100.0, max(0.0, final_score))
+    
+    async def _calculate_comprehensive_factual_accuracy(self, query: str, response: str) -> float:
+        """
+        Calculate comprehensive factual accuracy using full validation pipeline.
+        
+        This method integrates with BiomedicalClaimExtractor and FactualAccuracyValidator
+        for complete claim verification against source documents.
+        """
+        try:
+            # Extract claims from response
+            claims = await self._claim_extractor.extract_claims(response)
+            if not claims:
+                return await self._calculate_basic_factual_accuracy(query, response)
+            
+            # Verify claims against documents
+            verification_report = await self._factual_validator.verify_claims(claims)
+            
+            # Process verification results
+            if not verification_report.verification_results:
+                return 50.0  # Neutral score if no verification results
+            
+            # Calculate weighted accuracy score
+            total_score = 0.0
+            total_weight = 0.0
+            
+            for result in verification_report.verification_results:
+                # Base score from verification status
+                if result.verification_status.value == 'SUPPORTED':
+                    base_score = 95.0
+                elif result.verification_status.value == 'NEUTRAL':
+                    base_score = 65.0
+                elif result.verification_status.value == 'NOT_FOUND':
+                    base_score = 45.0
+                elif result.verification_status.value == 'CONTRADICTED':
+                    base_score = 15.0
+                else:  # ERROR
+                    base_score = 0.0
+                
+                # Weight by evidence strength and verification confidence
+                evidence_weight = result.evidence_strength / 100.0
+                confidence_weight = result.verification_confidence / 100.0
+                claim_weight = (evidence_weight * 0.6 + confidence_weight * 0.4)
+                
+                # Adjust score by context match quality
+                context_adjustment = result.context_match / 100.0
+                adjusted_score = base_score * (0.8 + 0.2 * context_adjustment)
+                
+                total_score += adjusted_score * claim_weight
+                total_weight += claim_weight
+            
+            # Calculate average weighted score
+            if total_weight > 0:
+                avg_score = total_score / total_weight
+            else:
+                avg_score = 50.0
+            
+            # Apply claim coverage bonus/penalty
+            supported_claims = sum(1 for r in verification_report.verification_results 
+                                 if r.verification_status.value == 'SUPPORTED')
+            total_claims = len(verification_report.verification_results)
+            
+            if total_claims > 0:
+                support_ratio = supported_claims / total_claims
+                if support_ratio >= 0.8:
+                    coverage_bonus = 5.0
+                elif support_ratio >= 0.6:
+                    coverage_bonus = 2.0
+                elif support_ratio <= 0.2:
+                    coverage_bonus = -10.0
+                else:
+                    coverage_bonus = 0.0
+            else:
+                coverage_bonus = 0.0
+            
+            final_score = avg_score + coverage_bonus
+            return min(100.0, max(0.0, final_score))
+            
+        except Exception as e:
+            logger.error(f"Error in comprehensive factual accuracy calculation: {str(e)}")
+            return await self._calculate_basic_factual_accuracy(query, response)
     
     async def _calculate_response_length_quality(self, query: str, response: str) -> float:
         """

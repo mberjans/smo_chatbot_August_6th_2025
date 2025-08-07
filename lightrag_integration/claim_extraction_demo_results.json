@@ -1,0 +1,1200 @@
+{
+  "demo_timestamp": "2025-08-07T12:57:34.329246",
+  "extraction_statistics": {
+    "total_extractions": 5,
+    "total_claims_extracted": 63,
+    "average_claims_per_extraction": 12.6,
+    "processing_times": {
+      "count": 5,
+      "average_ms": 2.621889114379883,
+      "median_ms": 2.7348995208740234,
+      "min_ms": 0.9388923645019531,
+      "max_ms": 4.520893096923828
+    }
+  },
+  "response_results": {
+    "comprehensive_metabolomics_study": {
+      "total_claims": 19,
+      "processing_time_ms": 4.550933837890625,
+      "claims_summary": [
+        {
+          "claim_id": "0e26b1d751bb",
+          "claim_type": "methodological",
+          "confidence": 62.1,
+          "priority": 62.1,
+          "text_preview": "A comprehensive untargeted metabolomics analysis was performed using LC-MS/MS on plasma samples from...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "performed",
+            "plasma",
+            "healthy",
+            "patients",
+            "using"
+          ]
+        },
+        {
+          "claim_id": "0b410cc0d76c",
+          "claim_type": "numeric",
+          "confidence": 52.5,
+          "priority": 63.0,
+          "text_preview": " 15%",
+          "numeric_values": [
+            15.0
+          ],
+          "units": [],
+          "keywords": [
+            "metabolites",
+            "high",
+            "confidence",
+            "study",
+            "metabolite"
+          ]
+        },
+        {
+          "claim_id": "216d90b612e0",
+          "claim_type": "numeric",
+          "confidence": 52.5,
+          "priority": 69.30000000000001,
+          "text_preview": "247 m",
+          "numeric_values": [
+            247.0
+          ],
+          "units": [
+            "m"
+          ],
+          "keywords": [
+            "metabolites",
+            "identified",
+            "high",
+            "study",
+            "metabolite"
+          ]
+        },
+        {
+          "claim_id": "3e6518abbff4",
+          "claim_type": "numeric",
+          "confidence": 56.5,
+          "priority": 74.58,
+          "text_preview": "2.1 mm",
+          "numeric_values": [
+            2.1
+          ],
+          "units": [
+            "mm"
+          ],
+          "keywords": [
+            "patients",
+            "glucose",
+            "compared",
+            "elevated",
+            "mmol"
+          ]
+        },
+        {
+          "claim_id": "59435bd9d4a4",
+          "claim_type": "numeric",
+          "confidence": 56.5,
+          "priority": 74.58,
+          "text_preview": "0.8 mm",
+          "numeric_values": [
+            0.8
+          ],
+          "units": [
+            "mm"
+          ],
+          "keywords": [
+            "patients",
+            "glucose",
+            "compared",
+            "elevated",
+            "mmol"
+          ]
+        },
+        {
+          "claim_id": "e586c8589bef",
+          "claim_type": "numeric",
+          "confidence": 57.05,
+          "priority": 68.46,
+          "text_preview": "p < 0.001",
+          "numeric_values": [
+            0.001
+          ],
+          "units": [],
+          "keywords": [
+            "levels",
+            "homa",
+            "insulin",
+            "mmol",
+            "diabetic"
+          ]
+        },
+        {
+          "claim_id": "b852e1f28007",
+          "claim_type": "numeric",
+          "confidence": 56.5,
+          "priority": 74.58,
+          "text_preview": "2.1 mmol/L",
+          "numeric_values": [
+            2.1
+          ],
+          "units": [
+            "mmol",
+            "L"
+          ],
+          "keywords": [
+            "patients",
+            "glucose",
+            "compared",
+            "elevated",
+            "mmol"
+          ]
+        },
+        {
+          "claim_id": "be8148c9df5f",
+          "claim_type": "numeric",
+          "confidence": 56.5,
+          "priority": 74.58,
+          "text_preview": "0.8 mmol/L",
+          "numeric_values": [
+            0.8
+          ],
+          "units": [
+            "mmol",
+            "L"
+          ],
+          "keywords": [
+            "patients",
+            "glucose",
+            "compared",
+            "elevated",
+            "mmol"
+          ]
+        },
+        {
+          "claim_id": "3ab37eaf4a54",
+          "claim_type": "qualitative",
+          "confidence": 63.1,
+          "priority": 56.79,
+          "text_preview": "Glucose concentrations were significantly elevated in diabetic patients (9.8 ± 2.1 mmol/L) compared ...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "patients",
+            "glucose",
+            "compared",
+            "elevated",
+            "mmol"
+          ]
+        },
+        {
+          "claim_id": "3ab37eaf4a54",
+          "claim_type": "comparative",
+          "confidence": 63.1,
+          "priority": 63.1,
+          "text_preview": "Glucose concentrations were significantly elevated in diabetic patients (9.8 ± 2.1 mmol/L) compared ...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "patients",
+            "glucose",
+            "compared",
+            "elevated",
+            "mmol"
+          ]
+        },
+        {
+          "claim_id": "d1af313babfa",
+          "claim_type": "numeric",
+          "confidence": 55.8,
+          "priority": 66.96,
+          "text_preview": "r = 0.73",
+          "numeric_values": [
+            0.73
+          ],
+          "units": [],
+          "keywords": [
+            "strongly",
+            "levels",
+            "acid",
+            "measured",
+            "resistance"
+          ]
+        },
+        {
+          "claim_id": "d2dcfd10dee8",
+          "claim_type": "numeric",
+          "confidence": 52.5,
+          "priority": 63.0,
+          "text_preview": " 45%",
+          "numeric_values": [
+            45.0
+          ],
+          "units": [],
+          "keywords": [
+            "oxidative",
+            "metabolites",
+            "revealed",
+            "stress",
+            "antioxidant"
+          ]
+        },
+        {
+          "claim_id": "0dfa572c2a5c",
+          "claim_type": "comparative",
+          "confidence": 55.25,
+          "priority": 55.25,
+          "text_preview": "The analysis revealed a 2.3-fold increase in oxidative stress markers and a 45% reduction in antioxi...",
+          "numeric_values": [
+            2.3
+          ],
+          "units": [],
+          "keywords": [
+            "oxidative",
+            "metabolites",
+            "revealed",
+            "stress",
+            "antioxidant"
+          ]
+        },
+        {
+          "claim_id": "4cbf0dc5c66c",
+          "claim_type": "numeric",
+          "confidence": 61.9,
+          "priority": 74.28,
+          "text_preview": "R < 0.05",
+          "numeric_values": [
+            0.05
+          ],
+          "units": [],
+          "keywords": [
+            "PCA",
+            "performed",
+            "statistical",
+            "false discovery rate",
+            "using"
+          ]
+        },
+        {
+          "claim_id": "c67dcb6e2375",
+          "claim_type": "methodological",
+          "confidence": 63.9,
+          "priority": 63.9,
+          "text_preview": "Statistical analysis was performed using multivariate PCA and PLS-DA methods, with false discovery r...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "PCA",
+            "performed",
+            "false discovery rate",
+            "using",
+            "statistical"
+          ]
+        },
+        {
+          "claim_id": "c4b42b6815fe",
+          "claim_type": "numeric",
+          "confidence": 54.5,
+          "priority": 71.94,
+          "text_preview": "18 m",
+          "numeric_values": [
+            18.0
+          ],
+          "units": [
+            "m"
+          ],
+          "keywords": [
+            "months",
+            "following",
+            "design",
+            "over",
+            "trial"
+          ]
+        },
+        {
+          "claim_id": "bf180bd61f94",
+          "claim_type": "qualitative",
+          "confidence": 54.5,
+          "priority": 54.5,
+          "text_preview": "The study was conducted over 18 months following a randomized controlled trial design.",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "months",
+            "following",
+            "design",
+            "over",
+            "trial"
+          ]
+        },
+        {
+          "claim_id": "bf180bd61f94",
+          "claim_type": "methodological",
+          "confidence": 54.5,
+          "priority": 54.5,
+          "text_preview": "The study was conducted over 18 months following a randomized controlled trial design.",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "months",
+            "following",
+            "design",
+            "over",
+            "trial"
+          ]
+        },
+        {
+          "claim_id": "bf180bd61f94",
+          "claim_type": "temporal",
+          "confidence": 54.5,
+          "priority": 54.5,
+          "text_preview": "The study was conducted over 18 months following a randomized controlled trial design.",
+          "numeric_values": [
+            18.0
+          ],
+          "units": [],
+          "keywords": [
+            "months",
+            "following",
+            "design",
+            "over",
+            "trial"
+          ]
+        }
+      ]
+    },
+    "clinical_biomarker_validation": {
+      "total_claims": 13,
+      "processing_time_ms": 2.7570724487304688,
+      "claims_summary": [
+        {
+          "claim_id": "1a90635c4ee9",
+          "claim_type": "methodological",
+          "confidence": 56.1,
+          "priority": 56.1,
+          "text_preview": "Targeted metabolomics analysis using LC-MS/MS validated potential biomarkers for early-stage pancrea...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "stage",
+            "cancer",
+            "potential",
+            "early",
+            "using"
+          ]
+        },
+        {
+          "claim_id": "9e43a0e86981",
+          "claim_type": "numeric",
+          "confidence": 57.1,
+          "priority": 75.372,
+          "text_preview": "142 h",
+          "numeric_values": [
+            142.0
+          ],
+          "units": [
+            "h"
+          ],
+          "keywords": [
+            "limits",
+            "cancer",
+            "healthy",
+            "patients",
+            "analyzed"
+          ]
+        },
+        {
+          "claim_id": "b5a44080bb95",
+          "claim_type": "numeric",
+          "confidence": 61.05,
+          "priority": 84.24899999999998,
+          "text_preview": "from 0.5 to 50",
+          "numeric_values": [
+            0.5,
+            50.0
+          ],
+          "units": [],
+          "keywords": [
+            "limits",
+            "cancer",
+            "healthy",
+            "patients",
+            "analyzed"
+          ]
+        },
+        {
+          "claim_id": "e159adcc05a7",
+          "claim_type": "numeric",
+          "confidence": 57.1,
+          "priority": 75.372,
+          "text_preview": "50 ng/mL",
+          "numeric_values": [
+            50.0
+          ],
+          "units": [
+            "mL"
+          ],
+          "keywords": [
+            "limits",
+            "cancer",
+            "healthy",
+            "patients",
+            "analyzed"
+          ]
+        },
+        {
+          "claim_id": "dd96b9f37c13",
+          "claim_type": "numeric",
+          "confidence": 53.25,
+          "priority": 63.9,
+          "text_preview": " 35%",
+          "numeric_values": [
+            35.0
+          ],
+          "units": [],
+          "keywords": [
+            "decreased",
+            "levels",
+            "versus",
+            "three",
+            "increased"
+          ]
+        },
+        {
+          "claim_id": "765536051d48",
+          "claim_type": "numeric",
+          "confidence": 53.25,
+          "priority": 70.29,
+          "text_preview": "9 l",
+          "numeric_values": [
+            9.0
+          ],
+          "units": [
+            "l"
+          ],
+          "keywords": [
+            "decreased",
+            "levels",
+            "versus",
+            "three",
+            "increased"
+          ]
+        },
+        {
+          "claim_id": "e586c8589bef",
+          "claim_type": "numeric",
+          "confidence": 57.05,
+          "priority": 68.46,
+          "text_preview": "p < 0.001",
+          "numeric_values": [
+            0.001
+          ],
+          "units": [],
+          "keywords": [
+            "decreased",
+            "levels",
+            "versus",
+            "three",
+            "increased"
+          ]
+        },
+        {
+          "claim_id": "d282a3dfb9af",
+          "claim_type": "numeric",
+          "confidence": 57.05,
+          "priority": 68.46,
+          "text_preview": "p = 0.003",
+          "numeric_values": [
+            0.003
+          ],
+          "units": [],
+          "keywords": [
+            "decreased",
+            "levels",
+            "versus",
+            "three",
+            "increased"
+          ]
+        },
+        {
+          "claim_id": "5aa964b28def",
+          "claim_type": "qualitative",
+          "confidence": 62.75,
+          "priority": 56.475,
+          "text_preview": "Three metabolites showed exceptional diagnostic performance: CA 19-9 levels were elevated 8.7-fold (...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "decreased",
+            "levels",
+            "versus",
+            "three",
+            "increased"
+          ]
+        },
+        {
+          "claim_id": "5aa964b28def",
+          "claim_type": "comparative",
+          "confidence": 62.75,
+          "priority": 72.1625,
+          "text_preview": "Three metabolites showed exceptional diagnostic performance: CA 19-9 levels were elevated 8.7-fold (...",
+          "numeric_values": [
+            8.7,
+            35.0
+          ],
+          "units": [],
+          "keywords": [
+            "decreased",
+            "levels",
+            "versus",
+            "three",
+            "increased"
+          ]
+        },
+        {
+          "claim_id": "33df651dfbfb",
+          "claim_type": "numeric",
+          "confidence": 53.0,
+          "priority": 63.599999999999994,
+          "text_preview": " 89%",
+          "numeric_values": [
+            89.0
+          ],
+          "units": [],
+          "keywords": [
+            "cancer",
+            "achieved",
+            "detection",
+            "panel",
+            "specificity"
+          ]
+        },
+        {
+          "claim_id": "37bbd64c4ed0",
+          "claim_type": "numeric",
+          "confidence": 53.0,
+          "priority": 63.599999999999994,
+          "text_preview": " 94%",
+          "numeric_values": [
+            94.0
+          ],
+          "units": [],
+          "keywords": [
+            "cancer",
+            "achieved",
+            "detection",
+            "panel",
+            "specificity"
+          ]
+        },
+        {
+          "claim_id": "24c6b5ef5092",
+          "claim_type": "numeric",
+          "confidence": 53.0,
+          "priority": 63.599999999999994,
+          "text_preview": "95%",
+          "numeric_values": [
+            95.0
+          ],
+          "units": [],
+          "keywords": [
+            "cancer",
+            "achieved",
+            "detection",
+            "panel",
+            "specificity"
+          ]
+        }
+      ]
+    },
+    "pharmacokinetic_study": {
+      "total_claims": 9,
+      "processing_time_ms": 1.668691635131836,
+      "claims_summary": [
+        {
+          "claim_id": "bc6c990f5179",
+          "claim_type": "numeric",
+          "confidence": 53.25,
+          "priority": 70.29,
+          "text_preview": "24 h",
+          "numeric_values": [
+            24.0
+          ],
+          "units": [
+            "h"
+          ],
+          "keywords": [
+            "hours",
+            "collected",
+            "healthy",
+            "blood",
+            "fate"
+          ]
+        },
+        {
+          "claim_id": "4bbe2cdd1b2d",
+          "claim_type": "methodological",
+          "confidence": 53.5,
+          "priority": 53.5,
+          "text_preview": "LC-MS/MS analysis identified the parent compound and five major metabolites",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "metabolites",
+            "analysis",
+            "parent",
+            "metabolite",
+            "compound"
+          ]
+        },
+        {
+          "claim_id": "fcf2b99bd217",
+          "claim_type": "numeric",
+          "confidence": 57.0,
+          "priority": 75.24,
+          "text_preview": "0.8 h",
+          "numeric_values": [
+            0.8
+          ],
+          "units": [
+            "h"
+          ],
+          "keywords": [
+            "hours",
+            "plasma",
+            "concentration",
+            "peak",
+            "levels"
+          ]
+        },
+        {
+          "claim_id": "e214a830532d",
+          "claim_type": "numeric",
+          "confidence": 55.0,
+          "priority": 72.60000000000001,
+          "text_preview": "34 ng/mL",
+          "numeric_values": [
+            34.0
+          ],
+          "units": [
+            "mL"
+          ],
+          "keywords": [
+            "hours",
+            "plasma",
+            "concentration",
+            "peak",
+            "levels"
+          ]
+        },
+        {
+          "claim_id": "c195104dbe12",
+          "claim_type": "numeric",
+          "confidence": 56.5,
+          "priority": 74.58,
+          "text_preview": "1.2 h",
+          "numeric_values": [
+            1.2
+          ],
+          "units": [
+            "h"
+          ],
+          "keywords": [
+            "elimination",
+            "hours",
+            "total",
+            "clearance",
+            "half"
+          ]
+        },
+        {
+          "claim_id": "f495930b428c",
+          "claim_type": "numeric",
+          "confidence": 56.5,
+          "priority": 74.58,
+          "text_preview": "0.6 L",
+          "numeric_values": [
+            0.6
+          ],
+          "units": [
+            "L"
+          ],
+          "keywords": [
+            "elimination",
+            "hours",
+            "total",
+            "clearance",
+            "half"
+          ]
+        },
+        {
+          "claim_id": "a03b117c57c3",
+          "claim_type": "numeric",
+          "confidence": 52.5,
+          "priority": 63.0,
+          "text_preview": " 65%",
+          "numeric_values": [
+            65.0
+          ],
+          "units": [],
+          "keywords": [
+            "circulating",
+            "total",
+            "while",
+            "exposure",
+            "metabolite"
+          ]
+        },
+        {
+          "claim_id": "e2da221f8f05",
+          "claim_type": "numeric",
+          "confidence": 52.5,
+          "priority": 63.0,
+          "text_preview": " 23%",
+          "numeric_values": [
+            23.0
+          ],
+          "units": [],
+          "keywords": [
+            "circulating",
+            "total",
+            "while",
+            "exposure",
+            "metabolite"
+          ]
+        },
+        {
+          "claim_id": "326f57666ce1",
+          "claim_type": "qualitative",
+          "confidence": 54.75,
+          "priority": 54.75,
+          "text_preview": "Metabolite M1 accounted for 65% of total drug-related exposure, while M2 represented 23% of the circ...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "circulating",
+            "total",
+            "while",
+            "exposure",
+            "metabolite"
+          ]
+        }
+      ]
+    },
+    "method_development_validation": {
+      "total_claims": 18,
+      "processing_time_ms": 3.283977508544922,
+      "claims_summary": [
+        {
+          "claim_id": "2fdb94e22a44",
+          "claim_type": "methodological",
+          "confidence": 59.5,
+          "priority": 59.5,
+          "text_preview": "A novel UPLC-MS/MS method was developed and validated for simultaneous quantification of 85 endogeno...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "metabolites",
+            "plasma",
+            "method",
+            "MS",
+            "UPLC-MS"
+          ]
+        },
+        {
+          "claim_id": "6fe1d9520ecc",
+          "claim_type": "numeric",
+          "confidence": 54.1,
+          "priority": 71.412,
+          "text_preview": "100 mm",
+          "numeric_values": [
+            100.0
+          ],
+          "units": [
+            "mm"
+          ],
+          "keywords": [
+            "ammonium",
+            "column",
+            "elution",
+            "using",
+            "particles"
+          ]
+        },
+        {
+          "claim_id": "8e917941e17d",
+          "claim_type": "numeric",
+          "confidence": 56.1,
+          "priority": 74.05199999999999,
+          "text_preview": "1.7 μm",
+          "numeric_values": [
+            1.7
+          ],
+          "units": [
+            "μm"
+          ],
+          "keywords": [
+            "ammonium",
+            "column",
+            "elution",
+            "using",
+            "particles"
+          ]
+        },
+        {
+          "claim_id": "224f4f217d85",
+          "claim_type": "numeric",
+          "confidence": 54.1,
+          "priority": 71.412,
+          "text_preview": "10 mM",
+          "numeric_values": [
+            10.0
+          ],
+          "units": [
+            "mM"
+          ],
+          "keywords": [
+            "ammonium",
+            "column",
+            "elution",
+            "using",
+            "particles"
+          ]
+        },
+        {
+          "claim_id": "150e67857dbe",
+          "claim_type": "numeric",
+          "confidence": 54.1,
+          "priority": 71.412,
+          "text_preview": "100 m",
+          "numeric_values": [
+            100.0
+          ],
+          "units": [
+            "m"
+          ],
+          "keywords": [
+            "ammonium",
+            "column",
+            "elution",
+            "using",
+            "particles"
+          ]
+        },
+        {
+          "claim_id": "dca9cc948418",
+          "claim_type": "numeric",
+          "confidence": 54.1,
+          "priority": 71.412,
+          "text_preview": "10 m",
+          "numeric_values": [
+            10.0
+          ],
+          "units": [
+            "m"
+          ],
+          "keywords": [
+            "ammonium",
+            "column",
+            "elution",
+            "using",
+            "particles"
+          ]
+        },
+        {
+          "claim_id": "8400ae55e8c7",
+          "claim_type": "numeric",
+          "confidence": 58.2,
+          "priority": 80.316,
+          "text_preview": "range of 0.1-1000",
+          "numeric_values": [
+            0.1,
+            1000.0
+          ],
+          "units": [],
+          "keywords": [
+            "demonstrated",
+            "excellent",
+            "concentration",
+            "range",
+            "analytes"
+          ]
+        },
+        {
+          "claim_id": "f0ec741cdd42",
+          "claim_type": "numeric",
+          "confidence": 54.25,
+          "priority": 71.61,
+          "text_preview": "1000 ng/mL",
+          "numeric_values": [
+            1000.0
+          ],
+          "units": [
+            "mL"
+          ],
+          "keywords": [
+            "demonstrated",
+            "excellent",
+            "concentration",
+            "range",
+            "analytes"
+          ]
+        },
+        {
+          "claim_id": "0b4723511e69",
+          "claim_type": "numeric",
+          "confidence": 57.75,
+          "priority": 69.3,
+          "text_preview": " 2.1%",
+          "numeric_values": [
+            2.1
+          ],
+          "units": [],
+          "keywords": [
+            "precision",
+            "ranged",
+            "quality",
+            "control",
+            "samples"
+          ]
+        },
+        {
+          "claim_id": "4f46df0b8899",
+          "claim_type": "numeric",
+          "confidence": 57.75,
+          "priority": 69.3,
+          "text_preview": " 8.9%",
+          "numeric_values": [
+            8.9
+          ],
+          "units": [],
+          "keywords": [
+            "precision",
+            "ranged",
+            "quality",
+            "control",
+            "samples"
+          ]
+        },
+        {
+          "claim_id": "19cd13f5f6e9",
+          "claim_type": "numeric",
+          "confidence": 55.75,
+          "priority": 66.89999999999999,
+          "text_preview": "108%",
+          "numeric_values": [
+            108.0
+          ],
+          "units": [],
+          "keywords": [
+            "precision",
+            "ranged",
+            "quality",
+            "control",
+            "samples"
+          ]
+        },
+        {
+          "claim_id": "12180a3d1b99",
+          "claim_type": "numeric",
+          "confidence": 57.7,
+          "priority": 79.62599999999999,
+          "text_preview": "between 95-108",
+          "numeric_values": [
+            95.0,
+            108.0
+          ],
+          "units": [],
+          "keywords": [
+            "precision",
+            "ranged",
+            "quality",
+            "control",
+            "samples"
+          ]
+        },
+        {
+          "claim_id": "c93510481a3c",
+          "claim_type": "qualitative",
+          "confidence": 61.2,
+          "priority": 61.2,
+          "text_preview": "Precision values ranged from 2.1% to 8.9% CV, while accuracy was between 95-108% for all quality con...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "precision",
+            "ranged",
+            "quality",
+            "control",
+            "samples"
+          ]
+        },
+        {
+          "claim_id": "9a2c056d1428",
+          "claim_type": "numeric",
+          "confidence": 52.0,
+          "priority": 62.4,
+          "text_preview": " 15%",
+          "numeric_values": [
+            15.0
+          ],
+          "units": [],
+          "keywords": [
+            "limits",
+            "effects",
+            "ranged",
+            "analyzed",
+            "below"
+          ]
+        },
+        {
+          "claim_id": "c89d4a6ce246",
+          "claim_type": "numeric",
+          "confidence": 52.0,
+          "priority": 62.4,
+          "text_preview": " 98%",
+          "numeric_values": [
+            98.0
+          ],
+          "units": [],
+          "keywords": [
+            "limits",
+            "effects",
+            "ranged",
+            "analyzed",
+            "below"
+          ]
+        },
+        {
+          "claim_id": "b59ac71b3dba",
+          "claim_type": "numeric",
+          "confidence": 57.75,
+          "priority": 79.695,
+          "text_preview": "from 0.05 to 2.5",
+          "numeric_values": [
+            0.05,
+            2.5
+          ],
+          "units": [],
+          "keywords": [
+            "limits",
+            "effects",
+            "ranged",
+            "analyzed",
+            "below"
+          ]
+        },
+        {
+          "claim_id": "0bf7ef89eb91",
+          "claim_type": "numeric",
+          "confidence": 54.0,
+          "priority": 71.28,
+          "text_preview": "2.5 ng/mL",
+          "numeric_values": [
+            2.5
+          ],
+          "units": [
+            "mL"
+          ],
+          "keywords": [
+            "limits",
+            "effects",
+            "ranged",
+            "analyzed",
+            "below"
+          ]
+        },
+        {
+          "claim_id": "dc4860aa1085",
+          "claim_type": "numeric",
+          "confidence": 54.5,
+          "priority": 71.94,
+          "text_preview": "12 m",
+          "numeric_values": [
+            12.0
+          ],
+          "units": [
+            "m"
+          ],
+          "keywords": [
+            "clinical",
+            "minutes",
+            "total",
+            "high",
+            "large"
+          ]
+        }
+      ]
+    },
+    "uncertain_preliminary_findings": {
+      "total_claims": 4,
+      "processing_time_ms": 0.9529590606689453,
+      "claims_summary": [
+        {
+          "claim_id": "6e2ccd27bdff",
+          "claim_type": "qualitative",
+          "confidence": 47.0,
+          "priority": 42.300000000000004,
+          "text_preview": "Preliminary data suggests that certain metabolic profiles might be associated with disease progressi...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "profiles",
+            "patients",
+            "metabolic profile",
+            "disease",
+            "progression"
+          ]
+        },
+        {
+          "claim_id": "c78a9d8ccc3e",
+          "claim_type": "qualitative",
+          "confidence": 36.25,
+          "priority": 21.75,
+          "text_preview": "It appears that biomarker levels could potentially fluctuate depending on various factors that may i...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "levels",
+            "variations",
+            "diet",
+            "genetic",
+            "depending"
+          ]
+        },
+        {
+          "claim_id": "f53587e7585b",
+          "claim_type": "qualitative",
+          "confidence": 47.0,
+          "priority": 42.300000000000004,
+          "text_preview": "Some studies have reported that metabolite ratios might correlate with therapeutic response, althoug...",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "therapeutic",
+            "reported",
+            "remains",
+            "ratios",
+            "response"
+          ]
+        },
+        {
+          "claim_id": "138f2fed2631",
+          "claim_type": "qualitative",
+          "confidence": 48.5,
+          "priority": 48.5,
+          "text_preview": "Additional validation studies would likely be required before drawing definitive conclusions.",
+          "numeric_values": [],
+          "units": [],
+          "keywords": [
+            "drawing",
+            "definitive",
+            "conclusions",
+            "required",
+            "additional"
+          ]
+        }
+      ]
+    }
+  }
+}
