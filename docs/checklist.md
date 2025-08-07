@@ -212,7 +212,7 @@
 - [x] Execute integration tests with sample PDF files
 
 **CMO-LIGHTRAG-006-T09** [VALIDATE]
-- [ ] Verify dependencies on CMO-LIGHTRAG-004 and CMO-LIGHTRAG-005
+- [x] Verify dependencies on CMO-LIGHTRAG-004 and CMO-LIGHTRAG-005
 
 ---
 
