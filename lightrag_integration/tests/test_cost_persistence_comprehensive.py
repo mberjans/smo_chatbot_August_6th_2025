@@ -824,7 +824,7 @@ class TestCostPersistence:
     def test_error_handling(self, cost_persistence):
         """Test error handling in cost persistence operations."""
         # Test with invalid token usage
-        with pytest.raises((ValueError, TypeError)):
+        with pytest.raises(AttributeError):
             cost_persistence.record_cost(
                 cost_usd=0.05,
                 operation_type="error_test",

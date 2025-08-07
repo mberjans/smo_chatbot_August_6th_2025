@@ -532,7 +532,7 @@ class AdvancedCleanupOrchestrator:
     def __init__(self, policy: CleanupPolicy = None, thresholds: ResourceThresholds = None):
         self.policy = policy or CleanupPolicy()
         self.thresholds = thresholds or ResourceThresholds()
-        self.logger = logging.getLogger(f"{__name__.{self.__class__.__name__}")
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Initialize resource managers
         self._resource_managers = {

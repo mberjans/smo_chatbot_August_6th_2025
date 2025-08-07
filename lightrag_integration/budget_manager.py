@@ -221,7 +221,7 @@ class BudgetManager:
         if cached_status and (time.time() - cached_time) < self._cache_ttl:
             # Use cached status but add current cost
             status = cached_status.copy()
-            status['projected_cost'] = status['current_cost'] + current_cost
+            status['projected_cost'] = status['total_cost'] + current_cost
             status['projected_percentage'] = (status['projected_cost'] / budget_limit) * 100 if budget_limit > 0 else 0
         else:
             # Get fresh status from persistence layer

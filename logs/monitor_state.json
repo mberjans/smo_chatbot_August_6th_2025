@@ -721,22 +721,22 @@
   },
   "line_274": {
     "line_number": 274,
-    "original_line": "- [ ] Set up test data management and cleanup",
+    "original_line": "- [x] Set up test data management and cleanup",
     "task_id": "line_274",
     "task_description": "Set up test data management and cleanup",
-    "is_checked": false,
-    "retry_count": 1,
-    "last_attempt": "2025-08-07T05:28:26.348063",
+    "is_checked": true,
+    "retry_count": 0,
+    "last_attempt": "2025-08-07T08:07:16.377173",
     "is_failed": false
   },
   "line_277": {
     "line_number": 277,
-    "original_line": "- [ ] Execute complete test suite and verify >90% code coverage",
+    "original_line": "- [ ] Execute complete test suite and verify >90% code coverage PARTIALLY COMPLETED",
     "task_id": "line_277",
-    "task_description": "Execute complete test suite and verify >90% code coverage",
+    "task_description": "Execute complete test suite and verify >90% code coverage PARTIALLY COMPLETED",
     "is_checked": false,
-    "retry_count": 0,
-    "last_attempt": null,
+    "retry_count": 3,
+    "last_attempt": "2025-08-07T09:47:49.178872",
     "is_failed": false
   },
   "line_280": {

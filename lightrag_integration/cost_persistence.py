@@ -128,7 +128,10 @@ class CostRecord:
             except json.JSONDecodeError:
                 data['metadata'] = {}
         
-        return cls(**data)
+        # Remove database-only fields that are not part of the dataclass
+        clean_data = {k: v for k, v in data.items() if k != 'created_at'}
+        
+        return cls(**clean_data)
 
 
 class CostDatabase:
