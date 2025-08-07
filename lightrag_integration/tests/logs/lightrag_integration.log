@@ -5597,3 +5597,52 @@
 2025-08-06 21:24:56,321 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
 2025-08-06 21:24:56,325 - clinical_metabolomics_rag - ERROR - LightRAG initialization failed: Callable() takes no arguments
 2025-08-06 21:24:56,325 - clinical_metabolomics_rag - ERROR - Failed to initialize LightRAG: Callable() takes no arguments
+2025-08-07 02:06:44,041 - clinical_metabolomics_rag - INFO - [852d5b6e-ac4d-419c-8d4b-998344fc5aee] Configuration validation: enhanced_logging
+2025-08-07 02:06:44,042 - clinical_metabolomics_rag.structured - INFO - {"timestamp":"2025-08-07T08:06:44.041769+00:00","level":"INFO","message":"Configuration validation: enhanced_logging","correlation_id":"852d5b6e-ac4d-419c-8d4b-998344fc5aee","operation_name":"configuration_validation","component":"diagnostics","error_details":{},"metadata":{"config_name":"enhanced_logging","validation_results":{"structured_logging_enabled":true,"log_dir":"logs","correlation_tracking_enabled":true,"performance_tracking_enabled":true}}}
+2025-08-07 02:06:44,047 - clinical_metabolomics_rag - INFO - Cost persistence initialized with database at /tmp/test_lightrag/cost_tracking.db
+2025-08-07 02:06:44,047 - clinical_metabolomics_rag - INFO - Research categorizer initialized
+2025-08-07 02:06:44,047 - clinical_metabolomics_rag - INFO - Audit trail system initialized
+2025-08-07 02:06:44,050 - clinical_metabolomics_rag - INFO - Audit Event [system_start]: Audit trail system started
+2025-08-07 02:06:44,050 - clinical_metabolomics_rag - INFO - Enhanced cost tracking initialized successfully
+2025-08-07 02:06:44,050 - clinical_metabolomics_rag - INFO - API Usage Metrics Logger initialized with session ID: 5b3b17c4-b482-4d78-880b-6c22319b8161
+2025-08-07 02:06:44,050 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
+2025-08-07 02:06:44,086 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /tmp/test_lightrag
+2025-08-07 02:06:44,086 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - No specific pattern detected, using hybrid mode fallback
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - Smart query params generated: top_k=16, tokens=8000, pattern=None, mode=hybrid, confidence=hybrid_fallback
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - Using suggested mode 'hybrid' based on query pattern
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - No specific pattern detected, using hybrid mode fallback
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - Smart query params generated: top_k=16, tokens=8000, pattern=None, mode=hybrid, confidence=hybrid_fallback
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - Using suggested mode 'hybrid' based on query pattern
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - Using fallback pattern analysis: disease_association
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - Using pattern-based parameters: disease_association
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - Smart query params generated: top_k=18, tokens=10200, pattern=disease_association, mode=hybrid, confidence=high
+2025-08-07 02:06:44,090 - clinical_metabolomics_rag - INFO - Using suggested mode 'hybrid' based on query pattern
+2025-08-07 02:06:44,210 - clinical_metabolomics_rag - INFO - Audit Event [cost_recorded]: API cost tracked: $0.0010
+2025-08-07 02:06:44,210 - clinical_metabolomics_rag - WARNING - Response validation failed for query 'What are the main metabolites in glucose metabolism?'. Quality score: 0.34. Recommendations: ['Improve scientific accuracy by adding more biomedical context and reducing unsupported claims', 'Enhance response completeness by addressing more aspects of the query and providing structured information', 'Strengthen source credibility by including more citations and diverse evidence types', 'Increase clinical relevance by focusing more on patient outcomes and clinical applications']
+2025-08-07 02:06:44,210 - clinical_metabolomics_rag - INFO - Query processed successfully in 0.10s using hybrid mode
+2025-08-07 02:06:44,214 - clinical_metabolomics_rag - INFO - Audit Event [cost_recorded]: API cost tracked: $0.0010
+2025-08-07 02:06:44,214 - clinical_metabolomics_rag - WARNING - Response validation failed for query 'How does insulin affect metabolite levels?'. Quality score: 0.31. Recommendations: ['Improve scientific accuracy by adding more biomedical context and reducing unsupported claims', 'Enhance response completeness by addressing more aspects of the query and providing structured information', 'Strengthen source credibility by including more citations and diverse evidence types', 'Increase clinical relevance by focusing more on patient outcomes and clinical applications']
+2025-08-07 02:06:44,214 - clinical_metabolomics_rag - INFO - Query processed successfully in 0.12s using hybrid mode
+2025-08-07 02:06:44,219 - clinical_metabolomics_rag - INFO - Audit Event [cost_recorded]: API cost tracked: $0.0010
+2025-08-07 02:06:44,219 - clinical_metabolomics_rag - WARNING - Response validation failed for query 'What biomarkers are used in diabetes diagnosis?'. Quality score: 0.38. Recommendations: ['Improve scientific accuracy by adding more biomedical context and reducing unsupported claims', 'Enhance response completeness by addressing more aspects of the query and providing structured information', 'Strengthen source credibility by including more citations and diverse evidence types', 'Increase clinical relevance by focusing more on patient outcomes and clinical applications']
+2025-08-07 02:06:44,219 - clinical_metabolomics_rag - INFO - Query processed successfully in 0.12s using hybrid mode
+2025-08-07 02:06:44,223 - clinical_metabolomics_rag - INFO - [41a160e8-2a76-41bb-b302-403a668b5d79] Configuration validation: enhanced_logging
+2025-08-07 02:06:44,223 - clinical_metabolomics_rag.structured - INFO - {"timestamp":"2025-08-07T08:06:44.223311+00:00","level":"INFO","message":"Configuration validation: enhanced_logging","correlation_id":"41a160e8-2a76-41bb-b302-403a668b5d79","operation_name":"configuration_validation","component":"diagnostics","error_details":{},"metadata":{"config_name":"enhanced_logging","validation_results":{"structured_logging_enabled":true,"log_dir":"logs","correlation_tracking_enabled":true,"performance_tracking_enabled":true}}}
+2025-08-07 02:06:44,223 - clinical_metabolomics_rag - INFO - Cost persistence initialized with database at /tmp/test_lightrag/cost_tracking.db
+2025-08-07 02:06:44,223 - clinical_metabolomics_rag - INFO - Research categorizer initialized
+2025-08-07 02:06:44,223 - clinical_metabolomics_rag - INFO - Audit trail system initialized
+2025-08-07 02:06:44,225 - clinical_metabolomics_rag - INFO - Audit Event [system_start]: Audit trail system started
+2025-08-07 02:06:44,225 - clinical_metabolomics_rag - INFO - Enhanced cost tracking initialized successfully
+2025-08-07 02:06:44,225 - clinical_metabolomics_rag - INFO - API Usage Metrics Logger initialized with session ID: 5854540a-7b41-45c3-b7c5-679928ce3a79
+2025-08-07 02:06:44,225 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
+2025-08-07 02:06:44,230 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /tmp/test_lightrag
+2025-08-07 02:06:44,230 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-07 02:06:44,230 - clinical_metabolomics_rag - INFO - No specific pattern detected, using hybrid mode fallback
+2025-08-07 02:06:44,231 - clinical_metabolomics_rag - INFO - Smart query params generated: top_k=14, tokens=6400.0, pattern=None, mode=hybrid, confidence=hybrid_fallback
+2025-08-07 02:06:44,231 - clinical_metabolomics_rag - INFO - Using suggested mode 'hybrid' based on query pattern
+2025-08-07 02:06:44,338 - clinical_metabolomics_rag - INFO - Audit Event [cost_recorded]: API cost tracked: $0.0010
+2025-08-07 02:06:44,338 - clinical_metabolomics_rag - WARNING - Response validation failed for query 'Test query'. Quality score: 0.26. Recommendations: ['Improve scientific accuracy by adding more biomedical context and reducing unsupported claims', 'Enhance response completeness by addressing more aspects of the query and providing structured information', 'Improve clarity by using better sentence structure and transition words', 'Strengthen source credibility by including more citations and diverse evidence types', 'Increase clinical relevance by focusing more on patient outcomes and clinical applications']
+2025-08-07 02:06:44,338 - clinical_metabolomics_rag - INFO - Query processed successfully in 0.10s using hybrid mode
+2025-08-07 02:06:44,338 - clinical_metabolomics_rag - INFO - Cleaning up ClinicalMetabolomicsRAG resources
+2025-08-07 02:06:44,338 - clinical_metabolomics_rag - INFO - Cleanup completed successfully

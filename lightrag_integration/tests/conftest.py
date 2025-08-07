@@ -15,6 +15,7 @@ Created: August 6, 2025
 """
 
 import pytest
+import pytest_asyncio
 import tempfile
 import logging
 from pathlib import Path
@@ -43,6 +44,15 @@ def pytest_configure(config):
     )
     config.addinivalue_line(
         "markers", "concurrent: mark test as testing concurrent operations"
+    )
+    config.addinivalue_line(
+        "markers", "async: mark test as requiring async functionality"
+    )
+    config.addinivalue_line(
+        "markers", "lightrag: mark test as LightRAG integration test"
+    )
+    config.addinivalue_line(
+        "markers", "biomedical: mark test as biomedical-specific functionality"
     )
 
 
@@ -142,6 +152,180 @@ class TestDataBuilder:
 def test_data_builder():
     """Provide test data builder utility."""
     return TestDataBuilder()
+
+
+# =====================================================================
+# ASYNC TESTING FIXTURES AND EVENT LOOP CONFIGURATION
+# =====================================================================
+
+@pytest.fixture(scope="session")
+def event_loop_policy():
+    """Configure event loop policy for async testing."""
+    import asyncio
+    
+    # Use the default event loop policy
+    policy = asyncio.get_event_loop_policy()
+    return policy
+
+
+@pytest_asyncio.fixture(scope="function")
+async def async_test_context():
+    """Provide async test context with proper setup and cleanup."""
+    import asyncio
+    
+    # Create a context for async operations
+    context = {
+        'start_time': asyncio.get_event_loop().time(),
+        'tasks': [],
+        'cleanup_callbacks': []
+    }
+    
+    yield context
+    
+    # Cleanup: cancel any remaining tasks
+    for task in context.get('tasks', []):
+        if not task.done():
+            task.cancel()
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
+    
+    # Run cleanup callbacks
+    for callback in context.get('cleanup_callbacks', []):
+        try:
+            if asyncio.iscoroutinefunction(callback):
+                await callback()
+            else:
+                callback()
+        except Exception:
+            pass
+
+
+@pytest_asyncio.fixture
+async def async_mock_lightrag():
+    """Provide async mock LightRAG system for testing."""
+    from unittest.mock import AsyncMock
+    
+    mock_lightrag = AsyncMock()
+    
+    # Configure async methods
+    mock_lightrag.ainsert = AsyncMock(return_value={'status': 'success', 'cost': 0.01})
+    mock_lightrag.aquery = AsyncMock(return_value="Mock response from LightRAG system")
+    mock_lightrag.adelete = AsyncMock(return_value={'status': 'deleted'})
+    
+    # Configure properties
+    mock_lightrag.working_dir = "/tmp/test_lightrag"
+    mock_lightrag.cost_accumulated = 0.0
+    
+    yield mock_lightrag
+    
+    # Cleanup
+    mock_lightrag.reset_mock()
+
+
+@pytest_asyncio.fixture
+async def async_cost_tracker():
+    """Provide async cost tracking for testing."""
+    import asyncio
+    
+    class AsyncCostTracker:
+        def __init__(self):
+            self.costs = []
+            self.total = 0.0
+            self._lock = asyncio.Lock()
+        
+        async def track_cost(self, operation: str, cost: float, **kwargs):
+            """Track cost asynchronously."""
+            async with self._lock:
+                record = {
+                    'operation': operation,
+                    'cost': cost,
+                    'timestamp': asyncio.get_event_loop().time(),
+                    **kwargs
+                }
+                self.costs.append(record)
+                self.total += cost
+                return record
+        
+        async def get_total(self) -> float:
+            """Get total cost."""
+            async with self._lock:
+                return self.total
+        
+        async def get_costs(self):
+            """Get all cost records."""
+            async with self._lock:
+                return self.costs.copy()
+        
+        async def reset(self):
+            """Reset cost tracking."""
+            async with self._lock:
+                self.costs.clear()
+                self.total = 0.0
+    
+    tracker = AsyncCostTracker()
+    yield tracker
+    await tracker.reset()
+
+
+@pytest_asyncio.fixture
+async def async_progress_monitor():
+    """Provide async progress monitoring for testing."""
+    import asyncio
+    
+    class AsyncProgressMonitor:
+        def __init__(self):
+            self.progress = 0.0
+            self.status = "initialized"
+            self.events = []
+            self.start_time = asyncio.get_event_loop().time()
+            self._lock = asyncio.Lock()
+        
+        async def update(self, progress: float, status: str = None, **kwargs):
+            """Update progress asynchronously."""
+            async with self._lock:
+                self.progress = progress
+                if status:
+                    self.status = status
+                
+                event = {
+                    'timestamp': asyncio.get_event_loop().time(),
+                    'progress': progress,
+                    'status': status or self.status,
+                    **kwargs
+                }
+                self.events.append(event)
+                return event
+        
+        async def get_summary(self):
+            """Get progress summary."""
+            async with self._lock:
+                return {
+                    'current_progress': self.progress,
+                    'current_status': self.status,
+                    'elapsed_time': asyncio.get_event_loop().time() - self.start_time,
+                    'total_events': len(self.events)
+                }
+        
+        async def wait_for_completion(self, timeout: float = 10.0):
+            """Wait for progress to reach 100%."""
+            start = asyncio.get_event_loop().time()
+            while asyncio.get_event_loop().time() - start < timeout:
+                async with self._lock:
+                    if self.progress >= 100.0:
+                        return True
+                await asyncio.sleep(0.1)
+            return False
+    
+    monitor = AsyncProgressMonitor()
+    yield monitor
+
+
+@pytest.fixture
+def async_timeout():
+    """Configure timeout for async tests."""
+    return 30.0  # 30 second timeout for async tests
 
 
 # Performance Test Configuration
