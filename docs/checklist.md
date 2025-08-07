@@ -240,7 +240,7 @@
 - [x] Implement error handling for query failures
 
 **CMO-LIGHTRAG-007-T08** [CODE]
-- [ ] Optimize QueryParam settings for biomedical content
+- [x] Optimize QueryParam settings for biomedical content
 
 **CMO-LIGHTRAG-007-T09** [TEST]
 - [ ] Execute all query processing unit tests
