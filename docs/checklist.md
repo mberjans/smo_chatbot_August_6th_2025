@@ -262,7 +262,7 @@
 - [x] Write primary success test: "What is clinical metabolomics?" query
 
 **CMO-LIGHTRAG-008-T04-TEST** [TEST]
-- [ ] Write integration tests for end-to-end PDF to query workflow
+- [x] Write integration tests for end-to-end PDF to query workflow
 
 **CMO-LIGHTRAG-008-T05-TEST** [TEST]
 - [ ] Write performance benchmark tests
