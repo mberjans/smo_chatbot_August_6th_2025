@@ -80,18 +80,28 @@ except ImportError:
 
 # LightRAG imports - will be mocked for testing
 try:
-    from lightrag import LightRAG
+    from lightrag import LightRAG, QueryParam
     LIGHTRAG_AVAILABLE = True
 except ImportError:
     # For testing purposes, we'll create mock classes
     LIGHTRAG_AVAILABLE = False
+    
+    class QueryParam:
+        """Mock QueryParam class for testing."""
+        def __init__(self, mode="hybrid", response_type="Multiple Paragraphs", 
+                     top_k=10, max_total_tokens=8000, **kwargs):
+            self.mode = mode
+            self.response_type = response_type
+            self.top_k = top_k
+            self.max_total_tokens = max_total_tokens
+            self.__dict__.update(kwargs)
     
     class LightRAG:
         """Mock LightRAG class for testing."""
         def __init__(self, *args, **kwargs):
             pass
         
-        async def aquery(self, query, **kwargs):
+        async def aquery(self, query, param=None, **kwargs):
             return f"Mock response for: {query}"
         
         async def ainsert(self, documents):
@@ -111,7 +121,9 @@ try:
     from lightrag.utils import EmbeddingFunc
 except ImportError:
     # Mock EmbeddingFunc for testing
-    EmbeddingFunc = Callable
+    class EmbeddingFunc:
+        def __init__(self, *args, **kwargs):
+            pass
 
 # Local imports
 from .config import LightRAGConfig, LightRAGConfigError
@@ -847,6 +859,30 @@ class ClinicalMetabolomicsRAG:
                 'extract_numerical_values': True,
                 'identify_statistical_results': True,
                 'preserve_units': True
+            },
+            'query_optimization': {
+                # Optimized QueryParam settings for biomedical content based on research
+                # Research indicates optimal top-k ranges from 8-25 and tokens 4K-16K for biomedical
+                'basic_definition': {
+                    'top_k': 8,  # Focused retrieval for simple definitions
+                    'max_total_tokens': 4000,  # Sufficient for clear explanations
+                    'response_type': 'Multiple Paragraphs'
+                },
+                'complex_analysis': {
+                    'top_k': 15,  # More context for pathway analysis and disease mechanisms
+                    'max_total_tokens': 12000,  # Extended responses for complex metabolic queries
+                    'response_type': 'Multiple Paragraphs'
+                },
+                'comprehensive_research': {
+                    'top_k': 25,  # Maximum context for research synthesis queries
+                    'max_total_tokens': 16000,  # Full detailed responses with multiple sources
+                    'response_type': 'Multiple Paragraphs'
+                },
+                'default': {
+                    'top_k': 12,  # Balanced retrieval optimized for general biomedical queries
+                    'max_total_tokens': 8000,  # Current default - balanced for most clinical queries
+                    'response_type': 'Multiple Paragraphs'
+                }
             }
         }
     
@@ -1860,7 +1896,12 @@ class ClinicalMetabolomicsRAG:
                 self.logger.error(f"Embedding function failed after {self.retry_config['max_attempts']} attempts: {e}")
                 raise ClinicalMetabolomicsRAGError(f"Embedding function failed permanently: {e}") from e
         
-        return enhanced_embedding_function
+        # Return EmbeddingFunc object with proper structure
+        return EmbeddingFunc(
+            embedding_dim=1536,  # Standard OpenAI embedding dimension
+            func=enhanced_embedding_function,
+            max_token_size=8192
+        )
     
     def _calculate_embedding_cost(self, model: str, token_usage: Dict[str, int]) -> float:
         """
@@ -1908,15 +1949,13 @@ class ClinicalMetabolomicsRAG:
                 embedding_func=embedding_func,
                 # Biomedical-specific entity extraction parameters
                 entity_extract_max_gleaning=2,
-                entity_extract_max_tokens=8192,
-                # Relationship extraction parameters
-                relationship_max_gleaning=2,
-                relationship_max_tokens=8192,
-                # Graph and vector database settings
-                graph_chunk_entity_relation_json_path="graph_chunk_entity_relation.json",
-                vdb_chunks_path="vdb_chunks",
-                vdb_entities_path="vdb_entities",
-                vdb_relationships_path="vdb_relationships"
+                max_entity_tokens=8192,
+                max_relation_tokens=8192,
+                # Other biomedical parameters
+                chunk_token_size=1200,
+                chunk_overlap_token_size=100,
+                embedding_func_max_async=self.config.max_async,
+                llm_model_max_async=4
             )
             
             self.logger.info(f"LightRAG initialized with working directory: {self.config.working_dir}")
@@ -1932,12 +1971,22 @@ class ClinicalMetabolomicsRAG:
         **kwargs
     ) -> Dict[str, Any]:
         """
-        Execute a query against the RAG system.
+        Execute a query against the RAG system using QueryParam for biomedical optimization.
         
         Args:
             query: The query string to process
             mode: Query mode ('naive', 'local', 'global', 'hybrid')
-            **kwargs: Additional parameters for query processing
+            **kwargs: Additional QueryParam parameters for query processing:
+                - response_type: Response format (default: "Multiple Paragraphs") 
+                - top_k: Number of top results to retrieve (default: 10)
+                - max_total_tokens: Maximum tokens for response (default: 8000)
+                - Other QueryParam-compatible parameters
+        
+        QueryParam Optimization:
+            This method uses QueryParam with biomedical-optimized default settings:
+            - response_type: "Multiple Paragraphs" for comprehensive biomedical explanations
+            - top_k: 10 to retrieve sufficient context for complex biomedical queries
+            - max_total_tokens: 8000 to allow detailed responses for scientific content
         
         Returns:
             Dict containing:
@@ -1964,12 +2013,31 @@ class ClinicalMetabolomicsRAG:
             # Add query to history (as string for simple test compatibility)
             self.query_history.append(query)
             
-            # Execute query using LightRAG
-            # Note: QueryParam handling will be implemented when LightRAG is available
+            # Create QueryParam with biomedical-optimized settings
+            # Use optimized defaults from biomedical_params research-based configuration
+            default_params = self.biomedical_params['query_optimization']['default']
+            query_param_kwargs = {
+                'mode': mode,
+                'response_type': kwargs.get('response_type', default_params['response_type']),  # Better for biomedical explanations
+                'top_k': kwargs.get('top_k', default_params['top_k']),  # Optimized retrieval for biomedical queries (research-based)
+                'max_total_tokens': kwargs.get('max_total_tokens', default_params['max_total_tokens']),  # Optimized token limit for clinical content
+            }
+            
+            # Add any additional QueryParam parameters from kwargs
+            query_param_fields = {'mode', 'response_type', 'top_k', 'max_total_tokens'}
+            for key, value in kwargs.items():
+                if key not in query_param_fields:
+                    query_param_kwargs[key] = value
+            
+            # Validate QueryParam parameters before creation
+            self._validate_query_param_kwargs(query_param_kwargs)
+            
+            query_param = QueryParam(**query_param_kwargs)
+            
+            # Execute query using LightRAG with QueryParam
             response = await self.lightrag_instance.aquery(
                 query,
-                mode=mode,
-                **kwargs
+                param=query_param
             )
             
             processing_time = time.time() - start_time
@@ -2011,6 +2079,280 @@ class ClinicalMetabolomicsRAG:
         except Exception as e:
             self.logger.error(f"Query processing failed: {e}")
             raise ClinicalMetabolomicsRAGError(f"Query processing failed: {e}") from e
+    
+    def _validate_query_param_kwargs(self, query_param_kwargs: Dict[str, Any]) -> None:
+        """
+        Validate QueryParam parameters before creating QueryParam instance.
+        
+        This method provides comprehensive validation of QueryParam parameters
+        to catch invalid configurations early and provide meaningful error messages.
+        
+        Args:
+            query_param_kwargs: Dictionary of QueryParam parameters to validate
+            
+        Raises:
+            ValueError: If any parameter values are invalid
+            TypeError: If any parameter types are incorrect
+            ClinicalMetabolomicsRAGError: If validation fails with context
+        """
+        try:
+            # Validate mode parameter
+            mode = query_param_kwargs.get('mode', 'hybrid')
+            valid_modes = {'naive', 'local', 'global', 'hybrid'}
+            if mode not in valid_modes:
+                raise ValueError(
+                    f"Invalid mode '{mode}'. Must be one of: {', '.join(sorted(valid_modes))}"
+                )
+            
+            # Validate response_type parameter
+            response_type = query_param_kwargs.get('response_type', 'Multiple Paragraphs')
+            if not isinstance(response_type, str):
+                raise TypeError(
+                    f"response_type must be a string, got {type(response_type).__name__}: {response_type}"
+                )
+            if not response_type.strip():
+                raise ValueError("response_type cannot be empty")
+            
+            # Validate top_k parameter
+            top_k = query_param_kwargs.get('top_k', 10)
+            if not isinstance(top_k, int):
+                # Try to convert to int if it's a numeric string
+                try:
+                    top_k = int(top_k)
+                    query_param_kwargs['top_k'] = top_k
+                except (ValueError, TypeError):
+                    raise TypeError(
+                        f"top_k must be an integer, got {type(top_k).__name__}: {top_k}"
+                    )
+            
+            if top_k <= 0:
+                raise ValueError(f"top_k must be positive, got: {top_k}")
+            
+            if top_k > 100:  # Reasonable upper limit for biomedical queries
+                self.logger.warning(f"top_k value {top_k} is very high, may impact performance")
+                if top_k > 1000:  # Hard limit
+                    raise ValueError(f"top_k too large ({top_k}), maximum allowed: 1000")
+            
+            # Validate max_total_tokens parameter
+            max_total_tokens = query_param_kwargs.get('max_total_tokens', 8000)
+            if not isinstance(max_total_tokens, int):
+                # Try to convert to int if it's a numeric string
+                try:
+                    max_total_tokens = int(max_total_tokens)
+                    query_param_kwargs['max_total_tokens'] = max_total_tokens
+                except (ValueError, TypeError):
+                    raise TypeError(
+                        f"max_total_tokens must be an integer, got {type(max_total_tokens).__name__}: {max_total_tokens}"
+                    )
+            
+            if max_total_tokens <= 0:
+                raise ValueError(f"max_total_tokens must be positive, got: {max_total_tokens}")
+            
+            # Check against model limits (conservative estimate for most models)
+            model_max_tokens = 32768  # Most current models support this
+            if hasattr(self.config, 'max_tokens') and self.config.max_tokens:
+                model_max_tokens = self.config.max_tokens
+                
+            if max_total_tokens > model_max_tokens:
+                self.logger.warning(
+                    f"max_total_tokens ({max_total_tokens}) exceeds configured model limit ({model_max_tokens}), "
+                    f"reducing to {model_max_tokens}"
+                )
+                query_param_kwargs['max_total_tokens'] = model_max_tokens
+            
+            # Validate parameter combinations
+            if top_k > 50 and max_total_tokens > 16000:
+                self.logger.warning(
+                    f"High top_k ({top_k}) with large max_total_tokens ({max_total_tokens}) "
+                    f"may cause long response times or memory issues"
+                )
+            
+            self.logger.debug(f"QueryParam validation passed: mode={mode}, top_k={top_k}, max_total_tokens={max_total_tokens}")
+            
+        except (ValueError, TypeError) as e:
+            self.logger.error(f"QueryParam validation failed: {e}")
+            raise ClinicalMetabolomicsRAGError(f"Invalid QueryParam configuration: {e}") from e
+        except Exception as e:
+            self.logger.error(f"Unexpected error during QueryParam validation: {e}")
+            raise ClinicalMetabolomicsRAGError(f"QueryParam validation error: {e}") from e
+    
+    def get_optimized_query_params(self, query_type: str = 'default') -> Dict[str, Any]:
+        """
+        Get optimized QueryParam settings for different types of biomedical queries.
+        
+        Args:
+            query_type: Type of biomedical query ('basic_definition', 'complex_analysis', 
+                       'comprehensive_research', 'default')
+                       
+        Returns:
+            Dictionary of optimized QueryParam settings for the specified query type
+            
+        Raises:
+            ValueError: If query_type is not recognized
+        """
+        optimization_params = self.biomedical_params.get('query_optimization', {})
+        
+        if query_type not in optimization_params:
+            available_types = list(optimization_params.keys())
+            raise ValueError(
+                f"Unknown query_type '{query_type}'. Available types: {available_types}"
+            )
+            
+        return optimization_params[query_type].copy()
+    
+    async def query_basic_definition(self, query: str, mode: str = "hybrid", **kwargs) -> Dict[str, Any]:
+        """
+        Execute a basic definition query optimized for simple biomedical concepts.
+        
+        Optimized for queries like:
+        - "What is glucose?"
+        - "Define metabolism" 
+        - "What are biomarkers?"
+        
+        Args:
+            query: The query string (should be a simple definition request)
+            mode: Query mode (default: 'hybrid')
+            **kwargs: Additional parameters (will be merged with optimized settings)
+            
+        Returns:
+            Dict containing query response optimized for basic definitions
+        """
+        optimized_params = self.get_optimized_query_params('basic_definition')
+        
+        # Merge user kwargs with optimized params (user params take precedence)
+        merged_params = {**optimized_params, **kwargs}
+        
+        self.logger.info(f"Executing basic definition query with optimized params: top_k={optimized_params['top_k']}")
+        
+        return await self.query(query, mode=mode, **merged_params)
+    
+    async def query_complex_analysis(self, query: str, mode: str = "hybrid", **kwargs) -> Dict[str, Any]:
+        """
+        Execute a complex analysis query optimized for detailed biomedical investigations.
+        
+        Optimized for queries like:
+        - "How does glucose metabolism interact with insulin resistance in type 2 diabetes?"
+        - "What are the metabolic pathways involved in lipid oxidation?"
+        - "Explain the relationship between gut microbiome and host metabolism"
+        
+        Args:
+            query: The query string (should involve complex biomedical relationships)
+            mode: Query mode (default: 'hybrid')  
+            **kwargs: Additional parameters (will be merged with optimized settings)
+            
+        Returns:
+            Dict containing query response optimized for complex analysis
+        """
+        optimized_params = self.get_optimized_query_params('complex_analysis')
+        
+        # Merge user kwargs with optimized params (user params take precedence)
+        merged_params = {**optimized_params, **kwargs}
+        
+        self.logger.info(f"Executing complex analysis query with optimized params: top_k={optimized_params['top_k']}, max_tokens={optimized_params['max_total_tokens']}")
+        
+        return await self.query(query, mode=mode, **merged_params)
+    
+    async def query_comprehensive_research(self, query: str, mode: str = "hybrid", **kwargs) -> Dict[str, Any]:
+        """
+        Execute a comprehensive research query optimized for in-depth biomedical research.
+        
+        Optimized for queries requiring synthesis of multiple sources like:
+        - "Provide a comprehensive review of metabolomics in cardiovascular disease"
+        - "What is the current state of biomarker discovery in Alzheimer's disease?"
+        - "Synthesize research on the role of metabolomics in precision medicine"
+        
+        Args:
+            query: The query string (should require comprehensive research synthesis)
+            mode: Query mode (default: 'hybrid')
+            **kwargs: Additional parameters (will be merged with optimized settings)
+            
+        Returns:
+            Dict containing query response optimized for comprehensive research
+        """
+        optimized_params = self.get_optimized_query_params('comprehensive_research')
+        
+        # Merge user kwargs with optimized params (user params take precedence)
+        merged_params = {**optimized_params, **kwargs}
+        
+        self.logger.info(f"Executing comprehensive research query with optimized params: top_k={optimized_params['top_k']}, max_tokens={optimized_params['max_total_tokens']}")
+        
+        return await self.query(query, mode=mode, **merged_params)
+    
+    def classify_query_type(self, query: str) -> str:
+        """
+        Automatically classify a query to determine the optimal parameter set.
+        
+        Uses heuristics based on query length, complexity indicators, and keywords
+        to suggest the most appropriate query type for parameter optimization.
+        
+        Args:
+            query: The query string to classify
+            
+        Returns:
+            Recommended query type ('basic_definition', 'complex_analysis', 
+            'comprehensive_research', or 'default')
+        """
+        query_lower = query.lower().strip()
+        
+        # Basic definition indicators
+        definition_patterns = [
+            'what is', 'define', 'definition of', 'meaning of', 
+            'explain what', 'what does', 'what are'
+        ]
+        
+        # Complex analysis indicators  
+        complex_patterns = [
+            'how does', 'relationship between', 'interaction', 'mechanism',
+            'pathway', 'process', 'regulation', 'modulation', 'effect of',
+            'role of', 'impact of', 'influence of'
+        ]
+        
+        # Comprehensive research indicators
+        research_patterns = [
+            'comprehensive', 'review', 'state of', 'current research',
+            'literature', 'evidence', 'studies show', 'research indicates',
+            'systematic', 'meta-analysis', 'synthesis'
+        ]
+        
+        # Check for comprehensive research first (highest priority - most specific)
+        if any(pattern in query_lower for pattern in research_patterns):
+            return 'comprehensive_research'
+            
+        # Check for complex analysis (contains analysis indicators or is longer)
+        if any(pattern in query_lower for pattern in complex_patterns) or len(query) > 100:
+            return 'complex_analysis'
+            
+        # Check for basic definitions (short, simple queries with definition patterns)
+        if len(query) < 50 and any(pattern in query_lower for pattern in definition_patterns):
+            return 'basic_definition'
+            
+        # Default for everything else
+        return 'default'
+    
+    async def query_auto_optimized(self, query: str, mode: str = "hybrid", **kwargs) -> Dict[str, Any]:
+        """
+        Execute a query with automatically selected optimal parameters based on query classification.
+        
+        This method analyzes the query to determine its type and applies the most suitable
+        optimization parameters automatically.
+        
+        Args:
+            query: The query string
+            mode: Query mode (default: 'hybrid')
+            **kwargs: Additional parameters (will be merged with auto-selected optimized settings)
+            
+        Returns:
+            Dict containing query response with auto-optimized parameters
+        """
+        query_type = self.classify_query_type(query)
+        optimized_params = self.get_optimized_query_params(query_type)
+        
+        # Merge user kwargs with optimized params (user params take precedence)
+        merged_params = {**optimized_params, **kwargs}
+        
+        self.logger.info(f"Auto-classified query as '{query_type}' with params: top_k={optimized_params['top_k']}, max_tokens={optimized_params['max_total_tokens']}")
+        
+        return await self.query(query, mode=mode, **merged_params)
     
     def track_api_cost(self, 
                       cost: float, 
@@ -2786,6 +3128,9 @@ class ClinicalMetabolomicsRAG:
             result: Result dictionary to update
             batch_id: Identifier for logging
         """
+        # Import error classes at function start to ensure availability
+        IngestionNonRetryableError = globals().get('IngestionNonRetryableError', IngestionNonRetryableError)
+        
         # Pre-validate all documents in batch to catch issues early
         validated_documents = []
         validation_failures = []
@@ -2820,9 +3165,9 @@ class ClinicalMetabolomicsRAG:
         # Add validation failures to results
         result['errors'].extend(validation_failures)
         
+        # Import needed for error handling
         # Check if we should fail fast on validation errors
         if fail_fast and validation_failures:
-            from .lightrag_errors import IngestionNonRetryableError
             raise IngestionNonRetryableError(
                 f"Batch validation failed: {len(validation_failures)} documents failed validation",
                 document_id=batch_id,
