@@ -1,0 +1,118 @@
+# Testing requirements for performance benchmarking utilities
+# This file contains all dependencies needed for running the comprehensive test suite
+
+# Core testing framework
+pytest>=7.0.0
+pytest-asyncio>=0.20.0
+pytest-mock>=3.8.0
+pytest-cov>=4.0.0
+pytest-xdist>=3.0.0  # For parallel test execution
+pytest-timeout>=2.1.0
+pytest-benchmark>=4.0.0  # For performance benchmarking
+pytest-html>=3.1.0  # For HTML test reports
+pytest-json-report>=1.5.0  # For JSON test reports
+
+# Test utilities and fixtures
+responses>=0.20.0  # For mocking HTTP responses
+requests-mock>=1.9.0
+aioresponses>=0.7.0  # For mocking async HTTP responses
+freezegun>=1.2.0  # For mocking time/datetime
+factory-boy>=3.2.0  # For creating test fixtures
+
+# Performance and monitoring libraries (for testing)
+memory-profiler>=0.60.0
+psutil>=5.9.0
+py-spy>=0.3.0  # Optional profiling tool
+
+# Data science and visualization libraries (for testing visualization components)
+numpy>=1.21.0
+pandas>=1.3.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+plotly>=5.0.0
+
+# Statistical analysis libraries (for testing correlation engine)
+scipy>=1.7.0
+scikit-learn>=1.0.0
+
+# Development and debugging tools
+ipdb>=0.13.0  # Enhanced debugger
+rich>=12.0.0  # Rich text and beautiful formatting
+tabulate>=0.9.0  # For formatting test result tables
+
+# Code quality tools (optional for development)
+flake8>=4.0.0
+black>=22.0.0
+mypy>=0.991
+bandit>=1.7.0  # Security linting
+
+# Documentation generation (optional)
+sphinx>=5.0.0
+sphinx-rtd-theme>=1.0.0
+
+# Additional utilities
+click>=8.0.0  # For CLI interfaces in test utilities
+colorama>=0.4.0  # Cross-platform colored terminal text
+tqdm>=4.64.0  # Progress bars
+
+# HTTP libraries for testing API components
+httpx>=0.23.0
+aiohttp>=3.8.0
+
+# File format support for testing export functionality
+openpyxl>=3.0.0  # Excel file support
+xlsxwriter>=3.0.0  # Excel writing
+Pillow>=9.0.0  # Image processing for report generation
+
+# Temporary file handling
+tempfile  # Built-in, but explicit for clarity
+
+# JSON/YAML handling
+pyyaml>=6.0.0
+jsonschema>=4.0.0
+
+# Time and date utilities
+python-dateutil>=2.8.0
+pytz>=2022.1
+
+# Logging enhancements
+structlog>=22.0.0  # Structured logging
+
+# Optional: Database testing support
+# SQLAlchemy>=1.4.0
+# sqlite3  # Built-in
+
+# Optional: Message queue testing
+# celery>=5.2.0
+# redis>=4.3.0
+
+# Environment and configuration management
+python-dotenv>=0.20.0
+configparser  # Built-in
+
+# Platform detection
+platform  # Built-in
+
+# Path manipulation
+pathlib  # Built-in (Python 3.4+)
+
+# Type checking support
+typing-extensions>=4.0.0
+
+# Optional: Performance profiling
+# line_profiler>=3.5.0  # Requires compilation
+# pympler>=0.9.0  # Memory profiling
+
+# Note: Some dependencies may require additional system packages
+# For visualization on headless systems, you may need:
+# - xvfb (virtual framebuffer)
+# - fonts-dejavu-core (fonts for matplotlib)
+
+# Installation instructions:
+# pip install -r requirements_test.txt
+#
+# For development with all optional dependencies:
+# pip install -r requirements_test.txt[dev]
+#
+# For minimal testing setup:
+# pip install pytest pytest-asyncio pytest-mock pytest-cov

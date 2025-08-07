@@ -1,0 +1,648 @@
+{
+  "report_metadata": {
+    "generated_timestamp": "2025-08-07T20:58:11.349295+00:00",
+    "session_id": "255b06fe-8d33-4c52-adeb-5ecbf6d52f59",
+    "report_version": "1.0.0",
+    "format": "json",
+    "include_raw_data": true
+  },
+  "session_summary": {
+    "total_quality_operations": 3,
+    "quality_validation_cost": 0.046,
+    "average_quality_score": 84.5,
+    "validation_success_rate": 0.0
+  },
+  "quality_performance": {
+    "session_id": "255b06fe-8d33-4c52-adeb-5ecbf6d52f59",
+    "uptime_seconds": 1.1124770641326904,
+    "total_operations": 2,
+    "quality_validation": {
+      "session_stats": {
+        "total_quality_operations": 3,
+        "quality_validation_cost": 0.046,
+        "average_quality_score": 84.5,
+        "validation_success_rate": 0.0
+      },
+      "active_quality_operations": 0,
+      "quality_validation_summary": {
+        "relevance": {
+          "total_operations": 1.0,
+          "average_quality_score": 87.5,
+          "success_rate_percent": 100.0,
+          "average_cost_usd": 0.008,
+          "total_cost_usd": 0.008
+        },
+        "factual_accuracy": {
+          "total_operations": 1.0,
+          "average_quality_score": 82.3,
+          "success_rate_percent": 100.0,
+          "average_cost_usd": 0.01,
+          "total_cost_usd": 0.01
+        },
+        "integrated": {
+          "total_operations": 1.0,
+          "average_quality_score": 83.7,
+          "success_rate_percent": 100.0,
+          "average_cost_usd": 0.028,
+          "total_cost_usd": 0.028
+        },
+        "comprehensive": {
+          "total_operations": 1.0,
+          "average_quality_score": 81.2,
+          "success_rate_percent": 0.0,
+          "average_cost_usd": 0.12,
+          "total_cost_usd": 0.12
+        }
+      },
+      "operation_stage_performance": {
+        "scoring": {
+          "total_operations": 1.0,
+          "average_time_ms": 201.36,
+          "average_cost_usd": 0.008,
+          "total_cost_usd": 0.008
+        },
+        "validation": {
+          "total_operations": 1.0,
+          "average_time_ms": 403.1,
+          "average_cost_usd": 0.01,
+          "total_cost_usd": 0.01,
+          "average_claims_validated": 7.0,
+          "average_evidence_processed": 25.0
+        },
+        "workflow": {
+          "total_operations": 1.0,
+          "average_time_ms": 501.45,
+          "average_cost_usd": 0.028,
+          "total_cost_usd": 0.028
+        },
+        "batch_processing": {
+          "total_operations": 1.0,
+          "average_time_ms": 4500.0,
+          "average_cost_usd": 0.12,
+          "total_cost_usd": 0.12
+        }
+      },
+      "quality_trends": {
+        "quality_score": {
+          "current_value": 81.2,
+          "average": 83.67,
+          "median": 83.0,
+          "std_deviation": 2.75,
+          "min_value": 81.2,
+          "max_value": 87.5,
+          "sample_size": 4
+        },
+        "confidence_score": {
+          "current_value": 89.2,
+          "average": 89.9,
+          "median": 89.2,
+          "std_deviation": 1.85,
+          "min_value": 88.5,
+          "max_value": 92.0,
+          "sample_size": 3
+        },
+        "cost_effectiveness": {
+          "current_value": 676.6666666666667,
+          "average": 676.67,
+          "median": 676.67,
+          "std_deviation": 0,
+          "min_value": 676.6666666666667,
+          "max_value": 676.6666666666667,
+          "sample_size": 1
+        }
+      },
+      "cost_analysis": {
+        "total_quality_validation_cost_usd": 0.166,
+        "daily_costs": {
+          "2025-08-07": 0.166
+        },
+        "today_cost_usd": 0.166,
+        "average_daily_cost_usd": 0.166,
+        "cost_trend": "stable",
+        "cost_tracking_days": 1
+      },
+      "validation_success_rates": {
+        "relevance": {
+          "success_rate_percent": 100.0,
+          "successful_validations": 1,
+          "total_validations": 1,
+          "recent_success_rate": 100.0
+        },
+        "factual_accuracy": {
+          "success_rate_percent": 100.0,
+          "successful_validations": 1,
+          "total_validations": 1,
+          "recent_success_rate": 100.0
+        },
+        "integrated": {
+          "success_rate_percent": 100.0,
+          "successful_validations": 1,
+          "total_validations": 1,
+          "recent_success_rate": 100.0
+        },
+        "comprehensive": {
+          "success_rate_percent": 0.0,
+          "successful_validations": 0,
+          "total_validations": 1,
+          "recent_success_rate": 0.0
+        }
+      },
+      "quality_benchmarks": {
+        "overall_grade": "good",
+        "average_quality_score": 83.67,
+        "quality_distribution": {
+          "excellent": 0,
+          "good": 4,
+          "acceptable": 0,
+          "poor": 0
+        },
+        "quality_distribution_percent": {
+          "excellent": 0.0,
+          "good": 100.0,
+          "acceptable": 0.0,
+          "poor": 0.0
+        },
+        "benchmarks": {
+          "excellent_threshold": 90.0,
+          "good_threshold": 80.0,
+          "acceptable_threshold": 70.0,
+          "poor_threshold": 60.0
+        }
+      },
+      "recommendations": [
+        "comprehensive validation has low success rate (0.0%). Consider reviewing validation criteria or improving input quality."
+      ]
+    }
+  },
+  "detailed_analysis": {
+    "quality_validation_summary": {
+      "relevance": {
+        "total_operations": 1.0,
+        "average_quality_score": 87.5,
+        "success_rate_percent": 100.0,
+        "average_cost_usd": 0.008,
+        "total_cost_usd": 0.008
+      },
+      "factual_accuracy": {
+        "total_operations": 1.0,
+        "average_quality_score": 82.3,
+        "success_rate_percent": 100.0,
+        "average_cost_usd": 0.01,
+        "total_cost_usd": 0.01
+      },
+      "integrated": {
+        "total_operations": 1.0,
+        "average_quality_score": 83.7,
+        "success_rate_percent": 100.0,
+        "average_cost_usd": 0.028,
+        "total_cost_usd": 0.028
+      },
+      "comprehensive": {
+        "total_operations": 1.0,
+        "average_quality_score": 81.2,
+        "success_rate_percent": 0.0,
+        "average_cost_usd": 0.12,
+        "total_cost_usd": 0.12
+      }
+    },
+    "operation_stage_performance": {
+      "scoring": {
+        "total_operations": 1.0,
+        "average_time_ms": 201.36,
+        "average_cost_usd": 0.008,
+        "total_cost_usd": 0.008
+      },
+      "validation": {
+        "total_operations": 1.0,
+        "average_time_ms": 403.1,
+        "average_cost_usd": 0.01,
+        "total_cost_usd": 0.01,
+        "average_claims_validated": 7.0,
+        "average_evidence_processed": 25.0
+      },
+      "workflow": {
+        "total_operations": 1.0,
+        "average_time_ms": 501.45,
+        "average_cost_usd": 0.028,
+        "total_cost_usd": 0.028
+      },
+      "batch_processing": {
+        "total_operations": 1.0,
+        "average_time_ms": 4500.0,
+        "average_cost_usd": 0.12,
+        "total_cost_usd": 0.12
+      }
+    },
+    "quality_trends": {
+      "quality_score": {
+        "current_value": 81.2,
+        "average": 83.67,
+        "median": 83.0,
+        "std_deviation": 2.75,
+        "min_value": 81.2,
+        "max_value": 87.5,
+        "sample_size": 4
+      },
+      "confidence_score": {
+        "current_value": 89.2,
+        "average": 89.9,
+        "median": 89.2,
+        "std_deviation": 1.85,
+        "min_value": 88.5,
+        "max_value": 92.0,
+        "sample_size": 3
+      },
+      "cost_effectiveness": {
+        "current_value": 676.6666666666667,
+        "average": 676.67,
+        "median": 676.67,
+        "std_deviation": 0,
+        "min_value": 676.6666666666667,
+        "max_value": 676.6666666666667,
+        "sample_size": 1
+      }
+    },
+    "cost_analysis": {
+      "total_quality_validation_cost_usd": 0.166,
+      "daily_costs": {
+        "2025-08-07": 0.166
+      },
+      "today_cost_usd": 0.166,
+      "average_daily_cost_usd": 0.166,
+      "cost_trend": "stable",
+      "cost_tracking_days": 1
+    },
+    "validation_success_rates": {
+      "relevance": {
+        "success_rate_percent": 100.0,
+        "successful_validations": 1,
+        "total_validations": 1,
+        "recent_success_rate": 100.0
+      },
+      "factual_accuracy": {
+        "success_rate_percent": 100.0,
+        "successful_validations": 1,
+        "total_validations": 1,
+        "recent_success_rate": 100.0
+      },
+      "integrated": {
+        "success_rate_percent": 100.0,
+        "successful_validations": 1,
+        "total_validations": 1,
+        "recent_success_rate": 100.0
+      },
+      "comprehensive": {
+        "success_rate_percent": 0.0,
+        "successful_validations": 0,
+        "total_validations": 1,
+        "recent_success_rate": 0.0
+      }
+    },
+    "quality_benchmarks": {
+      "overall_grade": "good",
+      "average_quality_score": 83.67,
+      "quality_distribution": {
+        "excellent": 0,
+        "good": 4,
+        "acceptable": 0,
+        "poor": 0
+      },
+      "quality_distribution_percent": {
+        "excellent": 0.0,
+        "good": 100.0,
+        "acceptable": 0.0,
+        "poor": 0.0
+      },
+      "benchmarks": {
+        "excellent_threshold": 90.0,
+        "good_threshold": 80.0,
+        "acceptable_threshold": 70.0,
+        "poor_threshold": 60.0
+      }
+    },
+    "recommendations": [
+      "comprehensive validation has low success rate (0.0%). Consider reviewing validation criteria or improving input quality."
+    ]
+  },
+  "raw_metrics": [
+    {
+      "id": "d2714602-a5a1-46fc-83ca-6c9152d8eaf7",
+      "timestamp": 1754600290.238605,
+      "session_id": "255b06fe-8d33-4c52-adeb-5ecbf6d52f59",
+      "metric_type": "quality_validation",
+      "operation_name": "clinical_relevance_assessment",
+      "model_name": "gpt-4",
+      "api_provider": "openai",
+      "endpoint_used": null,
+      "prompt_tokens": 180,
+      "completion_tokens": 45,
+      "embedding_tokens": 0,
+      "total_tokens": 225,
+      "cost_usd": 0.008,
+      "cost_per_token": null,
+      "response_time_ms": 201.3571262359619,
+      "queue_time_ms": null,
+      "processing_time_ms": null,
+      "throughput_tokens_per_sec": null,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "retry_count": 0,
+      "final_attempt": true,
+      "research_category": "metabolomics_clinical_analysis",
+      "query_type": null,
+      "subject_area": null,
+      "document_type": null,
+      "memory_usage_mb": 0.015625,
+      "cpu_usage_percent": null,
+      "concurrent_operations": 1,
+      "request_size_bytes": null,
+      "response_size_bytes": null,
+      "context_length": null,
+      "temperature_used": null,
+      "daily_budget_used_percent": null,
+      "monthly_budget_used_percent": null,
+      "compliance_level": "standard",
+      "user_id": null,
+      "project_id": null,
+      "experiment_id": null,
+      "metadata": {
+        "query_complexity": "high",
+        "domain_specificity": "metabolomics"
+      },
+      "tags": [],
+      "quality_operation_stage": "scoring",
+      "quality_validation_type": "relevance",
+      "quality_assessment_method": "semantic_analysis",
+      "quality_score": 87.5,
+      "relevance_score": 87.5,
+      "factual_accuracy_score": null,
+      "completeness_score": null,
+      "clarity_score": null,
+      "confidence_score": 92.0,
+      "claims_extracted": 0,
+      "claims_validated": 0,
+      "evidence_items_processed": 0,
+      "biomedical_terms_identified": 15,
+      "citations_found": 0,
+      "validation_passed": true,
+      "validation_confidence": 92.0,
+      "quality_flags": [],
+      "quality_recommendations": [],
+      "claim_extraction_time_ms": null,
+      "validation_time_ms": null,
+      "scoring_time_ms": null,
+      "integration_time_ms": null,
+      "quality_validation_cost_usd": 0.008,
+      "cost_per_quality_point": null,
+      "cost_effectiveness_ratio": null,
+      "timestamp_iso": "2025-08-07T20:58:10.238605+00:00"
+    },
+    {
+      "id": "e56b131b-fc33-4931-a26f-5b92c643278e",
+      "timestamp": 1754600290.441518,
+      "session_id": "255b06fe-8d33-4c52-adeb-5ecbf6d52f59",
+      "metric_type": "quality_validation",
+      "operation_name": "factual_accuracy_verification",
+      "model_name": "gpt-4",
+      "api_provider": "openai",
+      "endpoint_used": null,
+      "prompt_tokens": 250,
+      "completion_tokens": 35,
+      "embedding_tokens": 0,
+      "total_tokens": 285,
+      "cost_usd": 0.012,
+      "cost_per_token": null,
+      "response_time_ms": 403.1028747558594,
+      "queue_time_ms": null,
+      "processing_time_ms": null,
+      "throughput_tokens_per_sec": null,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "retry_count": 0,
+      "final_attempt": true,
+      "research_category": "biomedical_fact_checking",
+      "query_type": null,
+      "subject_area": null,
+      "document_type": null,
+      "memory_usage_mb": 0.03125,
+      "cpu_usage_percent": null,
+      "concurrent_operations": 1,
+      "request_size_bytes": null,
+      "response_size_bytes": null,
+      "context_length": null,
+      "temperature_used": null,
+      "daily_budget_used_percent": null,
+      "monthly_budget_used_percent": null,
+      "compliance_level": "standard",
+      "user_id": null,
+      "project_id": null,
+      "experiment_id": null,
+      "metadata": {},
+      "tags": [],
+      "quality_operation_stage": "validation",
+      "quality_validation_type": "factual_accuracy",
+      "quality_assessment_method": "document_verification",
+      "quality_score": 82.3,
+      "relevance_score": null,
+      "factual_accuracy_score": 82.3,
+      "completeness_score": null,
+      "clarity_score": null,
+      "confidence_score": 88.5,
+      "claims_extracted": 8,
+      "claims_validated": 7,
+      "evidence_items_processed": 25,
+      "biomedical_terms_identified": 0,
+      "citations_found": 0,
+      "validation_passed": true,
+      "validation_confidence": 88.5,
+      "quality_flags": [
+        "low_evidence_quality_claim_3"
+      ],
+      "quality_recommendations": [
+        "increase_evidence_threshold"
+      ],
+      "claim_extraction_time_ms": 101.22919082641602,
+      "validation_time_ms": 301.71990394592285,
+      "scoring_time_ms": null,
+      "integration_time_ms": null,
+      "quality_validation_cost_usd": 0.01,
+      "cost_per_quality_point": null,
+      "cost_effectiveness_ratio": null,
+      "timestamp_iso": "2025-08-07T20:58:10.441518+00:00"
+    },
+    {
+      "id": "7f4f9c48-0f12-49a7-8262-c0b82c876b7e",
+      "timestamp": 1754600290.845639,
+      "session_id": "255b06fe-8d33-4c52-adeb-5ecbf6d52f59",
+      "metric_type": "integrated_quality_workflow",
+      "operation_name": "comprehensive_quality_assessment",
+      "model_name": "gpt-4",
+      "api_provider": "openai",
+      "endpoint_used": null,
+      "prompt_tokens": 680,
+      "completion_tokens": 120,
+      "embedding_tokens": 0,
+      "total_tokens": 800,
+      "cost_usd": 0.028,
+      "cost_per_token": null,
+      "response_time_ms": 501.4529228210449,
+      "queue_time_ms": null,
+      "processing_time_ms": null,
+      "throughput_tokens_per_sec": null,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "retry_count": 0,
+      "final_attempt": true,
+      "research_category": "comprehensive_quality_validation",
+      "query_type": null,
+      "subject_area": null,
+      "document_type": null,
+      "memory_usage_mb": null,
+      "cpu_usage_percent": null,
+      "concurrent_operations": 1,
+      "request_size_bytes": null,
+      "response_size_bytes": null,
+      "context_length": null,
+      "temperature_used": null,
+      "daily_budget_used_percent": null,
+      "monthly_budget_used_percent": null,
+      "compliance_level": "standard",
+      "user_id": null,
+      "project_id": null,
+      "experiment_id": null,
+      "metadata": {
+        "components": [
+          "relevance",
+          "factual_accuracy",
+          "completeness",
+          "clarity"
+        ],
+        "component_count": 4,
+        "workflow_version": "v2.1",
+        "parallel_processing": true,
+        "component_results": {
+          "relevance": 87.5,
+          "factual_accuracy": 82.3,
+          "completeness": 79.1,
+          "clarity": 85.7
+        },
+        "component_costs": {
+          "relevance": 0.008,
+          "factual_accuracy": 0.01,
+          "completeness": 0.006,
+          "clarity": 0.004
+        }
+      },
+      "tags": [],
+      "quality_operation_stage": "workflow",
+      "quality_validation_type": "integrated",
+      "quality_assessment_method": "weighted_harmonic_mean",
+      "quality_score": 83.7,
+      "relevance_score": 87.5,
+      "factual_accuracy_score": 82.3,
+      "completeness_score": 79.1,
+      "clarity_score": 85.7,
+      "confidence_score": 89.2,
+      "claims_extracted": 0,
+      "claims_validated": 0,
+      "evidence_items_processed": 0,
+      "biomedical_terms_identified": 0,
+      "citations_found": 0,
+      "validation_passed": true,
+      "validation_confidence": null,
+      "quality_flags": [],
+      "quality_recommendations": [],
+      "claim_extraction_time_ms": null,
+      "validation_time_ms": null,
+      "scoring_time_ms": null,
+      "integration_time_ms": null,
+      "quality_validation_cost_usd": 0.028,
+      "cost_per_quality_point": null,
+      "cost_effectiveness_ratio": null,
+      "timestamp_iso": "2025-08-07T20:58:10.845639+00:00"
+    },
+    {
+      "id": "5289ada3-6c9c-42ab-ad6a-4cbe5490d6aa",
+      "timestamp": 1754600291.3478599,
+      "session_id": "255b06fe-8d33-4c52-adeb-5ecbf6d52f59",
+      "metric_type": "quality_validation",
+      "operation_name": "batch_batch_manuscript_validation",
+      "model_name": null,
+      "api_provider": "openai",
+      "endpoint_used": null,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "embedding_tokens": 0,
+      "total_tokens": 3500,
+      "cost_usd": 0.15,
+      "cost_per_token": null,
+      "response_time_ms": 4500,
+      "queue_time_ms": null,
+      "processing_time_ms": null,
+      "throughput_tokens_per_sec": null,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "retry_count": 0,
+      "final_attempt": true,
+      "research_category": "manuscript_quality_assessment",
+      "query_type": null,
+      "subject_area": null,
+      "document_type": null,
+      "memory_usage_mb": null,
+      "cpu_usage_percent": null,
+      "concurrent_operations": 1,
+      "request_size_bytes": null,
+      "response_size_bytes": null,
+      "context_length": null,
+      "temperature_used": null,
+      "daily_budget_used_percent": null,
+      "monthly_budget_used_percent": null,
+      "compliance_level": "standard",
+      "user_id": null,
+      "project_id": null,
+      "experiment_id": null,
+      "metadata": {
+        "batch_type": "research_papers",
+        "parallel_workers": 4,
+        "retry_failed": true,
+        "batch_size": 20,
+        "success_count": 20,
+        "validation_passed_count": 18,
+        "error_count": 0,
+        "success_rate": 1.0,
+        "validation_success_rate": 0.9
+      },
+      "tags": [],
+      "quality_operation_stage": "batch_processing",
+      "quality_validation_type": "comprehensive",
+      "quality_assessment_method": null,
+      "quality_score": 81.2,
+      "relevance_score": null,
+      "factual_accuracy_score": null,
+      "completeness_score": null,
+      "clarity_score": null,
+      "confidence_score": null,
+      "claims_extracted": 0,
+      "claims_validated": 0,
+      "evidence_items_processed": 0,
+      "biomedical_terms_identified": 0,
+      "citations_found": 0,
+      "validation_passed": false,
+      "validation_confidence": null,
+      "quality_flags": [],
+      "quality_recommendations": [],
+      "claim_extraction_time_ms": null,
+      "validation_time_ms": null,
+      "scoring_time_ms": null,
+      "integration_time_ms": null,
+      "quality_validation_cost_usd": 0.12,
+      "cost_per_quality_point": 0.0014778325123152708,
+      "cost_effectiveness_ratio": 676.6666666666667,
+      "timestamp_iso": "2025-08-07T20:58:11.347860+00:00"
+    }
+  ]
+}

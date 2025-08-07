@@ -1,0 +1,39 @@
+{
+  "test_execution_summary": {
+    "timestamp": 1754600256.434314,
+    "total_modules": 4,
+    "discovered_tests": {
+      "test_quality_performance_benchmarks": [],
+      "test_performance_correlation_engine": [],
+      "test_quality_aware_metrics_logger": [],
+      "test_quality_performance_reporter": []
+    },
+    "total_discovered_tests": 0
+  },
+  "test_results": {
+    "unit_tests": {
+      "execution_time_seconds": 2.6252591609954834,
+      "exit_code": 4,
+      "success": false,
+      "modules_tested": [
+        "test_quality_performance_benchmarks",
+        "test_performance_correlation_engine",
+        "test_quality_aware_metrics_logger",
+        "test_quality_performance_reporter"
+      ],
+      "timestamp": 1754600254.059584
+    }
+  },
+  "environment_info": {
+    "python_version": "3.13.5 (main, Jun 11 2025, 15:36:57) [Clang 17.0.0 (clang-1700.0.13.3)]",
+    "platform": "darwin",
+    "working_directory": "/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/performance_benchmarking",
+    "output_directory": "test_reports"
+  },
+  "overall_statistics": {
+    "total_execution_time": 2.6252591609954834,
+    "all_tests_passed": false,
+    "total_test_suites": 1,
+    "successful_test_suites": 0
+  }
+}

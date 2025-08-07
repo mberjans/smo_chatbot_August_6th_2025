@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quality Validation Metrics Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { background-color: #f0f0f0; padding: 20px; border-radius: 5px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .metric { margin: 10px 0; padding: 8px; background-color: #f9f9f9; }
+        .success { color: green; }
+        .warning { color: orange; }
+        .error { color: red; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .json-data { background-color: #f5f5f5; padding: 10px; border-radius: 3px; font-family: monospace; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Quality Validation Metrics Report</h1>
+        <p>Generated: 2025-08-07T20:58:11.357267+00:00</p>
+        <p>Session ID: 255b06fe-8d33-4c52-adeb-5ecbf6d52f59</p>
+    </div>
+    
+    <div class="section">
+        <h2>Session Summary</h2>
+        <div class="json-data">{
+  "total_quality_operations": 3,
+  "quality_validation_cost": 0.046,
+  "average_quality_score": 84.5,
+  "validation_success_rate": 0.0
+}</div>
+    </div>
+    
+    <div class="section">
+        <h2>Quality Performance Analysis</h2>
+        <div class="json-data">{
+  "session_id": "255b06fe-8d33-4c52-adeb-5ecbf6d52f59",
+  "uptime_seconds": 1.1189091205596924,
+  "total_operations": 2,
+  "quality_validation": {
+    "session_stats": {
+      "total_quality_operations": 3,
+      "quality_validation_cost": 0.046,
+      "average_quality_score": 84.5,
+      "validation_success_rate": 0.0
+    },
+    "active_quality_operations": 0,
+    "quality_validation_summary": {
+      "relevance": {
+        "total_operations": 1.0,
+        "average_quality_score": 87.5,
+        "success_rate_percent": 100.0,
+        "average_cost_usd": 0.008,
+        "total_cost_usd": 0.008
+      },
+      "factual_accuracy": {
+        "total_operations": 1.0,
+        "average_quality_score": 82.3,
+        "success_rate_percent": 100.0,
+        "average_cost_usd": 0.01,
+        "total_cost_usd": 0.01
+      },
+      "integrated": {
+        "total_operations": 1.0,
+        "average_quality_score": 83.7,
+        "success_rate_percent": 100.0,
+        "average_cost_usd": 0.028,
+        "total_cost_usd": 0.028
+      },
+      "comprehensive": {
+        "total_operations": 1.0,
+        "average_quality_score": 81.2,
+        "success_rate_percent": 0.0,
+        "average_cost_usd": 0.12,
+        "total_cost_usd": 0.12
+      }
+    },
+    "operation_stage_performance": {
+      "scoring": {
+        "total_operations": 1.0,
+        "average_time_ms": 201.36,
+        "average_cost_usd": 0.008,
+        "total_cost_usd": 0.008
+      },
+      "validation": {
+        "total_operations": 1.0,
+        "average_time_ms": 403.1,
+        "average_cost_usd": 0.01,
+        "total_cost_usd": 0.01,
+        "average_claims_validated": 7.0,
+        "average_evidence_processed": 25.0
+      },
+      "workflow": {
+        "total_operations": 1.0,
+        "average_time_ms": 501.45,
+        "average_cost_usd": 0.028,
+        "total_cost_usd": 0.028
+      },
+      "batch_processing": {
+        "total_operations": 1.0,
+        "average_time_ms": 4500.0,
+        "average_cost_usd": 0.12,
+        "total_cost_usd": 0.12
+      }
+    },
+    "quality_trends": {
+      "quality_score": {
+        "current_value": 81.2,
+        "average": 83.67,
+        "median": 83.0,
+        "std_deviation": 2.75,
+        "min_value": 81.2,
+        "max_value": 87.5,
+        "sample_size": 4
+      },
+      "confidence_score": {
+        "current_value": 89.2,
+        "average": 89.9,
+        "median": 89.2,
+        "std_deviation": 1.85,
+        "min_value": 88.5,
+        "max_value": 92.0,
+        "sample_size": 3
+      },
+      "cost_effectiveness": {
+        "current_value": 676.6666666666667,
+        "average": 676.67,
+        "median": 676.67,
+        "std_deviation": 0,
+        "min_value": 676.6666666666667,
+        "max_value": 676.6666666666667,
+        "sample_size": 1
+      }
+    },
+    "cost_analysis": {
+      "total_quality_validation_cost_usd": 0.166,
+      "daily_costs": {
+        "2025-08-07": 0.166
+      },
+      "today_cost_usd": 0.166,
+      "average_daily_cost_usd": 0.166,
+      "cost_trend": "stable",
+      "cost_tracking_days": 1
+    },
+    "validation_success_rates": {
+      "relevance": {
+        "success_rate_percent": 100.0,
+        "successful_validations": 1,
+        "total_validations": 1,
+        "recent_success_rate": 100.0
+      },
+      "factual_accuracy": {
+        "success_rate_percent": 100.0,
+        "successful_validations": 1,
+        "total_validations": 1,
+        "recent_success_rate": 100.0
+      },
+      "integrated": {
+        "success_rate_percent": 100.0,
+        "successful_validations": 1,
+        "total_validations": 1,
+        "recent_success_rate": 100.0
+      },
+      "comprehensive": {
+        "success_rate_percent": 0.0,
+        "successful_validations": 0,
+        "total_validations": 1,
+        "recent_success_rate": 0.0
+      }
+    },
+    "quality_benchmarks": {
+      "overall_grade": "good",
+      "average_quality_score": 83.67,
+      "quality_distribution": {
+        "excellent": 0,
+        "good": 4,
+        "acceptable": 0,
+        "poor": 0
+      },
+      "quality_distribution_percent": {
+        "excellent": 0.0,
+        "good": 100.0,
+        "acceptable": 0.0,
+        "poor": 0.0
+      },
+      "benchmarks": {
+        "excellent_threshold": 90.0,
+        "good_threshold": 80.0,
+        "acceptable_threshold": 70.0,
+        "poor_threshold": 60.0
+      }
+    },
+    "recommendations": [
+      "comprehensive validation has low success rate (0.0%). Consider reviewing validation criteria or improving input quality."
+    ]
+  }
+}</div>
+    </div>
+    
+    <div class="section">
+        <h2>Detailed Analysis</h2>
+        <div class="json-data">{
+  "quality_validation_summary": {
+    "relevance": {
+      "total_operations": 1.0,
+      "average_quality_score": 87.5,
+      "success_rate_percent": 100.0,
+      "average_cost_usd": 0.008,
+      "total_cost_usd": 0.008
+    },
+    "factual_accuracy": {
+      "total_operations": 1.0,
+      "average_quality_score": 82.3,
+      "success_rate_percent": 100.0,
+      "average_cost_usd": 0.01,
+      "total_cost_usd": 0.01
+    },
+    "integrated": {
+      "total_operations": 1.0,
+      "average_quality_score": 83.7,
+      "success_rate_percent": 100.0,
+      "average_cost_usd": 0.028,
+      "total_cost_usd": 0.028
+    },
+    "comprehensive": {
+      "total_operations": 1.0,
+      "average_quality_score": 81.2,
+      "success_rate_percent": 0.0,
+      "average_cost_usd": 0.12,
+      "total_cost_usd": 0.12
+    }
+  },
+  "operation_stage_performance": {
+    "scoring": {
+      "total_operations": 1.0,
+      "average_time_ms": 201.36,
+      "average_cost_usd": 0.008,
+      "total_cost_usd": 0.008
+    },
+    "validation": {
+      "total_operations": 1.0,
+      "average_time_ms": 403.1,
+      "average_cost_usd": 0.01,
+      "total_cost_usd": 0.01,
+      "average_claims_validated": 7.0,
+      "average_evidence_processed": 25.0
+    },
+    "workflow": {
+      "total_operations": 1.0,
+      "average_time_ms": 501.45,
+      "average_cost_usd": 0.028,
+      "total_cost_usd": 0.028
+    },
+    "batch_processing": {
+      "total_operations": 1.0,
+      "average_time_ms": 4500.0,
+      "average_cost_usd": 0.12,
+      "total_cost_usd": 0.12
+    }
+  },
+  "quality_trends": {
+    "quality_score": {
+      "current_value": 81.2,
+      "average": 83.67,
+      "median": 83.0,
+      "std_deviation": 2.75,
+      "min_value": 81.2,
+      "max_value": 87.5,
+      "sample_size": 4
+    },
+    "confidence_score": {
+      "current_value": 89.2,
+      "average": 89.9,
+      "median": 89.2,
+      "std_deviation": 1.85,
+      "min_value": 88.5,
+      "max_value": 92.0,
+      "sample_size": 3
+    },
+    "cost_effectiveness": {
+      "current_value": 676.6666666666667,
+      "average": 676.67,
+      "median": 676.67,
+      "std_deviation": 0,
+      "min_value": 676.6666666666667,
+      "max_value": 676.6666666666667,
+      "sample_size": 1
+    }
+  },
+  "cost_analysis": {
+    "total_quality_validation_cost_usd": 0.166,
+    "daily_costs": {
+      "2025-08-07": 0.166
+    },
+    "today_cost_usd": 0.166,
+    "average_daily_cost_usd": 0.166,
+    "cost_trend": "stable",
+    "cost_tracking_days": 1
+  },
+  "validation_success_rates": {
+    "relevance": {
+      "success_rate_percent": 100.0,
+      "successful_validations": 1,
+      "total_validations": 1,
+      "recent_success_rate": 100.0
+    },
+    "factual_accuracy": {
+      "success_rate_percent": 100.0,
+      "successful_validations": 1,
+      "total_validations": 1,
+      "recent_success_rate": 100.0
+    },
+    "integrated": {
+      "success_rate_percent": 100.0,
+      "successful_validations": 1,
+      "total_validations": 1,
+      "recent_success_rate": 100.0
+    },
+    "comprehensive": {
+      "success_rate_percent": 0.0,
+      "successful_validations": 0,
+      "total_validations": 1,
+      "recent_success_rate": 0.0
+    }
+  },
+  "quality_benchmarks": {
+    "overall_grade": "good",
+    "average_quality_score": 83.67,
+    "quality_distribution": {
+      "excellent": 0,
+      "good": 4,
+      "acceptable": 0,
+      "poor": 0
+    },
+    "quality_distribution_percent": {
+      "excellent": 0.0,
+      "good": 100.0,
+      "acceptable": 0.0,
+      "poor": 0.0
+    },
+    "benchmarks": {
+      "excellent_threshold": 90.0,
+      "good_threshold": 80.0,
+      "acceptable_threshold": 70.0,
+      "poor_threshold": 60.0
+    }
+  },
+  "recommendations": [
+    "comprehensive validation has low success rate (0.0%). Consider reviewing validation criteria or improving input quality."
+  ]
+}</div>
+    </div>
+</body>
+</html>

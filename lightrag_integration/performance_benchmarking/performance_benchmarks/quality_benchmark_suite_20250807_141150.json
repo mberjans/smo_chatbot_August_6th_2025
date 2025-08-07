@@ -1,0 +1,1338 @@
+{
+  "suite_execution_summary": {
+    "execution_timestamp": "2025-08-07T14:11:50.065535",
+    "total_quality_benchmarks": 2,
+    "passed_benchmarks": 1,
+    "failed_benchmarks": 1,
+    "success_rate_percent": 50.0,
+    "benchmark_type": "quality_validation"
+  },
+  "overall_quality_statistics": {
+    "total_quality_operations": 45,
+    "total_claims_extracted": 135,
+    "total_claims_validated": 30,
+    "avg_quality_efficiency_score": 96.7125,
+    "avg_claim_extraction_time_ms": 150.0,
+    "avg_validation_time_ms": 400.0,
+    "avg_validation_accuracy_rate": 88.5,
+    "peak_validation_memory_mb": 0.0
+  },
+  "quality_benchmark_results": {
+    "factual_accuracy_validation_benchmark": {
+      "benchmark_name": "factual_accuracy_validation_benchmark",
+      "description": "Benchmark factual accuracy validation performance",
+      "scenario_results": [
+        {
+          "scenario_name": "baseline",
+          "quality_metrics": {
+            "scenario_name": "baseline",
+            "operations_count": 5,
+            "success_count": 5,
+            "failure_count": 0,
+            "error_count": 0,
+            "start_time": 1754597498.874828,
+            "end_time": 1754597500.9635751,
+            "duration_seconds": 2.0887413024902344,
+            "response_times": [
+              404.7820568084717,
+              401.43609046936035,
+              407.9928398132324,
+              404.5078754425049,
+              401.9949436187744
+            ],
+            "average_latency_ms": 404.14276123046875,
+            "p95_latency_ms": 407.9928398132324,
+            "throughput_ops_per_sec": 2.3937861496006763,
+            "error_rate_percent": 0.0,
+            "memory_usage_mb": 0.0,
+            "cpu_usage_percent": 0.0,
+            "claim_extraction_time_ms": 150.0,
+            "factual_validation_time_ms": 400.0,
+            "relevance_scoring_time_ms": 0.0,
+            "integrated_workflow_time_ms": 0.0,
+            "claims_extracted_count": 15,
+            "claims_validated_count": 10,
+            "validation_accuracy_rate": 88.5,
+            "relevance_scoring_accuracy": 85.2,
+            "claims_per_second": 7.18135844880203,
+            "validations_per_second": 4.7875722992013525,
+            "relevance_scores_per_second": 0.0,
+            "extraction_error_rate": 0.0,
+            "validation_error_rate": 0.0,
+            "scoring_error_rate": 0.0,
+            "peak_validation_memory_mb": 0.0,
+            "avg_validation_cpu_percent": 0.0,
+            "avg_validation_confidence": 82.0,
+            "avg_relevance_confidence": 79.5,
+            "consistency_score": 85.0
+          },
+          "assertion_results": {
+            "claim_extraction_time_ms": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_claim_extraction_time_ms",
+              "passed": true,
+              "measured_value": 150.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x1052f4f50>",
+              "message": "\u2713 claim_extraction_time_ms: 150.00 ms meets threshold (lte 2000 ms)",
+              "timestamp": 1754597500.963826,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "factual_validation_time_ms": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_factual_validation_time_ms",
+              "passed": true,
+              "measured_value": 400.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105277310>",
+              "message": "\u2713 factual_validation_time_ms: 400.00 ms meets threshold (lte 5000 ms)",
+              "timestamp": 1754597500.964003,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "relevance_scoring_time_ms": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_relevance_scoring_time_ms",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105277a10>",
+              "message": "\u2713 relevance_scoring_time_ms: 0.00 ms meets threshold (lte 1000 ms)",
+              "timestamp": 1754597500.964063,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "integrated_workflow_time_ms": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_integrated_workflow_time_ms",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x1052e28f0>",
+              "message": "\u2713 integrated_workflow_time_ms: 0.00 ms meets threshold (lte 10000 ms)",
+              "timestamp": 1754597500.964113,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validation_accuracy_rate": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_validation_accuracy_rate",
+              "passed": true,
+              "measured_value": 88.5,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105314d10>",
+              "message": "\u2713 validation_accuracy_rate: 88.50 % meets threshold (gte 85.0 %)",
+              "timestamp": 1754597500.964159,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "claims_per_second": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_claims_per_second",
+              "passed": true,
+              "measured_value": 7.18135844880203,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105314dd0>",
+              "message": "\u2713 claims_per_second: 7.18 ops/sec meets threshold (gte 5.0 ops/sec)",
+              "timestamp": 1754597500.964204,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validations_per_second": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_validations_per_second",
+              "passed": true,
+              "measured_value": 4.7875722992013525,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105242e60>",
+              "message": "\u2713 validations_per_second: 4.79 ops/sec meets threshold (gte 2.0 ops/sec)",
+              "timestamp": 1754597500.964246,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "extraction_error_rate": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_extraction_error_rate",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105242f10>",
+              "message": "\u2713 extraction_error_rate: 0.00 % meets threshold (lte 5.0 %)",
+              "timestamp": 1754597500.9642859,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validation_error_rate": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_validation_error_rate",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10532b6b0>",
+              "message": "\u2713 validation_error_rate: 0.00 % meets threshold (lte 3.0 %)",
+              "timestamp": 1754597500.964328,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "peak_validation_memory_mb": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_peak_validation_memory_mb",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10532b610>",
+              "message": "\u2713 peak_validation_memory_mb: 0.00 MB meets threshold (lte 1500 MB)",
+              "timestamp": 1754597500.964371,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "avg_validation_confidence": {
+              "assertion_name": "factual_accuracy_validation_benchmark_baseline_avg_validation_confidence",
+              "passed": true,
+              "measured_value": 82.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10522bd10>",
+              "message": "\u2713 avg_validation_confidence: 82.00 % meets threshold (gte 75.0 %)",
+              "timestamp": 1754597500.964415,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            }
+          },
+          "passed": true,
+          "benchmark_name": "factual_accuracy_validation_benchmark",
+          "quality_efficiency_score": 96.7125
+        },
+        {
+          "scenario_name": "light_load",
+          "quality_metrics": {
+            "scenario_name": "light_load",
+            "operations_count": 10,
+            "success_count": 10,
+            "failure_count": 0,
+            "error_count": 0,
+            "start_time": 1754597500.9650838,
+            "end_time": 1754597505.115317,
+            "duration_seconds": 4.150198221206665,
+            "response_times": [
+              401.87907218933105,
+              402.7419090270996,
+              401.80397033691406,
+              401.53002738952637,
+              407.39989280700684,
+              405.8668613433838,
+              401.78894996643066,
+              404.5438766479492,
+              407.8240394592285,
+              403.9011001586914
+            ],
+            "average_latency_ms": 403.92796993255615,
+            "p95_latency_ms": 407.8240394592285,
+            "throughput_ops_per_sec": 2.409523465385832,
+            "error_rate_percent": 0.0,
+            "memory_usage_mb": 0.0,
+            "cpu_usage_percent": 0.0,
+            "claim_extraction_time_ms": 150.0,
+            "factual_validation_time_ms": 400.0,
+            "relevance_scoring_time_ms": 0.0,
+            "integrated_workflow_time_ms": 0.0,
+            "claims_extracted_count": 30,
+            "claims_validated_count": 20,
+            "validation_accuracy_rate": 88.5,
+            "relevance_scoring_accuracy": 85.2,
+            "claims_per_second": 7.2285703961574965,
+            "validations_per_second": 4.819046930771664,
+            "relevance_scores_per_second": 0.0,
+            "extraction_error_rate": 0.0,
+            "validation_error_rate": 0.0,
+            "scoring_error_rate": 0.0,
+            "peak_validation_memory_mb": 0.0,
+            "avg_validation_cpu_percent": 0.0,
+            "avg_validation_confidence": 82.0,
+            "avg_relevance_confidence": 79.5,
+            "consistency_score": 85.0
+          },
+          "assertion_results": {
+            "claim_extraction_time_ms": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_claim_extraction_time_ms",
+              "passed": true,
+              "measured_value": 150.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105349850>",
+              "message": "\u2713 claim_extraction_time_ms: 150.00 ms meets threshold (lte 2000 ms)",
+              "timestamp": 1754597505.11549,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "factual_validation_time_ms": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_factual_validation_time_ms",
+              "passed": true,
+              "measured_value": 400.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105349a50>",
+              "message": "\u2713 factual_validation_time_ms: 400.00 ms meets threshold (lte 5000 ms)",
+              "timestamp": 1754597505.1156301,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "relevance_scoring_time_ms": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_relevance_scoring_time_ms",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105349bd0>",
+              "message": "\u2713 relevance_scoring_time_ms: 0.00 ms meets threshold (lte 1000 ms)",
+              "timestamp": 1754597505.115674,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "integrated_workflow_time_ms": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_integrated_workflow_time_ms",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105349d50>",
+              "message": "\u2713 integrated_workflow_time_ms: 0.00 ms meets threshold (lte 10000 ms)",
+              "timestamp": 1754597505.1157131,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validation_accuracy_rate": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_validation_accuracy_rate",
+              "passed": true,
+              "measured_value": 88.5,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105349ed0>",
+              "message": "\u2713 validation_accuracy_rate: 88.50 % meets threshold (gte 85.0 %)",
+              "timestamp": 1754597505.1157498,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "claims_per_second": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_claims_per_second",
+              "passed": true,
+              "measured_value": 7.2285703961574965,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534a050>",
+              "message": "\u2713 claims_per_second: 7.23 ops/sec meets threshold (gte 5.0 ops/sec)",
+              "timestamp": 1754597505.1157901,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validations_per_second": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_validations_per_second",
+              "passed": true,
+              "measured_value": 4.819046930771664,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534a1d0>",
+              "message": "\u2713 validations_per_second: 4.82 ops/sec meets threshold (gte 2.0 ops/sec)",
+              "timestamp": 1754597505.115826,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "extraction_error_rate": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_extraction_error_rate",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534a2d0>",
+              "message": "\u2713 extraction_error_rate: 0.00 % meets threshold (lte 5.0 %)",
+              "timestamp": 1754597505.115864,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validation_error_rate": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_validation_error_rate",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534a450>",
+              "message": "\u2713 validation_error_rate: 0.00 % meets threshold (lte 3.0 %)",
+              "timestamp": 1754597505.115901,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "peak_validation_memory_mb": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_peak_validation_memory_mb",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534a5d0>",
+              "message": "\u2713 peak_validation_memory_mb: 0.00 MB meets threshold (lte 1500 MB)",
+              "timestamp": 1754597505.115938,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "avg_validation_confidence": {
+              "assertion_name": "factual_accuracy_validation_benchmark_light_load_avg_validation_confidence",
+              "passed": true,
+              "measured_value": 82.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534a750>",
+              "message": "\u2713 avg_validation_confidence: 82.00 % meets threshold (gte 75.0 %)",
+              "timestamp": 1754597505.115977,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            }
+          },
+          "passed": true,
+          "benchmark_name": "factual_accuracy_validation_benchmark",
+          "quality_efficiency_score": 96.7125
+        }
+      ],
+      "scenario_quality_metrics": [
+        "QualityValidationMetrics(scenario_name='baseline', operations_count=5, success_count=5, failure_count=0, error_count=0, start_time=1754597498.874828, end_time=1754597500.9635751, duration_seconds=2.0887413024902344, response_times=[404.7820568084717, 401.43609046936035, 407.9928398132324, 404.5078754425049, 401.9949436187744], average_latency_ms=404.14276123046875, p95_latency_ms=407.9928398132324, throughput_ops_per_sec=2.3937861496006763, error_rate_percent=0.0, memory_usage_mb=0.0, cpu_usage_percent=0.0, claim_extraction_time_ms=150.0, factual_validation_time_ms=400.0, relevance_scoring_time_ms=0.0, integrated_workflow_time_ms=0.0, claims_extracted_count=15, claims_validated_count=10, validation_accuracy_rate=88.5, relevance_scoring_accuracy=85.2, claims_per_second=7.18135844880203, validations_per_second=4.7875722992013525, relevance_scores_per_second=0.0, extraction_error_rate=0.0, validation_error_rate=0.0, scoring_error_rate=0.0, peak_validation_memory_mb=0.0, avg_validation_cpu_percent=0.0, avg_validation_confidence=82.0, avg_relevance_confidence=79.5, consistency_score=85.0)",
+        "QualityValidationMetrics(scenario_name='light_load', operations_count=10, success_count=10, failure_count=0, error_count=0, start_time=1754597500.9650838, end_time=1754597505.115317, duration_seconds=4.150198221206665, response_times=[401.87907218933105, 402.7419090270996, 401.80397033691406, 401.53002738952637, 407.39989280700684, 405.8668613433838, 401.78894996643066, 404.5438766479492, 407.8240394592285, 403.9011001586914], average_latency_ms=403.92796993255615, p95_latency_ms=407.8240394592285, throughput_ops_per_sec=2.409523465385832, error_rate_percent=0.0, memory_usage_mb=0.0, cpu_usage_percent=0.0, claim_extraction_time_ms=150.0, factual_validation_time_ms=400.0, relevance_scoring_time_ms=0.0, integrated_workflow_time_ms=0.0, claims_extracted_count=30, claims_validated_count=20, validation_accuracy_rate=88.5, relevance_scoring_accuracy=85.2, claims_per_second=7.2285703961574965, validations_per_second=4.819046930771664, relevance_scores_per_second=0.0, extraction_error_rate=0.0, validation_error_rate=0.0, scoring_error_rate=0.0, peak_validation_memory_mb=0.0, avg_validation_cpu_percent=0.0, avg_validation_confidence=82.0, avg_relevance_confidence=79.5, consistency_score=85.0)"
+      ],
+      "passed": true,
+      "execution_timestamp": "2025-08-07T14:11:45.116433"
+    },
+    "relevance_scoring_benchmark": {
+      "benchmark_name": "relevance_scoring_benchmark",
+      "description": "Benchmark relevance scoring performance",
+      "scenario_results": [
+        {
+          "scenario_name": "light_load",
+          "quality_metrics": {
+            "scenario_name": "light_load",
+            "operations_count": 10,
+            "success_count": 10,
+            "failure_count": 0,
+            "error_count": 0,
+            "start_time": 1754597505.116521,
+            "end_time": 1754597506.759959,
+            "duration_seconds": 1.64341402053833,
+            "response_times": [
+              151.84783935546875,
+              152.04691886901855,
+              152.9250144958496,
+              153.4721851348877,
+              152.10580825805664,
+              150.9871482849121,
+              152.08005905151367,
+              152.85301208496094,
+              152.9989242553711,
+              152.50802040100098
+            ],
+            "average_latency_ms": 152.382493019104,
+            "p95_latency_ms": 153.4721851348877,
+            "throughput_ops_per_sec": 6.084893931186201,
+            "error_rate_percent": 0.0,
+            "memory_usage_mb": 0.0,
+            "cpu_usage_percent": 0.0,
+            "claim_extraction_time_ms": 150.0,
+            "factual_validation_time_ms": 0.0,
+            "relevance_scoring_time_ms": 80.0,
+            "integrated_workflow_time_ms": 0.0,
+            "claims_extracted_count": 30,
+            "claims_validated_count": 0,
+            "validation_accuracy_rate": 88.5,
+            "relevance_scoring_accuracy": 85.2,
+            "claims_per_second": 18.254681793558603,
+            "validations_per_second": 0.0,
+            "relevance_scores_per_second": 0.0,
+            "extraction_error_rate": 0.0,
+            "validation_error_rate": 0.0,
+            "scoring_error_rate": 0.0,
+            "peak_validation_memory_mb": 0.0,
+            "avg_validation_cpu_percent": 0.0,
+            "avg_validation_confidence": 82.0,
+            "avg_relevance_confidence": 79.5,
+            "consistency_score": 85.0
+          },
+          "assertion_results": {
+            "claim_extraction_time_ms": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_claim_extraction_time_ms",
+              "passed": true,
+              "measured_value": 150.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534afd0>",
+              "message": "\u2713 claim_extraction_time_ms: 150.00 ms meets threshold (lte 2000 ms)",
+              "timestamp": 1754597506.760179,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "factual_validation_time_ms": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_factual_validation_time_ms",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534b1d0>",
+              "message": "\u2713 factual_validation_time_ms: 0.00 ms meets threshold (lte 5000 ms)",
+              "timestamp": 1754597506.7604082,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "relevance_scoring_time_ms": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_relevance_scoring_time_ms",
+              "passed": true,
+              "measured_value": 80.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534b350>",
+              "message": "\u2713 relevance_scoring_time_ms: 80.00 ms meets threshold (lte 1000 ms)",
+              "timestamp": 1754597506.760501,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "integrated_workflow_time_ms": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_integrated_workflow_time_ms",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534b4d0>",
+              "message": "\u2713 integrated_workflow_time_ms: 0.00 ms meets threshold (lte 10000 ms)",
+              "timestamp": 1754597506.7605891,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validation_accuracy_rate": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_validation_accuracy_rate",
+              "passed": true,
+              "measured_value": 88.5,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534b650>",
+              "message": "\u2713 validation_accuracy_rate: 88.50 % meets threshold (gte 85.0 %)",
+              "timestamp": 1754597506.7606678,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "claims_per_second": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_claims_per_second",
+              "passed": true,
+              "measured_value": 18.254681793558603,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534b7d0>",
+              "message": "\u2713 claims_per_second: 18.25 ops/sec meets threshold (gte 5.0 ops/sec)",
+              "timestamp": 1754597506.760742,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validations_per_second": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_validations_per_second",
+              "passed": false,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534b950>",
+              "message": "\u2717 validations_per_second: 0.00 ops/sec fails threshold (gte 2.0 ops/sec) - Should validate at least 2 claims per second",
+              "timestamp": 1754597506.760822,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "extraction_error_rate": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_extraction_error_rate",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534ba50>",
+              "message": "\u2713 extraction_error_rate: 0.00 % meets threshold (lte 5.0 %)",
+              "timestamp": 1754597506.760917,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validation_error_rate": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_validation_error_rate",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534bbd0>",
+              "message": "\u2713 validation_error_rate: 0.00 % meets threshold (lte 3.0 %)",
+              "timestamp": 1754597506.760988,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "peak_validation_memory_mb": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_peak_validation_memory_mb",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534bd50>",
+              "message": "\u2713 peak_validation_memory_mb: 0.00 MB meets threshold (lte 1500 MB)",
+              "timestamp": 1754597506.7610571,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "avg_validation_confidence": {
+              "assertion_name": "relevance_scoring_benchmark_light_load_avg_validation_confidence",
+              "passed": true,
+              "measured_value": 82.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x10534bed0>",
+              "message": "\u2713 avg_validation_confidence: 82.00 % meets threshold (gte 75.0 %)",
+              "timestamp": 1754597506.761128,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            }
+          },
+          "passed": false,
+          "benchmark_name": "relevance_scoring_benchmark",
+          "quality_efficiency_score": 96.7125
+        },
+        {
+          "scenario_name": "moderate_load",
+          "quality_metrics": {
+            "scenario_name": "moderate_load",
+            "operations_count": 20,
+            "success_count": 20,
+            "failure_count": 0,
+            "error_count": 0,
+            "start_time": 1754597506.7620428,
+            "end_time": 1754597510.063651,
+            "duration_seconds": 3.3015851974487305,
+            "response_times": [
+              151.993989944458,
+              156.6159725189209,
+              159.76905822753906,
+              152.48394012451172,
+              152.67205238342285,
+              152.51421928405762,
+              152.67109870910645,
+              151.63493156433105,
+              153.33199501037598,
+              157.0901870727539,
+              156.50606155395508,
+              151.51619911193848,
+              155.9760570526123,
+              151.7190933227539,
+              153.1369686126709,
+              152.20880508422852,
+              154.70123291015625,
+              152.1322727203369,
+              153.07211875915527,
+              152.32110023498535
+            ],
+            "average_latency_ms": 153.70336771011353,
+            "p95_latency_ms": 159.76905822753906,
+            "throughput_ops_per_sec": 6.057696168329933,
+            "error_rate_percent": 0.0,
+            "memory_usage_mb": 0.0,
+            "cpu_usage_percent": 0.0,
+            "claim_extraction_time_ms": 150.0,
+            "factual_validation_time_ms": 0.0,
+            "relevance_scoring_time_ms": 80.0,
+            "integrated_workflow_time_ms": 0.0,
+            "claims_extracted_count": 60,
+            "claims_validated_count": 0,
+            "validation_accuracy_rate": 88.5,
+            "relevance_scoring_accuracy": 85.2,
+            "claims_per_second": 18.1730885049898,
+            "validations_per_second": 0.0,
+            "relevance_scores_per_second": 0.0,
+            "extraction_error_rate": 0.0,
+            "validation_error_rate": 0.0,
+            "scoring_error_rate": 0.0,
+            "peak_validation_memory_mb": 0.0,
+            "avg_validation_cpu_percent": 0.0,
+            "avg_validation_confidence": 82.0,
+            "avg_relevance_confidence": 79.5,
+            "consistency_score": 85.0
+          },
+          "assertion_results": {
+            "claim_extraction_time_ms": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_claim_extraction_time_ms",
+              "passed": true,
+              "measured_value": 150.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105334650>",
+              "message": "\u2713 claim_extraction_time_ms: 150.00 ms meets threshold (lte 2000 ms)",
+              "timestamp": 1754597510.0639439,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "factual_validation_time_ms": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_factual_validation_time_ms",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105334850>",
+              "message": "\u2713 factual_validation_time_ms: 0.00 ms meets threshold (lte 5000 ms)",
+              "timestamp": 1754597510.0642838,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "relevance_scoring_time_ms": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_relevance_scoring_time_ms",
+              "passed": true,
+              "measured_value": 80.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053349d0>",
+              "message": "\u2713 relevance_scoring_time_ms: 80.00 ms meets threshold (lte 1000 ms)",
+              "timestamp": 1754597510.0643342,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "integrated_workflow_time_ms": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_integrated_workflow_time_ms",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105334b50>",
+              "message": "\u2713 integrated_workflow_time_ms: 0.00 ms meets threshold (lte 10000 ms)",
+              "timestamp": 1754597510.064377,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validation_accuracy_rate": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_validation_accuracy_rate",
+              "passed": true,
+              "measured_value": 88.5,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105334cd0>",
+              "message": "\u2713 validation_accuracy_rate: 88.50 % meets threshold (gte 85.0 %)",
+              "timestamp": 1754597510.064416,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "claims_per_second": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_claims_per_second",
+              "passed": true,
+              "measured_value": 18.1730885049898,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105334e50>",
+              "message": "\u2713 claims_per_second: 18.17 ops/sec meets threshold (gte 5.0 ops/sec)",
+              "timestamp": 1754597510.064458,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validations_per_second": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_validations_per_second",
+              "passed": false,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105334fd0>",
+              "message": "\u2717 validations_per_second: 0.00 ops/sec fails threshold (gte 2.0 ops/sec) - Should validate at least 2 claims per second",
+              "timestamp": 1754597510.064503,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "extraction_error_rate": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_extraction_error_rate",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053350d0>",
+              "message": "\u2713 extraction_error_rate: 0.00 % meets threshold (lte 5.0 %)",
+              "timestamp": 1754597510.0645492,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "validation_error_rate": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_validation_error_rate",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105335250>",
+              "message": "\u2713 validation_error_rate: 0.00 % meets threshold (lte 3.0 %)",
+              "timestamp": 1754597510.0646431,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "peak_validation_memory_mb": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_peak_validation_memory_mb",
+              "passed": true,
+              "measured_value": 0.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053353d0>",
+              "message": "\u2713 peak_validation_memory_mb: 0.00 MB meets threshold (lte 1500 MB)",
+              "timestamp": 1754597510.064678,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            },
+            "avg_validation_confidence": {
+              "assertion_name": "relevance_scoring_benchmark_moderate_load_avg_validation_confidence",
+              "passed": true,
+              "measured_value": 82.0,
+              "threshold": "<__main__.QualityPerformanceThreshold object at 0x105335550>",
+              "message": "\u2713 avg_validation_confidence: 82.00 % meets threshold (gte 75.0 %)",
+              "timestamp": 1754597510.0647209,
+              "duration_ms": null,
+              "additional_metrics": {
+                "quality_efficiency_score": 96.7125
+              }
+            }
+          },
+          "passed": false,
+          "benchmark_name": "relevance_scoring_benchmark",
+          "quality_efficiency_score": 96.7125
+        }
+      ],
+      "scenario_quality_metrics": [
+        "QualityValidationMetrics(scenario_name='light_load', operations_count=10, success_count=10, failure_count=0, error_count=0, start_time=1754597505.116521, end_time=1754597506.759959, duration_seconds=1.64341402053833, response_times=[151.84783935546875, 152.04691886901855, 152.9250144958496, 153.4721851348877, 152.10580825805664, 150.9871482849121, 152.08005905151367, 152.85301208496094, 152.9989242553711, 152.50802040100098], average_latency_ms=152.382493019104, p95_latency_ms=153.4721851348877, throughput_ops_per_sec=6.084893931186201, error_rate_percent=0.0, memory_usage_mb=0.0, cpu_usage_percent=0.0, claim_extraction_time_ms=150.0, factual_validation_time_ms=0.0, relevance_scoring_time_ms=80.0, integrated_workflow_time_ms=0.0, claims_extracted_count=30, claims_validated_count=0, validation_accuracy_rate=88.5, relevance_scoring_accuracy=85.2, claims_per_second=18.254681793558603, validations_per_second=0.0, relevance_scores_per_second=0.0, extraction_error_rate=0.0, validation_error_rate=0.0, scoring_error_rate=0.0, peak_validation_memory_mb=0.0, avg_validation_cpu_percent=0.0, avg_validation_confidence=82.0, avg_relevance_confidence=79.5, consistency_score=85.0)",
+        "QualityValidationMetrics(scenario_name='moderate_load', operations_count=20, success_count=20, failure_count=0, error_count=0, start_time=1754597506.7620428, end_time=1754597510.063651, duration_seconds=3.3015851974487305, response_times=[151.993989944458, 156.6159725189209, 159.76905822753906, 152.48394012451172, 152.67205238342285, 152.51421928405762, 152.67109870910645, 151.63493156433105, 153.33199501037598, 157.0901870727539, 156.50606155395508, 151.51619911193848, 155.9760570526123, 151.7190933227539, 153.1369686126709, 152.20880508422852, 154.70123291015625, 152.1322727203369, 153.07211875915527, 152.32110023498535], average_latency_ms=153.70336771011353, p95_latency_ms=159.76905822753906, throughput_ops_per_sec=6.057696168329933, error_rate_percent=0.0, memory_usage_mb=0.0, cpu_usage_percent=0.0, claim_extraction_time_ms=150.0, factual_validation_time_ms=0.0, relevance_scoring_time_ms=80.0, integrated_workflow_time_ms=0.0, claims_extracted_count=60, claims_validated_count=0, validation_accuracy_rate=88.5, relevance_scoring_accuracy=85.2, claims_per_second=18.1730885049898, validations_per_second=0.0, relevance_scores_per_second=0.0, extraction_error_rate=0.0, validation_error_rate=0.0, scoring_error_rate=0.0, peak_validation_memory_mb=0.0, avg_validation_cpu_percent=0.0, avg_validation_confidence=82.0, avg_relevance_confidence=79.5, consistency_score=85.0)"
+      ],
+      "passed": false,
+      "execution_timestamp": "2025-08-07T14:11:50.065358"
+    }
+  },
+  "assertion_summary": {
+    "total_assertions": 44,
+    "passed_assertions": 42,
+    "failed_assertions": 2,
+    "success_rate_percent": 95.45454545454545,
+    "assertions": [
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_claim_extraction_time_ms",
+        "passed": true,
+        "measured_value": 150.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053356d0>",
+        "message": "\u2713 claim_extraction_time_ms: 150.00 ms meets threshold (lte 2000 ms)",
+        "timestamp": 1754597500.963826,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_factual_validation_time_ms",
+        "passed": true,
+        "measured_value": 400.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105335850>",
+        "message": "\u2713 factual_validation_time_ms: 400.00 ms meets threshold (lte 5000 ms)",
+        "timestamp": 1754597500.964003,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_relevance_scoring_time_ms",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053359d0>",
+        "message": "\u2713 relevance_scoring_time_ms: 0.00 ms meets threshold (lte 1000 ms)",
+        "timestamp": 1754597500.964063,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_integrated_workflow_time_ms",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105335b50>",
+        "message": "\u2713 integrated_workflow_time_ms: 0.00 ms meets threshold (lte 10000 ms)",
+        "timestamp": 1754597500.964113,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_validation_accuracy_rate",
+        "passed": true,
+        "measured_value": 88.5,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105335cd0>",
+        "message": "\u2713 validation_accuracy_rate: 88.50 % meets threshold (gte 85.0 %)",
+        "timestamp": 1754597500.964159,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_claims_per_second",
+        "passed": true,
+        "measured_value": 7.18135844880203,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105335e50>",
+        "message": "\u2713 claims_per_second: 7.18 ops/sec meets threshold (gte 5.0 ops/sec)",
+        "timestamp": 1754597500.964204,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_validations_per_second",
+        "passed": true,
+        "measured_value": 4.7875722992013525,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105335fd0>",
+        "message": "\u2713 validations_per_second: 4.79 ops/sec meets threshold (gte 2.0 ops/sec)",
+        "timestamp": 1754597500.964246,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_extraction_error_rate",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105336150>",
+        "message": "\u2713 extraction_error_rate: 0.00 % meets threshold (lte 5.0 %)",
+        "timestamp": 1754597500.9642859,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_validation_error_rate",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053362d0>",
+        "message": "\u2713 validation_error_rate: 0.00 % meets threshold (lte 3.0 %)",
+        "timestamp": 1754597500.964328,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_peak_validation_memory_mb",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053364d0>",
+        "message": "\u2713 peak_validation_memory_mb: 0.00 MB meets threshold (lte 1500 MB)",
+        "timestamp": 1754597500.964371,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_baseline_avg_validation_confidence",
+        "passed": true,
+        "measured_value": 82.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105336650>",
+        "message": "\u2713 avg_validation_confidence: 82.00 % meets threshold (gte 75.0 %)",
+        "timestamp": 1754597500.964415,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_claim_extraction_time_ms",
+        "passed": true,
+        "measured_value": 150.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053367d0>",
+        "message": "\u2713 claim_extraction_time_ms: 150.00 ms meets threshold (lte 2000 ms)",
+        "timestamp": 1754597505.11549,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_factual_validation_time_ms",
+        "passed": true,
+        "measured_value": 400.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105336950>",
+        "message": "\u2713 factual_validation_time_ms: 400.00 ms meets threshold (lte 5000 ms)",
+        "timestamp": 1754597505.1156301,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_relevance_scoring_time_ms",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105336ad0>",
+        "message": "\u2713 relevance_scoring_time_ms: 0.00 ms meets threshold (lte 1000 ms)",
+        "timestamp": 1754597505.115674,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_integrated_workflow_time_ms",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105336c50>",
+        "message": "\u2713 integrated_workflow_time_ms: 0.00 ms meets threshold (lte 10000 ms)",
+        "timestamp": 1754597505.1157131,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_validation_accuracy_rate",
+        "passed": true,
+        "measured_value": 88.5,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105336dd0>",
+        "message": "\u2713 validation_accuracy_rate: 88.50 % meets threshold (gte 85.0 %)",
+        "timestamp": 1754597505.1157498,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_claims_per_second",
+        "passed": true,
+        "measured_value": 7.2285703961574965,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105336f50>",
+        "message": "\u2713 claims_per_second: 7.23 ops/sec meets threshold (gte 5.0 ops/sec)",
+        "timestamp": 1754597505.1157901,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_validations_per_second",
+        "passed": true,
+        "measured_value": 4.819046930771664,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105337050>",
+        "message": "\u2713 validations_per_second: 4.82 ops/sec meets threshold (gte 2.0 ops/sec)",
+        "timestamp": 1754597505.115826,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_extraction_error_rate",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053371d0>",
+        "message": "\u2713 extraction_error_rate: 0.00 % meets threshold (lte 5.0 %)",
+        "timestamp": 1754597505.115864,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_validation_error_rate",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105337350>",
+        "message": "\u2713 validation_error_rate: 0.00 % meets threshold (lte 3.0 %)",
+        "timestamp": 1754597505.115901,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_peak_validation_memory_mb",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053374d0>",
+        "message": "\u2713 peak_validation_memory_mb: 0.00 MB meets threshold (lte 1500 MB)",
+        "timestamp": 1754597505.115938,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "factual_accuracy_validation_benchmark_light_load_avg_validation_confidence",
+        "passed": true,
+        "measured_value": 82.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105337650>",
+        "message": "\u2713 avg_validation_confidence: 82.00 % meets threshold (gte 75.0 %)",
+        "timestamp": 1754597505.115977,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_claim_extraction_time_ms",
+        "passed": true,
+        "measured_value": 150.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053377d0>",
+        "message": "\u2713 claim_extraction_time_ms: 150.00 ms meets threshold (lte 2000 ms)",
+        "timestamp": 1754597506.760179,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_factual_validation_time_ms",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105337950>",
+        "message": "\u2713 factual_validation_time_ms: 0.00 ms meets threshold (lte 5000 ms)",
+        "timestamp": 1754597506.7604082,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_relevance_scoring_time_ms",
+        "passed": true,
+        "measured_value": 80.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105337ad0>",
+        "message": "\u2713 relevance_scoring_time_ms: 80.00 ms meets threshold (lte 1000 ms)",
+        "timestamp": 1754597506.760501,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_integrated_workflow_time_ms",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105337c50>",
+        "message": "\u2713 integrated_workflow_time_ms: 0.00 ms meets threshold (lte 10000 ms)",
+        "timestamp": 1754597506.7605891,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_validation_accuracy_rate",
+        "passed": true,
+        "measured_value": 88.5,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105337dd0>",
+        "message": "\u2713 validation_accuracy_rate: 88.50 % meets threshold (gte 85.0 %)",
+        "timestamp": 1754597506.7606678,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_claims_per_second",
+        "passed": true,
+        "measured_value": 18.254681793558603,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105337f50>",
+        "message": "\u2713 claims_per_second: 18.25 ops/sec meets threshold (gte 5.0 ops/sec)",
+        "timestamp": 1754597506.760742,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_validations_per_second",
+        "passed": false,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105338150>",
+        "message": "\u2717 validations_per_second: 0.00 ops/sec fails threshold (gte 2.0 ops/sec) - Should validate at least 2 claims per second",
+        "timestamp": 1754597506.760822,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_extraction_error_rate",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053382d0>",
+        "message": "\u2713 extraction_error_rate: 0.00 % meets threshold (lte 5.0 %)",
+        "timestamp": 1754597506.760917,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_validation_error_rate",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105338450>",
+        "message": "\u2713 validation_error_rate: 0.00 % meets threshold (lte 3.0 %)",
+        "timestamp": 1754597506.760988,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_peak_validation_memory_mb",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053385d0>",
+        "message": "\u2713 peak_validation_memory_mb: 0.00 MB meets threshold (lte 1500 MB)",
+        "timestamp": 1754597506.7610571,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_light_load_avg_validation_confidence",
+        "passed": true,
+        "measured_value": 82.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105338750>",
+        "message": "\u2713 avg_validation_confidence: 82.00 % meets threshold (gte 75.0 %)",
+        "timestamp": 1754597506.761128,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_claim_extraction_time_ms",
+        "passed": true,
+        "measured_value": 150.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053388d0>",
+        "message": "\u2713 claim_extraction_time_ms: 150.00 ms meets threshold (lte 2000 ms)",
+        "timestamp": 1754597510.0639439,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_factual_validation_time_ms",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105338a50>",
+        "message": "\u2713 factual_validation_time_ms: 0.00 ms meets threshold (lte 5000 ms)",
+        "timestamp": 1754597510.0642838,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_relevance_scoring_time_ms",
+        "passed": true,
+        "measured_value": 80.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105338bd0>",
+        "message": "\u2713 relevance_scoring_time_ms: 80.00 ms meets threshold (lte 1000 ms)",
+        "timestamp": 1754597510.0643342,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_integrated_workflow_time_ms",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105338d50>",
+        "message": "\u2713 integrated_workflow_time_ms: 0.00 ms meets threshold (lte 10000 ms)",
+        "timestamp": 1754597510.064377,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_validation_accuracy_rate",
+        "passed": true,
+        "measured_value": 88.5,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105338ed0>",
+        "message": "\u2713 validation_accuracy_rate: 88.50 % meets threshold (gte 85.0 %)",
+        "timestamp": 1754597510.064416,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_claims_per_second",
+        "passed": true,
+        "measured_value": 18.1730885049898,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105339050>",
+        "message": "\u2713 claims_per_second: 18.17 ops/sec meets threshold (gte 5.0 ops/sec)",
+        "timestamp": 1754597510.064458,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_validations_per_second",
+        "passed": false,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053391d0>",
+        "message": "\u2717 validations_per_second: 0.00 ops/sec fails threshold (gte 2.0 ops/sec) - Should validate at least 2 claims per second",
+        "timestamp": 1754597510.064503,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_extraction_error_rate",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105339350>",
+        "message": "\u2713 extraction_error_rate: 0.00 % meets threshold (lte 5.0 %)",
+        "timestamp": 1754597510.0645492,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_validation_error_rate",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053394d0>",
+        "message": "\u2713 validation_error_rate: 0.00 % meets threshold (lte 3.0 %)",
+        "timestamp": 1754597510.0646431,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_peak_validation_memory_mb",
+        "passed": true,
+        "measured_value": 0.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x105339650>",
+        "message": "\u2713 peak_validation_memory_mb: 0.00 MB meets threshold (lte 1500 MB)",
+        "timestamp": 1754597510.064678,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      },
+      {
+        "assertion_name": "relevance_scoring_benchmark_moderate_load_avg_validation_confidence",
+        "passed": true,
+        "measured_value": 82.0,
+        "threshold": "<__main__.QualityPerformanceThreshold object at 0x1053397d0>",
+        "message": "\u2713 avg_validation_confidence: 82.00 % meets threshold (gte 75.0 %)",
+        "timestamp": 1754597510.0647209,
+        "duration_ms": null,
+        "additional_metrics": {
+          "quality_efficiency_score": 96.7125
+        }
+      }
+    ]
+  },
+  "quality_recommendations": [
+    "Address quality validation performance issues in failed benchmarks: relevance_scoring_benchmark"
+  ]
+}

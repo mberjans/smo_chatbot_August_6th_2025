@@ -1,0 +1,28 @@
+
+CLINICAL METABOLOMICS ORACLE - QUALITY VALIDATION BENCHMARK REPORT
+================================================================
+
+Execution Summary:
+- Timestamp: 2025-08-07T14:57:56.183612
+- Total Quality Benchmarks: 2
+- Passed: 1
+- Failed: 1
+- Success Rate: 50.0%
+
+Quality Validation Performance Statistics:
+- Total Operations: 45
+- Total Claims Extracted: 135
+- Total Claims Validated: 30
+- Average Quality Efficiency Score: 96.7%
+- Average Claim Extraction Time: 150.0 ms
+- Average Validation Time: 400.0 ms
+- Average Validation Accuracy: 88.5%
+
+Quality Benchmark Results:
+- factual_accuracy_validation_benchmark: PASSED
+- relevance_scoring_benchmark: FAILED
+
+Quality Validation Recommendations:
+1. Address quality validation performance issues in failed benchmarks: relevance_scoring_benchmark
+
+For detailed quality metrics and analysis, see the complete JSON report.
