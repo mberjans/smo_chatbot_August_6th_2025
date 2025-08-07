@@ -318,9 +318,374 @@ class QueryResponse:
     processing_time: float
 
 
+# Retry mechanism utilities for query error handling
+async def exponential_backoff_retry(
+    operation: Callable,
+    max_retries: int = 3,
+    base_delay: float = 1.0,
+    max_delay: float = 60.0,
+    backoff_factor: float = 2.0,
+    jitter: bool = True,
+    retryable_exceptions: tuple = None,
+    logger: Optional[logging.Logger] = None
+) -> Any:
+    """
+    Execute an operation with exponential backoff retry logic.
+    
+    Args:
+        operation: Async callable to execute
+        max_retries: Maximum number of retry attempts
+        base_delay: Base delay in seconds before first retry
+        max_delay: Maximum delay between retries
+        backoff_factor: Multiplier for exponential backoff
+        jitter: Whether to add random jitter to delay
+        retryable_exceptions: Tuple of exception types that should trigger retry
+        logger: Logger instance for retry logging
+    
+    Returns:
+        Result of successful operation
+        
+    Raises:
+        The last exception if all retries are exhausted
+    """
+    if retryable_exceptions is None:
+        retryable_exceptions = (Exception,)
+    
+    last_exception = None
+    
+    for attempt in range(max_retries + 1):  # +1 for initial attempt
+        try:
+            if logger and attempt > 0:
+                logger.info(f"Retry attempt {attempt}/{max_retries}")
+            
+            result = await operation()
+            
+            if logger and attempt > 0:
+                logger.info(f"Operation succeeded on attempt {attempt + 1}")
+                
+            return result
+            
+        except Exception as e:
+            last_exception = e
+            
+            # Check if this exception type should trigger a retry
+            if not isinstance(e, retryable_exceptions):
+                if logger:
+                    logger.warning(f"Non-retryable exception {type(e).__name__}: {e}")
+                raise
+            
+            # If this is the last attempt, don't wait
+            if attempt >= max_retries:
+                if logger:
+                    logger.error(f"All {max_retries + 1} attempts failed. Final exception: {e}")
+                break
+            
+            # Calculate delay with exponential backoff
+            delay = min(base_delay * (backoff_factor ** attempt), max_delay)
+            
+            # Add jitter to prevent thundering herd
+            if jitter:
+                delay = delay * (0.5 + random.random() * 0.5)  # 50-100% of calculated delay
+            
+            if logger:
+                logger.warning(f"Attempt {attempt + 1} failed with {type(e).__name__}: {e}. Retrying in {delay:.2f}s")
+            
+            # Check if exception provides a retry_after hint
+            if hasattr(e, 'retry_after') and e.retry_after:
+                delay = max(delay, e.retry_after)
+                if logger:
+                    logger.info(f"Using exception retry_after: {e.retry_after}s")
+            
+            await asyncio.sleep(delay)
+    
+    # Re-raise the last exception
+    raise last_exception
+
+
+def classify_query_exception(exception: Exception, query: Optional[str] = None, query_mode: Optional[str] = None) -> 'QueryError':
+    """
+    Classify a query exception into the appropriate QueryError subclass.
+    
+    Args:
+        exception: The original exception
+        query: The query that caused the error
+        query_mode: The query mode that was used
+        
+    Returns:
+        Appropriate QueryError subclass instance
+    """
+    # If it's already a QueryError, return it as-is
+    if isinstance(exception, QueryError):
+        return exception
+    
+    error_msg = str(exception).lower()
+    exception_type = type(exception).__name__.lower()
+    
+    # Network and timeout errors
+    if any(keyword in error_msg for keyword in [
+        'timeout', 'connection', 'network', 'unreachable', 'refused', 'reset'
+    ]) or any(exc_type in exception_type for exc_type in [
+        'timeout', 'connection', 'network'
+    ]):
+        timeout_seconds = None
+        # Try to extract timeout value
+        timeout_match = re.search(r'timeout.*?(\d+(?:\.\d+)?)', error_msg)
+        if timeout_match:
+            timeout_seconds = float(timeout_match.group(1))
+        
+        return QueryNetworkError(
+            f"Network error during query processing: {exception}",
+            query=query,
+            query_mode=query_mode,
+            timeout_seconds=timeout_seconds,
+            retry_after=5  # Default retry after 5 seconds for network issues
+        )
+    
+    # API rate limiting and quota errors  
+    if any(keyword in error_msg for keyword in [
+        'rate limit', 'quota', 'too many requests', '429', 'rate_limit_exceeded'
+    ]):
+        status_code = None
+        rate_limit_type = None
+        retry_after = 60  # Default retry after 1 minute
+        
+        # Extract status code (look for HTTP status codes like 429, 503, etc.)
+        status_match = re.search(r'status[:\s]*(\d{3})', error_msg)
+        if not status_match:
+            # Try other common patterns for status codes
+            status_match = re.search(r'(\b[4-5]\d{2}\b)', error_msg)
+        if status_match:
+            status_code = int(status_match.group(1))
+        
+        # Extract rate limit type
+        if 'token' in error_msg:
+            rate_limit_type = 'tokens'
+        elif 'request' in error_msg:
+            rate_limit_type = 'requests'
+        
+        # Extract retry_after if present (look for various patterns)
+        retry_match = re.search(r'retry[_\s]*after[_\s]*(\d+)', error_msg)
+        if retry_match:
+            retry_after = int(retry_match.group(1))
+        else:
+            # Try "try again in X seconds" pattern
+            retry_match = re.search(r'try[_\s]*again[_\s]*in[_\s]*(\d+)', error_msg)
+            if retry_match:
+                retry_after = int(retry_match.group(1))
+        
+        return QueryAPIError(
+            f"API rate limit or quota exceeded: {exception}",
+            query=query,
+            query_mode=query_mode,
+            status_code=status_code,
+            rate_limit_type=rate_limit_type,
+            retry_after=retry_after
+        )
+    
+    # Authentication and authorization errors (non-retryable)
+    if any(keyword in error_msg for keyword in [
+        'unauthorized', '401', '403', 'authentication', 'api key', 'invalid key'
+    ]):
+        return QueryNonRetryableError(
+            f"Authentication/authorization error: {exception}",
+            query=query,
+            query_mode=query_mode,
+            error_code='AUTH_ERROR'
+        )
+    
+    # Parameter validation errors (non-retryable)
+    if any(exc_type in exception_type for exc_type in [
+        'value', 'type', 'attribute'
+    ]) or any(keyword in error_msg for keyword in [
+        'invalid', 'parameter', 'validation', 'malformed'
+    ]):
+        return QueryValidationError(
+            f"Query parameter validation failed: {exception}",
+            query=query,
+            query_mode=query_mode,
+            error_code='VALIDATION_ERROR'
+        )
+    
+    # LightRAG-specific errors
+    if 'lightrag' in error_msg or any(keyword in error_msg for keyword in [
+        'graph', 'embedding', 'retrieval', 'chunking'
+    ]):
+        lightrag_error_type = 'unknown'
+        if 'graph' in error_msg:
+            lightrag_error_type = 'graph_error'
+        elif 'embedding' in error_msg:
+            lightrag_error_type = 'embedding_error'
+        elif 'retrieval' in error_msg:
+            lightrag_error_type = 'retrieval_error'
+        elif 'chunk' in error_msg:
+            lightrag_error_type = 'chunking_error'
+        
+        return QueryLightRAGError(
+            f"LightRAG internal error: {exception}",
+            query=query,
+            query_mode=query_mode,
+            lightrag_error_type=lightrag_error_type,
+            retry_after=10  # Retry after 10 seconds for LightRAG issues
+        )
+    
+    # Response validation errors
+    if any(keyword in error_msg for keyword in [
+        'empty response', 'no response', 'invalid response', 'malformed response'
+    ]):
+        return QueryResponseError(
+            f"Invalid or empty response: {exception}",
+            query=query,
+            query_mode=query_mode,
+            error_code='RESPONSE_ERROR'
+        )
+    
+    # Default to retryable error for unknown issues
+    return QueryRetryableError(
+        f"Unknown query error (retryable): {exception}",
+        query=query,
+        query_mode=query_mode,
+        retry_after=30  # Default retry after 30 seconds
+    )
+
+
 class ClinicalMetabolomicsRAGError(Exception):
     """Custom exception for ClinicalMetabolomicsRAG errors."""
     pass
+
+
+# Query-specific error hierarchy for comprehensive query error handling
+class QueryError(ClinicalMetabolomicsRAGError):
+    """Base class for query-related errors."""
+    
+    def __init__(self, message: str, query: Optional[str] = None, query_mode: Optional[str] = None, 
+                 error_code: Optional[str] = None, retry_after: Optional[int] = None):
+        """
+        Initialize query error with context.
+        
+        Args:
+            message: Error message
+            query: The original query that failed
+            query_mode: The query mode that was used
+            error_code: Optional error code for categorization
+            retry_after: Seconds to wait before retry (for retryable errors)
+        """
+        super().__init__(message)
+        self.query = query
+        self.query_mode = query_mode
+        self.error_code = error_code
+        self.retry_after = retry_after
+        self.timestamp = time.time()
+
+
+class QueryValidationError(QueryError):
+    """Malformed or invalid query parameters."""
+    
+    def __init__(self, message: str, parameter_name: Optional[str] = None, 
+                 parameter_value: Optional[Any] = None, **kwargs):
+        """
+        Initialize query validation error.
+        
+        Args:
+            message: Error message
+            parameter_name: Name of the invalid parameter
+            parameter_value: Value that caused the validation error
+            **kwargs: Additional QueryError arguments
+        """
+        super().__init__(message, **kwargs)
+        self.parameter_name = parameter_name
+        self.parameter_value = parameter_value
+
+
+class QueryRetryableError(QueryError):
+    """Base class for retryable query errors."""
+    
+    def __init__(self, message: str, retry_after: Optional[int] = None, max_retries: int = 3, **kwargs):
+        """
+        Initialize retryable query error.
+        
+        Args:
+            message: Error message
+            retry_after: Seconds to wait before retry
+            max_retries: Maximum number of retry attempts
+            **kwargs: Additional QueryError arguments
+        """
+        super().__init__(message, retry_after=retry_after, **kwargs)
+        self.max_retries = max_retries
+
+
+class QueryNonRetryableError(QueryError):
+    """Non-retryable query errors (validation failures, auth issues)."""
+    pass
+
+
+class QueryNetworkError(QueryRetryableError):
+    """Network connectivity and timeout errors."""
+    
+    def __init__(self, message: str, timeout_seconds: Optional[float] = None, **kwargs):
+        """
+        Initialize network error.
+        
+        Args:
+            message: Error message
+            timeout_seconds: The timeout that was exceeded
+            **kwargs: Additional QueryRetryableError arguments
+        """
+        super().__init__(message, **kwargs)
+        self.timeout_seconds = timeout_seconds
+
+
+class QueryAPIError(QueryRetryableError):
+    """API-related query errors (rate limits, quota exceeded)."""
+    
+    def __init__(self, message: str, status_code: Optional[int] = None, 
+                 rate_limit_type: Optional[str] = None, **kwargs):
+        """
+        Initialize API error.
+        
+        Args:
+            message: Error message
+            status_code: HTTP status code from the API
+            rate_limit_type: Type of rate limit (requests, tokens, etc.)
+            **kwargs: Additional QueryRetryableError arguments
+        """
+        super().__init__(message, **kwargs)
+        self.status_code = status_code
+        self.rate_limit_type = rate_limit_type
+
+
+class QueryLightRAGError(QueryRetryableError):
+    """LightRAG internal errors."""
+    
+    def __init__(self, message: str, lightrag_error_type: Optional[str] = None, **kwargs):
+        """
+        Initialize LightRAG error.
+        
+        Args:
+            message: Error message
+            lightrag_error_type: Type of LightRAG error
+            **kwargs: Additional QueryRetryableError arguments
+        """
+        super().__init__(message, **kwargs)
+        self.lightrag_error_type = lightrag_error_type
+
+
+class QueryResponseError(QueryError):
+    """Empty, invalid, or malformed response errors."""
+    
+    def __init__(self, message: str, response_content: Optional[str] = None, 
+                 response_type: Optional[str] = None, **kwargs):
+        """
+        Initialize response error.
+        
+        Args:
+            message: Error message
+            response_content: The invalid response content
+            response_type: Type of response that was expected
+            **kwargs: Additional QueryError arguments
+        """
+        super().__init__(message, **kwargs)
+        self.response_content = response_content
+        self.response_type = response_type
 
 
 # Ingestion-specific error hierarchy for comprehensive error handling
@@ -6287,14 +6652,25 @@ class ClinicalMetabolomicsRAG:
                   - formatting_applied: List of formatting operations applied
         
         Raises:
-            ValueError: If query is empty or invalid
-            ClinicalMetabolomicsRAGError: If query processing fails
+            QueryValidationError: If query is empty or invalid
+            QueryNonRetryableError: If RAG system is not initialized
+            QueryError: If query processing fails (specific subclass based on error type)
         """
         if not query or not query.strip():
-            raise ValueError("Query cannot be empty")
+            raise QueryValidationError(
+                "Query cannot be empty",
+                parameter_name="query",
+                parameter_value=query,
+                error_code="EMPTY_QUERY"
+            )
         
         if not self.is_initialized:
-            raise ClinicalMetabolomicsRAGError("RAG system not initialized")
+            raise QueryNonRetryableError(
+                "RAG system not initialized",
+                query=query,
+                query_mode=mode,
+                error_code="NOT_INITIALIZED"
+            )
         
         start_time = time.time()
         
@@ -6319,7 +6695,15 @@ class ClinicalMetabolomicsRAG:
                     query_param_kwargs[key] = value
             
             # Validate QueryParam parameters before creation
-            self._validate_query_param_kwargs(query_param_kwargs)
+            try:
+                self._validate_query_param_kwargs(query_param_kwargs)
+            except (ValueError, TypeError) as ve:
+                raise QueryValidationError(
+                    f"Query parameter validation failed: {ve}",
+                    query=query,
+                    query_mode=mode,
+                    error_code='PARAM_VALIDATION_ERROR'
+                ) from ve
             
             query_param = QueryParam(**query_param_kwargs)
             
@@ -6330,6 +6714,41 @@ class ClinicalMetabolomicsRAG:
             )
             
             processing_time = time.time() - start_time
+            
+            # Validate response is not empty or None
+            if response is None:
+                raise QueryResponseError(
+                    "LightRAG returned None response",
+                    query=query,
+                    query_mode=mode,
+                    response_content=None,
+                    error_code='NULL_RESPONSE'
+                )
+            
+            if isinstance(response, str) and not response.strip():
+                raise QueryResponseError(
+                    "LightRAG returned empty response",
+                    query=query,
+                    query_mode=mode,
+                    response_content=response,
+                    error_code='EMPTY_RESPONSE'
+                )
+            
+            # Check for common error patterns in response
+            if isinstance(response, str):
+                error_patterns = [
+                    'error occurred', 'failed to', 'cannot process', 'unable to',
+                    'service unavailable', 'internal error', 'timeout'
+                ]
+                response_lower = response.lower().strip()
+                if any(pattern in response_lower for pattern in error_patterns):
+                    raise QueryResponseError(
+                        f"LightRAG returned error response: {response[:200]}...",
+                        query=query,
+                        query_mode=mode,
+                        response_content=response,
+                        error_code='ERROR_RESPONSE'
+                    )
             
             # Apply biomedical response formatting if enabled
             formatted_response_data = None
@@ -6481,8 +6900,104 @@ class ClinicalMetabolomicsRAG:
             return result
             
         except Exception as e:
-            self.logger.error(f"Query processing failed: {e}")
-            raise ClinicalMetabolomicsRAGError(f"Query processing failed: {e}") from e
+            processing_time = time.time() - start_time
+            
+            # Classify the exception into appropriate error type
+            classified_error = classify_query_exception(e, query=query, query_mode=mode)
+            
+            # Log error with context
+            self.logger.error(
+                f"Query processing failed after {processing_time:.2f}s: {classified_error.__class__.__name__}: {e}",
+                extra={
+                    'query': query[:100] + '...' if len(query) > 100 else query,  # Truncate long queries
+                    'query_mode': mode,
+                    'error_type': classified_error.__class__.__name__,
+                    'error_code': getattr(classified_error, 'error_code', 'UNKNOWN'),
+                    'processing_time': processing_time,
+                    'retryable': isinstance(classified_error, QueryRetryableError)
+                }
+            )
+            
+            # Track failed query cost if enabled
+            if self.cost_tracking_enabled:
+                self.track_api_cost(
+                    cost=0.0,  # No cost for failed queries
+                    token_usage={'total_tokens': 0, 'prompt_tokens': 0, 'completion_tokens': 0},
+                    operation_type=mode,
+                    query_text=query,
+                    success=False,
+                    error_type=classified_error.__class__.__name__,
+                    response_time=processing_time
+                )
+            
+            # Re-raise as classified error for proper handling by callers
+            raise classified_error
+    
+    async def query_with_retry(
+        self,
+        query: str,
+        mode: str = "hybrid",
+        max_retries: int = 3,
+        retry_config: Optional[Dict[str, Any]] = None,
+        **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Execute a query with automatic retry logic for transient failures.
+        
+        This method wraps the main query method with exponential backoff retry
+        for transient errors while preserving non-retryable errors.
+        
+        Args:
+            query: The query string to process
+            mode: Query mode ('naive', 'local', 'global', 'hybrid')
+            max_retries: Maximum number of retry attempts (default: 3)
+            retry_config: Optional retry configuration override
+            **kwargs: Additional query parameters
+        
+        Returns:
+            Dict containing query response (same format as query method)
+            
+        Raises:
+            QueryNonRetryableError: For validation failures, auth issues, etc.
+            QueryError: After all retry attempts are exhausted
+        """
+        # Default retry configuration
+        default_retry_config = {
+            'base_delay': 1.0,
+            'max_delay': 60.0,
+            'backoff_factor': 2.0,
+            'jitter': True
+        }
+        
+        if retry_config:
+            default_retry_config.update(retry_config)
+        
+        # Define retryable exceptions
+        retryable_exceptions = (
+            QueryRetryableError,
+            QueryNetworkError,
+            QueryAPIError,
+            QueryLightRAGError
+        )
+        
+        async def query_operation():
+            return await self.query(query, mode=mode, **kwargs)
+        
+        try:
+            return await exponential_backoff_retry(
+                operation=query_operation,
+                max_retries=max_retries,
+                retryable_exceptions=retryable_exceptions,
+                logger=self.logger,
+                **default_retry_config
+            )
+        except QueryError:
+            # Re-raise query errors as-is
+            raise
+        except Exception as e:
+            # Classify and re-raise unexpected exceptions
+            classified_error = classify_query_exception(e, query=query, query_mode=mode)
+            raise classified_error
     
     async def get_context_only(
         self,
@@ -6525,13 +7040,28 @@ class ClinicalMetabolomicsRAG:
             ClinicalMetabolomicsRAGError: If context retrieval fails
         """
         if not isinstance(query, str):
-            raise TypeError("Query must be a string")
+            raise QueryValidationError(
+                "Query must be a string",
+                parameter_name="query",
+                parameter_value=query,
+                error_code="INVALID_TYPE"
+            )
         
         if not query or not query.strip():
-            raise ValueError("Query cannot be empty")
+            raise QueryValidationError(
+                "Query cannot be empty",
+                parameter_name="query", 
+                parameter_value=query,
+                error_code="EMPTY_QUERY"
+            )
         
         if not self.is_initialized:
-            raise ClinicalMetabolomicsRAGError("RAG system not initialized")
+            raise QueryNonRetryableError(
+                "RAG system not initialized",
+                query=query,
+                query_mode=mode,
+                error_code="NOT_INITIALIZED"
+            )
         
         start_time = time.time()
         
