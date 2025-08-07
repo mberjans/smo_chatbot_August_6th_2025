@@ -209,7 +209,7 @@
 - [x] Implement error handling for ingestion failures
 
 **CMO-LIGHTRAG-006-T08** [TEST]
-- [ ] Execute integration tests with sample PDF files
+- [x] Execute integration tests with sample PDF files
 
 **CMO-LIGHTRAG-006-T09** [VALIDATE]
 - [ ] Verify dependencies on CMO-LIGHTRAG-004 and CMO-LIGHTRAG-005
