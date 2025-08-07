@@ -197,10 +197,10 @@
 - [x] Implement initialize_knowledge_base method
 
 **CMO-LIGHTRAG-006-T04** [CODE]
-- [ ] Add LightRAG storage initialization
+- [x] Add LightRAG storage initialization
 
 **CMO-LIGHTRAG-006-T05** [CODE]
-- [ ] Integrate PDF processor with document ingestion
+- [x] Integrate PDF processor with document ingestion
 
 **CMO-LIGHTRAG-006-T06** [CODE]
 - [ ] Add progress tracking during knowledge base construction
