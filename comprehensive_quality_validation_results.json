@@ -1,0 +1,38 @@
+{
+  "overall_quality_score": 0.0,
+  "relevance_score": 0,
+  "threshold_80_percent_met": false,
+  "total_test_cases": 3,
+  "components_active": 0,
+  "average_processing_time_ms": 0.12071927388509114,
+  "validation_timestamp": "2025-08-07T15:40:02.000428",
+  "detailed_results": [
+    {
+      "test_case": 1,
+      "query_preview": "What are the clinical applications of metabolomics...",
+      "overall_quality_score": 0.0,
+      "quality_grade": "Poor",
+      "processing_time_ms": 0.17118453979492188,
+      "components_used": [],
+      "assessment_confidence": 0.0
+    },
+    {
+      "test_case": 2,
+      "query_preview": "How does LC-MS work in metabolomics analysis?...",
+      "overall_quality_score": 0.0,
+      "quality_grade": "Poor",
+      "processing_time_ms": 0.10395050048828125,
+      "components_used": [],
+      "assessment_confidence": 0.0
+    },
+    {
+      "test_case": 3,
+      "query_preview": "What are the main challenges in metabolomics data ...",
+      "overall_quality_score": 0.0,
+      "quality_grade": "Poor",
+      "processing_time_ms": 0.08702278137207031,
+      "components_used": [],
+      "assessment_confidence": 0.0
+    }
+  ]
+}
