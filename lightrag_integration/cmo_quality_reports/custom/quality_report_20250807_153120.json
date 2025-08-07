@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "report_id": "137477f7-b9e8-4cd3-ac8c-3404645120ab",
+    "report_name": "CMO 3-Day Quality Analysis",
+    "description": "Automated quality assessment of LightRAG responses for clinical metabolomics applications",
+    "generated_timestamp": "2025-08-07T15:31:20.365899",
+    "analysis_period": {
+      "start": "2025-08-04T15:31:20.364691",
+      "end": "2025-08-07T15:31:20.364691",
+      "days": 3
+    },
+    "generation_time_seconds": 0.0,
+    "configuration": {
+      "report_name": "CMO 3-Day Quality Analysis",
+      "report_description": "Automated quality assessment of LightRAG responses for clinical metabolomics applications",
+      "analysis_period_days": 3,
+      "include_historical_comparison": true,
+      "historical_comparison_days": 30,
+      "include_executive_summary": true,
+      "include_detailed_metrics": true,
+      "include_trend_analysis": true,
+      "include_performance_analysis": true,
+      "include_factual_accuracy_analysis": true,
+      "include_relevance_scoring_analysis": true,
+      "include_insights_and_recommendations": true,
+      "output_formats": [
+        "json",
+        "html",
+        "csv"
+      ],
+      "generate_charts": true,
+      "chart_style": "professional",
+      "quality_score_thresholds": {
+        "excellent": 92.0,
+        "good": 85.0,
+        "acceptable": 78.0,
+        "marginal": 70.0,
+        "poor": 0.0
+      },
+      "alert_thresholds": {
+        "quality_decline_threshold": 8.0,
+        "low_accuracy_threshold": 80.0,
+        "high_error_rate_threshold": 3.0,
+        "response_time_threshold": 2500.0
+      },
+      "custom_branding": {
+        "organization": "Clinical Metabolomics Oracle",
+        "department": "LightRAG Quality Assurance",
+        "contact": "quality-team@cmo.org"
+      },
+      "additional_metadata": {}
+    },
+    "data_summary": {
+      "total_records": 6,
+      "relevance_evaluations": 2,
+      "accuracy_evaluations": 2,
+      "performance_benchmarks": 2
+    }
+  },
+  "executive_summary": {
+    "overall_health_score": 90.0,
+    "health_grade": "Good",
+    "evaluation_period": "3 days",
+    "total_evaluations": 6,
+    "key_findings": [
+      "Overall system quality health: Good (90.0/100)",
+      "Improving trends detected in: Relevance Scoring, Factual Accuracy"
+    ],
+    "insight_summary": {
+      "total_insights": 0,
+      "by_severity": {}
+    },
+    "trend_summary": {
+      "trends_analyzed": 3,
+      "significant_trends": 2,
+      "key_trends": [
+        {
+          "metric": "Relevance Scoring",
+          "direction": "improving",
+          "change_percentage": 6.7,
+          "confidence": 0.84
+        },
+        {
+          "metric": "Factual Accuracy",
+          "direction": "improving",
+          "change_percentage": 7.7,
+          "confidence": 0.78
+        }
+      ]
+    },
+    "top_recommendations": [],
+    "action_items": []
+  },
+  "quality_metrics": {
+    "summaries": [
+      {
+        "component_name": "Response Relevance Scorer",
+        "metric_type": "relevance",
+        "total_evaluations": 2,
+        "average_score": 88.35,
+        "median_score": 88.35,
+        "min_score": 85.5,
+        "max_score": 91.2,
+        "standard_deviation": 4.030508652763323,
+        "scores_distribution": {
+          "Good": 2
+        },
+        "evaluation_period_start": "2025-08-04 16:31:20.364691",
+        "evaluation_period_end": "2025-08-04 17:31:20.364691",
+        "metadata": {}
+      },
+      {
+        "component_name": "Factual Accuracy Validator",
+        "metric_type": "factual_accuracy",
+        "total_evaluations": 2,
+        "average_score": 90.85,
+        "median_score": 90.85,
+        "min_score": 87.5,
+        "max_score": 94.2,
+        "standard_deviation": 4.737615433949871,
+        "scores_distribution": {
+          "Good": 1,
+          "Excellent": 1
+        },
+        "evaluation_period_start": "2025-08-04 16:31:20.364691",
+        "evaluation_period_end": "2025-08-04 18:31:20.364691",
+        "metadata": {}
+      },
+      {
+        "component_name": "Performance Benchmarker",
+        "metric_type": "performance",
+        "total_evaluations": 2,
+        "average_score": 90.8,
+        "median_score": 90.8,
+        "min_score": 89.5,
+        "max_score": 92.1,
+        "standard_deviation": 1.8384776310850195,
+        "scores_distribution": {
+          "Good": 1,
+          "Excellent": 1
+        },
+        "evaluation_period_start": "2025-08-04 16:31:20.364691",
+        "evaluation_period_end": "2025-08-04 17:31:20.364691",
+        "metadata": {}
+      }
+    ],
+    "trends": [
+      {
+        "metric_name": "Relevance Scoring",
+        "trend_direction": "improving",
+        "trend_strength": 0.5700000000000017,
+        "change_percentage": 6.66666666666667,
+        "period_days": 3,
+        "data_points_count": 2,
+        "confidence_level": 0.8375499999999998,
+        "trend_description": "Quality metrics are moderately improving with a 6.7% increase over 2 measurements.",
+        "recommendations": [
+          "Collect more data points to establish clear trends for Relevance Scoring",
+          "Implement regular quality monitoring"
+        ]
+      },
+      {
+        "metric_name": "Factual Accuracy",
+        "trend_direction": "improving",
+        "trend_strength": 0.6700000000000017,
+        "change_percentage": 7.657142857142861,
+        "period_days": 3,
+        "data_points_count": 2,
+        "confidence_level": 0.7755499999999999,
+        "trend_description": "Quality metrics are moderately improving with a 7.7% increase over 2 measurements.",
+        "recommendations": [
+          "Collect more data points to establish clear trends for Factual Accuracy",
+          "Implement regular quality monitoring"
+        ]
+      },
+      {
+        "metric_name": "Performance Quality",
+        "trend_direction": "improving",
+        "trend_strength": 0.25999999999999945,
+        "change_percentage": 2.9050279329608877,
+        "period_days": 3,
+        "data_points_count": 2,
+        "confidence_level": 0.9662000000000002,
+        "trend_description": "Quality metrics are slightly improving with a 2.9% increase over 2 measurements.",
+        "recommendations": [
+          "Collect more data points to establish clear trends for Performance Quality",
+          "Implement regular quality monitoring"
+        ]
+      }
+    ]
+  },
+  "insights_and_recommendations": [],
+  "raw_data": {
+    "relevance_scores": [
+      {
+        "timestamp": "2025-08-04 16:31:20.364691",
+        "query": "What is metabolomics?",
+        "response_length": 250,
+        "overall_score": 85.5,
+        "dimension_scores": {
+          "metabolomics_relevance": 88.0,
+          "clinical_applicability": 82.5,
+          "query_alignment": 87.0,
+          "scientific_rigor": 84.0
+        },
+        "query_type": "basic_definition",
+        "processing_time_ms": 145.2
+      },
+      {
+        "timestamp": "2025-08-04 17:31:20.364691",
+        "query": "How does LC-MS work in metabolomics?",
+        "response_length": 380,
+        "overall_score": 91.2,
+        "dimension_scores": {
+          "metabolomics_relevance": 94.0,
+          "clinical_applicability": 88.0,
+          "query_alignment": 92.5,
+          "scientific_rigor": 90.0
+        },
+        "query_type": "analytical_method",
+        "processing_time_ms": 167.8
+      }
+    ],
+    "factual_accuracy": [
+      {
+        "timestamp": "2025-08-04 16:31:20.364691",
+        "response_id": "resp_001",
+        "claims_extracted": 5,
+        "claims_validated": 5,
+        "overall_accuracy_score": 87.5,
+        "verification_results": [
+          {
+            "status": "SUPPORTED",
+            "confidence": 92.0,
+            "evidence_strength": 85.0
+          },
+          {
+            "status": "SUPPORTED",
+            "confidence": 89.0,
+            "evidence_strength": 78.0
+          },
+          {
+            "status": "NEUTRAL",
+            "confidence": 65.0,
+            "evidence_strength": 60.0
+          },
+          {
+            "status": "SUPPORTED",
+            "confidence": 94.0,
+            "evidence_strength": 90.0
+          },
+          {
+            "status": "NOT_FOUND",
+            "confidence": 45.0,
+            "evidence_strength": 40.0
+          }
+        ],
+        "processing_time_ms": 234.5
+      },
+      {
+        "timestamp": "2025-08-04 18:31:20.364691",
+        "response_id": "resp_002",
+        "claims_extracted": 3,
+        "claims_validated": 3,
+        "overall_accuracy_score": 94.2,
+        "verification_results": [
+          {
+            "status": "SUPPORTED",
+            "confidence": 96.0,
+            "evidence_strength": 92.0
+          },
+          {
+            "status": "SUPPORTED",
+            "confidence": 91.0,
+            "evidence_strength": 88.0
+          },
+          {
+            "status": "SUPPORTED",
+            "confidence": 93.5,
+            "evidence_strength": 89.0
+          }
+        ],
+        "processing_time_ms": 189.7
+      }
+    ],
+    "performance_metrics": [
+      {
+        "timestamp": "2025-08-04 16:31:20.364691",
+        "benchmark_name": "quality_validation_benchmark",
+        "scenario_name": "standard_validation",
+        "operations_count": 25,
+        "average_latency_ms": 1250.0,
+        "throughput_ops_per_sec": 4.8,
+        "validation_accuracy_rate": 89.5,
+        "error_rate_percent": 1.8,
+        "memory_usage_mb": 456.7,
+        "cpu_usage_percent": 42.3
+      },
+      {
+        "timestamp": "2025-08-04 17:31:20.364691",
+        "benchmark_name": "integrated_workflow_benchmark",
+        "scenario_name": "full_pipeline_test",
+        "operations_count": 15,
+        "average_latency_ms": 1780.0,
+        "throughput_ops_per_sec": 3.4,
+        "validation_accuracy_rate": 92.1,
+        "error_rate_percent": 1.2,
+        "memory_usage_mb": 623.4,
+        "cpu_usage_percent": 56.8
+      }
+    ]
+  }
+}

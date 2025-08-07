@@ -1,0 +1,10 @@
+Metric,Value,Unit,Category,Description
+Overall Health Score,90.0,Points,Summary,System-wide quality health score
+Total Evaluations,6,Count,Summary,Total number of quality evaluations
+Response Relevance Scorer Average Score,88.35,Points,Quality,Average quality score for Response Relevance Scorer
+Response Relevance Scorer Total Evaluations,2,Count,Quality,Number of evaluations for Response Relevance Scorer
+Factual Accuracy Validator Average Score,90.85,Points,Quality,Average quality score for Factual Accuracy Validator
+Factual Accuracy Validator Total Evaluations,2,Count,Quality,Number of evaluations for Factual Accuracy Validator
+Performance Benchmarker Average Score,90.8,Points,Quality,Average quality score for Performance Benchmarker
+Performance Benchmarker Total Evaluations,2,Count,Quality,Number of evaluations for Performance Benchmarker
+Total Insights,0,Count,Analysis,Number of quality insights generated
