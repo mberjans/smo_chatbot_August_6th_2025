@@ -1,0 +1,62 @@
+{
+  "structure_validation": {
+    "status": true
+  },
+  "content_validation": {
+    "pdfs": {
+      "samples_count": 2,
+      "templates_count": 1,
+      "corrupted_count": 1,
+      "valid_content": 2,
+      "errors": []
+    },
+    "databases": {
+      "schemas_count": 2,
+      "sample_dbs_count": 0,
+      "valid_schemas": 2,
+      "valid_dbs": 0,
+      "errors": []
+    },
+    "mocks": {
+      "biomedical_files": 1,
+      "api_response_files": 1,
+      "state_files": 1,
+      "valid_json_files": 3,
+      "errors": []
+    },
+    "utilities": {
+      "cleanup_scripts": 1,
+      "data_generators": 1,
+      "validators": 1,
+      "executable_scripts": 3
+    }
+  },
+  "integrity_validation": {
+    "checksums": {
+      "test_data_validation_report.json": "7d9b0264b9604114ac257ebcea976b02",
+      "README.md": "8542ef1ac673bacb2f98aaa0c52a7997",
+      "TEST_DATA_FIXTURES_IMPLEMENTATION_SUMMARY.md": "d1aa24a9aea84b0a8cda5c634e40b4ac",
+      "INTEGRATION_GUIDE.md": "235aad53f7af56a01a871bf0a285142c",
+      "mocks/state_data/mock_system_states.json": "762f28a4169ef0c617ae34067fd07849",
+      "mocks/api_responses/openai_api_responses.json": "3ae97a12efedeac129811d84a56ed15a",
+      "mocks/biomedical_data/mock_metabolites.json": "e0896d87d527de546b6eb51e34f1e782",
+      "databases/schemas/knowledge_base_schema.sql": "c1a6e4472afb3a306f7787478a0f5117",
+      "databases/schemas/cost_tracking_schema.sql": "ea6defac5ff5286acddb126251918958",
+      "utilities/README.md": "4c487c96fd4a8e4d412ba11e40777523",
+      "utilities/cleanup_scripts/cleanup_test_data.py": "ba97a566e7f2fe3ac848669459dca49c",
+      "utilities/validators/test_data_validator.py": "208973b65efc0fb62f6d3d3b01dd6b55",
+      "utilities/data_generators/generate_test_pdfs.py": "cbc9d74d5cdee630cb03ad0036a4d46b",
+      "logs/samples/sample_api_metrics.log": "1942aee3ef719da7e002cdb77d7c710f",
+      "logs/configs/logging_config_template.json": "a886e03c0a03a403443151c5dcde22b5",
+      "logs/templates/lightrag_integration_log_template.log": "3c9c42482995efba47a988755850ac35",
+      "pdfs/samples/sample_metabolomics_study.txt": "25f99042b1df7fdee904bf3d5b3fbf0d",
+      "pdfs/samples/sample_clinical_trial.txt": "ddbd6d7d2234baa19b417c0f65694cde",
+      "pdfs/corrupted/corrupted_sample.txt": "0d30072d578d117420ba8f48746af3a8",
+      "pdfs/templates/minimal_biomedical_template.txt": "87aba1df7ce2315b459cf854afc17357"
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "overall_status": "PASSED",
+  "validation_timestamp": "2025-08-07 08:08:42.898318"
+}

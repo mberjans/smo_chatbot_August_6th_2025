@@ -1,0 +1,29 @@
+SAMPLE BIOMEDICAL RESEARCH DOCUMENT - METABOLOMICS STUDY
+
+Title: Clinical Metabolomics Analysis of Diabetes Biomarkers
+Authors: Dr. Sample Author, Research Team
+Journal: Test Journal of Clinical Metabolomics
+Year: 2024
+
+ABSTRACT
+This study investigates metabolomic profiles in Type 2 diabetes patients compared to healthy controls. Using LC-MS/MS analysis, we identified 150 metabolites with significant differential expression. Key findings include elevated glucose-6-phosphate and reduced citric acid cycle intermediates in diabetic patients.
+
+INTRODUCTION
+Metabolomics provides insights into disease pathophysiology by measuring small molecule metabolites in biological samples. This approach has shown promise in diabetes research for identifying biomarkers and understanding metabolic dysregulation.
+
+METHODS
+Sample Collection: Plasma samples from 100 T2D patients and 50 controls
+Analytical Platform: LC-MS/MS using Thermo Q Exactive
+Data Processing: XCMS and MetaboAnalyst workflows
+Statistical Analysis: t-tests, PCA, pathway enrichment
+
+RESULTS
+- 47 metabolites significantly upregulated in T2D (p < 0.05)
+- 38 metabolites significantly downregulated 
+- Glucose metabolism pathway most affected
+- Amino acid metabolism also disrupted
+
+CONCLUSIONS
+Metabolomic profiling reveals distinct metabolic signatures in T2D patients, supporting its use for biomarker discovery and therapeutic monitoring.
+
+KEYWORDS: metabolomics, diabetes, biomarkers, LC-MS/MS, clinical research

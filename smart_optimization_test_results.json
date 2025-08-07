@@ -1,0 +1,138 @@
+{
+  "What is the chemical structure of glucose?": {
+    "detected_pattern": "metabolite_identification",
+    "top_k": 12,
+    "max_total_tokens": 6000,
+    "response_type": "Single String",
+    "suggested_mode": "local",
+    "fallback_used": null
+  },
+  "Identify the metabolite at m/z 180.063": {
+    "detected_pattern": "metabolite_identification",
+    "top_k": 12,
+    "max_total_tokens": 6000,
+    "response_type": "Single String",
+    "suggested_mode": "local",
+    "fallback_used": null
+  },
+  "What is creatinine and what does it indicate?": {
+    "detected_pattern": "metabolite_identification",
+    "top_k": 12,
+    "max_total_tokens": 6000,
+    "response_type": "Single String",
+    "suggested_mode": "local",
+    "fallback_used": null
+  },
+  "Explain the glycolytic pathway and its regulation": {
+    "detected_pattern": "pathway_analysis",
+    "top_k": 20,
+    "max_total_tokens": 10000,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": "global",
+    "fallback_used": null
+  },
+  "How does the TCA cycle interact with metabolic networks?": {
+    "detected_pattern": "pathway_analysis",
+    "top_k": 20,
+    "max_total_tokens": 10000,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": "global",
+    "fallback_used": null
+  },
+  "Describe pathway analysis for diabetes metabolism": {
+    "detected_pattern": "pathway_analysis",
+    "top_k": 20,
+    "max_total_tokens": 12000,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": "global",
+    "fallback_used": null
+  },
+  "What are potential biomarkers for cardiovascular disease?": {
+    "detected_pattern": null,
+    "top_k": 16,
+    "max_total_tokens": 9200,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": null,
+    "fallback_used": "default"
+  },
+  "Identify prognostic biomarkers for cancer metabolism": {
+    "detected_pattern": "biomarker_discovery",
+    "top_k": 18,
+    "max_total_tokens": 11700,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": "hybrid",
+    "fallback_used": null
+  },
+  "What metabolic changes occur in diabetes?": {
+    "detected_pattern": null,
+    "top_k": 16,
+    "max_total_tokens": 9600,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": null,
+    "fallback_used": "default"
+  },
+  "How does cancer metabolism affect biomarker profiles?": {
+    "detected_pattern": null,
+    "top_k": 16,
+    "max_total_tokens": 10400,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": null,
+    "fallback_used": "default"
+  },
+  "Explain neurological metabolic disorders": {
+    "detected_pattern": "disease_association",
+    "top_k": 14,
+    "max_total_tokens": 8500.0,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": "hybrid",
+    "fallback_used": null
+  },
+  "LC-MS analysis of plasma metabolites": {
+    "detected_pattern": null,
+    "top_k": 16,
+    "max_total_tokens": 8000,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": null,
+    "fallback_used": "default"
+  },
+  "NMR spectroscopy for metabolic profiling": {
+    "detected_pattern": "platform_specific.untargeted",
+    "top_k": 18,
+    "max_total_tokens": 9500,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": null,
+    "fallback_used": null
+  },
+  "Targeted metabolomics using MRM": {
+    "detected_pattern": "platform_specific.targeted",
+    "top_k": 8,
+    "max_total_tokens": 4400.0,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": null,
+    "fallback_used": null
+  },
+  "Untargeted metabolomics discovery": {
+    "detected_pattern": "platform_specific.targeted",
+    "top_k": 8,
+    "max_total_tokens": 4400.0,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": null,
+    "fallback_used": null
+  },
+  "What is metabolomics?": {
+    "detected_pattern": null,
+    "top_k": 14,
+    "max_total_tokens": 6400.0,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": null,
+    "fallback_used": "default"
+  },
+  "Explain clinical applications": {
+    "detected_pattern": null,
+    "top_k": 14,
+    "max_total_tokens": 6400.0,
+    "response_type": "Multiple Paragraphs",
+    "suggested_mode": null,
+    "fallback_used": "default"
+  }
+}

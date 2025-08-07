@@ -1,0 +1,131 @@
+{
+  "system_states": {
+    "healthy_system": {
+      "timestamp": "2024-08-07T10:00:00Z",
+      "components": {
+        "lightrag": {
+          "status": "running",
+          "memory_usage_mb": 512,
+          "documents_loaded": 150,
+          "embeddings_cached": 2500
+        },
+        "database": {
+          "status": "connected",
+          "connection_pool_size": 10,
+          "active_connections": 3,
+          "query_cache_hit_rate": 0.85
+        },
+        "cost_tracking": {
+          "status": "active",
+          "daily_spend_usd": 2.30,
+          "daily_limit_usd": 10.00,
+          "current_session_cost_usd": 0.45
+        },
+        "api_limits": {
+          "requests_per_minute": 100,
+          "current_usage": 15,
+          "tokens_per_minute": 50000,
+          "current_token_usage": 8500
+        }
+      },
+      "performance_metrics": {
+        "average_query_time_ms": 3800,
+        "pdf_processing_rate_per_minute": 2.5,
+        "success_rate": 0.98
+      }
+    },
+    "overloaded_system": {
+      "timestamp": "2024-08-07T15:30:00Z",
+      "components": {
+        "lightrag": {
+          "status": "running",
+          "memory_usage_mb": 1024,
+          "documents_loaded": 500,
+          "embeddings_cached": 8000,
+          "warnings": ["High memory usage", "Slow response times"]
+        },
+        "database": {
+          "status": "connected",
+          "connection_pool_size": 10,
+          "active_connections": 9,
+          "query_cache_hit_rate": 0.65,
+          "warnings": ["Connection pool nearly full"]
+        },
+        "cost_tracking": {
+          "status": "warning",
+          "daily_spend_usd": 8.50,
+          "daily_limit_usd": 10.00,
+          "current_session_cost_usd": 1.25,
+          "alerts": ["Approaching daily limit"]
+        },
+        "api_limits": {
+          "requests_per_minute": 100,
+          "current_usage": 95,
+          "tokens_per_minute": 50000,
+          "current_token_usage": 48000,
+          "warnings": ["Rate limit warning", "Token limit warning"]
+        }
+      },
+      "performance_metrics": {
+        "average_query_time_ms": 8500,
+        "pdf_processing_rate_per_minute": 1.0,
+        "success_rate": 0.89,
+        "error_rate": 0.11
+      }
+    },
+    "error_state": {
+      "timestamp": "2024-08-07T16:45:00Z",
+      "components": {
+        "lightrag": {
+          "status": "error",
+          "error_message": "Failed to initialize knowledge base",
+          "last_successful_operation": "2024-08-07T16:30:00Z"
+        },
+        "database": {
+          "status": "disconnected",
+          "error_message": "Connection timeout after 30 seconds",
+          "retry_attempts": 3
+        },
+        "cost_tracking": {
+          "status": "error",
+          "daily_spend_usd": 10.50,
+          "daily_limit_usd": 10.00,
+          "alerts": ["Daily limit exceeded", "Operations suspended"]
+        },
+        "api_limits": {
+          "requests_per_minute": 100,
+          "current_usage": 0,
+          "status": "suspended",
+          "suspension_reason": "Budget limit exceeded"
+        }
+      },
+      "recovery_actions": [
+        "Reset database connections",
+        "Clear temporary files",
+        "Restart LightRAG service",
+        "Review budget settings"
+      ]
+    },
+    "recovery_state": {
+      "timestamp": "2024-08-07T17:00:00Z",
+      "recovery_in_progress": true,
+      "components": {
+        "lightrag": {
+          "status": "initializing",
+          "recovery_step": "Loading configuration"
+        },
+        "database": {
+          "status": "connecting",
+          "recovery_step": "Establishing connections"
+        },
+        "cost_tracking": {
+          "status": "reset",
+          "daily_spend_usd": 0.00,
+          "daily_limit_usd": 10.00,
+          "recovery_step": "Budget reset for new day"
+        }
+      },
+      "estimated_recovery_time_minutes": 5
+    }
+  }
+}

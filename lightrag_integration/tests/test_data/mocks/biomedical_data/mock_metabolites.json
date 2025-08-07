@@ -1,0 +1,101 @@
+{
+  "metabolite_database": {
+    "version": "1.0.0",
+    "source": "test_data_generator",
+    "metabolites": [
+      {
+        "id": "met_001",
+        "name": "Glucose-6-phosphate",
+        "formula": "C6H13O9P",
+        "molecular_weight": 260.03,
+        "kegg_id": "C00092",
+        "hmdb_id": "HMDB0001401",
+        "pathway": "Glycolysis",
+        "biological_role": "Energy metabolism intermediate",
+        "concentration_ranges": {
+          "plasma_healthy": {"min": 5.0, "max": 15.0, "unit": "µM"},
+          "plasma_diabetic": {"min": 20.0, "max": 45.0, "unit": "µM"}
+        }
+      },
+      {
+        "id": "met_002", 
+        "name": "Pyruvate",
+        "formula": "C3H4O3",
+        "molecular_weight": 88.06,
+        "kegg_id": "C00022",
+        "hmdb_id": "HMDB0000243",
+        "pathway": "Glycolysis",
+        "biological_role": "Central metabolic intermediate",
+        "concentration_ranges": {
+          "plasma_healthy": {"min": 50.0, "max": 200.0, "unit": "µM"},
+          "plasma_diabetic": {"min": 150.0, "max": 400.0, "unit": "µM"}
+        }
+      },
+      {
+        "id": "met_003",
+        "name": "Citric acid",
+        "formula": "C6H8O7",
+        "molecular_weight": 192.12,
+        "kegg_id": "C00158",
+        "hmdb_id": "HMDB0000094",
+        "pathway": "TCA cycle",
+        "biological_role": "Central energy metabolism",
+        "concentration_ranges": {
+          "plasma_healthy": {"min": 80.0, "max": 150.0, "unit": "µM"},
+          "plasma_diabetic": {"min": 40.0, "max": 90.0, "unit": "µM"}
+        }
+      },
+      {
+        "id": "met_004",
+        "name": "Lactate",
+        "formula": "C3H6O3", 
+        "molecular_weight": 90.08,
+        "kegg_id": "C00186",
+        "hmdb_id": "HMDB0000190",
+        "pathway": "Glycolysis",
+        "biological_role": "Anaerobic metabolism product",
+        "concentration_ranges": {
+          "plasma_healthy": {"min": 500.0, "max": 2000.0, "unit": "µM"},
+          "plasma_diabetic": {"min": 1500.0, "max": 4000.0, "unit": "µM"}
+        }
+      },
+      {
+        "id": "met_005",
+        "name": "Glycerol-3-phosphate",
+        "formula": "C3H9O6P",
+        "molecular_weight": 172.07,
+        "kegg_id": "C00093",
+        "hmdb_id": "HMDB0000126",
+        "pathway": "Lipid metabolism",
+        "biological_role": "Lipid synthesis intermediate",
+        "concentration_ranges": {
+          "plasma_healthy": {"min": 10.0, "max": 30.0, "unit": "µM"},
+          "plasma_diabetic": {"min": 25.0, "max": 60.0, "unit": "µM"}
+        }
+      }
+    ],
+    "pathways": [
+      {
+        "id": "pathway_001",
+        "name": "Glycolysis",
+        "kegg_id": "map00010",
+        "metabolites": ["met_001", "met_002", "met_004"],
+        "description": "Glucose breakdown pathway"
+      },
+      {
+        "id": "pathway_002",
+        "name": "TCA cycle",
+        "kegg_id": "map00020",
+        "metabolites": ["met_003"],
+        "description": "Citric acid cycle for energy production"
+      },
+      {
+        "id": "pathway_003",
+        "name": "Lipid metabolism",
+        "kegg_id": "map00561",
+        "metabolites": ["met_005"],
+        "description": "Lipid synthesis and breakdown"
+      }
+    ]
+  }
+}

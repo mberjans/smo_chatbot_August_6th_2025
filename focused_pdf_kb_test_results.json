@@ -1,0 +1,16 @@
+{
+  "overall_success": false,
+  "test_stages": {
+    "environment_setup": true,
+    "rag_initialization": false
+  },
+  "query_results": {},
+  "execution_time": 0.4332399368286133,
+  "summary": {
+    "passed_stages": 1,
+    "total_stages": 2,
+    "stage_success_rate": 0.5,
+    "query_success_rate": 0,
+    "execution_time": 0.4332399368286133
+  }
+}

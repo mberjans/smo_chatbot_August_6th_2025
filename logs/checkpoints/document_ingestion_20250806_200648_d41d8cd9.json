@@ -1,0 +1,29 @@
+{
+  "checkpoint_id": "document_ingestion_20250806_200648_d41d8cd9",
+  "timestamp": "2025-08-06T20:06:48.831148",
+  "phase": "document_ingestion",
+  "processed_documents": [],
+  "failed_documents": {
+    "doc1": "API error 1",
+    "doc2": "API error 2",
+    "doc3": "API error 3",
+    "doc4": "API error 4"
+  },
+  "pending_documents": [],
+  "current_batch_size": 1,
+  "degradation_mode": "minimal",
+  "system_resources": {
+    "memory_percent": 84.2,
+    "memory_available_gb": 2.52484130859375,
+    "disk_percent": 23.9,
+    "disk_free_gb": 43.73207473754883,
+    "cpu_percent": 22.9,
+    "load_average": 3.3642578125
+  },
+  "error_counts": {
+    "api_error": 4
+  },
+  "metadata": {
+    "recovery_action": "reduce_resources"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "checkpoint_id": "document_ingestion_20250806_200640_d41d8cd9",
+  "timestamp": "2025-08-06T20:06:40.804976",
+  "phase": "document_ingestion",
+  "processed_documents": [],
+  "failed_documents": {
+    "doc1": "High memory usage detected"
+  },
+  "pending_documents": [],
+  "current_batch_size": 1,
+  "degradation_mode": "minimal",
+  "system_resources": {
+    "memory_percent": 84.1,
+    "memory_available_gb": 2.5411224365234375,
+    "disk_percent": 23.9,
+    "disk_free_gb": 43.738468170166016,
+    "cpu_percent": 32.2,
+    "load_average": 3.2568359375
+  },
+  "error_counts": {
+    "memory_pressure": 1
+  },
+  "metadata": {
+    "recovery_action": "reduce_resources"
+  }
+}

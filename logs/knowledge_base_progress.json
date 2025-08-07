@@ -1,0 +1,101 @@
+{
+  "timestamp": "2025-08-06T20:55:11.268014",
+  "state": {
+    "overall_progress": 0.0,
+    "current_phase": "storage_initialization",
+    "phase_info": {
+      "storage_initialization": {
+        "phase": "storage_initialization",
+        "start_time": "2025-08-06T20:55:11.267937",
+        "end_time": null,
+        "current_progress": 0.0,
+        "status_message": "Initializing LightRAG storage systems",
+        "details": {},
+        "error_message": null,
+        "estimated_duration": 10.0,
+        "elapsed_time": 8.2e-05,
+        "is_active": true,
+        "is_completed": false,
+        "is_failed": false
+      },
+      "pdf_processing": {
+        "phase": "pdf_processing",
+        "start_time": null,
+        "end_time": null,
+        "current_progress": 0.0,
+        "status_message": "",
+        "details": {},
+        "error_message": null,
+        "estimated_duration": null,
+        "elapsed_time": 0.0,
+        "is_active": false,
+        "is_completed": false,
+        "is_failed": false
+      },
+      "document_ingestion": {
+        "phase": "document_ingestion",
+        "start_time": null,
+        "end_time": null,
+        "current_progress": 0.0,
+        "status_message": "",
+        "details": {},
+        "error_message": null,
+        "estimated_duration": null,
+        "elapsed_time": 0.0,
+        "is_active": false,
+        "is_completed": false,
+        "is_failed": false
+      },
+      "finalization": {
+        "phase": "finalization",
+        "start_time": null,
+        "end_time": null,
+        "current_progress": 0.0,
+        "status_message": "",
+        "details": {},
+        "error_message": null,
+        "estimated_duration": null,
+        "elapsed_time": 0.0,
+        "is_active": false,
+        "is_completed": false,
+        "is_failed": false
+      }
+    },
+    "phase_weights": {
+      "storage_init": 0.1,
+      "pdf_processing": 0.6,
+      "document_ingestion": 0.25,
+      "finalization": 0.05
+    },
+    "start_time": "2025-08-06T20:55:11.267357",
+    "estimated_completion_time": null,
+    "estimated_time_remaining": null,
+    "total_documents": 0,
+    "processed_documents": 0,
+    "failed_documents": 0,
+    "errors": [],
+    "elapsed_time": 0.00067
+  },
+  "config": {
+    "enable_progress_tracking": true,
+    "log_progress_interval": 5,
+    "log_detailed_errors": true,
+    "log_processing_stats": true,
+    "log_file_details": false,
+    "progress_log_level": "INFO",
+    "error_log_level": "ERROR",
+    "stats_log_level": "INFO",
+    "max_error_details_length": 500,
+    "enable_memory_monitoring": true,
+    "memory_check_interval": 10,
+    "enable_timing_details": true,
+    "save_progress_to_file": false,
+    "progress_file_path": null,
+    "enable_unified_progress_tracking": true,
+    "enable_phase_based_progress": true,
+    "phase_progress_update_interval": 2.0,
+    "enable_progress_callbacks": true,
+    "save_unified_progress_to_file": true,
+    "unified_progress_file_path": "logs/knowledge_base_progress.json"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "embedding_response_success": {
+    "object": "list",
+    "data": [
+      {
+        "object": "embedding",
+        "embedding": [0.0023064255, -0.009327292, 0.015797978, 0.008231707, -0.014123456],
+        "index": 0
+      }
+    ],
+    "model": "text-embedding-ada-002",
+    "usage": {
+      "prompt_tokens": 8,
+      "total_tokens": 8
+    }
+  },
+  "chat_completion_success": {
+    "id": "chatcmpl-test123",
+    "object": "chat.completion",
+    "created": 1691753200,
+    "model": "gpt-4",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Based on the clinical metabolomics research provided, several key biomarkers have been identified for diabetes:\n\n## Glucose Metabolism Markers\n- **Glucose-6-phosphate**: Significantly elevated in T2D patients (20-45 µM vs 5-15 µM in healthy controls)\n- **Pyruvate**: Increased levels observed in diabetic patients\n- **Lactate**: Higher concentrations in diabetes due to altered glucose metabolism\n\n## Lipid Metabolism Markers\n- **Glycerol-3-phosphate**: Elevated in diabetes, indicating disrupted lipid metabolism\n\n## Energy Metabolism Markers\n- **Citric acid**: Reduced levels in diabetes, suggesting TCA cycle dysfunction\n\nThese biomarkers show significant promise for diabetes diagnosis and monitoring."
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 500,
+      "completion_tokens": 150,
+      "total_tokens": 650
+    }
+  },
+  "rate_limit_error": {
+    "error": {
+      "message": "Rate limit reached for requests",
+      "type": "rate_limit_error",
+      "param": null,
+      "code": "rate_limit_exceeded"
+    }
+  },
+  "api_key_error": {
+    "error": {
+      "message": "Invalid API key provided",
+      "type": "invalid_request_error",
+      "param": null,
+      "code": "invalid_api_key"
+    }
+  },
+  "quota_exceeded_error": {
+    "error": {
+      "message": "You exceeded your current quota",
+      "type": "insufficient_quota",
+      "param": null,
+      "code": "insufficient_quota"
+    }
+  },
+  "model_overloaded_error": {
+    "error": {
+      "message": "The model is currently overloaded with other requests",
+      "type": "server_error",
+      "param": null,
+      "code": "model_overloaded"
+    }
+  }
+}

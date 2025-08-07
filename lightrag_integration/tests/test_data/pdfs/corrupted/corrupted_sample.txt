@@ -1,0 +1,30 @@
+INTENTIONALLY CORRUPTED TEST FILE
+
+This file simulates various corruption scenarios for error handling testing:
+
+1. INCOMPLETE DATA SCENARIOS:
+   Title: Metabolomic Analysis of [MISSING_CONTENT
+   Authors: Dr. Test, [TRUNCATED
+
+2. MALFORMED CONTENT:
+   <<<INVALID_XML_TAG>>>
+   {UNCLOSED_JSON: "malformed_data"
+   [BROKEN_MARKDOWN](#missing-link
+
+3. ENCODING ISSUES:
+   Special chars: àáâãäåæçèéêë��������
+   Binary-like content: ����þÿ��������
+   
+4. EMPTY SECTIONS:
+   Abstract:
+   
+   Methods:
+   
+   Results:
+
+5. STRUCTURAL ISSUES:
+   - Missing headers
+   - Duplicate sections
+   - Invalid formatting
+
+This file is used to test PDF processing error handling and recovery mechanisms.

@@ -1,0 +1,17 @@
+{
+  "overall_success": false,
+  "test_results": {
+    "pdf_loading": true,
+    "rag_system_setup": false,
+    "knowledge_base_init": false,
+    "query_functionality": false,
+    "knowledge_graph": false
+  },
+  "execution_time": 0.31038832664489746,
+  "summary": {
+    "passed_tests": 1,
+    "total_tests": 5,
+    "success_rate": 0.2,
+    "execution_time": 0.31038832664489746
+  }
+}

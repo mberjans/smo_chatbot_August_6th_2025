@@ -1,0 +1,2 @@
+2025-08-06 04:32:00,334 - demo_env - INFO - This is a test message using environment configuration
+2025-08-06 04:32:00,334 - demo_env - DEBUG - This DEBUG message should appear since level is DEBUG

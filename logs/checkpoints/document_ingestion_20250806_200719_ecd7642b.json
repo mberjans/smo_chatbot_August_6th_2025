@@ -1,0 +1,29 @@
+{
+  "checkpoint_id": "document_ingestion_20250806_200719_ecd7642b",
+  "timestamp": "2025-08-06T20:07:19.288194",
+  "phase": "document_ingestion",
+  "processed_documents": [
+    "doc2",
+    "doc1"
+  ],
+  "failed_documents": {
+    "doc3": ""
+  },
+  "pending_documents": [],
+  "current_batch_size": 1,
+  "degradation_mode": "minimal",
+  "system_resources": {
+    "memory_percent": 83.8,
+    "memory_available_gb": 2.590423583984375,
+    "disk_percent": 23.9,
+    "disk_free_gb": 43.71959686279297,
+    "cpu_percent": 26.7,
+    "load_average": 3.02978515625
+  },
+  "error_counts": {
+    "processing_error": 1
+  },
+  "metadata": {
+    "recovery_action": "reduce_resources"
+  }
+}

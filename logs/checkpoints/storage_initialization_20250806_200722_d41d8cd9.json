@@ -1,0 +1,26 @@
+{
+  "checkpoint_id": "storage_initialization_20250806_200722_d41d8cd9",
+  "timestamp": "2025-08-06T20:07:22.488700",
+  "phase": "storage_initialization",
+  "processed_documents": [],
+  "failed_documents": {
+    "test_doc": "Critical resource pressure detected: memory"
+  },
+  "pending_documents": [],
+  "current_batch_size": 1,
+  "degradation_mode": "minimal",
+  "system_resources": {
+    "memory_percent": 83.8,
+    "memory_available_gb": 2.597137451171875,
+    "disk_percent": 23.9,
+    "disk_free_gb": 43.71952819824219,
+    "cpu_percent": 22.0,
+    "load_average": 2.8671875
+  },
+  "error_counts": {
+    "memory_pressure": 1
+  },
+  "metadata": {
+    "recovery_action": "reduce_resources"
+  }
+}

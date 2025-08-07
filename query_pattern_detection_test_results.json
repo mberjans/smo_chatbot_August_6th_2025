@@ -1,0 +1,298 @@
+{
+  "summary": {
+    "total_correct": 31,
+    "total_queries": 39,
+    "overall_accuracy": 79.48717948717949
+  },
+  "detailed_results": {
+    "metabolite_identification": [
+      {
+        "query": "What is the chemical structure of glucose?",
+        "detected_pattern": "metabolite_identification",
+        "confidence": 1.0,
+        "matched_patterns": "chemical.*structure",
+        "correct": true
+      },
+      {
+        "query": "Identify the metabolite at m/z 180.063",
+        "detected_pattern": "metabolite_identification",
+        "confidence": 1.0,
+        "matched_patterns": "identify.*metabolite",
+        "correct": true
+      },
+      {
+        "query": "What is creatinine and what does it indicate?",
+        "detected_pattern": "metabolite_identification",
+        "confidence": 1.0,
+        "matched_patterns": "what.*is.*\\b\\w+ine\\b",
+        "correct": true
+      },
+      {
+        "query": "Chemical structure of cholesterol",
+        "detected_pattern": "metabolite_identification",
+        "confidence": 1.0,
+        "matched_patterns": "chemical.*structure",
+        "correct": true
+      },
+      {
+        "query": "MS/MS identification of amino acid peaks",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": false
+      }
+    ],
+    "pathway_analysis": [
+      {
+        "query": "Explain the glycolysis pathway",
+        "detected_pattern": "pathway_analysis",
+        "confidence": 1.0,
+        "matched_patterns": "glycolysis.*pathway",
+        "correct": true
+      },
+      {
+        "query": "How does the TCA cycle regulate metabolism?",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": false
+      },
+      {
+        "query": "Pathway analysis of fatty acid oxidation",
+        "detected_pattern": "pathway_analysis",
+        "confidence": 1.0,
+        "matched_patterns": "pathway.*analysis",
+        "correct": true
+      },
+      {
+        "query": "Metabolic network interactions in diabetes",
+        "detected_pattern": "pathway_analysis",
+        "confidence": 1.0,
+        "matched_patterns": "metabolic.*network, metabolic.*network",
+        "correct": true
+      },
+      {
+        "query": "Pentose phosphate pathway regulation",
+        "detected_pattern": "pathway_analysis",
+        "confidence": 1.0,
+        "matched_patterns": "pathway.*regulation, pentose.*phosphate",
+        "correct": true
+      }
+    ],
+    "biomarker_discovery": [
+      {
+        "query": "Biomarker discovery for diabetes",
+        "detected_pattern": "biomarker_discovery",
+        "confidence": 1.0,
+        "matched_patterns": "biomarker.*discovery",
+        "correct": true
+      },
+      {
+        "query": "Prognostic biomarkers in cancer",
+        "detected_pattern": "biomarker_discovery",
+        "confidence": 1.0,
+        "matched_patterns": "prognostic.*biomarker",
+        "correct": true
+      },
+      {
+        "query": "Diagnostic biomarker validation methods",
+        "detected_pattern": "biomarker_discovery",
+        "confidence": 1.0,
+        "matched_patterns": "diagnostic.*biomarker, biomarker.*validation",
+        "correct": true
+      },
+      {
+        "query": "Metabolomic biomarker panel development",
+        "detected_pattern": "biomarker_discovery",
+        "confidence": 1.0,
+        "matched_patterns": "biomarker.*panel, metabolomic.*biomarker",
+        "correct": true
+      },
+      {
+        "query": "ROC analysis of biomarker performance",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": false
+      }
+    ],
+    "disease_association": [
+      {
+        "query": "Diabetes metabolomics associations",
+        "detected_pattern": "disease_association",
+        "confidence": 1.0,
+        "matched_patterns": "diabetes.*metabolomics",
+        "correct": true
+      },
+      {
+        "query": "Cancer metabolite dysregulation",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": false
+      },
+      {
+        "query": "Disease mechanisms in Alzheimer's",
+        "detected_pattern": "disease_association",
+        "confidence": 1.0,
+        "matched_patterns": "disease.*mechanism",
+        "correct": true
+      },
+      {
+        "query": "Metabolic dysfunction in obesity",
+        "detected_pattern": "disease_association",
+        "confidence": 1.0,
+        "matched_patterns": "metabolic.*dysfunction",
+        "correct": true
+      },
+      {
+        "query": "Cardiovascular disease metabolomics",
+        "detected_pattern": "disease_association",
+        "confidence": 1.0,
+        "matched_patterns": "cardiovascular.*metabolomics",
+        "correct": true
+      }
+    ],
+    "clinical_diagnostic": [
+      {
+        "query": "Clinical diagnosis using metabolomics",
+        "detected_pattern": "clinical_diagnostic",
+        "confidence": 1.0,
+        "matched_patterns": "clinical.*diagnosis",
+        "correct": true
+      },
+      {
+        "query": "Point of care metabolite testing",
+        "detected_pattern": "clinical_diagnostic",
+        "confidence": 1.0,
+        "matched_patterns": "point.*of.*care",
+        "correct": true
+      },
+      {
+        "query": "Diagnostic accuracy of metabolomic tests",
+        "detected_pattern": "clinical_diagnostic",
+        "confidence": 1.0,
+        "matched_patterns": "diagnostic.*test, diagnostic.*accuracy",
+        "correct": true
+      },
+      {
+        "query": "Clinical utility of biomarker panels",
+        "detected_pattern": "clinical_diagnostic",
+        "confidence": 1.0,
+        "matched_patterns": "clinical.*utility",
+        "correct": true
+      },
+      {
+        "query": "Patient screening protocols",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": false
+      }
+    ],
+    "therapeutic_target": [
+      {
+        "query": "Drug target identification in metabolism",
+        "detected_pattern": "therapeutic_target",
+        "confidence": 1.0,
+        "matched_patterns": "drug.*target, target.*identification",
+        "correct": true
+      },
+      {
+        "query": "Therapeutic targets for diabetes",
+        "detected_pattern": "therapeutic_target",
+        "confidence": 1.0,
+        "matched_patterns": "therapeutic.*target",
+        "correct": true
+      },
+      {
+        "query": "Enzyme targets for drug development",
+        "detected_pattern": "therapeutic_target",
+        "confidence": 1.0,
+        "matched_patterns": "enzyme.*target, drug.*development",
+        "correct": true
+      },
+      {
+        "query": "Molecular docking of metabolites",
+        "detected_pattern": "therapeutic_target",
+        "confidence": 1.0,
+        "matched_patterns": "molecular.*docking",
+        "correct": true
+      },
+      {
+        "query": "Structure-activity relationships",
+        "detected_pattern": "therapeutic_target",
+        "confidence": 1.0,
+        "matched_patterns": "structure.*activity",
+        "correct": true
+      }
+    ],
+    "platform_specific": [
+      {
+        "query": "LC-MS analysis of plasma metabolites",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": null
+      },
+      {
+        "query": "GC-MS volatile metabolite profiling",
+        "detected_pattern": "platform_specific.gc_ms",
+        "confidence": 1.0,
+        "matched_patterns": "volatile.*metabolite",
+        "correct": true
+      },
+      {
+        "query": "NMR spectroscopy of urine samples",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": null
+      },
+      {
+        "query": "Targeted metabolomics using MRM",
+        "detected_pattern": "platform_specific.targeted",
+        "confidence": 1.0,
+        "matched_patterns": "targeted.*metabolomics",
+        "correct": true
+      },
+      {
+        "query": "Untargeted metabolomic profiling methods",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": null
+      }
+    ],
+    "uncertain": [
+      {
+        "query": "Tell me about metabolism",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": true
+      },
+      {
+        "query": "What is metabolomics?",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": true
+      },
+      {
+        "query": "Research methods in biochemistry",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": true
+      },
+      {
+        "query": "Laboratory equipment maintenance",
+        "detected_pattern": null,
+        "confidence": 0.0,
+        "matched_patterns": "",
+        "correct": true
+      }
+    ]
+  }
+}

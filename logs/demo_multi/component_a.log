@@ -1,0 +1,4 @@
+2025-08-06 04:32:00,338 - demo_component_a - DEBUG - DEBUG from component_a
+2025-08-06 04:32:00,338 - demo_component_a - INFO - INFO from component_a
+2025-08-06 04:32:00,338 - demo_component_a - WARNING - WARNING from component_a
+2025-08-06 04:32:00,338 - demo_component_a - ERROR - ERROR from component_a

@@ -1,0 +1,52 @@
+{
+  "checkpoint_id": "document_ingestion_20250806_200720_ecd7642b",
+  "timestamp": "2025-08-06T20:07:20.299910",
+  "phase": "document_ingestion",
+  "processed_documents": [
+    "doc2",
+    "doc1"
+  ],
+  "failed_documents": {
+    "doc3": ""
+  },
+  "pending_documents": [],
+  "current_batch_size": 1,
+  "degradation_mode": "minimal",
+  "system_resources": {
+    "memory_percent": 83.8,
+    "memory_available_gb": 2.5997772216796875,
+    "disk_percent": 23.9,
+    "disk_free_gb": 43.71953201293945,
+    "cpu_percent": 22.2,
+    "load_average": 3.02978515625
+  },
+  "error_counts": {
+    "processing_error": 1
+  },
+  "metadata": {
+    "final_results": {
+      "processed_documents": [
+        "doc1",
+        "doc2"
+      ],
+      "failed_documents": {
+        "doc2": "Processing failed",
+        "doc3": ""
+      },
+      "skipped_documents": [],
+      "recovery_events": [
+        {
+          "action": "retry"
+        },
+        {
+          "action": "reduce_resources",
+          "degradation_needed": true,
+          "batch_size_adjustment": 0.3,
+          "backoff_seconds": 1.0,
+          "checkpoint_recommended": true
+        }
+      ],
+      "checkpoints": [
+        "document_ingestion_20250806_200716_ecd7642b"
+      ],
+      "final_degradation_mode": 

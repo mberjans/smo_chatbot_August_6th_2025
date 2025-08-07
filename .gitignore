@@ -1,3 +1,91 @@
 # Ignore environment files
 .env
 venv/
+
+# Test Data Management - Generated and Temporary Files
+# Generated test files (keep templates and samples)
+lightrag_integration/tests/test_data/temp/**/*
+lightrag_integration/tests/test_data/pdfs/samples/generated_*
+lightrag_integration/tests/test_data/pdfs/samples/test_*
+!lightrag_integration/tests/test_data/pdfs/samples/sample_*
+!lightrag_integration/tests/test_data/pdfs/templates/
+!lightrag_integration/tests/test_data/pdfs/corrupted/
+
+# Dynamic databases (keep schemas and initial samples)
+lightrag_integration/tests/test_data/databases/test_dbs/dynamic_*
+lightrag_integration/tests/test_data/databases/samples/test_run_*
+cost_tracking.db
+**/test_*.db
+!lightrag_integration/tests/test_data/databases/samples/test_cost_tracking.db
+!lightrag_integration/tests/test_data/databases/samples/test_knowledge_base.db
+
+# Log files (keep templates and configs)
+lightrag_integration/tests/test_data/logs/samples/runtime_*
+lightrag_integration/tests/test_data/logs/samples/test_run_*
+lightrag_integration/tests/test_data/logs/**/*.log
+!lightrag_integration/tests/test_data/logs/templates/
+!lightrag_integration/tests/test_data/logs/configs/
+!lightrag_integration/tests/test_data/logs/samples/sample_*
+
+# Mock data dynamic files (keep static templates)
+lightrag_integration/tests/test_data/mocks/*/dynamic_*
+lightrag_integration/tests/test_data/mocks/*/runtime_*
+lightrag_integration/tests/test_data/mocks/state_data/current_*
+!lightrag_integration/tests/test_data/mocks/*/mock_*
+
+# Temporary processing files
+lightrag_integration/tests/test_data/temp/staging/*
+lightrag_integration/tests/test_data/temp/processing/*
+lightrag_integration/tests/test_data/temp/cleanup/*
+!lightrag_integration/tests/test_data/temp/**/.gitkeep
+
+# Generated reports (keep report templates if any)
+lightrag_integration/tests/test_data/reports/**/*.json
+lightrag_integration/tests/test_data/reports/**/*.txt
+lightrag_integration/tests/test_data/reports/**/*.html
+!lightrag_integration/tests/test_data/reports/**/template_*
+!lightrag_integration/tests/test_data/reports/**/README*
+
+# Python cache and testing artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.coverage
+.pytest_cache/
+*.cover
+.hypothesis/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+tmp_*
+temp_*
+
+# Environment and configuration
+.env.*
+!.env.example
+local_config.json
+secret_*.json
+
+# Performance and benchmark data
+benchmark_results/runtime_*
+performance_test_results/runtime_*
+logs/performance_*.log
+
+# Large datasets and downloads
+papers/*.pdf
+!papers/sample_*.pdf
+datasets/
+downloads/
+*.large
+*.dump

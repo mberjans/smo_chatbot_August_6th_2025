@@ -1,0 +1,41 @@
+MINIMAL BIOMEDICAL RESEARCH DOCUMENT TEMPLATE
+
+Title: [STUDY_TITLE]
+Authors: [AUTHORS]
+Institution: [INSTITUTION]
+Date: [DATE]
+
+ABSTRACT
+[Brief summary of research objectives, methods, results, and conclusions]
+
+KEYWORDS
+[keyword1], [keyword2], [keyword3]
+
+INTRODUCTION
+[Background information and research rationale]
+
+METHODS
+Study Design: [design_type]
+Participants: [participant_description]
+Measurements: [measurement_methods]
+Analysis: [statistical_methods]
+
+RESULTS
+[Key findings and statistical results]
+
+DISCUSSION
+[Interpretation of results and clinical implications]
+
+CONCLUSIONS
+[Main conclusions and future directions]
+
+REFERENCES
+[Relevant citations]
+
+---
+Template Variables:
+- STUDY_TITLE: Title of the research study
+- AUTHORS: List of study authors
+- INSTITUTION: Research institution
+- DATE: Publication/study date
+- Additional bracketed fields for content customization

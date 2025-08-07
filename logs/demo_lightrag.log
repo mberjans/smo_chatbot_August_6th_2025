@@ -1,0 +1,4 @@
+2025-08-06 04:25:00,093 - demo_app - DEBUG - This is a DEBUG message - shows internal processing details
+2025-08-06 04:25:00,093 - demo_app - INFO - This is an INFO message - general information about operation
+2025-08-06 04:25:00,093 - demo_app - WARNING - This is a WARNING message - something might be wrong
+2025-08-06 04:25:00,093 - demo_app - ERROR - This is an ERROR message - something went wrong but recoverable

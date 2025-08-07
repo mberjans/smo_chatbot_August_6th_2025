@@ -1,0 +1,48 @@
+2025-08-06 20:58:34,499 - __main__ - INFO - ============================================================
+2025-08-06 20:58:34,499 - __main__ - INFO - STARTING PDF TO KNOWLEDGE BASE PIPELINE VERIFICATION
+2025-08-06 20:58:34,499 - __main__ - INFO - ============================================================
+2025-08-06 20:58:34,499 - __main__ - INFO - 
+--- Starting Pdf Loading ---
+2025-08-06 20:58:34,499 - __main__ - INFO - Verifying PDF file loading...
+2025-08-06 20:58:34,499 - __main__ - INFO - PDF file found: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/papers/Clinical_Metabolomics_paper.pdf (281.1 KB)
+2025-08-06 20:58:34,500 - __main__ - INFO - PDF file verification passed
+2025-08-06 20:58:34,500 - __main__ - INFO - pdf_loading completed in 0.0s: PASS
+2025-08-06 20:58:34,500 - __main__ - INFO - 
+--- Starting Rag System Setup ---
+2025-08-06 20:58:34,500 - __main__ - INFO - Setting up RAG system...
+2025-08-06 20:58:34,809 - __main__ - ERROR - Failed to setup RAG system: attempted relative import with no known parent package
+2025-08-06 20:58:34,809 - __main__ - INFO - rag_system_setup completed in 0.3s: FAIL
+2025-08-06 20:58:34,809 - __main__ - ERROR - Critical failure in rag_system_setup
+2025-08-06 20:58:34,809 - __main__ - INFO - 
+--- Starting Knowledge Base Init ---
+2025-08-06 20:58:34,809 - __main__ - INFO - Verifying knowledge base initialization...
+2025-08-06 20:58:34,809 - __main__ - ERROR - RAG system not initialized
+2025-08-06 20:58:34,809 - __main__ - INFO - knowledge_base_init completed in 0.0s: FAIL
+2025-08-06 20:58:34,809 - __main__ - ERROR - Critical failure in knowledge_base_init
+2025-08-06 20:58:34,809 - __main__ - INFO - 
+--- Starting Query Functionality ---
+2025-08-06 20:58:34,809 - __main__ - INFO - Verifying basic query functionality...
+2025-08-06 20:58:34,809 - __main__ - ERROR - RAG system not initialized
+2025-08-06 20:58:34,809 - __main__ - INFO - query_functionality completed in 0.0s: FAIL
+2025-08-06 20:58:34,809 - __main__ - ERROR - Critical failure in query_functionality
+2025-08-06 20:58:34,809 - __main__ - INFO - 
+--- Starting Knowledge Graph ---
+2025-08-06 20:58:34,809 - __main__ - INFO - Verifying knowledge graph construction...
+2025-08-06 20:58:34,809 - __main__ - ERROR - RAG system not initialized
+2025-08-06 20:58:34,809 - __main__ - INFO - knowledge_graph completed in 0.0s: FAIL
+2025-08-06 20:58:34,809 - __main__ - ERROR - Critical failure in knowledge_graph
+2025-08-06 20:58:34,809 - __main__ - INFO - 
+============================================================
+2025-08-06 20:58:34,809 - __main__ - INFO - VERIFICATION RESULTS SUMMARY
+2025-08-06 20:58:34,809 - __main__ - INFO - ============================================================
+2025-08-06 20:58:34,809 - __main__ - INFO - Overall Success: FAIL
+2025-08-06 20:58:34,809 - __main__ - INFO - Tests Passed: 1/5 (20.0%)
+2025-08-06 20:58:34,809 - __main__ - INFO - Execution Time: 0.3s
+2025-08-06 20:58:34,810 - __main__ - INFO -   Pdf Loading: PASS
+2025-08-06 20:58:34,810 - __main__ - INFO -   Rag System Setup: FAIL
+2025-08-06 20:58:34,810 - __main__ - INFO -   Knowledge Base Init: FAIL
+2025-08-06 20:58:34,810 - __main__ - INFO -   Query Functionality: FAIL
+2025-08-06 20:58:34,810 - __main__ - INFO -   Knowledge Graph: FAIL
+2025-08-06 20:58:34,810 - __main__ - INFO - 
+Detailed results saved to: pdf_kb_pipeline_verification_results.json
+2025-08-06 20:58:34,810 - __main__ - ERROR - Some tests failed - check logs for details

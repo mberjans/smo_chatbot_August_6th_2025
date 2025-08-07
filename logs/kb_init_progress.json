@@ -1,0 +1,66 @@
+{
+  "timestamp": "2025-08-06T19:02:17.375675",
+  "overall_progress": 0.0,
+  "current_phase": "storage_initialization",
+  "phase_progress": 0.0,
+  "status_message": "Initializing LightRAG storage systems",
+  "phase_details": {},
+  "all_phases": {
+    "storage_initialization": {
+      "phase": "storage_initialization",
+      "start_time": "2025-08-06T19:02:17.375596",
+      "end_time": null,
+      "current_progress": 0.0,
+      "status_message": "Initializing LightRAG storage systems",
+      "details": {},
+      "error_message": null,
+      "estimated_duration": 5.0,
+      "elapsed_time": 8.4e-05,
+      "is_active": true,
+      "is_completed": false,
+      "is_failed": false
+    },
+    "pdf_processing": {
+      "phase": "pdf_processing",
+      "start_time": null,
+      "end_time": null,
+      "current_progress": 0.0,
+      "status_message": "",
+      "details": {},
+      "error_message": null,
+      "estimated_duration": null,
+      "elapsed_time": 0.0,
+      "is_active": false,
+      "is_completed": false,
+      "is_failed": false
+    },
+    "document_ingestion": {
+      "phase": "document_ingestion",
+      "start_time": null,
+      "end_time": null,
+      "current_progress": 0.0,
+      "status_message": "",
+      "details": {},
+      "error_message": null,
+      "estimated_duration": null,
+      "elapsed_time": 0.0,
+      "is_active": false,
+      "is_completed": false,
+      "is_failed": false
+    },
+    "finalization": {
+      "phase": "finalization",
+      "start_time": null,
+      "end_time": null,
+      "current_progress": 0.0,
+      "status_message": "",
+      "details": {},
+      "error_message": null,
+      "estimated_duration": null,
+      "elapsed_time": 0.0,
+      "is_active": false,
+      "is_completed": false,
+      "is_failed": false
+    }
+  }
+}

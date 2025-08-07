@@ -1,0 +1,10 @@
+2024-08-07T10:00:00.000Z [API] [POST] /api/query - 200 - 1250ms - tokens:500->300 - cost:$0.024
+2024-08-07T10:00:05.000Z [API] [POST] /api/pdf/upload - 200 - 5000ms - size:2.5MB - doc_id:12345
+2024-08-07T10:00:10.000Z [API] [GET] /api/health - 200 - 50ms - status:healthy
+2024-08-07T10:00:15.000Z [API] [POST] /api/query - 200 - 900ms - tokens:300->200 - cost:$0.015
+2024-08-07T10:00:20.000Z [API] [POST] /api/embedding - 200 - 2000ms - vectors:18 - cost:$0.001
+2024-08-07T10:00:25.000Z [API] [GET] /api/budget/status - 200 - 100ms - used:23% - remaining:$7.70
+2024-08-07T10:00:30.000Z [API] [POST] /api/query - 429 - 0ms - error:rate_limit_exceeded
+2024-08-07T10:00:35.000Z [API] [POST] /api/query - 200 - 1100ms - tokens:400->250 - cost:$0.020
+2024-08-07T10:00:40.000Z [API] [DELETE] /api/temp/cleanup - 200 - 3000ms - freed:45MB - files:15
+2024-08-07T10:00:45.000Z [API] [GET] /api/metrics/performance - 200 - 200ms - avg_query_time:3.8s

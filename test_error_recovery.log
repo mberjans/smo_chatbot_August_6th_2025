@@ -1,0 +1,10 @@
+2025-08-06 10:42:45,957 - __main__ - INFO - Starting error recovery system tests
+2025-08-06 10:42:45,958 - error_simulation - INFO - Attempting memory recovery: running garbage collection and clearing caches
+2025-08-06 10:42:46,467 - error_simulation - INFO - Memory recovery completed. Current memory usage: 51.41 MB
+2025-08-06 10:42:46,467 - error_simulation - INFO - Simple recovery: waiting 0.1s before retry
+2025-08-06 10:42:46,568 - __main__ - INFO - All error recovery tests completed successfully
+2025-08-06 10:44:37,358 - __main__ - INFO - Starting error recovery system tests
+2025-08-06 10:44:37,358 - error_simulation - INFO - Attempting memory recovery: running garbage collection and clearing caches
+2025-08-06 10:44:37,868 - error_simulation - INFO - Memory recovery completed. Current memory usage: 51.81 MB
+2025-08-06 10:44:37,868 - error_simulation - INFO - Simple recovery: waiting 0.1s before retry
+2025-08-06 10:44:37,972 - __main__ - INFO - All error recovery tests completed successfully

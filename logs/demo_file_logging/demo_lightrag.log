@@ -1,0 +1,4 @@
+2025-08-06 04:32:00,334 - demo_file - INFO - Starting file logging demonstration
+2025-08-06 04:32:00,334 - demo_file - INFO - This message should appear in both console and file
+2025-08-06 04:32:00,334 - demo_file - WARNING - Testing warning level message
+2025-08-06 04:32:00,334 - demo_file - ERROR - Testing error level message

@@ -1,0 +1,40 @@
+SAMPLE CLINICAL TRIAL DOCUMENT
+
+Title: Phase II Clinical Trial of Metabolomic-Guided Therapy in Cardiovascular Disease
+Trial ID: CMO-CVD-2024-001
+Principal Investigator: Dr. Clinical Researcher
+
+STUDY OVERVIEW
+This randomized controlled trial evaluates whether metabolomic profiling can improve treatment outcomes in cardiovascular disease patients. The study compares standard care versus metabolomic-guided therapy selection.
+
+STUDY DESIGN
+- Design: Double-blind, randomized controlled trial
+- Population: Adult patients with stable coronary artery disease
+- Sample Size: 200 participants (100 per arm)
+- Duration: 12-month follow-up
+- Primary Endpoint: Major adverse cardiovascular events
+
+INCLUSION CRITERIA
+- Age 18-75 years
+- Diagnosed stable CAD
+- On standard medical therapy
+- Able to provide informed consent
+
+EXCLUSION CRITERIA
+- Acute coronary syndrome within 3 months
+- Heart failure NYHA Class III-IV
+- Renal dysfunction (eGFR < 30)
+- Active malignancy
+
+METHODOLOGY
+Baseline metabolomic profiling using targeted LC-MS/MS panel measuring:
+- Lipid species (ceramides, phospholipids)
+- Amino acid metabolites
+- Energy metabolism intermediates
+- Oxidative stress markers
+
+STATISTICAL ANALYSIS
+Primary analysis by intention-to-treat principle using Cox proportional hazards model. Secondary analyses include per-protocol analysis and metabolomic biomarker correlation studies.
+
+EXPECTED OUTCOMES
+This trial aims to demonstrate clinical utility of metabolomics in precision cardiovascular medicine, potentially improving patient outcomes through personalized therapy selection.

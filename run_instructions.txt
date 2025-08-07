@@ -1,0 +1,57 @@
+Always create and use local Python envrioment via venv. Read the following files docs/checklist.md, docs/plan.md and docs/tickets.md, if they exists.
+
+IMPORTANT: Before creating any new code, always check the existing codebase thoroughly for existing functions, classes, utilities, or patterns that can be reused or extended to complete the task. Use the codebase-retrieval tool to search for relevant existing code. Only create new code when existing code cannot be adapted or reused for the current task.
+
+For unchecked tasks on the checklists, write the program one task of one ticket at a time. Once task is finshed, check it on the docs/checklist.md, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, and switch to the next task. Once you complete tasks on one ticket, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, switch to the next ticket. After the push, update the momety bank if it exists. Never chain multiple shell command together with & sign. Never use list comprehension in python. Avoid using regular expression for pattern matching. Instead create special pattern matching function to pattern matching. Work until all bugs are fixed. Please do not ask me for conformation whether I want you to proceedto the next ticket. Just keep working until completing the last ticket.
+
+CURRENT TASK TO COMPLETE:
+Set up test data management and cleanup
+
+CONTEXT:
+- Project directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
+- You are working through a checklist systematically
+- Focus on completing the current task above
+- IMPORTANT: After completing the task, update docs/checklist.md to mark the task as complete by changing [ ] to [x]
+
+REMAINING UNCHECKED TASKS (130 total):
+→ CURRENT Set up test data management and cleanup
+  2. Execute complete test suite and verify >90% code coverage
+  3. Verify dependency on CMO-LIGHTRAG-007 completion
+  4. Write tests for response quality metrics calculation
+  5. Implement response relevance scoring system
+  6. Implement factual accuracy validation against source documents
+  7. Create performance benchmarking utilities
+  8. Implement automated quality report generation
+  9. Run quality validation and verify >80% relevance score
+  10. Verify dependency on CMO-LIGHTRAG-008 completion
+  ... and 120 more tasks
+
+CRITICAL INSTRUCTIONS:
+1. Read docs/checklist.md, docs/plan.md, and docs/tickets.md for context
+2. Focus ONLY on completing the current task: Set up test data management and cleanup
+3. Think 
+4. Create to-do list of smaller subtasks
+5. Assign task to software-engeneer subagent. Give subagent only information it needs for the task. You can also give subagent ticket-specific information extracted from docs/tickets.md as well as task specific information extracted from docs/checklist.md 
+6. Ask software-engeneer subagent to design unit tests for the subtask if appropriate
+7. Ask software-engeneer subagent to implement the code for the subtask
+8. Ask software-engeneer subagent to refactor the code for the subtask if necessary
+9. Ask software-engeneer subagent to test the code for the subtask  if appropriate
+10. If software-engeneer subagent reports failure, ask software-engeneer subagent to create a to-do list of sub-subtasks and try again. Do this up-to 5 times.
+10a. For the second attempt to do sub-task, add the following to  software-engeneer subagent prompt: "Think hard about this task and consider alternative approaches."
+10b. For the third attempt  to do sub-task, add the following to  software-engeneer subagent prompt: "Think harder about this task. Review the previous attempts and try a completely different approach."
+10c. For the forth attempt  to do sub-task, add the following to  software-engeneer subagent prompt: "Think hardest about this task. This is a critical retry - analyze what went wrong in previous attempts and implement a robust solution."
+10d. For the fifth attempt  to do sub-task, add the following to  software-engeneer subagent prompt: "Ultrathink this task. This is the final attempt before marking as failed. Use maximum creativity and problem-solving skills."
+10e. If software-engeneer subagent reports success, add all changed files to git: git add [files], then commit changes: git commit -m "descriptive message" and then push changes: git push
+10f. If software-engeneer subagent reports failure on the fifth attempt, mark the sub-task as failed and move on to the next sub-task. 
+11. Repeat steps 5-10 for each subtask
+12. Test your implementation for the whole task if applicable
+13. Add all changed files to git: git add [files]
+14. Commit changes: git commit -m "descriptive message"
+15. Push changes: git push
+16a. IMPORTANT: If all subtasks have been completed, update docs/checklist.md to mark the current task as complete: change [ ] to [x] for the current task
+16b. IMPORTANT: If some subtasks have been completed, update docs/checklist.md to append "PARTIALLY COMPLETED" to the current task description.
+16b. IMPORTANT: If all subtasks have failed, update docs/checklist.md to append "FAILED" to the current task description.
+17. Provide a summary of what you accomplished
+
+
+IMPORTANT: Think hard about this task and consider alternative approaches.
