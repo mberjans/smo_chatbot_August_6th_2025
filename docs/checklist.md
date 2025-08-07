@@ -271,7 +271,7 @@
 - [x] Implement test utilities and helper functions
 
 **CMO-LIGHTRAG-008-T07** [CODE]
-- [ ] Set up test data management and cleanup
+- [x] Set up test data management and cleanup
 
 **CMO-LIGHTRAG-008-T08** [TEST]
 - [ ] Execute complete test suite and verify >90% code coverage
