@@ -5,7 +5,7 @@ IMPORTANT: Before creating any new code, always check the existing codebase thor
 For unchecked tasks on the checklists, write the program one task of one ticket at a time. Once task is finshed, check it on the docs/checklist.md, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, and switch to the next task. Once you complete tasks on one ticket, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, switch to the next ticket. After the push, update the momety bank if it exists. Never chain multiple shell command together with & sign. Never use list comprehension in python. Avoid using regular expression for pattern matching. Instead create special pattern matching function to pattern matching. Work until all bugs are fixed. Please do not ask me for conformation whether I want you to proceedto the next ticket. Just keep working until completing the last ticket.
 
 CURRENT TASK TO COMPLETE:
-Implement factual accuracy validation against source documents
+Implement automated quality report generation
 
 CONTEXT:
 - Project directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
@@ -13,22 +13,22 @@ CONTEXT:
 - Focus on completing the current task above
 - IMPORTANT: After completing the task, update docs/checklist.md to mark the task as complete by changing [ ] to [x]
 
-REMAINING UNCHECKED TASKS (125 total):
-→ CURRENT Implement factual accuracy validation against source documents
-  2. Create performance benchmarking utilities
-  3. Implement automated quality report generation
-  4. Run quality validation and verify >80% relevance score
-  5. Verify dependency on CMO-LIGHTRAG-008 completion
-  6. Write tests for module import and export functionality
-  7. Implement __init__.py with proper exports and version info
-  8. Create integration example code for existing CMO system
-  9. Implement optional integration pattern with feature flags
-  10. Test integration examples and backward compatibility
-  ... and 115 more tasks
+REMAINING UNCHECKED TASKS (123 total):
+→ CURRENT Implement automated quality report generation
+  2. Run quality validation and verify >80% relevance score
+  3. Verify dependency on CMO-LIGHTRAG-008 completion
+  4. Write tests for module import and export functionality
+  5. Implement __init__.py with proper exports and version info
+  6. Create integration example code for existing CMO system
+  7. Implement optional integration pattern with feature flags
+  8. Test integration examples and backward compatibility
+  9. Create integration documentation and examples
+  10. Verify dependency on CMO-LIGHTRAG-007 completion
+  ... and 113 more tasks
 
 CRITICAL INSTRUCTIONS:
 1. Read docs/checklist.md, docs/plan.md, and docs/tickets.md for context
-2. Focus ONLY on completing the current task: Implement factual accuracy validation against source documents
+2. Focus ONLY on completing the current task: Implement automated quality report generation
 3. Think 
 4. Create to-do list of smaller subtasks
 5. Assign task to software-engeneer subagent. Give subagent only information it needs for the task. You can also give subagent ticket-specific information extracted from docs/tickets.md as well as task specific information extracted from docs/checklist.md 

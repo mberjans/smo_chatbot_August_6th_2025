@@ -293,10 +293,10 @@
 - [x] Implement factual accuracy validation against source documents
 
 **CMO-LIGHTRAG-009-T04** [CODE]
-- [ ] Create performance benchmarking utilities
+- [x] Create performance benchmarking utilities
 
 **CMO-LIGHTRAG-009-T05** [CODE]
-- [ ] Implement automated quality report generation
+- [x] Implement automated quality report generation
 
 **CMO-LIGHTRAG-009-T06** [VALIDATE]
 - [ ] Run quality validation and verify >80% relevance score
