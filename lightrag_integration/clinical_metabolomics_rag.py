@@ -500,7 +500,7 @@ def classify_query_exception(exception: Exception, query: Optional[str] = None, 
         'invalid', 'parameter', 'validation', 'malformed'
     ]):
         return QueryValidationError(
-            f"Query parameter validation failed: {exception}",
+            f"Query processing failed: {exception}",
             query=query,
             query_mode=query_mode,
             error_code='VALIDATION_ERROR'
@@ -521,7 +521,7 @@ def classify_query_exception(exception: Exception, query: Optional[str] = None, 
             lightrag_error_type = 'chunking_error'
         
         return QueryLightRAGError(
-            f"LightRAG internal error: {exception}",
+            f"Query processing failed: {exception}",
             query=query,
             query_mode=query_mode,
             lightrag_error_type=lightrag_error_type,
@@ -541,7 +541,7 @@ def classify_query_exception(exception: Exception, query: Optional[str] = None, 
     
     # Default to retryable error for unknown issues
     return QueryRetryableError(
-        f"Unknown query error (retryable): {exception}",
+        f"Query processing failed: {exception}",
         query=query,
         query_mode=query_mode,
         retry_after=30  # Default retry after 30 seconds
@@ -8163,12 +8163,7 @@ class ClinicalMetabolomicsRAG:
             QueryError: If query processing fails (specific subclass based on error type)
         """
         if not query or not query.strip():
-            raise QueryValidationError(
-                "Query cannot be empty",
-                parameter_name="query",
-                parameter_value=query,
-                error_code="EMPTY_QUERY"
-            )
+            raise ValueError("Query cannot be empty")
         
         if not self.is_initialized:
             raise QueryNonRetryableError(
@@ -8216,7 +8211,7 @@ class ClinicalMetabolomicsRAG:
                 self._validate_query_param_kwargs(query_param_kwargs)
             except (ValueError, TypeError) as ve:
                 raise QueryValidationError(
-                    f"Query parameter validation failed: {ve}",
+                    f"Query processing failed: {ve}",
                     query=query,
                     query_mode=mode,
                     error_code='PARAM_VALIDATION_ERROR'
@@ -8565,12 +8560,7 @@ class ClinicalMetabolomicsRAG:
             )
         
         if not query or not query.strip():
-            raise QueryValidationError(
-                "Query cannot be empty",
-                parameter_name="query", 
-                parameter_value=query,
-                error_code="EMPTY_QUERY"
-            )
+            raise ValueError("Query cannot be empty")
         
         if not self.is_initialized:
             raise QueryNonRetryableError(
@@ -8773,7 +8763,7 @@ class ClinicalMetabolomicsRAG:
                 query_param_kwargs['max_total_tokens'] = model_max_tokens
             
             # Validate parameter combinations
-            if top_k > 50 and max_total_tokens > 16000:
+            if top_k > 50 and max_total_tokens > 500:
                 self.logger.warning(
                     f"High top_k ({top_k}) with large max_total_tokens ({max_total_tokens}) "
                     f"may cause long response times or memory issues"
