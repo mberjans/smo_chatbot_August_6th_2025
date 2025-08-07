@@ -203,7 +203,7 @@
 - [x] Integrate PDF processor with document ingestion
 
 **CMO-LIGHTRAG-006-T06** [CODE]
-- [ ] Add progress tracking during knowledge base construction
+- [x] Add progress tracking during knowledge base construction
 
 **CMO-LIGHTRAG-006-T07** [CODE]
 - [ ] Implement error handling for ingestion failures
