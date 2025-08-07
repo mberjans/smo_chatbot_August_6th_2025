@@ -302,7 +302,7 @@
 - [x] Run quality validation and verify >80% relevance score
 
 **CMO-LIGHTRAG-009-T07** [VALIDATE]
-- [ ] Verify dependency on CMO-LIGHTRAG-008 completion
+- [x] Verify dependency on CMO-LIGHTRAG-008 completion
 
 ---
 
