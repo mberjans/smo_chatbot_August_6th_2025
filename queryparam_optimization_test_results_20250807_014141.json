@@ -1,0 +1,1213 @@
+{
+  "test_run_info": {
+    "timestamp": "2025-08-07T01:41:41.740560",
+    "total_execution_time": 0.05280709266662598,
+    "total_tests": 8,
+    "passed_tests": 4,
+    "failed_tests": 4,
+    "success_rate": 0.5
+  },
+  "test_results": {
+    "default_parameter_improvements": {
+      "passed": true,
+      "execution_time": 2.1457672119140625e-06,
+      "details": {
+        "expected_top_k": 16,
+        "actual_top_k": 16,
+        "expected_tokens": 8000,
+        "actual_tokens": 8000,
+        "full_params": {
+          "top_k": 16,
+          "max_total_tokens": 8000,
+          "response_type": "Multiple Paragraphs"
+        }
+      },
+      "error_message": null
+    },
+    "dynamic_token_allocation": {
+      "passed": true,
+      "execution_time": 0.0037729740142822266,
+      "details": {
+        "test_cases": [
+          {
+            "query": "diabetes metabolism and glucose regulation",
+            "smart_tokens": 10200,
+            "baseline_tokens": 8000,
+            "smart_top_k": 16,
+            "baseline_top_k": 16,
+            "token_boost_detected": true,
+            "top_k_adjustment_detected": false,
+            "expected_boost": true,
+            "passed": true
+          },
+          {
+            "query": "cancer metabolomics biomarker discovery",
+            "smart_tokens": 9360.0,
+            "baseline_tokens": 8000,
+            "smart_top_k": 16,
+            "baseline_top_k": 16,
+            "token_boost_detected": true,
+            "top_k_adjustment_detected": false,
+            "expected_boost": true,
+            "passed": true
+          },
+          {
+            "query": "simple metabolite identification",
+            "smart_tokens": 4800.0,
+            "baseline_tokens": 8000,
+            "smart_top_k": 10,
+            "baseline_top_k": 16,
+            "token_boost_detected": false,
+            "top_k_adjustment_detected": true,
+            "expected_boost": false,
+            "passed": true
+          }
+        ],
+        "all_passed": true,
+        "total_cases": 3
+      },
+      "error_message": null
+    },
+    "query_pattern_detection": {
+      "passed": false,
+      "execution_time": 0.001020193099975586,
+      "details": {
+        "pattern_tests": [
+          {
+            "query": "What is glucose and its metabolic role?",
+            "detected_pattern": null,
+            "expected_patterns": [
+              "metabolite_identification"
+            ],
+            "suggested_mode": "hybrid",
+            "expected_mode": "naive",
+            "pattern_matched": false,
+            "mode_matched": false,
+            "smart_params": {
+              "top_k": 16,
+              "max_total_tokens": 8000,
+              "response_type": "Multiple Paragraphs"
+            },
+            "passed": false
+          },
+          {
+            "query": "How does the TCA cycle connect to lipid metabolism pathways?",
+            "detected_pattern": null,
+            "expected_patterns": [
+              "pathway_analysis"
+            ],
+            "suggested_mode": "hybrid",
+            "expected_mode": "global",
+            "pattern_matched": false,
+            "mode_matched": false,
+            "smart_params": {
+              "top_k": 16,
+              "max_total_tokens": 8000,
+              "response_type": "Multiple Paragraphs"
+            },
+            "passed": false
+          },
+          {
+            "query": "Find biomarkers for cardiovascular disease using LC-MS",
+            "detected_pattern": "disease_association",
+            "expected_patterns": [
+              "biomarker_discovery",
+              "platform_specific"
+            ],
+            "suggested_mode": "hybrid",
+            "expected_mode": "hybrid",
+            "pattern_matched": false,
+            "mode_matched": true,
+            "smart_params": {
+              "top_k": 16,
+              "max_total_tokens": 9775,
+              "response_type": "Multiple Paragraphs",
+              "confidence_threshold": 0.7,
+              "query_patterns": [
+                "disease.*association",
+                "disease.*metabolite",
+                "clinical.*correlation",
+                "pathophysiology",
+                "disease.*mechanism",
+                "metabolic.*disorder",
+                "diabetes.*metabolomics",
+                "cancer.*metabolomics",
+                "cardiovascular.*metabolomics",
+                "neurological.*metabolomics",
+                "kidney.*metabolomics",
+                "liver.*metabolomics",
+                "metabolic.*dysfunction",
+                "metabolic.*dysregulation",
+                "metabolic.*disturbance",
+                "disease.*pathogenesis",
+                "metabolic.*phenotype",
+                "disease.*phenotype",
+                "metabolic.*signature",
+                "disease.*signature",
+                "metabolic.*profile"
+              ],
+              "disease_multipliers": {
+                "diabetes": 1.2,
+                "cancer": 1.3,
+                "cardiovascular": 1.15,
+                "neurological": 1.25,
+                "rare_disease": 1.4,
+                "metabolic_syndrome": 1.25,
+                "inflammatory": 1.2,
+                "autoimmune": 1.3
+              }
+            },
+            "passed": false
+          },
+          {
+            "query": "Compare metabolomic profiles in diabetic vs healthy patients",
+            "detected_pattern": "comparative_analysis",
+            "expected_patterns": [
+              "comparative_analysis"
+            ],
+            "suggested_mode": "global",
+            "expected_mode": "hybrid",
+            "pattern_matched": true,
+            "mode_matched": false,
+            "smart_params": {
+              "top_k": 24,
+              "max_total_tokens": 12000,
+              "response_type": "Multiple Paragraphs",
+              "confidence_threshold": 0.7,
+              "query_patterns": [
+                "compare.*studies",
+                "comparative.*analysis",
+                "cross.*study",
+                "meta.*analysis",
+                "systematic.*review",
+                "study.*comparison",
+                "method.*comparison",
+                "platform.*comparison",
+                "technique.*comparison",
+                "population.*study",
+                "cohort.*analysis",
+                "case.*control",
+                "longitudinal.*study",
+                "cross.*sectional",
+                "epidemiological",
+                "multi.*center",
+                "multi.*cohort",
+                "validation.*cohort"
+              ]
+            },
+            "passed": true
+          },
+          {
+            "query": "LC-MS analysis protocol for amino acid quantification",
+            "detected_pattern": "metabolite_identification",
+            "expected_patterns": [
+              "platform_specific.lc_ms"
+            ],
+            "suggested_mode": "local",
+            "expected_mode": "local",
+            "pattern_matched": false,
+            "mode_matched": true,
+            "smart_params": {
+              "top_k": 12,
+              "max_total_tokens": 6000,
+              "response_type": "Single String",
+              "confidence_threshold": 0.8,
+              "query_patterns": [
+                "metabolite.*identification",
+                "identify.*metabolite",
+                "what.*is.*\\b\\w+ine\\b",
+                "chemical.*structure",
+                "molecular.*formula",
+                "mass.*spectrum",
+                "\\b\\w+acid\\b.*structure",
+                "\\b\\w+ose\\b.*identification",
+                "\\b\\w+ol\\b.*compound",
+                "compound.*identification",
+                "chemical.*identity",
+                "structural.*elucidation",
+                "metabolite.*characterization",
+                "metabolite.*annotation",
+                "peak.*identification",
+                "MS/MS.*identification",
+                "spectral.*match",
+                "library.*search",
+                "amino.*acid.*identification",
+                "fatty.*acid.*identification",
+                "steroid.*identification",
+                "nucleotide.*identification",
+                "carbohydrate.*identification"
+              ]
+            },
+            "passed": false
+          }
+        ],
+        "all_passed": false,
+        "total_tests": 5
+      },
+      "error_message": null
+    },
+    "platform_specific_configurations": {
+      "passed": false,
+      "execution_time": 0.0023610591888427734,
+      "details": {
+        "platform_tests": [
+          {
+            "platform": "lc_ms",
+            "query": "LC-MS analysis of amino acids in plasma samples",
+            "detected_pattern": null,
+            "platform_detected": null,
+            "top_k": 16,
+            "tokens": 8000,
+            "platform_valid": true,
+            "passed": null
+          },
+          {
+            "platform": "lc_ms",
+            "query": "UPLC-MS/MS method for lipid profiling",
+            "detected_pattern": null,
+            "platform_detected": null,
+            "top_k": 16,
+            "tokens": 8000,
+            "platform_valid": true,
+            "passed": null
+          },
+          {
+            "platform": "gc_ms",
+            "query": "GC-MS analysis of volatile organic compounds",
+            "detected_pattern": null,
+            "platform_detected": null,
+            "top_k": 16,
+            "tokens": 8000,
+            "platform_valid": false,
+            "passed": null
+          },
+          {
+            "platform": "gc_ms",
+            "query": "Gas chromatography protocol for fatty acids",
+            "detected_pattern": "platform_specific.gc_ms",
+            "platform_detected": true,
+            "top_k": 12,
+            "tokens": 6500,
+            "platform_valid": true,
+            "passed": true
+          },
+          {
+            "platform": "nmr",
+            "query": "NMR spectroscopy for metabolite identification",
+            "detected_pattern": "metabolite_identification",
+            "platform_detected": false,
+            "top_k": 12,
+            "tokens": 6000,
+            "platform_valid": false,
+            "passed": false
+          },
+          {
+            "platform": "nmr",
+            "query": "Nuclear magnetic resonance analysis protocol",
+            "detected_pattern": "platform_specific.nmr",
+            "platform_detected": true,
+            "top_k": 15,
+            "tokens": 8000,
+            "platform_valid": true,
+            "passed": true
+          },
+          {
+            "platform": "targeted",
+            "query": "Targeted metabolomics assay development",
+            "detected_pattern": "platform_specific.targeted",
+            "platform_detected": true,
+            "top_k": 8,
+            "tokens": 4400.0,
+            "platform_valid": false,
+            "passed": false
+          },
+          {
+            "platform": "targeted",
+            "query": "Quantitative analysis of specific biomarkers",
+            "detected_pattern": null,
+            "platform_detected": null,
+            "top_k": 16,
+            "tokens": 8000,
+            "platform_valid": false,
+            "passed": null
+          },
+          {
+            "platform": "untargeted",
+            "query": "Untargeted metabolomics discovery workflow",
+            "detected_pattern": "platform_specific.targeted",
+            "platform_detected": false,
+            "top_k": 8,
+            "tokens": 4400.0,
+            "platform_valid": false,
+            "passed": false
+          },
+          {
+            "platform": "untargeted",
+            "query": "Global metabolome profiling approach",
+            "detected_pattern": null,
+            "platform_detected": null,
+            "top_k": 14,
+            "tokens": 6400.0,
+            "platform_valid": false,
+            "passed": null
+          }
+        ],
+        "all_passed": false,
+        "total_tests": 10,
+        "platforms_tested": [
+          "lc_ms",
+          "gc_ms",
+          "nmr",
+          "targeted",
+          "untargeted"
+        ]
+      },
+      "error_message": null
+    },
+    "clinical_query_patterns": {
+      "passed": false,
+      "execution_time": 0.0025539398193359375,
+      "details": {
+        "category_results": {
+          "metabolite_identification": {
+            "tests": [
+              {
+                "category": "metabolite_identification",
+                "query": "What is the role of glucose metabolism in diabetes?",
+                "detected_pattern": "disease_association",
+                "smart_params": {
+                  "top_k": 16,
+                  "max_total_tokens": 10200,
+                  "response_type": "Multiple Paragraphs",
+                  "confidence_threshold": 0.7,
+                  "query_patterns": [
+                    "disease.*association",
+                    "disease.*metabolite",
+                    "clinical.*correlation",
+                    "pathophysiology",
+                    "disease.*mechanism",
+                    "metabolic.*disorder",
+                    "diabetes.*metabolomics",
+                    "cancer.*metabolomics",
+                    "cardiovascular.*metabolomics",
+                    "neurological.*metabolomics",
+                    "kidney.*metabolomics",
+                    "liver.*metabolomics",
+                    "metabolic.*dysfunction",
+                    "metabolic.*dysregulation",
+                    "metabolic.*disturbance",
+                    "disease.*pathogenesis",
+                    "metabolic.*phenotype",
+                    "disease.*phenotype",
+                    "metabolic.*signature",
+                    "disease.*signature",
+                    "metabolic.*profile"
+                  ],
+                  "disease_multipliers": {
+                    "diabetes": 1.2,
+                    "cancer": 1.3,
+                    "cardiovascular": 1.15,
+                    "neurological": 1.25,
+                    "rare_disease": 1.4,
+                    "metabolic_syndrome": 1.25,
+                    "inflammatory": 1.2,
+                    "autoimmune": 1.3
+                  },
+                  "_suggested_mode": "hybrid",
+                  "_pattern_detected": "disease_association",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 9,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": true
+              },
+              {
+                "category": "metabolite_identification",
+                "query": "Identify the metabolite lactate in muscle tissue",
+                "detected_pattern": "metabolite_identification",
+                "smart_params": {
+                  "top_k": 12,
+                  "max_total_tokens": 6000,
+                  "response_type": "Single String",
+                  "confidence_threshold": 0.8,
+                  "query_patterns": [
+                    "metabolite.*identification",
+                    "identify.*metabolite",
+                    "what.*is.*\\b\\w+ine\\b",
+                    "chemical.*structure",
+                    "molecular.*formula",
+                    "mass.*spectrum",
+                    "\\b\\w+acid\\b.*structure",
+                    "\\b\\w+ose\\b.*identification",
+                    "\\b\\w+ol\\b.*compound",
+                    "compound.*identification",
+                    "chemical.*identity",
+                    "structural.*elucidation",
+                    "metabolite.*characterization",
+                    "metabolite.*annotation",
+                    "peak.*identification",
+                    "MS/MS.*identification",
+                    "spectral.*match",
+                    "library.*search",
+                    "amino.*acid.*identification",
+                    "fatty.*acid.*identification",
+                    "steroid.*identification",
+                    "nucleotide.*identification",
+                    "carbohydrate.*identification"
+                  ],
+                  "_suggested_mode": "local",
+                  "_pattern_detected": "metabolite_identification",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 7,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": true
+              }
+            ],
+            "passed": true
+          },
+          "pathway_analysis": {
+            "tests": [
+              {
+                "category": "pathway_analysis",
+                "query": "How does the TCA cycle relate to cancer metabolism?",
+                "detected_pattern": "disease_association",
+                "smart_params": {
+                  "top_k": 16,
+                  "max_total_tokens": 11050,
+                  "response_type": "Multiple Paragraphs",
+                  "confidence_threshold": 0.7,
+                  "query_patterns": [
+                    "disease.*association",
+                    "disease.*metabolite",
+                    "clinical.*correlation",
+                    "pathophysiology",
+                    "disease.*mechanism",
+                    "metabolic.*disorder",
+                    "diabetes.*metabolomics",
+                    "cancer.*metabolomics",
+                    "cardiovascular.*metabolomics",
+                    "neurological.*metabolomics",
+                    "kidney.*metabolomics",
+                    "liver.*metabolomics",
+                    "metabolic.*dysfunction",
+                    "metabolic.*dysregulation",
+                    "metabolic.*disturbance",
+                    "disease.*pathogenesis",
+                    "metabolic.*phenotype",
+                    "disease.*phenotype",
+                    "metabolic.*signature",
+                    "disease.*signature",
+                    "metabolic.*profile"
+                  ],
+                  "disease_multipliers": {
+                    "diabetes": 1.2,
+                    "cancer": 1.3,
+                    "cardiovascular": 1.15,
+                    "neurological": 1.25,
+                    "rare_disease": 1.4,
+                    "metabolic_syndrome": 1.25,
+                    "inflammatory": 1.2,
+                    "autoimmune": 1.3
+                  },
+                  "_suggested_mode": "hybrid",
+                  "_pattern_detected": "disease_association",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 9,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": true
+              },
+              {
+                "category": "pathway_analysis",
+                "query": "Explain the glycolysis pathway in detail",
+                "detected_pattern": "pathway_analysis",
+                "smart_params": {
+                  "top_k": 20,
+                  "max_total_tokens": 10000,
+                  "response_type": "Multiple Paragraphs",
+                  "confidence_threshold": 0.7,
+                  "query_patterns": [
+                    "pathway.*analysis",
+                    "metabolic.*pathway",
+                    "biochemical.*pathway",
+                    "pathway.*regulation",
+                    "pathway.*interaction",
+                    "metabolic.*network",
+                    "metabolic.*network",
+                    "pathway.*enrichment",
+                    "pathway.*mapping",
+                    "systems.*biology",
+                    "network.*analysis",
+                    "metabolic.*flux",
+                    "flux.*balance.*analysis",
+                    "pathway.*reconstruction",
+                    "metabolic.*modeling",
+                    "glycolysis.*pathway",
+                    "TCA.*cycle",
+                    "pentose.*phosphate",
+                    "fatty.*acid.*synthesis",
+                    "amino.*acid.*metabolism",
+                    "purine.*pathway",
+                    "steroid.*biosynthesis",
+                    "cholesterol.*pathway",
+                    "urea.*cycle",
+                    "metabolic.*regulation",
+                    "allosteric.*regulation",
+                    "enzyme.*regulation",
+                    "pathway.*crosstalk",
+                    "metabolic.*coordination"
+                  ],
+                  "_suggested_mode": "global",
+                  "_pattern_detected": "pathway_analysis",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 6,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": true
+              }
+            ],
+            "passed": true
+          },
+          "biomarker_discovery": {
+            "tests": [
+              {
+                "category": "biomarker_discovery",
+                "query": "Identify biomarkers for cardiovascular disease using metabolomics",
+                "detected_pattern": "disease_association",
+                "smart_params": {
+                  "top_k": 16,
+                  "max_total_tokens": 9775,
+                  "response_type": "Multiple Paragraphs",
+                  "confidence_threshold": 0.7,
+                  "query_patterns": [
+                    "disease.*association",
+                    "disease.*metabolite",
+                    "clinical.*correlation",
+                    "pathophysiology",
+                    "disease.*mechanism",
+                    "metabolic.*disorder",
+                    "diabetes.*metabolomics",
+                    "cancer.*metabolomics",
+                    "cardiovascular.*metabolomics",
+                    "neurological.*metabolomics",
+                    "kidney.*metabolomics",
+                    "liver.*metabolomics",
+                    "metabolic.*dysfunction",
+                    "metabolic.*dysregulation",
+                    "metabolic.*disturbance",
+                    "disease.*pathogenesis",
+                    "metabolic.*phenotype",
+                    "disease.*phenotype",
+                    "metabolic.*signature",
+                    "disease.*signature",
+                    "metabolic.*profile"
+                  ],
+                  "disease_multipliers": {
+                    "diabetes": 1.2,
+                    "cancer": 1.3,
+                    "cardiovascular": 1.15,
+                    "neurological": 1.25,
+                    "rare_disease": 1.4,
+                    "metabolic_syndrome": 1.25,
+                    "inflammatory": 1.2,
+                    "autoimmune": 1.3
+                  },
+                  "_suggested_mode": "hybrid",
+                  "_pattern_detected": "disease_association",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 7,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": true
+              },
+              {
+                "category": "biomarker_discovery",
+                "query": "What metabolites are elevated in Alzheimer's disease?",
+                "detected_pattern": "disease_association",
+                "smart_params": {
+                  "top_k": 16,
+                  "max_total_tokens": 8500,
+                  "response_type": "Multiple Paragraphs",
+                  "confidence_threshold": 0.7,
+                  "query_patterns": [
+                    "disease.*association",
+                    "disease.*metabolite",
+                    "clinical.*correlation",
+                    "pathophysiology",
+                    "disease.*mechanism",
+                    "metabolic.*disorder",
+                    "diabetes.*metabolomics",
+                    "cancer.*metabolomics",
+                    "cardiovascular.*metabolomics",
+                    "neurological.*metabolomics",
+                    "kidney.*metabolomics",
+                    "liver.*metabolomics",
+                    "metabolic.*dysfunction",
+                    "metabolic.*dysregulation",
+                    "metabolic.*disturbance",
+                    "disease.*pathogenesis",
+                    "metabolic.*phenotype",
+                    "disease.*phenotype",
+                    "metabolic.*signature",
+                    "disease.*signature",
+                    "metabolic.*profile"
+                  ],
+                  "disease_multipliers": {
+                    "diabetes": 1.2,
+                    "cancer": 1.3,
+                    "cardiovascular": 1.15,
+                    "neurological": 1.25,
+                    "rare_disease": 1.4,
+                    "metabolic_syndrome": 1.25,
+                    "inflammatory": 1.2,
+                    "autoimmune": 1.3
+                  },
+                  "_suggested_mode": "hybrid",
+                  "_pattern_detected": "disease_association",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 7,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": true
+              }
+            ],
+            "passed": true
+          },
+          "clinical_diagnostics": {
+            "tests": [
+              {
+                "category": "clinical_diagnostics",
+                "query": "How can metabolomics be used for cancer diagnosis?",
+                "detected_pattern": "disease_association",
+                "smart_params": {
+                  "top_k": 18,
+                  "max_total_tokens": 11050,
+                  "response_type": "Multiple Paragraphs",
+                  "confidence_threshold": 0.7,
+                  "query_patterns": [
+                    "disease.*association",
+                    "disease.*metabolite",
+                    "clinical.*correlation",
+                    "pathophysiology",
+                    "disease.*mechanism",
+                    "metabolic.*disorder",
+                    "diabetes.*metabolomics",
+                    "cancer.*metabolomics",
+                    "cardiovascular.*metabolomics",
+                    "neurological.*metabolomics",
+                    "kidney.*metabolomics",
+                    "liver.*metabolomics",
+                    "metabolic.*dysfunction",
+                    "metabolic.*dysregulation",
+                    "metabolic.*disturbance",
+                    "disease.*pathogenesis",
+                    "metabolic.*phenotype",
+                    "disease.*phenotype",
+                    "metabolic.*signature",
+                    "disease.*signature",
+                    "metabolic.*profile"
+                  ],
+                  "disease_multipliers": {
+                    "diabetes": 1.2,
+                    "cancer": 1.3,
+                    "cardiovascular": 1.15,
+                    "neurological": 1.25,
+                    "rare_disease": 1.4,
+                    "metabolic_syndrome": 1.25,
+                    "inflammatory": 1.2,
+                    "autoimmune": 1.3
+                  },
+                  "_clinical_context_boost": true,
+                  "_suggested_mode": "hybrid",
+                  "_pattern_detected": "disease_association",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 8,
+                  "_has_clinical_terms": true
+                },
+                "params_valid": true,
+                "passed": true
+              },
+              {
+                "category": "clinical_diagnostics",
+                "query": "What are the metabolomic changes in kidney disease?",
+                "detected_pattern": "disease_association",
+                "smart_params": {
+                  "top_k": 16,
+                  "max_total_tokens": 8500,
+                  "response_type": "Multiple Paragraphs",
+                  "confidence_threshold": 0.7,
+                  "query_patterns": [
+                    "disease.*association",
+                    "disease.*metabolite",
+                    "clinical.*correlation",
+                    "pathophysiology",
+                    "disease.*mechanism",
+                    "metabolic.*disorder",
+                    "diabetes.*metabolomics",
+                    "cancer.*metabolomics",
+                    "cardiovascular.*metabolomics",
+                    "neurological.*metabolomics",
+                    "kidney.*metabolomics",
+                    "liver.*metabolomics",
+                    "metabolic.*dysfunction",
+                    "metabolic.*dysregulation",
+                    "metabolic.*disturbance",
+                    "disease.*pathogenesis",
+                    "metabolic.*phenotype",
+                    "disease.*phenotype",
+                    "metabolic.*signature",
+                    "disease.*signature",
+                    "metabolic.*profile"
+                  ],
+                  "disease_multipliers": {
+                    "diabetes": 1.2,
+                    "cancer": 1.3,
+                    "cardiovascular": 1.15,
+                    "neurological": 1.25,
+                    "rare_disease": 1.4,
+                    "metabolic_syndrome": 1.25,
+                    "inflammatory": 1.2,
+                    "autoimmune": 1.3
+                  },
+                  "_suggested_mode": "hybrid",
+                  "_pattern_detected": "disease_association",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 8,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": true
+              }
+            ],
+            "passed": true
+          },
+          "analytical_methods": {
+            "tests": [
+              {
+                "category": "analytical_methods",
+                "query": "What are the LC-MS methods for analyzing amino acids?",
+                "detected_pattern": null,
+                "smart_params": {
+                  "top_k": 16,
+                  "max_total_tokens": 8000,
+                  "response_type": "Multiple Paragraphs",
+                  "_suggested_mode": "hybrid",
+                  "_pattern_detected": null,
+                  "_confidence_level": "hybrid_fallback",
+                  "_fallback_used": "default",
+                  "_query_length": 9,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": false
+              },
+              {
+                "category": "analytical_methods",
+                "query": "How to perform GC-MS analysis of volatile metabolites?",
+                "detected_pattern": "platform_specific.gc_ms",
+                "smart_params": {
+                  "top_k": 12,
+                  "max_total_tokens": 6500,
+                  "response_type": "Multiple Paragraphs",
+                  "query_patterns": [
+                    "GC-MS",
+                    "gas.*chromatography",
+                    "volatile.*metabolite"
+                  ],
+                  "_pattern_detected": "platform_specific.gc_ms",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 8,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": true
+              }
+            ],
+            "passed": false
+          },
+          "comparative_analysis": {
+            "tests": [
+              {
+                "category": "comparative_analysis",
+                "query": "Compare metabolomic profiles between healthy and diabetic patients",
+                "detected_pattern": "comparative_analysis",
+                "smart_params": {
+                  "top_k": 24,
+                  "max_total_tokens": 12000,
+                  "response_type": "Multiple Paragraphs",
+                  "confidence_threshold": 0.7,
+                  "query_patterns": [
+                    "compare.*studies",
+                    "comparative.*analysis",
+                    "cross.*study",
+                    "meta.*analysis",
+                    "systematic.*review",
+                    "study.*comparison",
+                    "method.*comparison",
+                    "platform.*comparison",
+                    "technique.*comparison",
+                    "population.*study",
+                    "cohort.*analysis",
+                    "case.*control",
+                    "longitudinal.*study",
+                    "cross.*sectional",
+                    "epidemiological",
+                    "multi.*center",
+                    "multi.*cohort",
+                    "validation.*cohort"
+                  ],
+                  "_suggested_mode": "global",
+                  "_pattern_detected": "comparative_analysis",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 8,
+                  "_has_clinical_terms": true
+                },
+                "params_valid": true,
+                "passed": true
+              },
+              {
+                "category": "comparative_analysis",
+                "query": "Analyze differences in metabolites between cancer and control groups",
+                "detected_pattern": "disease_association",
+                "smart_params": {
+                  "top_k": 16,
+                  "max_total_tokens": 11050,
+                  "response_type": "Multiple Paragraphs",
+                  "confidence_threshold": 0.7,
+                  "query_patterns": [
+                    "disease.*association",
+                    "disease.*metabolite",
+                    "clinical.*correlation",
+                    "pathophysiology",
+                    "disease.*mechanism",
+                    "metabolic.*disorder",
+                    "diabetes.*metabolomics",
+                    "cancer.*metabolomics",
+                    "cardiovascular.*metabolomics",
+                    "neurological.*metabolomics",
+                    "kidney.*metabolomics",
+                    "liver.*metabolomics",
+                    "metabolic.*dysfunction",
+                    "metabolic.*dysregulation",
+                    "metabolic.*disturbance",
+                    "disease.*pathogenesis",
+                    "metabolic.*phenotype",
+                    "disease.*phenotype",
+                    "metabolic.*signature",
+                    "disease.*signature",
+                    "metabolic.*profile"
+                  ],
+                  "disease_multipliers": {
+                    "diabetes": 1.2,
+                    "cancer": 1.3,
+                    "cardiovascular": 1.15,
+                    "neurological": 1.25,
+                    "rare_disease": 1.4,
+                    "metabolic_syndrome": 1.25,
+                    "inflammatory": 1.2,
+                    "autoimmune": 1.3
+                  },
+                  "_suggested_mode": "hybrid",
+                  "_pattern_detected": "disease_association",
+                  "_confidence_level": "high",
+                  "_fallback_used": null,
+                  "_query_length": 9,
+                  "_has_clinical_terms": false
+                },
+                "params_valid": true,
+                "passed": true
+              }
+            ],
+            "passed": true
+          }
+        },
+        "all_passed": false,
+        "total_categories": 6,
+        "total_queries_tested": 12
+      },
+      "error_message": null
+    },
+    "response_optimization": {
+      "passed": true,
+      "execution_time": 0.0003712177276611328,
+      "details": {
+        "response_tests": [
+          {
+            "query": "What is glucose?",
+            "expected_response_type": "Single String",
+            "actual_response_type": "Multiple Paragraphs",
+            "has_clinical_boost": false,
+            "has_enhancement": false,
+            "smart_params": {
+              "top_k": 14,
+              "max_total_tokens": 6400.0,
+              "response_type": "Multiple Paragraphs",
+              "_suggested_mode": "hybrid",
+              "_pattern_detected": null,
+              "_confidence_level": "hybrid_fallback",
+              "_fallback_used": "default",
+              "_query_length": 3,
+              "_has_clinical_terms": false
+            },
+            "response_type_matched": false,
+            "passed": true
+          },
+          {
+            "query": "Explain the TCA cycle pathway in detail",
+            "expected_response_type": "Multiple Paragraphs",
+            "actual_response_type": "Multiple Paragraphs",
+            "has_clinical_boost": false,
+            "has_enhancement": false,
+            "smart_params": {
+              "top_k": 16,
+              "max_total_tokens": 8000,
+              "response_type": "Multiple Paragraphs",
+              "_suggested_mode": "hybrid",
+              "_pattern_detected": null,
+              "_confidence_level": "hybrid_fallback",
+              "_fallback_used": "default",
+              "_query_length": 7,
+              "_has_clinical_terms": false
+            },
+            "response_type_matched": true,
+            "passed": true
+          },
+          {
+            "query": "Find biomarkers for cardiovascular disease",
+            "expected_response_type": "Multiple Paragraphs",
+            "actual_response_type": "Multiple Paragraphs",
+            "has_clinical_boost": false,
+            "has_enhancement": false,
+            "smart_params": {
+              "top_k": 16,
+              "max_total_tokens": 9775,
+              "response_type": "Multiple Paragraphs",
+              "confidence_threshold": 0.7,
+              "query_patterns": [
+                "disease.*association",
+                "disease.*metabolite",
+                "clinical.*correlation",
+                "pathophysiology",
+                "disease.*mechanism",
+                "metabolic.*disorder",
+                "diabetes.*metabolomics",
+                "cancer.*metabolomics",
+                "cardiovascular.*metabolomics",
+                "neurological.*metabolomics",
+                "kidney.*metabolomics",
+                "liver.*metabolomics",
+                "metabolic.*dysfunction",
+                "metabolic.*dysregulation",
+                "metabolic.*disturbance",
+                "disease.*pathogenesis",
+                "metabolic.*phenotype",
+                "disease.*phenotype",
+                "metabolic.*signature",
+                "disease.*signature",
+                "metabolic.*profile"
+              ],
+              "disease_multipliers": {
+                "diabetes": 1.2,
+                "cancer": 1.3,
+                "cardiovascular": 1.15,
+                "neurological": 1.25,
+                "rare_disease": 1.4,
+                "metabolic_syndrome": 1.25,
+                "inflammatory": 1.2,
+                "autoimmune": 1.3
+              },
+              "_suggested_mode": "hybrid",
+              "_pattern_detected": "disease_association",
+              "_confidence_level": "high",
+              "_fallback_used": null,
+              "_query_length": 5,
+              "_has_clinical_terms": false
+            },
+            "response_type_matched": true,
+            "passed": true
+          }
+        ],
+        "all_passed": true,
+        "total_tests": 3
+      },
+      "error_message": null
+    },
+    "integration_pipeline": {
+      "passed": false,
+      "execution_time": 0.0004487037658691406,
+      "details": {
+        "pipeline_tests": [
+          {
+            "query": "What is the role of glucose metabolism in diabetes?",
+            "error": "'ClinicalMetabolomicsRAG' object has no attribute '_validate_query_param_arguments'",
+            "passed": false
+          },
+          {
+            "query": "How does the TCA cycle relate to cancer metabolism?",
+            "error": "'ClinicalMetabolomicsRAG' object has no attribute '_validate_query_param_arguments'",
+            "passed": false
+          },
+          {
+            "query": "Identify biomarkers for cardiovascular disease using metabolomics",
+            "error": "'ClinicalMetabolomicsRAG' object has no attribute '_validate_query_param_arguments'",
+            "passed": false
+          }
+        ],
+        "all_passed": false,
+        "total_tests": 3
+      },
+      "error_message": null
+    },
+    "performance_benchmarks": {
+      "passed": true,
+      "execution_time": 0.0026183128356933594,
+      "details": {
+        "performance_results": [
+          {
+            "iteration": 0,
+            "query": "What is glucose metabolism?",
+            "execution_time": 0.00016188621520996094,
+            "params_generated": true,
+            "pattern_detected": false
+          },
+          {
+            "iteration": 0,
+            "query": "How does the TCA cycle work?",
+            "execution_time": 0.0001609325408935547,
+            "params_generated": true,
+            "pattern_detected": false
+          },
+          {
+            "iteration": 0,
+            "query": "Find biomarkers for diabetes",
+            "execution_time": 0.00019598007202148438,
+            "params_generated": true,
+            "pattern_detected": true
+          },
+          {
+            "iteration": 0,
+            "query": "LC-MS analysis of amino acids",
+            "execution_time": 0.00015616416931152344,
+            "params_generated": true,
+            "pattern_detected": false
+          },
+          {
+            "iteration": 0,
+            "query": "Compare healthy vs diabetic metabolomes",
+            "execution_time": 0.0001957416534423828,
+            "params_generated": true,
+            "pattern_detected": true
+          },
+          {
+            "iteration": 1,
+            "query": "What is glucose metabolism?",
+            "execution_time": 0.00015616416931152344,
+            "params_generated": true,
+            "pattern_detected": false
+          },
+          {
+            "iteration": 1,
+            "query": "How does the TCA cycle work?",
+            "execution_time": 0.00015687942504882812,
+            "params_generated": true,
+            "pattern_detected": false
+          },
+          {
+            "iteration": 1,
+            "query": "Find biomarkers for diabetes",
+            "execution_time": 0.0001850128173828125,
+            "params_generated": true,
+            "pattern_detected": true
+          },
+          {
+            "iteration": 1,
+            "query": "LC-MS analysis of amino acids",
+            "execution_time": 0.0001590251922607422,
+            "params_generated": true,
+            "pattern_detected": false
+          },
+          {
+            "iteration": 1,
+            "query": "Compare healthy vs diabetic metabolomes",
+            "execution_time": 0.00019288063049316406,
+            "params_generated": true,
+            "pattern_detected": true
+          },
+          {
+            "iteration": 2,
+            "query": "What is glucose metabolism?",
+            "execution_time": 0.00015997886657714844,
+            "params_generated": true,
+            "pattern_detected": false
+          },
+          {
+            "iteration": 2,
+            "query": "How does the TCA cycle work?",
+            "execution_time": 0.00014901161193847656,
+            "params_generated": true,
+            "pattern_detected": false
+          },
+          {
+            "iteration": 2,
+            "query": "Find biomarkers for diabetes",
+            "execution_time": 0.00019097328186035156,
+            "params_generated": true,
+            "pattern_detected": true
+          },
+          {
+            "iteration": 2,
+            "query": "LC-MS analysis of amino acids",
+            "execution_time": 0.00015473365783691406,
+            "params_generated": true,
+            "pattern_detected": false
+          },
+          {
+            "iteration": 2,
+            "query": "Compare healthy vs diabetic metabolomes",
+            "execution_time": 0.0001900196075439453,
+            "params_generated": true,
+            "pattern_detected": true
+          }
+        ],
+        "metrics": {
+          "avg_execution_time": 0.00017102559407552084,
+          "min_execution_time": 0.00014901161193847656,
+          "max_execution_time": 0.00019598007202148438,
+          "success_rate": 1.0,
+          "total_queries": 15,
+          "iterations": 3
+        },
+        "performance_acceptable": true
+      },
+      "error_message": null
+    }
+  },
+  "summary": {
+    "all_tests_passed": false,
+    "critical_failures": [
+      "integration_pipeline"
+    ],
+    "recommendations": [
+      "Improve query pattern detection regex patterns",
+      "Validate platform-specific parameter ranges",
+      "Check end-to-end pipeline integration"
+    ]
+  }
+}
