@@ -1,0 +1,27 @@
+2025-08-07 04:08:48,712 - performance_test_runner - INFO - Starting quick performance test suite
+2025-08-07 04:08:49,716 - performance_test_runner - INFO - Benchmark completed: simple query - 1004ms (target: 5000ms)
+2025-08-07 04:08:52,719 - performance_test_runner - INFO - Benchmark completed: medium query - 3001ms (target: 15000ms)
+2025-08-07 04:08:55,722 - performance_test_runner - INFO - Benchmark completed: complex query - 3002ms (target: 30000ms)
+2025-08-07 04:08:56,730 - performance_test_runner - INFO - Quality assessment completed: What is clinical metabolomics?... - Score: 60.1/100
+2025-08-07 04:08:57,732 - performance_test_runner - INFO - Quality assessment completed: Explain biomarker discovery pr... - Score: 46.6/100
+2025-08-07 04:08:58,736 - performance_test_runner - INFO - Quality assessment completed: Compare analytical platforms... - Score: 59.9/100
+2025-08-07 04:08:58,756 - performance_test_runner - INFO - Performance Report Generated: Quick_Performance_Test_20250807_040858
+2025-08-07 04:08:58,756 - performance_test_runner - INFO - Total test duration: 0.0 seconds
+2025-08-07 04:08:58,756 - performance_test_runner - INFO - Overall Performance Grade: Excellent
+2025-08-07 04:08:58,757 - performance_test_runner - INFO - Overall Quality Grade: Needs Improvement
+2025-08-07 04:08:58,757 - performance_test_runner - INFO - Tests Passed: 3/6
+2025-08-07 04:08:58,757 - performance_test_runner - INFO - Quick test suite completed successfully
+2025-08-07 04:09:08,293 - performance_test_runner - INFO - Starting quick performance test suite
+2025-08-07 04:09:09,296 - performance_test_runner - INFO - Benchmark completed: simple query - 1002ms (target: 5000ms)
+2025-08-07 04:09:12,298 - performance_test_runner - INFO - Benchmark completed: medium query - 3002ms (target: 15000ms)
+2025-08-07 04:09:15,302 - performance_test_runner - INFO - Benchmark completed: complex query - 3002ms (target: 30000ms)
+2025-08-07 04:09:16,308 - performance_test_runner - INFO - Quality assessment completed: What is clinical metabolomics?... - Score: 60.1/100
+2025-08-07 04:09:17,312 - performance_test_runner - INFO - Quality assessment completed: Explain biomarker discovery pr... - Score: 46.6/100
+2025-08-07 04:09:18,316 - performance_test_runner - INFO - Quality assessment completed: Compare analytical platforms... - Score: 59.9/100
+2025-08-07 04:09:18,338 - performance_test_runner - INFO - Performance Report Generated: Quick_Performance_Test_20250807_040918
+2025-08-07 04:09:18,338 - performance_test_runner - INFO - Total test duration: 0.0 seconds
+2025-08-07 04:09:18,338 - performance_test_runner - INFO - Overall Performance Grade: Excellent
+2025-08-07 04:09:18,339 - performance_test_runner - INFO - Overall Quality Grade: Needs Improvement
+2025-08-07 04:09:18,339 - performance_test_runner - INFO - Tests Passed: 3/6
+2025-08-07 04:09:18,339 - performance_test_runner - INFO - Quick test suite completed successfully
+2025-08-07 04:09:18,340 - performance_test_runner - INFO - Detailed test results saved: performance_test_results/Quick_Performance_Test_20250807_040918_detailed_results.json

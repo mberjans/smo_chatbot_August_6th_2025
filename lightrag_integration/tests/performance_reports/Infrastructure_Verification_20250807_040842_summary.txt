@@ -1,0 +1,49 @@
+
+CLINICAL METABOLOMICS ORACLE - PERFORMANCE TEST REPORT
+======================================================
+
+Report ID: Infrastructure_Verification_20250807_040842
+Generated: 2025-08-07 04:08:42
+Test Suite: Infrastructure_Verification
+
+EXECUTIVE SUMMARY
+-----------------
+Total Tests Run: 2
+Tests Passed: 1
+Tests Failed: 0
+Overall Performance Grade: Excellent
+Overall Quality Grade: Excellent
+
+PERFORMANCE METRICS
+-------------------
+Average Response Time: 4500.0 ms
+Median Response Time: 4500.0 ms
+95th Percentile Response Time: 4500.0 ms
+Throughput: 1.10 operations/second
+Error Rate: 2.0%
+
+QUALITY METRICS
+---------------
+Average Quality Score: 85.5/100
+Average Relevance Score: 85.0/100
+Average Biomedical Terminology Score: 78.0/100
+Response Consistency Score: 87.0/100
+
+RESOURCE USAGE
+--------------
+Peak Memory Usage: 450.0 MB
+Average Memory Usage: 450.0 MB
+Peak CPU Usage: 0.0%
+Average CPU Usage: 0.0%
+
+RECOMMENDATIONS
+---------------
+No specific recommendations - system performance is satisfactory.
+
+DETAILED RESULTS
+----------------
+Benchmark Tests: 1
+Quality Tests: 1
+Scalability Tests: 0
+
+For detailed metrics and analysis, see the full JSON report.

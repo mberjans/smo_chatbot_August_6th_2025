@@ -265,10 +265,10 @@
 - [x] Write integration tests for end-to-end PDF to query workflow
 
 **CMO-LIGHTRAG-008-T05-TEST** [TEST]
-- [ ] Write performance benchmark tests
+- [x] Write performance benchmark tests
 
 **CMO-LIGHTRAG-008-T06** [CODE]
-- [ ] Implement test utilities and helper functions
+- [x] Implement test utilities and helper functions
 
 **CMO-LIGHTRAG-008-T07** [CODE]
 - [ ] Set up test data management and cleanup

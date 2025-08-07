@@ -1178,3 +1178,15 @@ def disease_specific_content():
         return content
     
     return generate_content
+
+
+# =====================================================================
+# IMPORT COMPREHENSIVE TEST FIXTURES
+# =====================================================================
+
+# Import comprehensive fixtures to make them available to all tests
+try:
+    from .comprehensive_test_fixtures import *
+    from .biomedical_test_fixtures import *
+except ImportError as e:
+    logging.warning(f"Could not import comprehensive test fixtures: {e}")

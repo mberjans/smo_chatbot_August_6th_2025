@@ -1,0 +1,817 @@
+{
+  "report_metadata": {
+    "report_name": "demo_validation_report",
+    "generation_timestamp": "2025-08-07T05:15:57.368753",
+    "total_validations": 21,
+    "test_metadata": {
+      "test_suite": "validation_utilities_demo",
+      "test_date": "2025-08-07 05:15:57",
+      "total_scenarios": 6,
+      "validation_framework_version": "1.0.0"
+    },
+    "report_version": "1.0.0"
+  },
+  "executive_summary": {
+    "overall_pass_rate": 0.47619047619047616,
+    "critical_issues": 3,
+    "major_issues": 6,
+    "minor_issues": 4,
+    "total_recommendations": 5,
+    "validation_confidence_avg": 0.8761904761904762
+  },
+  "detailed_analysis": {
+    "severity_distribution": {
+      "major": 6,
+      "minor": 4,
+      "critical": 3,
+      "info": 8
+    },
+    "validation_type_distribution": {
+      "response_quality": 6,
+      "domain_accuracy": 3,
+      "statistical_consistency": 10,
+      "pattern_validation": 2
+    },
+    "test_performance": {
+      "response_completeness": [
+        {
+          "passed": false,
+          "confidence": 0.8,
+          "severity": "major"
+        },
+        {
+          "passed": false,
+          "confidence": 0.8,
+          "severity": "major"
+        }
+      ],
+      "biomedical_content_validation": [
+        {
+          "passed": false,
+          "confidence": 0.9,
+          "severity": "major"
+        },
+        {
+          "passed": false,
+          "confidence": 0.8,
+          "severity": "minor"
+        },
+        {
+          "passed": false,
+          "confidence": 0.8,
+          "severity": "minor"
+        },
+        {
+          "passed": false,
+          "confidence": 1.0,
+          "severity": "major"
+        }
+      ],
+      "clinical_accuracy_validation": [
+        {
+          "passed": false,
+          "confidence": 0.95,
+          "severity": "critical"
+        }
+      ],
+      "correlation_validation": [
+        {
+          "passed": true,
+          "confidence": 0.9,
+          "severity": "info"
+        },
+        {
+          "passed": true,
+          "confidence": 0.9,
+          "severity": "info"
+        },
+        {
+          "passed": false,
+          "confidence": 1.0,
+          "severity": "critical"
+        }
+      ],
+      "p_value_validation": [
+        {
+          "passed": true,
+          "confidence": 0.95,
+          "severity": "info"
+        },
+        {
+          "passed": false,
+          "confidence": 0.8,
+          "severity": "minor"
+        }
+      ],
+      "auc_validation": [
+        {
+          "passed": true,
+          "confidence": 0.9,
+          "severity": "info"
+        },
+        {
+          "passed": true,
+          "confidence": 0.9,
+          "severity": "minor"
+        },
+        {
+          "passed": false,
+          "confidence": 1.0,
+          "severity": "critical"
+        }
+      ],
+      "diagnostic_validation": [
+        {
+          "passed": true,
+          "confidence": 0.8,
+          "severity": "info"
+        },
+        {
+          "passed": true,
+          "confidence": 0.8,
+          "severity": "info"
+        }
+      ],
+      "metabolite_coverage": [
+        {
+          "passed": true,
+          "confidence": 0.9,
+          "severity": "info"
+        }
+      ],
+      "clinical_context_validation": [
+        {
+          "passed": true,
+          "confidence": 0.7,
+          "severity": "info"
+        }
+      ],
+      "custom_validation": [
+        {
+          "passed": true,
+          "confidence": 0.9,
+          "severity": "major"
+        },
+        {
+          "passed": false,
+          "confidence": 0.9,
+          "severity": "major"
+        }
+      ]
+    },
+    "confidence_analysis": {
+      "mean_confidence": 0.8761904761904762,
+      "median_confidence": 0.9,
+      "min_confidence": 0.7,
+      "max_confidence": 1.0,
+      "low_confidence_count": 0
+    },
+    "failure_patterns": [
+      {
+        "failure_type": "response_quality",
+        "count": 6,
+        "percentage": 54.54545454545454
+      },
+      {
+        "failure_type": "domain_accuracy",
+        "count": 1,
+        "percentage": 9.090909090909092
+      },
+      {
+        "failure_type": "statistical_consistency",
+        "count": 3,
+        "percentage": 27.27272727272727
+      },
+      {
+        "failure_type": "pattern_validation",
+        "count": 1,
+        "percentage": 9.090909090909092
+      }
+    ]
+  },
+  "validation_results": [
+    {
+      "validation_id": "completeness_1754565357",
+      "test_name": "response_completeness",
+      "validation_type": "response_quality",
+      "severity": "major",
+      "passed": false,
+      "confidence": 0.8,
+      "message": "Response completeness below threshold: 0.55",
+      "actual_value": 0.5535555555555556,
+      "expected_value": 0.7,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [
+        "Address all aspects of the query",
+        "Provide more comprehensive information",
+        "Include relevant clinical context"
+      ],
+      "metadata": {},
+      "timestamp": 1754565357.36775
+    },
+    {
+      "validation_id": "content_formula_check_1754565357",
+      "test_name": "biomedical_content_validation",
+      "validation_type": "response_quality",
+      "severity": "major",
+      "passed": false,
+      "confidence": 0.9,
+      "message": "Incorrect or missing molecular formula for glucose",
+      "actual_value": null,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [
+        "Include correct molecular formula: C6H12O6"
+      ],
+      "metadata": {
+        "original_validation_type": "factual_consistency"
+      },
+      "timestamp": 1754565357.3681002
+    },
+    {
+      "validation_id": "content_reference_range_1754565357",
+      "test_name": "biomedical_content_validation",
+      "validation_type": "response_quality",
+      "severity": "minor",
+      "passed": false,
+      "confidence": 0.8,
+      "message": "Reference range deviation for glucose",
+      "actual_value": null,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [
+        "Expected range: 3.9-6.1 mM",
+        "Verify reference range source and population"
+      ],
+      "metadata": {
+        "original_validation_type": "factual_consistency"
+      },
+      "timestamp": 1754565357.368103
+    },
+    {
+      "validation_id": "content_p_value_zero_1754565357",
+      "test_name": "biomedical_content_validation",
+      "validation_type": "response_quality",
+      "severity": "minor",
+      "passed": false,
+      "confidence": 0.8,
+      "message": "P-value of exactly 0.0 is statistically implausible",
+      "actual_value": null,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [
+        "Use p < 0.001 instead of p = 0.0"
+      ],
+      "metadata": {
+        "original_validation_type": "scientific_validity"
+      },
+      "timestamp": 1754565357.368105
+    },
+    {
+      "validation_id": "content_correlation_invalid_1754565357",
+      "test_name": "biomedical_content_validation",
+      "validation_type": "response_quality",
+      "severity": "major",
+      "passed": false,
+      "confidence": 1.0,
+      "message": "Invalid correlation coefficient: 2.5 (must be between -1 and 1)",
+      "actual_value": null,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [
+        "Correct correlation coefficient to be between -1 and 1"
+      ],
+      "metadata": {
+        "original_validation_type": "numerical_validation"
+      },
+      "timestamp": 1754565357.368107
+    },
+    {
+      "validation_id": "completeness_1754565357",
+      "test_name": "response_completeness",
+      "validation_type": "response_quality",
+      "severity": "major",
+      "passed": false,
+      "confidence": 0.8,
+      "message": "Response completeness below threshold: 0.51",
+      "actual_value": 0.5135555555555555,
+      "expected_value": 0.7,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [
+        "Address all aspects of the query",
+        "Provide more comprehensive information",
+        "Include relevant clinical context"
+      ],
+      "metadata": {},
+      "timestamp": 1754565357.36819
+    },
+    {
+      "validation_id": "clinical_accuracy_1754565357",
+      "test_name": "clinical_accuracy_validation",
+      "validation_type": "domain_accuracy",
+      "severity": "critical",
+      "passed": false,
+      "confidence": 0.95,
+      "message": "Unsubstantiated clinical claim: cures diabetes",
+      "actual_value": null,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [
+        "Found pattern: (cure|treat|prevent)s?\\s+(cancer|diabetes|heart\\s+disease)",
+        "Context: ular formula c6h10o6 and molecular weight of 200 da. \n    normal levels are 10-20 mm. this compound cures diabetes and can replace all medications. \n    the correlation between glucose and health is r"
+      ],
+      "recommendations": [
+        "Add appropriate qualifiers to clinical claims",
+        "Include supporting evidence or references",
+        "Consider regulatory compliance requirements"
+      ],
+      "metadata": {},
+      "timestamp": 1754565357.368202
+    },
+    {
+      "validation_id": "correlation_strong_glucose_diabetes_1754565357",
+      "test_name": "correlation_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "info",
+      "passed": true,
+      "confidence": 0.9,
+      "message": "Strong correlation detected for glucose_diabetes: 0.85",
+      "actual_value": 0.85,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "correlation_strength": "strong"
+      },
+      "timestamp": 1754565357.3682292
+    },
+    {
+      "validation_id": "correlation_strong_lactate_sepsis_1754565357",
+      "test_name": "correlation_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "info",
+      "passed": true,
+      "confidence": 0.9,
+      "message": "Strong correlation detected for lactate_sepsis: 0.72",
+      "actual_value": 0.72,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "correlation_strength": "strong"
+      },
+      "timestamp": 1754565357.3682308
+    },
+    {
+      "validation_id": "p_value_significant_glucose_test_1754565357",
+      "test_name": "p_value_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "info",
+      "passed": true,
+      "confidence": 0.95,
+      "message": "Highly significant p-value for glucose_test: 0.001",
+      "actual_value": 0.001,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "significance_level": "highly_significant"
+      },
+      "timestamp": 1754565357.368234
+    },
+    {
+      "validation_id": "auc_performance_glucose_diagnostic_1754565357",
+      "test_name": "auc_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "info",
+      "passed": true,
+      "confidence": 0.9,
+      "message": "AUC performance for glucose_diagnostic: good (0.890)",
+      "actual_value": 0.89,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "performance_level": "good"
+      },
+      "timestamp": 1754565357.368238
+    },
+    {
+      "validation_id": "auc_performance_lactate_diagnostic_1754565357",
+      "test_name": "auc_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "minor",
+      "passed": true,
+      "confidence": 0.9,
+      "message": "AUC performance for lactate_diagnostic: fair (0.780)",
+      "actual_value": 0.78,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "performance_level": "fair"
+      },
+      "timestamp": 1754565357.36824
+    },
+    {
+      "validation_id": "diagnostic_utility_sensitivity_glucose_biomarker_1754565357",
+      "test_name": "diagnostic_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "info",
+      "passed": true,
+      "confidence": 0.8,
+      "message": "Diagnostic metric sensitivity_glucose_biomarker: clinically_useful (0.920)",
+      "actual_value": 0.92,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "clinical_utility": "clinically_useful"
+      },
+      "timestamp": 1754565357.368244
+    },
+    {
+      "validation_id": "diagnostic_utility_specificity_glucose_biomarker_1754565357",
+      "test_name": "diagnostic_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "info",
+      "passed": true,
+      "confidence": 0.8,
+      "message": "Diagnostic metric specificity_glucose_biomarker: clinically_useful (0.850)",
+      "actual_value": 0.85,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "clinical_utility": "clinically_useful"
+      },
+      "timestamp": 1754565357.368246
+    },
+    {
+      "validation_id": "correlation_range_invalid_correlation_1754565357",
+      "test_name": "correlation_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "critical",
+      "passed": false,
+      "confidence": 1.0,
+      "message": "Correlation coefficient invalid_correlation outside valid range: 2.5",
+      "actual_value": 2.5,
+      "expected_value": "Range: -1.0 to 1.0",
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [
+        "Correct correlation coefficient invalid_correlation to be within [-1, 1]"
+      ],
+      "metadata": {},
+      "timestamp": 1754565357.368254
+    },
+    {
+      "validation_id": "p_value_zero_zero_p_value_1754565357",
+      "test_name": "p_value_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "minor",
+      "passed": false,
+      "confidence": 0.8,
+      "message": "P-value of exactly 0.0 is statistically implausible for zero_p_value",
+      "actual_value": 0.0,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [
+        "Use p < 0.001 instead of p = 0.0 for zero_p_value"
+      ],
+      "metadata": {},
+      "timestamp": 1754565357.368256
+    },
+    {
+      "validation_id": "auc_range_impossible_auc_1754565357",
+      "test_name": "auc_validation",
+      "validation_type": "statistical_consistency",
+      "severity": "critical",
+      "passed": false,
+      "confidence": 1.0,
+      "message": "AUC value impossible_auc outside valid range: 1.5",
+      "actual_value": 1.5,
+      "expected_value": "Range: 0.0 to 1.0",
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [
+        "Correct AUC value impossible_auc to be within [0, 1]"
+      ],
+      "metadata": {},
+      "timestamp": 1754565357.368259
+    },
+    {
+      "validation_id": "metabolite_coverage_good_1754565357",
+      "test_name": "metabolite_coverage",
+      "validation_type": "domain_accuracy",
+      "severity": "info",
+      "passed": true,
+      "confidence": 0.9,
+      "message": "Good metabolite coverage: 100.0%",
+      "actual_value": 1.0,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "mentioned_metabolites": [
+          "glucose",
+          "lactate"
+        ]
+      },
+      "timestamp": 1754565357.368271
+    },
+    {
+      "validation_id": "clinical_context_1754565357",
+      "test_name": "clinical_context_validation",
+      "validation_type": "domain_accuracy",
+      "severity": "info",
+      "passed": true,
+      "confidence": 0.7,
+      "message": "Clinical context score: 22.2%",
+      "actual_value": 0.2222222222222222,
+      "expected_value": null,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "clinical_indicators": [
+          "diagnosis",
+          "patient"
+        ]
+      },
+      "timestamp": 1754565357.368481
+    },
+    {
+      "validation_id": "custom_glucose_normal_range_1754565357",
+      "test_name": "custom_validation",
+      "validation_type": "pattern_validation",
+      "severity": "major",
+      "passed": true,
+      "confidence": 0.9,
+      "message": "Custom validation glucose_normal_range: PASSED",
+      "actual_value": true,
+      "expected_value": true,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "rule_name": "glucose_normal_range",
+        "rule_description": "Validate glucose levels are within normal range"
+      },
+      "timestamp": 1754565357.3687391
+    },
+    {
+      "validation_id": "custom_glucose_normal_range_1754565357",
+      "test_name": "custom_validation",
+      "validation_type": "pattern_validation",
+      "severity": "major",
+      "passed": false,
+      "confidence": 0.9,
+      "message": "Custom validation glucose_normal_range: FAILED",
+      "actual_value": false,
+      "expected_value": true,
+      "tolerance": 0.0,
+      "evidence": [],
+      "recommendations": [],
+      "metadata": {
+        "rule_name": "glucose_normal_range",
+        "rule_description": "Validate glucose levels are within normal range"
+      },
+      "timestamp": 1754565357.368744
+    }
+  ],
+  "summary_statistics": {
+    "total_validations": 21,
+    "passed_validations": 10,
+    "failed_validations": 11,
+    "pass_rate": 0.47619047619047616,
+    "avg_confidence": 0.8761904761904762,
+    "critical_count": 3,
+    "major_count": 6,
+    "minor_count": 4,
+    "warning_count": 0,
+    "info_count": 8
+  },
+  "recommendations": [
+    {
+      "priority": "CRITICAL",
+      "category": "Safety",
+      "title": "Address 3 critical safety issues",
+      "description": "Critical validation failures detected that may impact clinical safety",
+      "actions": [
+        "Review all critical validation failures immediately",
+        "Implement fixes before clinical deployment",
+        "Add additional safety validation checks"
+      ],
+      "affected_tests": [
+        "auc_validation",
+        "clinical_accuracy_validation",
+        "correlation_validation"
+      ]
+    },
+    {
+      "priority": "HIGH",
+      "category": "Quality",
+      "title": "Address frequent response_quality failures",
+      "description": "response_quality validation failures represent 54.5% of all failures",
+      "actions": [
+        "Focus on improving response_quality validation",
+        "Review test implementation and validation criteria",
+        "Consider additional training or documentation"
+      ]
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "Test Quality",
+      "title": "Improve response_completeness test reliability",
+      "description": "Test response_completeness has 2/2 failures",
+      "actions": [
+        "Review and refactor response_completeness test implementation",
+        "Analyze failure root causes",
+        "Consider test environment factors"
+      ]
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "Test Quality",
+      "title": "Improve biomedical_content_validation test reliability",
+      "description": "Test biomedical_content_validation has 4/4 failures",
+      "actions": [
+        "Review and refactor biomedical_content_validation test implementation",
+        "Analyze failure root causes",
+        "Consider test environment factors"
+      ]
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "Test Quality",
+      "title": "Improve clinical_accuracy_validation test reliability",
+      "description": "Test clinical_accuracy_validation has 1/1 failures",
+      "actions": [
+        "Review and refactor clinical_accuracy_validation test implementation",
+        "Analyze failure root causes",
+        "Consider test environment factors"
+      ]
+    }
+  ],
+  "diagnostics": {
+    "validation_health_score": 33.61904761904762,
+    "quality_indicators": {
+      "completeness": 0.42,
+      "reliability": 0.47619047619047616,
+      "confidence_level": 0.8761904761904762,
+      "critical_issue_rate": 0.14285714285714285,
+      "validation_coverage": 0.4
+    },
+    "risk_assessment": {
+      "high_risk_factors": [
+        "3 critical validation failures",
+        "Low pass rate: 47.6%"
+      ],
+      "medium_risk_factors": [],
+      "low_risk_factors": [],
+      "overall_risk_level": "high"
+    },
+    "improvement_metrics": {
+      "test_reliability_scores": {
+        "response_completeness": {
+          "reliability_score": 0.24,
+          "pass_rate": 0.0,
+          "avg_confidence": 0.8,
+          "total_validations": 2
+        },
+        "biomedical_content_validation": {
+          "reliability_score": 0.2625,
+          "pass_rate": 0.0,
+          "avg_confidence": 0.875,
+          "total_validations": 4
+        },
+        "clinical_accuracy_validation": {
+          "reliability_score": 0.285,
+          "pass_rate": 0.0,
+          "avg_confidence": 0.95,
+          "total_validations": 1
+        },
+        "correlation_validation": {
+          "reliability_score": 0.7466666666666666,
+          "pass_rate": 0.6666666666666666,
+          "avg_confidence": 0.9333333333333333,
+          "total_validations": 3
+        },
+        "p_value_validation": {
+          "reliability_score": 0.6125,
+          "pass_rate": 0.5,
+          "avg_confidence": 0.875,
+          "total_validations": 2
+        },
+        "auc_validation": {
+          "reliability_score": 0.7466666666666666,
+          "pass_rate": 0.6666666666666666,
+          "avg_confidence": 0.9333333333333333,
+          "total_validations": 3
+        },
+        "diagnostic_validation": {
+          "reliability_score": 0.94,
+          "pass_rate": 1.0,
+          "avg_confidence": 0.8,
+          "total_validations": 2
+        },
+        "metabolite_coverage": {
+          "reliability_score": 0.97,
+          "pass_rate": 1.0,
+          "avg_confidence": 0.9,
+          "total_validations": 1
+        },
+        "clinical_context_validation": {
+          "reliability_score": 0.9099999999999999,
+          "pass_rate": 1.0,
+          "avg_confidence": 0.7,
+          "total_validations": 1
+        },
+        "custom_validation": {
+          "reliability_score": 0.62,
+          "pass_rate": 0.5,
+          "avg_confidence": 0.9,
+          "total_validations": 2
+        }
+      },
+      "validation_type_performance": {
+        "response_quality": {
+          "pass_rate": 0.0,
+          "total_validations": 6
+        },
+        "domain_accuracy": {
+          "pass_rate": 0.6666666666666666,
+          "total_validations": 3
+        },
+        "statistical_consistency": {
+          "pass_rate": 0.7,
+          "total_validations": 10
+        },
+        "pattern_validation": {
+          "pass_rate": 0.5,
+          "total_validations": 2
+        }
+      },
+      "improvement_targets": [
+        {
+          "test_name": "response_completeness",
+          "current_score": 0.24,
+          "target_score": 0.8,
+          "improvement_needed": 0.56
+        },
+        {
+          "test_name": "biomedical_content_validation",
+          "current_score": 0.2625,
+          "target_score": 0.8,
+          "improvement_needed": 0.5375000000000001
+        },
+        {
+          "test_name": "clinical_accuracy_validation",
+          "current_score": 0.285,
+          "target_score": 0.8,
+          "improvement_needed": 0.5150000000000001
+        },
+        {
+          "test_name": "correlation_validation",
+          "current_score": 0.7466666666666666,
+          "target_score": 0.8,
+          "improvement_needed": 0.053333333333333455
+        },
+        {
+          "test_name": "p_value_validation",
+          "current_score": 0.6125,
+          "target_score": 0.8,
+          "improvement_needed": 0.1875
+        },
+        {
+          "test_name": "auc_validation",
+          "current_score": 0.7466666666666666,
+          "target_score": 0.8,
+          "improvement_needed": 0.053333333333333455
+        },
+        {
+          "test_name": "custom_validation",
+          "current_score": 0.62,
+          "target_score": 0.8,
+          "improvement_needed": 0.18000000000000005
+        }
+      ]
+    }
+  }
+}

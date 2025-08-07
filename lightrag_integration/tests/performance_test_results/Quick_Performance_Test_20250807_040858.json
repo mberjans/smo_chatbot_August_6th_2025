@@ -1,0 +1,224 @@
+{
+  "report_id": "Quick_Performance_Test_20250807_040858",
+  "generation_time": "2025-08-07T04:08:58.737111",
+  "test_suite_name": "Quick_Performance_Test",
+  "total_tests_run": 6,
+  "tests_passed": 3,
+  "tests_failed": 0,
+  "overall_performance_grade": "Excellent",
+  "overall_quality_grade": "Needs Improvement",
+  "avg_response_time_ms": 2336.000680923462,
+  "median_response_time_ms": 3001.3480186462402,
+  "p95_response_time_ms": 3002.2857189178467,
+  "throughput_ops_per_sec": 0.5540018697815999,
+  "error_rate_percent": 2.0,
+  "avg_quality_score": 55.52508960573476,
+  "avg_relevance_score": 35.77777777777778,
+  "avg_biomedical_terminology_score": 45.806451612903224,
+  "consistency_score": 100,
+  "peak_memory_mb": 430.02389907836914,
+  "avg_memory_mb": 423.3600068092346,
+  "peak_cpu_percent": 0,
+  "avg_cpu_percent": 0,
+  "benchmark_results": [
+    {
+      "query_type": "simple",
+      "benchmark_name": "response_time_simple",
+      "target_response_time_ms": 5000,
+      "actual_response_time_ms": 1004.2641162872314,
+      "target_throughput_ops_per_sec": 1.0,
+      "actual_throughput_ops_per_sec": 0.9957539891965911,
+      "target_memory_usage_mb": 500,
+      "actual_memory_usage_mb": 410.0426411628723,
+      "target_error_rate_percent": 5.0,
+      "actual_error_rate_percent": 2.0,
+      "meets_performance_targets": true,
+      "performance_ratio": 4.978769945982956,
+      "benchmark_details": {
+        "query": "What is clinical metabolomics?",
+        "simulation_mode": true,
+        "test_timestamp": "2025-08-07T04:08:49.716547"
+      }
+    },
+    {
+      "query_type": "medium",
+      "benchmark_name": "response_time_medium",
+      "target_response_time_ms": 15000,
+      "actual_response_time_ms": 3001.3480186462402,
+      "target_throughput_ops_per_sec": 1.0,
+      "actual_throughput_ops_per_sec": 0.33318362075553326,
+      "target_memory_usage_mb": 500,
+      "actual_memory_usage_mb": 430.0134801864624,
+      "target_error_rate_percent": 5.0,
+      "actual_error_rate_percent": 2.0,
+      "meets_performance_targets": true,
+      "performance_ratio": 4.997754311332999,
+      "benchmark_details": {
+        "query": "Compare targeted vs untargeted metabolomics",
+        "simulation_mode": true,
+        "test_timestamp": "2025-08-07T04:08:52.718767"
+      }
+    },
+    {
+      "query_type": "complex",
+      "benchmark_name": "response_time_complex",
+      "target_response_time_ms": 30000,
+      "actual_response_time_ms": 3002.389907836914,
+      "target_throughput_ops_per_sec": 1.0,
+      "actual_throughput_ops_per_sec": 0.3330679993926754,
+      "target_memory_usage_mb": 500,
+      "actual_memory_usage_mb": 430.02389907836914,
+      "target_error_rate_percent": 5.0,
+      "actual_error_rate_percent": 2.0,
+      "meets_performance_targets": true,
+      "performance_ratio": 9.99203998178026,
+      "benchmark_details": {
+        "query": "Design comprehensive biomarker discovery study",
+        "simulation_mode": true,
+        "test_timestamp": "2025-08-07T04:08:55.722113"
+      }
+    }
+  ],
+  "quality_results": [
+    {
+      "relevance_score": 54.0,
+      "accuracy_score": 70.0,
+      "completeness_score": 100,
+      "clarity_score": 40,
+      "biomedical_terminology_score": 45.806451612903224,
+      "source_citation_score": 20,
+      "consistency_score": 100,
+      "factual_accuracy_score": 75.0,
+      "hallucination_score": 100,
+      "overall_quality_score": 60.08064516129032,
+      "key_concepts_covered": [
+        "metabolite",
+        "metabolomics",
+        "clinical",
+        "diagnosis",
+        "biomarker",
+        "Key",
+        "Clinical",
+        "mass spectrometry",
+        "disease",
+        "It"
+      ],
+      "missing_concepts": [],
+      "biomedical_terms_found": [
+        "metabolomics",
+        "metabolite",
+        "biomarker",
+        "mass spectrometry",
+        "clinical",
+        "disease",
+        "diagnosis"
+      ],
+      "citations_extracted": [],
+      "quality_flags": [],
+      "assessment_details": {
+        "response_length": 382,
+        "word_count": 43,
+        "sentence_count": 3,
+        "paragraph_count": 1,
+        "technical_density": 18.6046511627907
+      }
+    },
+    {
+      "relevance_score": 0.0,
+      "accuracy_score": 70.0,
+      "completeness_score": 100,
+      "clarity_score": 40,
+      "biomedical_terminology_score": 45.806451612903224,
+      "source_citation_score": 20,
+      "consistency_score": 100,
+      "factual_accuracy_score": 75.0,
+      "hallucination_score": 100,
+      "overall_quality_score": 46.58064516129032,
+      "key_concepts_covered": [
+        "metabolite",
+        "metabolomics",
+        "clinical",
+        "diagnosis",
+        "biomarker",
+        "Key",
+        "Clinical",
+        "mass spectrometry",
+        "disease",
+        "It"
+      ],
+      "missing_concepts": [],
+      "biomedical_terms_found": [
+        "metabolomics",
+        "metabolite",
+        "biomarker",
+        "mass spectrometry",
+        "clinical",
+        "disease",
+        "diagnosis"
+      ],
+      "citations_extracted": [],
+      "quality_flags": [],
+      "assessment_details": {
+        "response_length": 382,
+        "word_count": 43,
+        "sentence_count": 3,
+        "paragraph_count": 1,
+        "technical_density": 18.6046511627907
+      }
+    },
+    {
+      "relevance_score": 53.33333333333333,
+      "accuracy_score": 70.0,
+      "completeness_score": 100,
+      "clarity_score": 40,
+      "biomedical_terminology_score": 45.806451612903224,
+      "source_citation_score": 20,
+      "consistency_score": 100,
+      "factual_accuracy_score": 75.0,
+      "hallucination_score": 100,
+      "overall_quality_score": 59.91397849462365,
+      "key_concepts_covered": [
+        "metabolite",
+        "metabolomics",
+        "clinical",
+        "diagnosis",
+        "biomarker",
+        "Key",
+        "Clinical",
+        "mass spectrometry",
+        "disease",
+        "It"
+      ],
+      "missing_concepts": [],
+      "biomedical_terms_found": [
+        "metabolomics",
+        "metabolite",
+        "biomarker",
+        "mass spectrometry",
+        "clinical",
+        "disease",
+        "diagnosis"
+      ],
+      "citations_extracted": [],
+      "quality_flags": [],
+      "assessment_details": {
+        "response_length": 382,
+        "word_count": 43,
+        "sentence_count": 3,
+        "paragraph_count": 1,
+        "technical_density": 18.6046511627907
+      }
+    }
+  ],
+  "scalability_results": [],
+  "regression_analysis": {
+    "regressions_detected": 0,
+    "improvements_detected": 3,
+    "stable_metrics": 0,
+    "analysis_timestamp": "2025-08-07T04:08:58.753637"
+  },
+  "recommendations": [
+    "Improve response quality through better training data or prompt optimization",
+    "Enhance biomedical terminology usage in responses"
+  ]
+}

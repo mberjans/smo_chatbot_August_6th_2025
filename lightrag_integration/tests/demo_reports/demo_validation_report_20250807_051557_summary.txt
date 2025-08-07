@@ -1,0 +1,20 @@
+CLINICAL METABOLOMICS ORACLE - VALIDATION REPORT SUMMARY
+============================================================
+
+EXECUTIVE SUMMARY:
+Overall Pass Rate: 47.6%
+Critical Issues: 3
+Major Issues: 6
+Minor Issues: 4
+Average Confidence: 87.6%
+
+TOP RECOMMENDATIONS:
+1. [CRITICAL] Address 3 critical safety issues
+2. [HIGH] Address frequent response_quality failures
+3. [MEDIUM] Improve response_completeness test reliability
+4. [MEDIUM] Improve biomedical_content_validation test reliability
+5. [MEDIUM] Improve clinical_accuracy_validation test reliability
+
+VALIDATION HEALTH SCORE: 33.6/100
+
+Report generated: 2025-08-07T05:15:57.368753

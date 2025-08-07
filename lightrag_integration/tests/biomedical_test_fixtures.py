@@ -31,8 +31,17 @@ from dataclasses import dataclass, field
 from collections import defaultdict
 import numpy as np
 
-# Import research categorizer for category-specific fixtures
-from lightrag_integration.research_categorizer import ResearchCategory
+# Optional import for research categorizer - handle gracefully if not available
+try:
+    from lightrag_integration.research_categorizer import ResearchCategory
+except ImportError:
+    # Define minimal ResearchCategory enum for testing
+    from enum import Enum
+    class ResearchCategory(Enum):
+        BIOMARKER_DISCOVERY = "biomarker_discovery"
+        PATHWAY_ANALYSIS = "pathway_analysis"
+        CLINICAL_VALIDATION = "clinical_validation"
+        ANALYTICAL_METHODS = "analytical_methods"
 
 
 @dataclass

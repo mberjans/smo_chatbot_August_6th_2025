@@ -1,0 +1,68 @@
+{
+  "report_id": "Infrastructure_Verification_20250807_040842",
+  "generation_time": "2025-08-07T04:08:42.519493",
+  "test_suite_name": "Infrastructure_Verification",
+  "total_tests_run": 2,
+  "tests_passed": 1,
+  "tests_failed": 0,
+  "overall_performance_grade": "Excellent",
+  "overall_quality_grade": "Excellent",
+  "avg_response_time_ms": 4500,
+  "median_response_time_ms": 4500,
+  "p95_response_time_ms": 4500.0,
+  "throughput_ops_per_sec": 1.1,
+  "error_rate_percent": 2.0,
+  "avg_quality_score": 85.5,
+  "avg_relevance_score": 85.0,
+  "avg_biomedical_terminology_score": 78.0,
+  "consistency_score": 87.0,
+  "peak_memory_mb": 450,
+  "avg_memory_mb": 450,
+  "peak_cpu_percent": 0,
+  "avg_cpu_percent": 0,
+  "benchmark_results": [
+    {
+      "query_type": "test",
+      "benchmark_name": "verification_test",
+      "target_response_time_ms": 5000,
+      "actual_response_time_ms": 4500,
+      "target_throughput_ops_per_sec": 1.0,
+      "actual_throughput_ops_per_sec": 1.1,
+      "target_memory_usage_mb": 500,
+      "actual_memory_usage_mb": 450,
+      "target_error_rate_percent": 5.0,
+      "actual_error_rate_percent": 2.0,
+      "meets_performance_targets": true,
+      "performance_ratio": 1.1,
+      "benchmark_details": {}
+    }
+  ],
+  "quality_results": [
+    {
+      "relevance_score": 85.0,
+      "accuracy_score": 88.0,
+      "completeness_score": 82.0,
+      "clarity_score": 90.0,
+      "biomedical_terminology_score": 78.0,
+      "source_citation_score": 75.0,
+      "consistency_score": 87.0,
+      "factual_accuracy_score": 89.0,
+      "hallucination_score": 92.0,
+      "overall_quality_score": 85.5,
+      "key_concepts_covered": [],
+      "missing_concepts": [],
+      "biomedical_terms_found": [],
+      "citations_extracted": [],
+      "quality_flags": [],
+      "assessment_details": {}
+    }
+  ],
+  "scalability_results": [],
+  "regression_analysis": {
+    "regressions_detected": 0,
+    "improvements_detected": 0,
+    "stable_metrics": 1,
+    "analysis_timestamp": "2025-08-07T04:08:42.520503"
+  },
+  "recommendations": []
+}

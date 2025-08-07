@@ -1,0 +1,47 @@
+================================================================================
+PDF ERROR HANDLING TEST INFRASTRUCTURE VALIDATION REPORT
+================================================================================
+Overall Status: FAILED
+Validation Time: smo_chatbot_August_6th_2025
+
+Component: PYTHON_DEPENDENCIES
+----------------------------------------
+  Available packages: 14
+  Missing packages: 0
+
+Component: CORE_COMPONENTS
+----------------------------------------
+  Available components: 0
+  Missing components: 5
+  Missing: pdf_processor, clinical_rag, recovery_system, enhanced_logging, progress_tracker
+
+Component: TEST_FIXTURES
+----------------------------------------
+  Available fixtures: 3
+  Missing fixtures: 2
+
+Component: TEST_FILES
+----------------------------------------
+  Available files: 4
+  Missing files: 0
+
+Component: SYSTEM_RESOURCES
+----------------------------------------
+  Memory: 2.76GB available
+  Disk: 35.49GB free
+  CPU cores: 8
+  System suitable: True
+
+Component: PYTEST_CONFIGURATION
+----------------------------------------
+  Config file exists: True
+  Async support: True
+  Configuration valid: True
+
+RECOMMENDATIONS
+----------------------------------------
+  Some validations failed. Address the following issues:
+  - Install missing core_components: pdf_processor, clinical_rag, recovery_system, enhanced_logging, progress_tracker
+  - Install missing test_fixtures: biomedical_test_fixtures, query_test_fixtures
+
+================================================================================
