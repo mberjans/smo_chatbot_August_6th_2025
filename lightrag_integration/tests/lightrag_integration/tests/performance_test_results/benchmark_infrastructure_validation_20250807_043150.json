@@ -1,0 +1,129 @@
+{
+  "imports": {
+    "pytest": {
+      "status": "success",
+      "available": true
+    },
+    "pytest_asyncio": {
+      "status": "success",
+      "available": true
+    },
+    "numpy": {
+      "status": "success",
+      "available": true
+    },
+    "psutil": {
+      "status": "success",
+      "available": true
+    },
+    "asyncio": {
+      "status": "success",
+      "available": true
+    },
+    "pathlib": {
+      "status": "success",
+      "available": true
+    },
+    "dataclasses": {
+      "status": "success",
+      "available": true
+    },
+    "typing": {
+      "status": "success",
+      "available": true
+    },
+    "unittest.mock": {
+      "status": "success",
+      "available": true
+    },
+    "collections": {
+      "status": "success",
+      "available": true
+    },
+    "json": {
+      "status": "success",
+      "available": true
+    },
+    "time": {
+      "status": "success",
+      "available": true
+    },
+    "logging": {
+      "status": "success",
+      "available": true
+    },
+    "performance_test_fixtures": {
+      "status": "success",
+      "available": true
+    },
+    "biomedical_test_fixtures": {
+      "status": "success",
+      "available": true
+    },
+    "test_performance_benchmarks": {
+      "status": "success",
+      "available": true
+    }
+  },
+  "fixtures": {
+    "performance_executor": {
+      "status": "success",
+      "available": true
+    },
+    "resource_monitor": {
+      "status": "success",
+      "available": true
+    },
+    "load_test_scenarios": {
+      "status": "success",
+      "available": true
+    },
+    "mock_operation_generator": {
+      "status": "success",
+      "available": true
+    },
+    "biomedical_data_generator": {
+      "status": "failed",
+      "error": "'ClinicalMetabolomicsDataGenerator' object has no attribute 'generate_metabolite_data'"
+    }
+  },
+  "benchmarks": {
+    "mock_operation": {
+      "status": "success",
+      "execution_time": 0.23925185203552246,
+      "available": true
+    },
+    "benchmark_suite": {
+      "status": "success",
+      "available": true
+    },
+    "quick_benchmark_execution": {
+      "status": "success",
+      "execution_time": 45.37729001045227,
+      "benchmark_status": "failed",
+      "available": true
+    }
+  },
+  "integration": {
+    "pytest_config": {
+      "status": "success",
+      "available": true
+    },
+    "conftest": {
+      "status": "success",
+      "available": true,
+      "has_async_fixtures": true,
+      "has_performance_fixtures": true
+    },
+    "report_generation": {
+      "status": "failed",
+      "error": "name 'datetime' is not defined"
+    },
+    "runner_script": {
+      "status": "success",
+      "available": true
+    }
+  },
+  "overall_status": "good",
+  "overall_score": 0.8875
+}
