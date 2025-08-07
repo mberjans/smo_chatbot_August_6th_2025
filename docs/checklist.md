@@ -243,10 +243,10 @@
 - [x] Optimize QueryParam settings for biomedical content
 
 **CMO-LIGHTRAG-007-T09** [TEST]
-- [ ] Execute all query processing unit tests
+- [x] Execute all query processing unit tests
 
 **CMO-LIGHTRAG-007-T10** [VALIDATE]
-- [ ] Verify dependency on CMO-LIGHTRAG-006 completion
+- [x] Verify dependency on CMO-LIGHTRAG-006 completion
 
 ---
 
