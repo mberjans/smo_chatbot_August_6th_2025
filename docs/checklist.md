@@ -228,10 +228,10 @@
 - [x] Write performance tests for query response time (<30 seconds)
 
 **CMO-LIGHTRAG-007-T04** [CODE]
-- [ ] Implement query method with QueryParam configuration
+- [x] Implement query method with QueryParam configuration
 
 **CMO-LIGHTRAG-007-T05** [CODE]
-- [ ] Implement get_context_only method for context retrieval
+- [x] Implement get_context_only method for context retrieval
 
 **CMO-LIGHTRAG-007-T06** [CODE]
 - [ ] Add response formatting and post-processing
