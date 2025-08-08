@@ -187,11 +187,69 @@ def _load_feature_flags():
     return flags
 
 def is_feature_enabled(feature_name: str) -> bool:
-    """Check if a specific feature is enabled via feature flags."""
+    """
+    Check if a specific feature is enabled via environment-based feature flags.
+    
+    This function provides a centralized way to check if optional features are enabled
+    in the Clinical Metabolomics RAG system. Feature flags are loaded from environment
+    variables and cached for performance.
+    
+    Args:
+        feature_name: Name of the feature to check (e.g., 'quality_validation_enabled')
+        
+    Returns:
+        bool: True if the feature is enabled, False otherwise
+        
+    Common Feature Flags:
+        - quality_validation_enabled: Enable quality validation and scoring
+        - performance_monitoring_enabled: Enable performance monitoring
+        - cost_tracking_enabled: Enable cost tracking and budgeting
+        - relevance_scoring_enabled: Enable relevance scoring
+        - pdf_processing_enabled: Enable PDF document processing
+        - benchmarking_enabled: Enable performance benchmarking
+        - recovery_system_enabled: Enable advanced error recovery
+        
+    Example:
+        ```python
+        if is_feature_enabled('quality_validation_enabled'):
+            # Use quality validation features
+            validator = QualityValidator()
+        else:
+            # Skip quality validation
+            pass
+        ```
+    """
     return _FEATURE_FLAGS.get(feature_name, False)
 
 def get_enabled_features() -> dict:
-    """Get all enabled features and their status."""
+    """
+    Get all currently enabled features and their status.
+    
+    This function returns a dictionary containing only the features that are currently
+    enabled (set to True) via environment variables. This is useful for debugging,
+    logging, and understanding the current system configuration.
+    
+    Returns:
+        dict: Dictionary mapping feature names to their enabled status (all True)
+        
+    Example:
+        ```python
+        enabled = get_enabled_features()
+        print("Currently enabled features:")
+        for feature in enabled:
+            print(f"  - {feature}")
+            
+        # Check if any quality features are enabled
+        quality_features = [f for f in enabled if 'quality' in f]
+        if quality_features:
+            print(f"Quality features enabled: {quality_features}")
+        ```
+        
+    Note:
+        This function filters the feature flags to only return enabled features.
+        To get all feature flags (including disabled ones), use the internal
+        _FEATURE_FLAGS dictionary directly.
+    """
     return {key: value for key, value in _FEATURE_FLAGS.items() if value}
 
 def _register_integration_module(module_name: str, feature_flag: str, required: bool = False):

@@ -334,7 +334,7 @@
 ### CMO-LIGHTRAG-011: MVP Documentation and Handoff
 
 **CMO-LIGHTRAG-011-T01** [DOC]
-- [ ] Generate API documentation for all public methods
+- [x] Generate API documentation for all public methods
 
 **CMO-LIGHTRAG-011-T02** [DOC]
 - [ ] Create setup and installation guide
