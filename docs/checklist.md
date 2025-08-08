@@ -410,7 +410,7 @@
 - [x] Implement routing decision engine
 
 **CMO-LIGHTRAG-013-T05** [CODE]
-- [ ] Add system health checks and monitoring
+- [x] Add system health checks and monitoring
 
 **CMO-LIGHTRAG-013-T06** [CODE]
 - [ ] Implement load balancing between multiple backends
