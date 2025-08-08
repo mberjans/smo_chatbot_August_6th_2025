@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-08-07T19:03:01.546194",
+  "stdout": [
+    {
+      "type": "stdout",
+      "content": "{\"type\":\"system\",\"subtype\":\"init\",\"cwd\":\"/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025\",\"session_id\":\"7524e966-8422-4d6d-a408-37062b770ba1\",\"tools\":[\"Task\",\"Bash\",\"Glob\",\"Grep\",\"LS\",\"ExitPlanMode\",\"Read\",\"Edit\",\"MultiEdit\",\"Write\",\"NotebookEdit\",\"WebFetch\",\"TodoWrite\",\"WebSearch\"],\"mcp_servers\":[],\"model\":\"claude-sonnet-4-20250514\",\"permissionMode\":\"bypassPermissions\",\"slash_commands\":[\"add-dir\",\"agents\",\"clear\",\"compact\",\"config\",\"cost\",\"doctor\",\"exit\",\"help\",\"ide\",\"init\",\"install-github-app\",\"mcp\",\"memory\",\"migrate-installer\",\"model\",\"pr-comments\",\"release-notes\",\"resume\",\"status\",\"bug\",\"review\",\"security-review\",\"terminal-setup\",\"upgrade\",\"vim\",\"permissions\",\"hooks\",\"export\",\"logout\",\"login\"],\"apiKeySource\":\"none\"}\n",
+      "timestamp": "2025-08-07T19:02:57.636159"
+    },
+    {
+      "type": "stdout",
+      "content": "{\"type\":\"assistant\",\"message\":{\"id\":\"e51b97fb-92b2-415f-8e00-1089120a96cd\",\"model\":\"<synthetic>\",\"role\":\"assistant\",\"stop_reason\":\"stop_sequence\",\"stop_sequence\":\"\",\"type\":\"message\",\"usage\":{\"input_tokens\":0,\"output_tokens\":0,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"server_tool_use\":{\"web_search_requests\":0},\"service_tier\":null},\"content\":[{\"type\":\"text\",\"text\":\"API Error: 500 {\\\"type\\\":\\\"error\\\",\\\"error\\\":{\\\"type\\\":\\\"api_error\\\",\\\"message\\\":\\\"Internal server error\\\"}}\"}]},\"parent_tool_use_id\":null,\"session_id\":\"7524e966-8422-4d6d-a408-37062b770ba1\"}\n",
+      "timestamp": "2025-08-07T19:02:59.907763"
+    },
+    {
+      "type": "stdout",
+      "content": "{\"type\":\"result\",\"subtype\":\"success\",\"is_error\":true,\"duration_ms\":2279,\"duration_api_ms\":0,\"num_turns\":1,\"result\":\"API Error: 500 {\\\"type\\\":\\\"error\\\",\\\"error\\\":{\\\"type\\\":\\\"api_error\\\",\\\"message\\\":\\\"Internal server error\\\"}}\",\"session_id\":\"7524e966-8422-4d6d-a408-37062b770ba1\",\"total_cost_usd\":0,\"usage\":{\"input_tokens\":0,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"output_tokens\":0,\"server_tool_use\":{\"web_search_requests\":0},\"service_tier\":\"standard\"}}\n",
+      "timestamp": "2025-08-07T19:02:59.907925"
+    }
+  ],
+  "stderr": [],
+  "summary": {
+    "total_stdout_lines": 3,
+    "total_stderr_lines": 0,
+    "execution_duration": 2.271766
+  }
+}

@@ -1,0 +1,44 @@
+
+Feature Flag Test Suite Summary
+==================================================
+
+Suite: unit
+Status: FAILED (exit code: 1)
+Timestamp: test_reports/summary_unit_1.txt
+
+Test Files Executed:
+  - lightrag_integration/tests/test_feature_flag_manager.py
+  - lightrag_integration/tests/test_integration_wrapper.py
+  - lightrag_integration/tests/test_feature_flag_configuration.py
+
+Reports Generated:
+  - JUnit XML: test_reports/junit_unit.xml
+  - HTML Report: test_reports/feature_flag_tests.html
+  - Coverage Report: test_reports/htmlcov/index.html
+  - Memory Profile: test_reports/memray/
+
+Environment Configuration:
+  LIGHTRAG_INTEGRATION_ENABLED=true
+  LIGHTRAG_ENABLE_QUALITY_VALIDATION=true
+  LIGHTRAG_ENABLE_RELEVANCE_SCORING=true
+  LIGHTRAG_ENABLE_CIRCUIT_BREAKER=true
+  LIGHTRAG_ENABLE_AB_TESTING=true
+  LIGHTRAG_ROLLOUT_PERCENTAGE=50.0
+  LIGHTRAG_USER_HASH_SALT=test_salt_2025
+  LIGHTRAG_CIRCUIT_BREAKER_FAILURE_THRESHOLD=3
+  LIGHTRAG_CIRCUIT_BREAKER_RECOVERY_TIMEOUT=10.0
+  LIGHTRAG_MIN_QUALITY_THRESHOLD=0.7
+  OPENAI_API_KEY=test-openai-key-for-feature-flag-tests
+  LIGHTRAG_MODEL=gpt-4o-mini
+  LIGHTRAG_EMBEDDING_MODEL=text-embedding-3-small
+  LIGHTRAG_LOG_LEVEL=WARNING
+  LIGHTRAG_ENABLE_FILE_LOGGING=false
+  PYTEST_CURRENT_TEST=feature_flag_tests
+
+Next Steps:
+
+  ❌ Some tests failed. Please review:
+  - Check detailed test output for failure reasons
+  - Review JUnit XML report for structured failure data
+  - Check HTML report for visual failure analysis
+  - Ensure all dependencies are installed and configured

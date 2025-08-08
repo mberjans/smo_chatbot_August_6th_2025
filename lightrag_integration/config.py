@@ -97,6 +97,23 @@ class LightRAGConfig:
     relevance_minimum_threshold: float = field(default_factory=lambda: float(os.getenv("LIGHTRAG_RELEVANCE_MINIMUM_THRESHOLD", "50.0")))
     enable_parallel_relevance_processing: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_PARALLEL_RELEVANCE_PROCESSING", "true").lower() in ("true", "1", "yes", "t", "on"))
     
+    # Feature Flag Configuration for LightRAG Integration
+    lightrag_integration_enabled: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_INTEGRATION_ENABLED", "false").lower() in ("true", "1", "yes", "t", "on"))
+    lightrag_rollout_percentage: float = field(default_factory=lambda: float(os.getenv("LIGHTRAG_ROLLOUT_PERCENTAGE", "0.0")))
+    lightrag_user_hash_salt: str = field(default_factory=lambda: os.getenv("LIGHTRAG_USER_HASH_SALT", "cmo_lightrag_2025"))
+    lightrag_enable_ab_testing: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_AB_TESTING", "false").lower() in ("true", "1", "yes", "t", "on"))
+    lightrag_fallback_to_perplexity: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_FALLBACK_TO_PERPLEXITY", "true").lower() in ("true", "1", "yes", "t", "on"))
+    lightrag_force_user_cohort: Optional[str] = field(default_factory=lambda: os.getenv("LIGHTRAG_FORCE_USER_COHORT"))  # 'lightrag' or 'perplexity' or None
+    lightrag_integration_timeout_seconds: float = field(default_factory=lambda: float(os.getenv("LIGHTRAG_INTEGRATION_TIMEOUT_SECONDS", "30.0")))
+    lightrag_enable_performance_comparison: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_PERFORMANCE_COMPARISON", "false").lower() in ("true", "1", "yes", "t", "on"))
+    lightrag_enable_quality_metrics: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_QUALITY_METRICS", "false").lower() in ("true", "1", "yes", "t", "on"))
+    lightrag_min_quality_threshold: float = field(default_factory=lambda: float(os.getenv("LIGHTRAG_MIN_QUALITY_THRESHOLD", "0.7")))
+    lightrag_enable_circuit_breaker: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_CIRCUIT_BREAKER", "true").lower() in ("true", "1", "yes", "t", "on"))
+    lightrag_circuit_breaker_failure_threshold: int = field(default_factory=lambda: int(os.getenv("LIGHTRAG_CIRCUIT_BREAKER_FAILURE_THRESHOLD", "3")))
+    lightrag_circuit_breaker_recovery_timeout: float = field(default_factory=lambda: float(os.getenv("LIGHTRAG_CIRCUIT_BREAKER_RECOVERY_TIMEOUT", "300.0")))
+    lightrag_enable_conditional_routing: bool = field(default_factory=lambda: os.getenv("LIGHTRAG_ENABLE_CONDITIONAL_ROUTING", "false").lower() in ("true", "1", "yes", "t", "on"))
+    lightrag_routing_rules: Optional[Dict[str, Any]] = field(default_factory=lambda: json.loads(os.getenv("LIGHTRAG_ROUTING_RULES", "{}")) if os.getenv("LIGHTRAG_ROUTING_RULES") else None)
+    
     def __post_init__(self):
         """Post-initialization processing to handle Path objects and derived values."""
         # Ensure working_dir is a Path object
@@ -148,6 +165,34 @@ class LightRAGConfig:
         valid_frequencies = {"hourly", "daily", "weekly", "monthly"}
         if self.cost_report_frequency not in valid_frequencies:
             self.cost_report_frequency = "daily"
+        
+        # Validate and normalize feature flag fields
+        # Clamp rollout percentage to valid range
+        if self.lightrag_rollout_percentage < 0:
+            self.lightrag_rollout_percentage = 0.0
+        elif self.lightrag_rollout_percentage > 100:
+            self.lightrag_rollout_percentage = 100.0
+        
+        # Validate user cohort override
+        if self.lightrag_force_user_cohort and self.lightrag_force_user_cohort not in ['lightrag', 'perplexity']:
+            self.lightrag_force_user_cohort = None
+        
+        # Ensure timeout is positive
+        if self.lightrag_integration_timeout_seconds <= 0:
+            self.lightrag_integration_timeout_seconds = 30.0
+        
+        # Clamp quality threshold to valid range
+        if self.lightrag_min_quality_threshold < 0:
+            self.lightrag_min_quality_threshold = 0.0
+        elif self.lightrag_min_quality_threshold > 1:
+            self.lightrag_min_quality_threshold = 1.0
+        
+        # Ensure circuit breaker parameters are positive
+        if self.lightrag_circuit_breaker_failure_threshold <= 0:
+            self.lightrag_circuit_breaker_failure_threshold = 3
+        
+        if self.lightrag_circuit_breaker_recovery_timeout <= 0:
+            self.lightrag_circuit_breaker_recovery_timeout = 300.0
         
         # Automatically create necessary directories if requested
         if self.auto_create_dirs:
@@ -236,6 +281,25 @@ class LightRAGConfig:
         
         if not (0 <= self.relevance_minimum_threshold <= 100):
             raise LightRAGConfigError("relevance_minimum_threshold must be between 0 and 100")
+        
+        # Validate feature flag configuration
+        if not (0 <= self.lightrag_rollout_percentage <= 100):
+            raise LightRAGConfigError("lightrag_rollout_percentage must be between 0 and 100")
+        
+        if self.lightrag_force_user_cohort and self.lightrag_force_user_cohort not in ['lightrag', 'perplexity']:
+            raise LightRAGConfigError("lightrag_force_user_cohort must be 'lightrag', 'perplexity', or None")
+        
+        if self.lightrag_integration_timeout_seconds <= 0:
+            raise LightRAGConfigError("lightrag_integration_timeout_seconds must be positive")
+        
+        if not (0 <= self.lightrag_min_quality_threshold <= 1):
+            raise LightRAGConfigError("lightrag_min_quality_threshold must be between 0.0 and 1.0")
+        
+        if self.lightrag_circuit_breaker_failure_threshold <= 0:
+            raise LightRAGConfigError("lightrag_circuit_breaker_failure_threshold must be positive")
+        
+        if self.lightrag_circuit_breaker_recovery_timeout <= 0:
+            raise LightRAGConfigError("lightrag_circuit_breaker_recovery_timeout must be positive")
         
         # Validate working directory
         if not self.working_dir.exists():
@@ -588,7 +652,22 @@ class LightRAGConfig:
             'relevance_scoring_mode': self.relevance_scoring_mode,
             'relevance_confidence_threshold': self.relevance_confidence_threshold,
             'relevance_minimum_threshold': self.relevance_minimum_threshold,
-            'enable_parallel_relevance_processing': self.enable_parallel_relevance_processing
+            'enable_parallel_relevance_processing': self.enable_parallel_relevance_processing,
+            'lightrag_integration_enabled': self.lightrag_integration_enabled,
+            'lightrag_rollout_percentage': self.lightrag_rollout_percentage,
+            'lightrag_user_hash_salt': self.lightrag_user_hash_salt,
+            'lightrag_enable_ab_testing': self.lightrag_enable_ab_testing,
+            'lightrag_fallback_to_perplexity': self.lightrag_fallback_to_perplexity,
+            'lightrag_force_user_cohort': self.lightrag_force_user_cohort,
+            'lightrag_integration_timeout_seconds': self.lightrag_integration_timeout_seconds,
+            'lightrag_enable_performance_comparison': self.lightrag_enable_performance_comparison,
+            'lightrag_enable_quality_metrics': self.lightrag_enable_quality_metrics,
+            'lightrag_min_quality_threshold': self.lightrag_min_quality_threshold,
+            'lightrag_enable_circuit_breaker': self.lightrag_enable_circuit_breaker,
+            'lightrag_circuit_breaker_failure_threshold': self.lightrag_circuit_breaker_failure_threshold,
+            'lightrag_circuit_breaker_recovery_timeout': self.lightrag_circuit_breaker_recovery_timeout,
+            'lightrag_enable_conditional_routing': self.lightrag_enable_conditional_routing,
+            'lightrag_routing_rules': self.lightrag_routing_rules
         }
     
     def copy(self) -> 'LightRAGConfig':

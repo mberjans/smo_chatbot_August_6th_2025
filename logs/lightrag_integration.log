@@ -11526,3 +11526,282 @@
 2025-08-07 11:40:23,258 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
 2025-08-07 11:40:23,263 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /tmp/test_lightrag
 2025-08-07 11:40:23,263 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-07 18:42:18,763 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:42:18,764 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:42:18,764 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:42:18,956 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:42:27,695 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:42:27,696 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:42:27,696 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:42:27,740 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:42:34,276 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:42:34,277 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:42:34,277 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:42:34,321 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:42:53,516 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:42:53,517 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:42:53,517 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:42:53,582 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:43:01,553 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:43:01,554 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:43:01,554 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:43:01,612 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:43:23,608 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:43:23,609 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:43:23,609 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:43:23,673 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:43:23,674 - clinical_metabolomics_rag - INFO - [c6ab2371-581b-4057-8580-3b2c99bc759d] Configuration validation: enhanced_logging
+2025-08-07 18:43:23,674 - clinical_metabolomics_rag.structured - INFO - {"timestamp":"2025-08-08T00:43:23.674131+00:00","level":"INFO","message":"Configuration validation: enhanced_logging","correlation_id":"c6ab2371-581b-4057-8580-3b2c99bc759d","operation_name":"configuration_validation","component":"diagnostics","error_details":{},"metadata":{"config_name":"enhanced_logging","validation_results":{"structured_logging_enabled":true,"log_dir":"logs","correlation_tracking_enabled":true,"performance_tracking_enabled":true}}}
+2025-08-07 18:43:23,678 - clinical_metabolomics_rag - INFO - Cost persistence initialized with database at /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/cost_tracking.db
+2025-08-07 18:43:23,678 - clinical_metabolomics_rag - INFO - Budget manager initialized
+2025-08-07 18:43:23,678 - clinical_metabolomics_rag - INFO - Daily budget limit: $25.00
+2025-08-07 18:43:23,678 - clinical_metabolomics_rag - INFO - Monthly budget limit: $500.00
+2025-08-07 18:43:23,678 - clinical_metabolomics_rag - INFO - Research categorizer initialized
+2025-08-07 18:43:23,678 - clinical_metabolomics_rag - INFO - Audit trail system initialized
+2025-08-07 18:43:23,681 - clinical_metabolomics_rag - INFO - Audit Event [system_start]: Audit trail system started
+2025-08-07 18:43:23,681 - clinical_metabolomics_rag - INFO - Enhanced cost tracking initialized successfully
+2025-08-07 18:43:23,683 - clinical_metabolomics_rag - INFO - API Usage Metrics Logger initialized with session ID: cc0cce0b-4323-4f21-b4d4-5224e4b4a45e
+2025-08-07 18:43:23,683 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
+2025-08-07 18:43:23,690 - lightrag_integration.claim_extractor - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:43:23,690 - lightrag_integration.relevance_scorer - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:43:23,691 - lightrag_integration.factual_accuracy_validator - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:43:23,691 - lightrag_integration.relevance_scorer - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:43:23,691 - lightrag_integration.relevance_scorer - WARNING - DocumentIndexer not available - using fallback methods
+2025-08-07 18:43:23,691 - lightrag_integration.relevance_scorer - INFO - Complete factual accuracy pipeline initialized
+2025-08-07 18:43:23,691 - lightrag_integration.relevance_scorer - INFO - ClinicalMetabolomicsRelevanceScorer initialized with enhanced structure quality checks
+2025-08-07 18:43:23,691 - clinical_metabolomics_rag - INFO - Clinical Metabolomics Relevance Scorer initialized successfully
+2025-08-07 18:43:23,721 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
+2025-08-07 18:43:23,721 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-07 18:43:32,468 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:43:32,469 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:43:32,469 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:43:32,529 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:43:45,127 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:43:45,129 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:43:45,129 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:43:45,206 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:43:45,207 - clinical_metabolomics_rag - INFO - [2b71debf-6785-492f-82f6-ead91d84556d] Configuration validation: enhanced_logging
+2025-08-07 18:43:45,207 - clinical_metabolomics_rag.structured - INFO - {"timestamp":"2025-08-08T00:43:45.207281+00:00","level":"INFO","message":"Configuration validation: enhanced_logging","correlation_id":"2b71debf-6785-492f-82f6-ead91d84556d","operation_name":"configuration_validation","component":"diagnostics","error_details":{},"metadata":{"config_name":"enhanced_logging","validation_results":{"structured_logging_enabled":true,"log_dir":"logs","correlation_tracking_enabled":true,"performance_tracking_enabled":true}}}
+2025-08-07 18:43:45,208 - clinical_metabolomics_rag - INFO - Cost persistence initialized with database at /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/cost_tracking.db
+2025-08-07 18:43:45,208 - clinical_metabolomics_rag - INFO - Research categorizer initialized
+2025-08-07 18:43:45,208 - clinical_metabolomics_rag - INFO - Audit trail system initialized
+2025-08-07 18:43:45,211 - clinical_metabolomics_rag - INFO - Audit Event [system_start]: Audit trail system started
+2025-08-07 18:43:45,211 - clinical_metabolomics_rag - INFO - Enhanced cost tracking initialized successfully
+2025-08-07 18:43:45,211 - clinical_metabolomics_rag - INFO - API Usage Metrics Logger initialized with session ID: 92edff0c-b1ee-43ff-b401-227c52abcb71
+2025-08-07 18:43:45,211 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
+2025-08-07 18:43:45,219 - lightrag_integration.claim_extractor - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:43:45,219 - lightrag_integration.relevance_scorer - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:43:45,219 - lightrag_integration.factual_accuracy_validator - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:43:45,219 - lightrag_integration.relevance_scorer - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:43:45,219 - lightrag_integration.relevance_scorer - WARNING - DocumentIndexer not available - using fallback methods
+2025-08-07 18:43:45,219 - lightrag_integration.relevance_scorer - INFO - Complete factual accuracy pipeline initialized
+2025-08-07 18:43:45,219 - lightrag_integration.relevance_scorer - INFO - ClinicalMetabolomicsRelevanceScorer initialized with enhanced structure quality checks
+2025-08-07 18:43:45,219 - clinical_metabolomics_rag - INFO - Clinical Metabolomics Relevance Scorer initialized successfully
+2025-08-07 18:43:45,243 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
+2025-08-07 18:43:45,243 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-07 18:43:59,164 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:43:59,165 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:43:59,165 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:43:59,228 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:43:59,230 - clinical_metabolomics_rag - INFO - [47e809a9-f719-49b4-a0ec-b0d74f9fadfb] Configuration validation: enhanced_logging
+2025-08-07 18:43:59,230 - clinical_metabolomics_rag.structured - INFO - {"timestamp":"2025-08-08T00:43:59.230635+00:00","level":"INFO","message":"Configuration validation: enhanced_logging","correlation_id":"47e809a9-f719-49b4-a0ec-b0d74f9fadfb","operation_name":"configuration_validation","component":"diagnostics","error_details":{},"metadata":{"config_name":"enhanced_logging","validation_results":{"structured_logging_enabled":true,"log_dir":"logs","correlation_tracking_enabled":true,"performance_tracking_enabled":true}}}
+2025-08-07 18:43:59,231 - clinical_metabolomics_rag - INFO - Cost persistence initialized with database at /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/cost_tracking.db
+2025-08-07 18:43:59,231 - clinical_metabolomics_rag - INFO - Budget manager initialized
+2025-08-07 18:43:59,231 - clinical_metabolomics_rag - INFO - Daily budget limit: $30.00
+2025-08-07 18:43:59,231 - clinical_metabolomics_rag - INFO - Research categorizer initialized
+2025-08-07 18:43:59,231 - clinical_metabolomics_rag - INFO - Audit trail system initialized
+2025-08-07 18:43:59,234 - clinical_metabolomics_rag - INFO - Audit Event [system_start]: Audit trail system started
+2025-08-07 18:43:59,234 - clinical_metabolomics_rag - INFO - Enhanced cost tracking initialized successfully
+2025-08-07 18:43:59,234 - clinical_metabolomics_rag - INFO - API Usage Metrics Logger initialized with session ID: 913aaea3-09e8-4ba3-bc74-6f09ed134788
+2025-08-07 18:43:59,234 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
+2025-08-07 18:43:59,242 - lightrag_integration.claim_extractor - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:43:59,242 - lightrag_integration.relevance_scorer - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:43:59,243 - lightrag_integration.factual_accuracy_validator - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:43:59,243 - lightrag_integration.relevance_scorer - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:43:59,243 - lightrag_integration.relevance_scorer - WARNING - DocumentIndexer not available - using fallback methods
+2025-08-07 18:43:59,243 - lightrag_integration.relevance_scorer - INFO - Complete factual accuracy pipeline initialized
+2025-08-07 18:43:59,243 - lightrag_integration.relevance_scorer - INFO - ClinicalMetabolomicsRelevanceScorer initialized with enhanced structure quality checks
+2025-08-07 18:43:59,243 - clinical_metabolomics_rag - INFO - Clinical Metabolomics Relevance Scorer initialized successfully
+2025-08-07 18:43:59,267 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
+2025-08-07 18:43:59,267 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-07 18:43:59,267 - clinical_metabolomics_rag - INFO - [12f02e33-b4e4-4d8d-9d83-e4996a1a7003] Configuration validation: enhanced_logging
+2025-08-07 18:43:59,267 - clinical_metabolomics_rag.structured - INFO - {"timestamp":"2025-08-08T00:43:59.267932+00:00","level":"INFO","message":"Configuration validation: enhanced_logging","correlation_id":"12f02e33-b4e4-4d8d-9d83-e4996a1a7003","operation_name":"configuration_validation","component":"diagnostics","error_details":{},"metadata":{"config_name":"enhanced_logging","validation_results":{"structured_logging_enabled":true,"log_dir":"logs","correlation_tracking_enabled":true,"performance_tracking_enabled":true}}}
+2025-08-07 18:43:59,268 - clinical_metabolomics_rag - INFO - Cost persistence initialized with database at /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/cost_tracking.db
+2025-08-07 18:43:59,268 - clinical_metabolomics_rag - INFO - Research categorizer initialized
+2025-08-07 18:43:59,268 - clinical_metabolomics_rag - INFO - Audit trail system initialized
+2025-08-07 18:43:59,269 - clinical_metabolomics_rag - INFO - Audit Event [system_start]: Audit trail system started
+2025-08-07 18:43:59,269 - clinical_metabolomics_rag - INFO - Enhanced cost tracking initialized successfully
+2025-08-07 18:43:59,270 - clinical_metabolomics_rag - INFO - API Usage Metrics Logger initialized with session ID: 53ed9e1a-a727-41e9-8053-a4e11d224fbb
+2025-08-07 18:43:59,270 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
+2025-08-07 18:43:59,270 - lightrag_integration.claim_extractor - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:43:59,270 - lightrag_integration.relevance_scorer - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:43:59,270 - lightrag_integration.factual_accuracy_validator - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:43:59,270 - lightrag_integration.relevance_scorer - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:43:59,270 - lightrag_integration.relevance_scorer - WARNING - DocumentIndexer not available - using fallback methods
+2025-08-07 18:43:59,270 - lightrag_integration.relevance_scorer - INFO - Complete factual accuracy pipeline initialized
+2025-08-07 18:43:59,270 - lightrag_integration.relevance_scorer - INFO - ClinicalMetabolomicsRelevanceScorer initialized with enhanced structure quality checks
+2025-08-07 18:43:59,270 - clinical_metabolomics_rag - INFO - Clinical Metabolomics Relevance Scorer initialized successfully
+2025-08-07 18:43:59,274 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
+2025-08-07 18:43:59,274 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-07 18:44:34,372 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:44:34,373 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:44:34,373 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:44:34,442 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 18:44:34,444 - clinical_metabolomics_rag - INFO - [4c3af3bc-cc62-4091-8bd9-686943fc32ff] Configuration validation: enhanced_logging
+2025-08-07 18:44:34,444 - clinical_metabolomics_rag.structured - INFO - {"timestamp":"2025-08-08T00:44:34.444185+00:00","level":"INFO","message":"Configuration validation: enhanced_logging","correlation_id":"4c3af3bc-cc62-4091-8bd9-686943fc32ff","operation_name":"configuration_validation","component":"diagnostics","error_details":{},"metadata":{"config_name":"enhanced_logging","validation_results":{"structured_logging_enabled":true,"log_dir":"logs","correlation_tracking_enabled":true,"performance_tracking_enabled":true}}}
+2025-08-07 18:44:34,445 - clinical_metabolomics_rag - INFO - Cost persistence initialized with database at /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/cost_tracking.db
+2025-08-07 18:44:34,445 - clinical_metabolomics_rag - INFO - Budget manager initialized
+2025-08-07 18:44:34,445 - clinical_metabolomics_rag - INFO - Daily budget limit: $25.00
+2025-08-07 18:44:34,445 - clinical_metabolomics_rag - INFO - Monthly budget limit: $500.00
+2025-08-07 18:44:34,445 - clinical_metabolomics_rag - INFO - Research categorizer initialized
+2025-08-07 18:44:34,445 - clinical_metabolomics_rag - INFO - Audit trail system initialized
+2025-08-07 18:44:34,448 - clinical_metabolomics_rag - INFO - Audit Event [system_start]: Audit trail system started
+2025-08-07 18:44:34,448 - clinical_metabolomics_rag - INFO - Enhanced cost tracking initialized successfully
+2025-08-07 18:44:34,448 - clinical_metabolomics_rag - INFO - API Usage Metrics Logger initialized with session ID: a758b893-1ce6-4cf7-9b50-c95439c95428
+2025-08-07 18:44:34,448 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
+2025-08-07 18:44:34,456 - lightrag_integration.claim_extractor - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:44:34,456 - lightrag_integration.relevance_scorer - INFO - BiomedicalClaimExtractor initialized successfully
+2025-08-07 18:44:34,456 - lightrag_integration.factual_accuracy_validator - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:44:34,456 - lightrag_integration.relevance_scorer - INFO - FactualAccuracyValidator initialized successfully
+2025-08-07 18:44:34,456 - lightrag_integration.relevance_scorer - WARNING - DocumentIndexer not available - using fallback methods
+2025-08-07 18:44:34,456 - lightrag_integration.relevance_scorer - INFO - Complete factual accuracy pipeline initialized
+2025-08-07 18:44:34,456 - lightrag_integration.relevance_scorer - INFO - ClinicalMetabolomicsRelevanceScorer initialized with enhanced structure quality checks
+2025-08-07 18:44:34,456 - clinical_metabolomics_rag - INFO - Clinical Metabolomics Relevance Scorer initialized successfully
+2025-08-07 18:44:34,479 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
+2025-08-07 18:44:34,479 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-07 18:45:11,568 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 18:45:11,569 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 18:45:11,569 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 18:45:11,639 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:25:29,024 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:25:29,026 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 19:25:29,026 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 19:25:29,091 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:25:39,825 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:25:39,826 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 19:25:39,826 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 19:25:39,890 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:25:53,162 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:25:53,164 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 19:25:53,164 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 19:25:53,231 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:26:13,596 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:26:13,597 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 19:26:13,597 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 19:26:13,659 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:26:22,465 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:26:22,466 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 19:26:22,466 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 19:26:22,527 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:26:27,184 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:26:27,185 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 19:26:27,185 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 19:26:27,229 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:28:03,447 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:28:03,448 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 19:28:03,448 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 19:28:03,515 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:28:14,450 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:28:14,451 - lightrag_integration - INFO - Available components: config, clinical_metabolomics_rag, pdf_processor, cost_persistence, budget_manager, research_categorizer
+2025-08-07 19:28:14,451 - lightrag_integration - INFO - Available optional features: Quality Reporting, Relevance Scoring, Factual Validation, Progress Tracking
+2025-08-07 19:28:14,511 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:43:53,427 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:43:53,427 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 19:43:53,427 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 19:43:53,428 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:44:35,875 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 19:44:35,875 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 19:44:35,875 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 19:44:35,875 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:44:35,876 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 19:44:35,876 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 19:44:35,876 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:44:35,876 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, cost_tracking_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 19:44:35,876 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 19:44:35,876 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:44:35,876 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, cost_tracking_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 19:44:35,876 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 19:44:35,877 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:44:35,877 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 19:44:35,877 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 19:44:35,877 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 19:44:35,877 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, cost_tracking_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 19:44:35,877 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 19:44:35,877 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 19:44:35,878 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, cost_tracking_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 19:44:35,878 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 19:44:35,878 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 20:16:38,240 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:16:38,240 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:16:38,240 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:16:38,241 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:17:35,528 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:17:35,528 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:17:35,528 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:17:35,528 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:17:40,684 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:17:40,685 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:17:40,685 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:17:40,685 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:18:24,708 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:18:24,708 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:18:24,708 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:18:24,708 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:18:46,775 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:18:46,775 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:18:46,775 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:18:46,776 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:19:43,915 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:19:43,915 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:19:43,915 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:19:43,916 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:20:23,962 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:20:23,962 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:20:23,962 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:20:23,963 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:20:37,072 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:20:37,072 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:20:37,072 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:20:37,072 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:20:37,192 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 50.0%
+2025-08-07 20:20:42,136 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:20:42,136 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:20:42,136 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:20:42,136 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:20:42,225 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 50.0%
+2025-08-07 20:21:36,824 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:21:36,825 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:21:36,825 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:21:36,825 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:21:36,997 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 50.0%
+2025-08-07 20:22:53,959 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:22:53,959 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:53,959 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:53,959 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:22:54,059 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:54,060 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:54,060 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 20:22:54,061 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:54,061 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:54,061 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:22:54,063 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:54,063 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:54,063 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:22:54,064 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:54,064 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:54,064 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:22:54,150 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:54,150 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:54,150 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:22:54,182 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:54,183 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:54,183 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 20:22:54,184 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:54,184 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:54,184 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false); OPENAI_API_KEY environment variable is not set; Configuration validation failed: API key is required and cannot be empty
+2025-08-07 20:22:54,185 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:54,185 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:54,185 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false); Configuration validation failed: Failed to create configuration: could not convert string to float: 'not_a_number'
+2025-08-07 20:22:54,186 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:22:54,186 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:22:54,186 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)

@@ -135,65 +135,247 @@ from .clinical_metabolomics_rag import (
 )
 
 # =============================================================================
+# FEATURE FLAG INITIALIZATION (Must be first)
+# =============================================================================
+
+# Environment-based feature detection - initialize before any conditional imports
+_FEATURE_FLAGS = {}
+_INTEGRATION_MODULES = {}
+_FACTORY_FUNCTIONS = {}
+
+def _load_feature_flags():
+    """Load feature flags from environment variables."""
+    import os
+    
+    flags = {
+        # Core integration flags
+        'lightrag_integration_enabled': os.getenv('LIGHTRAG_INTEGRATION_ENABLED', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'quality_validation_enabled': os.getenv('LIGHTRAG_ENABLE_QUALITY_VALIDATION', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        'performance_monitoring_enabled': os.getenv('LIGHTRAG_ENABLE_PERFORMANCE_MONITORING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'cost_tracking_enabled': os.getenv('LIGHTRAG_ENABLE_COST_TRACKING', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Quality validation sub-features
+        'relevance_scoring_enabled': os.getenv('LIGHTRAG_ENABLE_RELEVANCE_SCORING', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        'accuracy_validation_enabled': os.getenv('LIGHTRAG_ENABLE_ACCURACY_VALIDATION', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'factual_validation_enabled': os.getenv('LIGHTRAG_ENABLE_FACTUAL_VALIDATION', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'claim_extraction_enabled': os.getenv('LIGHTRAG_ENABLE_CLAIM_EXTRACTION', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Performance and monitoring features
+        'benchmarking_enabled': os.getenv('LIGHTRAG_ENABLE_BENCHMARKING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'progress_tracking_enabled': os.getenv('LIGHTRAG_ENABLE_PROGRESS_TRACKING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'unified_progress_tracking_enabled': os.getenv('LIGHTRAG_ENABLE_UNIFIED_PROGRESS_TRACKING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Document processing features
+        'document_indexing_enabled': os.getenv('LIGHTRAG_ENABLE_DOCUMENT_INDEXING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'pdf_processing_enabled': os.getenv('LIGHTRAG_ENABLE_PDF_PROCESSING', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Advanced features
+        'recovery_system_enabled': os.getenv('LIGHTRAG_ENABLE_RECOVERY_SYSTEM', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'alert_system_enabled': os.getenv('LIGHTRAG_ENABLE_ALERT_SYSTEM', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'budget_monitoring_enabled': os.getenv('LIGHTRAG_ENABLE_BUDGET_MONITORING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Integration control flags
+        'circuit_breaker_enabled': os.getenv('LIGHTRAG_ENABLE_CIRCUIT_BREAKER', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        'ab_testing_enabled': os.getenv('LIGHTRAG_ENABLE_AB_TESTING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'conditional_routing_enabled': os.getenv('LIGHTRAG_ENABLE_CONDITIONAL_ROUTING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Debug and development flags
+        'debug_mode_enabled': os.getenv('LIGHTRAG_DEBUG_MODE', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'development_features_enabled': os.getenv('LIGHTRAG_ENABLE_DEVELOPMENT_FEATURES', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+    }
+    
+    return flags
+
+def is_feature_enabled(feature_name: str) -> bool:
+    """Check if a specific feature is enabled via feature flags."""
+    return _FEATURE_FLAGS.get(feature_name, False)
+
+def get_enabled_features() -> dict:
+    """Get all enabled features and their status."""
+    return {key: value for key, value in _FEATURE_FLAGS.items() if value}
+
+def _register_integration_module(module_name: str, feature_flag: str, required: bool = False):
+    """Register a module for conditional loading based on feature flags."""
+    _INTEGRATION_MODULES[module_name] = {
+        'feature_flag': feature_flag,
+        'required': required,
+        'loaded': False,
+        'module': None,
+        'exports': None
+    }
+
+def _check_integration_availability(module_name: str) -> bool:
+    """Check if an integration module is available and enabled."""
+    if module_name not in _INTEGRATION_MODULES:
+        return False
+    
+    module_info = _INTEGRATION_MODULES[module_name]
+    feature_flag = module_info['feature_flag']
+    
+    # Check feature flag
+    if not _FEATURE_FLAGS.get(feature_flag, False):
+        return False
+    
+    # Check if module can be imported
+    if not module_info['loaded']:
+        try:
+            import importlib
+            module = importlib.import_module(f'.{module_name}', package='lightrag_integration')
+            module_info['module'] = module
+            module_info['loaded'] = True
+            return True
+        except ImportError:
+            return False
+    
+    return module_info['loaded']
+
+def get_integration_status() -> dict:
+    """Get comprehensive integration status including feature flags and module availability."""
+    status = {
+        'feature_flags': _FEATURE_FLAGS.copy(),
+        'modules': {},
+        'factory_functions': list(_FACTORY_FUNCTIONS.keys()),
+        'integration_health': 'healthy'
+    }
+    
+    # Check module status
+    for module_name, module_info in _INTEGRATION_MODULES.items():
+        status['modules'][module_name] = {
+            'feature_flag': module_info['feature_flag'],
+            'required': module_info['required'],
+            'enabled': _FEATURE_FLAGS.get(module_info['feature_flag'], False),
+            'available': _check_integration_availability(module_name),
+            'loaded': module_info['loaded']
+        }
+    
+    # Determine overall health
+    required_modules_failed = [
+        name for name, info in _INTEGRATION_MODULES.items() 
+        if info['required'] and not _check_integration_availability(name)
+    ]
+    
+    if required_modules_failed:
+        status['integration_health'] = 'degraded'
+        status['failed_required_modules'] = required_modules_failed
+    
+    return status
+
+def validate_integration_setup() -> tuple[bool, list[str]]:
+    """Validate integration setup and return status with any issues."""
+    issues = []
+    
+    # Check core requirements
+    if not _FEATURE_FLAGS.get('lightrag_integration_enabled', False):
+        issues.append("LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)")
+    
+    # Check required modules
+    required_modules = [name for name, info in _INTEGRATION_MODULES.items() if info['required']]
+    for module_name in required_modules:
+        if not _check_integration_availability(module_name):
+            feature_flag = _INTEGRATION_MODULES[module_name]['feature_flag']
+            if not _FEATURE_FLAGS.get(feature_flag, False):
+                issues.append(f"Required module '{module_name}' is disabled by feature flag '{feature_flag}'")
+            else:
+                issues.append(f"Required module '{module_name}' cannot be imported")
+    
+    # Check environment configuration
+    import os
+    if not os.getenv('OPENAI_API_KEY'):
+        issues.append("OPENAI_API_KEY environment variable is not set")
+    
+    # Check directory permissions
+    try:
+        config = LightRAGConfig.get_config()
+        from pathlib import Path
+        
+        working_dir = Path(config.working_dir)
+        if not working_dir.exists() or not os.access(working_dir, os.W_OK):
+            issues.append(f"Working directory is not accessible or writable: {working_dir}")
+            
+    except Exception as e:
+        issues.append(f"Configuration validation failed: {str(e)}")
+    
+    return len(issues) == 0, issues
+
+# Initialize feature flags immediately
+_FEATURE_FLAGS = _load_feature_flags()
+
+# =============================================================================
 # QUALITY VALIDATION SUITE  
 # =============================================================================
 
-# Relevance and Accuracy Assessment
-try:
-    from .relevance_scorer import (
-        RelevanceScorer,
-        RelevanceScore,
-        RelevanceMetrics
-    )
-except ImportError:
-    # Create stub classes for missing modules
+# Conditional imports based on feature flags - Relevance and Accuracy Assessment
+if is_feature_enabled('relevance_scoring_enabled'):
+    try:
+        from .relevance_scorer import (
+            RelevanceScorer,
+            RelevanceScore,
+            RelevanceMetrics
+        )
+    except ImportError:
+        # Create stub classes for missing modules
+        RelevanceScorer = RelevanceScore = RelevanceMetrics = None
+else:
     RelevanceScorer = RelevanceScore = RelevanceMetrics = None
 
-try:
-    from .accuracy_scorer import (
-        AccuracyScorer,
-        AccuracyScore,
-        AccuracyMetrics
-    )
-except ImportError:
+if is_feature_enabled('accuracy_validation_enabled'):
+    try:
+        from .accuracy_scorer import (
+            AccuracyScorer,
+            AccuracyScore,
+            AccuracyMetrics
+        )
+    except ImportError:
+        AccuracyScorer = AccuracyScore = AccuracyMetrics = None
+else:
     AccuracyScorer = AccuracyScore = AccuracyMetrics = None
 
-try:
-    from .factual_accuracy_validator import (
-        FactualAccuracyValidator,
-        FactualValidationResult,
-        ValidationMetrics
-    )
-except ImportError:
+if is_feature_enabled('factual_validation_enabled'):
+    try:
+        from .factual_accuracy_validator import (
+            FactualAccuracyValidator,
+            FactualValidationResult,
+            ValidationMetrics
+        )
+    except ImportError:
+        FactualAccuracyValidator = FactualValidationResult = ValidationMetrics = None
+else:
     FactualAccuracyValidator = FactualValidationResult = ValidationMetrics = None
 
 # Claim Extraction and Validation
-try:
-    from .claim_extractor import (
-        ClaimExtractor,
-        ExtractedClaim,
-        ClaimExtractionResult
-    )
-except ImportError:
+if is_feature_enabled('claim_extraction_enabled'):
+    try:
+        from .claim_extractor import (
+            ClaimExtractor,
+            ExtractedClaim,
+            ClaimExtractionResult
+        )
+    except ImportError:
+        ClaimExtractor = ExtractedClaim = ClaimExtractionResult = None
+else:
     ClaimExtractor = ExtractedClaim = ClaimExtractionResult = None
 
 # Quality Assessment and Reporting
-try:
-    from .enhanced_response_quality_assessor import (
-        EnhancedResponseQualityAssessor,
-        QualityAssessmentResult,
-        QualityMetrics
-    )
-except ImportError:
+if is_feature_enabled('quality_validation_enabled'):
+    try:
+        from .enhanced_response_quality_assessor import (
+            EnhancedResponseQualityAssessor,
+            QualityAssessmentResult,
+            QualityMetrics
+        )
+    except ImportError:
+        EnhancedResponseQualityAssessor = QualityAssessmentResult = QualityMetrics = None
+        
+    try:
+        from .quality_report_generator import (
+            QualityReportGenerator,
+            QualityReport,
+            QualityTrend
+        )
+    except ImportError:
+        QualityReportGenerator = QualityReport = QualityTrend = None
+else:
     EnhancedResponseQualityAssessor = QualityAssessmentResult = QualityMetrics = None
-
-try:
-    from .quality_report_generator import (
-        QualityReportGenerator,
-        QualityReport,
-        QualityTrend
-    )
-except ImportError:
     QualityReportGenerator = QualityReport = QualityTrend = None
 
 # =============================================================================
@@ -201,33 +383,43 @@ except ImportError:
 # =============================================================================
 
 # Performance Benchmarking
-try:
-    from .performance_benchmarking import (
-        QualityValidationBenchmarkSuite,
-        QualityValidationMetrics,
-        QualityBenchmarkConfiguration,
-        QualityPerformanceThreshold
-    )
-except ImportError:
+if is_feature_enabled('benchmarking_enabled'):
+    try:
+        from .performance_benchmarking import (
+            QualityValidationBenchmarkSuite,
+            QualityValidationMetrics,
+            QualityBenchmarkConfiguration,
+            QualityPerformanceThreshold
+        )
+    except ImportError:
+        QualityValidationBenchmarkSuite = QualityValidationMetrics = None
+        QualityBenchmarkConfiguration = QualityPerformanceThreshold = None
+else:
     QualityValidationBenchmarkSuite = QualityValidationMetrics = None
     QualityBenchmarkConfiguration = QualityPerformanceThreshold = None
 
 # Progress Tracking
-try:
-    from .unified_progress_tracker import (
-        UnifiedProgressTracker,
-        ProgressEvent,
-        ProgressMetrics
-    )
-except ImportError:
+if is_feature_enabled('unified_progress_tracking_enabled'):
+    try:
+        from .unified_progress_tracker import (
+            UnifiedProgressTracker,
+            ProgressEvent,
+            ProgressMetrics
+        )
+    except ImportError:
+        UnifiedProgressTracker = ProgressEvent = ProgressMetrics = None
+else:
     UnifiedProgressTracker = ProgressEvent = ProgressMetrics = None
 
-try:
-    from .progress_tracker import (
-        ProgressTracker,
-        ProgressReport
-    )
-except ImportError:
+if is_feature_enabled('progress_tracking_enabled'):
+    try:
+        from .progress_tracker import (
+            ProgressTracker,
+            ProgressReport
+        )
+    except ImportError:
+        ProgressTracker = ProgressReport = None
+else:
     ProgressTracker = ProgressReport = None
 
 # =============================================================================
@@ -251,13 +443,16 @@ from .budget_manager import (
 )
 
 # Real-time Monitoring
-try:
-    from .realtime_budget_monitor import (
-        RealtimeBudgetMonitor,
-        BudgetStatus,
-        CostAlert
-    )
-except ImportError:
+if is_feature_enabled('budget_monitoring_enabled'):
+    try:
+        from .realtime_budget_monitor import (
+            RealtimeBudgetMonitor,
+            BudgetStatus,
+            CostAlert
+        )
+    except ImportError:
+        RealtimeBudgetMonitor = BudgetStatus = CostAlert = None
+else:
     RealtimeBudgetMonitor = BudgetStatus = CostAlert = None
 
 # API Metrics and Usage Tracking
@@ -300,193 +495,361 @@ from .pdf_processor import (
     BiomedicalPDFProcessorError
 )
 
-try:
-    from .document_indexer import (
-        DocumentIndexer,
-        IndexedDocument,
-        IndexingResult
-    )
-except ImportError:
+if is_feature_enabled('document_indexing_enabled'):
+    try:
+        from .document_indexer import (
+            DocumentIndexer,
+            IndexedDocument,
+            IndexingResult
+        )
+    except ImportError:
+        DocumentIndexer = IndexedDocument = IndexingResult = None
+else:
     DocumentIndexer = IndexedDocument = IndexingResult = None
 
 # =============================================================================
 # RECOVERY & ERROR HANDLING
 # =============================================================================
 
-try:
-    from .advanced_recovery_system import (
-        AdvancedRecoverySystem,
-        RecoveryStrategy,
-        RecoveryResult
-    )
-except ImportError:
+if is_feature_enabled('recovery_system_enabled'):
+    try:
+        from .advanced_recovery_system import (
+            AdvancedRecoverySystem,
+            RecoveryStrategy,
+            RecoveryResult
+        )
+    except ImportError:
+        AdvancedRecoverySystem = RecoveryStrategy = RecoveryResult = None
+else:
     AdvancedRecoverySystem = RecoveryStrategy = RecoveryResult = None
 
-try:
-    from .alert_system import (
-        AlertSystem,
-        Alert,
-        AlertPriority
-    )
-except ImportError:
+if is_feature_enabled('alert_system_enabled'):
+    try:
+        from .alert_system import (
+            AlertSystem,
+            Alert,
+            AlertPriority
+        )
+    except ImportError:
+        AlertSystem = Alert = AlertPriority = None
+else:
     AlertSystem = Alert = AlertPriority = None
+
+# =============================================================================
+# DYNAMIC EXPORT MANAGEMENT
+# =============================================================================
+
+def _build_dynamic_exports():
+    """Build dynamic __all__ list based on available features and modules."""
+    exports = [
+        # Package metadata (always available)
+        "__version__", "__author__", "__description__", "__license__", "__status__",
+        
+        # Feature flag & integration management (always available)
+        "is_feature_enabled", "get_enabled_features", "get_integration_status", "validate_integration_setup",
+        
+        # Core system components (always available)
+        "LightRAGConfig", "LightRAGConfigError", "setup_lightrag_logging",
+        "ClinicalMetabolomicsRAG", "ClinicalMetabolomicsRAGError", "CostSummary", "QueryResponse",
+        "CircuitBreaker", "CircuitBreakerError", "RateLimiter", "RequestQueue", "add_jitter",
+        
+        # Cost management & monitoring (always available)
+        "CostPersistence", "CostRecord", "ResearchCategory", "CostDatabase",
+        "BudgetManager", "BudgetThreshold", "BudgetAlert", "AlertLevel",
+        "APIUsageMetricsLogger", "APIMetric", "MetricType", "MetricsAggregator",
+        
+        # Research & categorization (always available)
+        "ResearchCategorizer", "CategoryPrediction", "CategoryMetrics", "QueryAnalyzer",
+        
+        # Audit & compliance (always available)
+        "AuditTrail", "AuditEvent", "AuditEventType", "ComplianceRule", "ComplianceChecker",
+        
+        # Document processing (PDF always available)
+        "BiomedicalPDFProcessor", "BiomedicalPDFProcessorError",
+        
+        # Factory functions (always available)
+        "create_clinical_rag_system", "create_clinical_rag_system_with_features",
+        "create_enhanced_rag_system", "get_default_research_categories", "get_quality_validation_config",
+    ]
+    
+    # Conditional exports based on feature availability
+    conditional_exports = {
+        # Quality validation suite
+        'relevance_scoring_enabled': ["RelevanceScorer", "RelevanceScore", "RelevanceMetrics"],
+        'accuracy_validation_enabled': ["AccuracyScorer", "AccuracyScore", "AccuracyMetrics"],
+        'factual_validation_enabled': ["FactualAccuracyValidator", "FactualValidationResult", "ValidationMetrics"],
+        'claim_extraction_enabled': ["ClaimExtractor", "ExtractedClaim", "ClaimExtractionResult"],
+        'quality_validation_enabled': [
+            "EnhancedResponseQualityAssessor", "QualityAssessmentResult", "QualityMetrics",
+            "QualityReportGenerator", "QualityReport", "QualityTrend",
+            "create_quality_validation_system"
+        ],
+        
+        # Performance monitoring & benchmarking
+        'benchmarking_enabled': [
+            "QualityValidationBenchmarkSuite", "QualityValidationMetrics",
+            "QualityBenchmarkConfiguration", "QualityPerformanceThreshold",
+            "create_performance_benchmark_suite"
+        ],
+        'unified_progress_tracking_enabled': ["UnifiedProgressTracker", "ProgressEvent", "ProgressMetrics"],
+        'progress_tracking_enabled': ["ProgressTracker", "ProgressReport"],
+        'performance_monitoring_enabled': ["create_performance_monitoring_system"],
+        
+        # Cost management advanced features
+        'budget_monitoring_enabled': ["RealtimeBudgetMonitor", "BudgetStatus", "CostAlert"],
+        
+        # Document processing
+        'document_indexing_enabled': ["DocumentIndexer", "IndexedDocument", "IndexingResult"],
+        
+        # Recovery & error handling
+        'recovery_system_enabled': ["AdvancedRecoverySystem", "RecoveryStrategy", "RecoveryResult"],
+        'alert_system_enabled': ["AlertSystem", "Alert", "AlertPriority"],
+    }
+    
+    # Add conditional exports based on enabled features
+    for feature_flag, symbols in conditional_exports.items():
+        if is_feature_enabled(feature_flag):
+            # Only add symbols that actually exist (not None)
+            for symbol in symbols:
+                if symbol in globals() and globals()[symbol] is not None:
+                    exports.append(symbol)
+    
+    return exports
+
 
 # =============================================================================
 # PUBLIC API EXPORTS
 # =============================================================================
 
-__all__ = [
-    # =========================================================================
-    # PACKAGE METADATA
-    # =========================================================================
-    "__version__",
-    "__author__", 
-    "__description__",
-    "__license__",
-    "__status__",
+# Environment-based feature detection - initialize before building exports
+_FEATURE_FLAGS = {}
+_INTEGRATION_MODULES = {}
+_FACTORY_FUNCTIONS = {}
+
+def _load_feature_flags():
+    """Load feature flags from environment variables."""
+    import os
     
-    # =========================================================================
-    # CORE SYSTEM COMPONENTS
-    # =========================================================================
+    flags = {
+        # Core integration flags
+        'lightrag_integration_enabled': os.getenv('LIGHTRAG_INTEGRATION_ENABLED', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'quality_validation_enabled': os.getenv('LIGHTRAG_ENABLE_QUALITY_VALIDATION', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        'performance_monitoring_enabled': os.getenv('LIGHTRAG_ENABLE_PERFORMANCE_MONITORING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'cost_tracking_enabled': os.getenv('LIGHTRAG_ENABLE_COST_TRACKING', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Quality validation sub-features
+        'relevance_scoring_enabled': os.getenv('LIGHTRAG_ENABLE_RELEVANCE_SCORING', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        'accuracy_validation_enabled': os.getenv('LIGHTRAG_ENABLE_ACCURACY_VALIDATION', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'factual_validation_enabled': os.getenv('LIGHTRAG_ENABLE_FACTUAL_VALIDATION', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'claim_extraction_enabled': os.getenv('LIGHTRAG_ENABLE_CLAIM_EXTRACTION', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Performance and monitoring features
+        'benchmarking_enabled': os.getenv('LIGHTRAG_ENABLE_BENCHMARKING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'progress_tracking_enabled': os.getenv('LIGHTRAG_ENABLE_PROGRESS_TRACKING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'unified_progress_tracking_enabled': os.getenv('LIGHTRAG_ENABLE_UNIFIED_PROGRESS_TRACKING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Document processing features
+        'document_indexing_enabled': os.getenv('LIGHTRAG_ENABLE_DOCUMENT_INDEXING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'pdf_processing_enabled': os.getenv('LIGHTRAG_ENABLE_PDF_PROCESSING', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Advanced features
+        'recovery_system_enabled': os.getenv('LIGHTRAG_ENABLE_RECOVERY_SYSTEM', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'alert_system_enabled': os.getenv('LIGHTRAG_ENABLE_ALERT_SYSTEM', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'budget_monitoring_enabled': os.getenv('LIGHTRAG_ENABLE_BUDGET_MONITORING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Integration control flags
+        'circuit_breaker_enabled': os.getenv('LIGHTRAG_ENABLE_CIRCUIT_BREAKER', 'true').lower() in ('true', '1', 'yes', 't', 'on'),
+        'ab_testing_enabled': os.getenv('LIGHTRAG_ENABLE_AB_TESTING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'conditional_routing_enabled': os.getenv('LIGHTRAG_ENABLE_CONDITIONAL_ROUTING', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        
+        # Debug and development flags
+        'debug_mode_enabled': os.getenv('LIGHTRAG_DEBUG_MODE', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+        'development_features_enabled': os.getenv('LIGHTRAG_ENABLE_DEVELOPMENT_FEATURES', 'false').lower() in ('true', '1', 'yes', 't', 'on'),
+    }
     
-    # Configuration Management
-    "LightRAGConfig",
-    "LightRAGConfigError", 
-    "setup_lightrag_logging",
+    return flags
+
+
+def _register_integration_module(module_name: str, feature_flag: str, required: bool = False):
+    """Register a module for conditional loading based on feature flags."""
+    _INTEGRATION_MODULES[module_name] = {
+        'feature_flag': feature_flag,
+        'required': required,
+        'loaded': False,
+        'module': None,
+        'exports': None
+    }
+
+
+def _check_integration_availability(module_name: str) -> bool:
+    """Check if an integration module is available and enabled."""
+    if module_name not in _INTEGRATION_MODULES:
+        return False
     
-    # Main RAG System
-    "ClinicalMetabolomicsRAG",
-    "ClinicalMetabolomicsRAGError",
-    "CostSummary",
-    "QueryResponse",
-    "CircuitBreaker",
-    "CircuitBreakerError",
-    "RateLimiter",
-    "RequestQueue",
-    "add_jitter",
+    module_info = _INTEGRATION_MODULES[module_name]
+    feature_flag = module_info['feature_flag']
     
-    # =========================================================================
-    # QUALITY VALIDATION SUITE
-    # =========================================================================
+    # Check feature flag
+    if not _FEATURE_FLAGS.get(feature_flag, False):
+        return False
     
-    # Relevance and Accuracy Assessment
-    "RelevanceScorer",
-    "RelevanceScore",
-    "RelevanceMetrics",
-    "AccuracyScorer",
-    "AccuracyScore",
-    "AccuracyMetrics",
-    "FactualAccuracyValidator",
-    "FactualValidationResult",
-    "ValidationMetrics",
+    # Check if module can be imported
+    if not module_info['loaded']:
+        try:
+            import importlib
+            module = importlib.import_module(f'.{module_name}', package='lightrag_integration')
+            module_info['module'] = module
+            module_info['loaded'] = True
+            return True
+        except ImportError:
+            return False
     
-    # Claim Extraction and Validation
-    "ClaimExtractor",
-    "ExtractedClaim", 
-    "ClaimExtractionResult",
+    return module_info['loaded']
+
+
+def is_feature_enabled(feature_name: str) -> bool:
+    """Check if a specific feature is enabled via feature flags."""
+    return _FEATURE_FLAGS.get(feature_name, False)
+
+
+def get_enabled_features() -> dict:
+    """Get all enabled features and their status."""
+    return {key: value for key, value in _FEATURE_FLAGS.items() if value}
+
+
+def get_integration_status() -> dict:
+    """Get comprehensive integration status including feature flags and module availability."""
+    status = {
+        'feature_flags': _FEATURE_FLAGS.copy(),
+        'modules': {},
+        'factory_functions': list(_FACTORY_FUNCTIONS.keys()),
+        'integration_health': 'healthy'
+    }
     
-    # Quality Assessment and Reporting
-    "EnhancedResponseQualityAssessor",
-    "QualityAssessmentResult",
-    "QualityMetrics",
-    "QualityReportGenerator",
-    "QualityReport",
-    "QualityTrend",
+    # Check module status
+    for module_name, module_info in _INTEGRATION_MODULES.items():
+        status['modules'][module_name] = {
+            'feature_flag': module_info['feature_flag'],
+            'required': module_info['required'],
+            'enabled': _FEATURE_FLAGS.get(module_info['feature_flag'], False),
+            'available': _check_integration_availability(module_name),
+            'loaded': module_info['loaded']
+        }
     
-    # =========================================================================
-    # PERFORMANCE MONITORING & BENCHMARKING
-    # =========================================================================
+    # Determine overall health
+    required_modules_failed = [
+        name for name, info in _INTEGRATION_MODULES.items() 
+        if info['required'] and not _check_integration_availability(name)
+    ]
     
-    # Performance Benchmarking
-    "QualityValidationBenchmarkSuite",
-    "QualityValidationMetrics",
-    "QualityBenchmarkConfiguration",
-    "QualityPerformanceThreshold",
+    if required_modules_failed:
+        status['integration_health'] = 'degraded'
+        status['failed_required_modules'] = required_modules_failed
     
-    # Progress Tracking
-    "UnifiedProgressTracker",
-    "ProgressEvent",
-    "ProgressMetrics",
-    "ProgressTracker",
-    "ProgressReport",
+    return status
+
+
+def validate_integration_setup() -> tuple[bool, list[str]]:
+    """Validate integration setup and return status with any issues."""
+    issues = []
     
-    # =========================================================================
-    # COST MANAGEMENT & MONITORING
-    # =========================================================================
+    # Check core requirements
+    if not _FEATURE_FLAGS.get('lightrag_integration_enabled', False):
+        issues.append("LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)")
     
-    # Cost Persistence and Database
-    "CostPersistence",
-    "CostRecord",
-    "ResearchCategory",
-    "CostDatabase",
+    # Check required modules
+    required_modules = [name for name, info in _INTEGRATION_MODULES.items() if info['required']]
+    for module_name in required_modules:
+        if not _check_integration_availability(module_name):
+            feature_flag = _INTEGRATION_MODULES[module_name]['feature_flag']
+            if not _FEATURE_FLAGS.get(feature_flag, False):
+                issues.append(f"Required module '{module_name}' is disabled by feature flag '{feature_flag}'")
+            else:
+                issues.append(f"Required module '{module_name}' cannot be imported")
     
-    # Budget Management
-    "BudgetManager",
-    "BudgetThreshold", 
-    "BudgetAlert",
-    "AlertLevel",
-    "RealtimeBudgetMonitor",
-    "BudgetStatus",
-    "CostAlert",
+    # Check environment configuration
+    import os
+    if not os.getenv('OPENAI_API_KEY'):
+        issues.append("OPENAI_API_KEY environment variable is not set")
     
-    # API Metrics and Usage Tracking
-    "APIUsageMetricsLogger",
-    "APIMetric",
-    "MetricType", 
-    "MetricsAggregator",
+    # Check directory permissions
+    try:
+        config = LightRAGConfig.get_config()
+        from pathlib import Path
+        
+        working_dir = Path(config.working_dir)
+        if not working_dir.exists() or not os.access(working_dir, os.W_OK):
+            issues.append(f"Working directory is not accessible or writable: {working_dir}")
+            
+    except Exception as e:
+        issues.append(f"Configuration validation failed: {str(e)}")
     
-    # =========================================================================
-    # RESEARCH & CATEGORIZATION
-    # =========================================================================
+    return len(issues) == 0, issues
+
+
+
+
+# =============================================================================
+# CONDITIONAL FACTORY FUNCTIONS
+# =============================================================================
+
+def create_clinical_rag_system_with_features(**config_overrides):
+    """Create a Clinical RAG system with features enabled based on feature flags."""
+    if not is_feature_enabled('lightrag_integration_enabled'):
+        raise RuntimeError(
+            "LightRAG integration is disabled. Set LIGHTRAG_INTEGRATION_ENABLED=true to enable."
+        )
     
-    "ResearchCategorizer",
-    "CategoryPrediction",
-    "CategoryMetrics",
-    "QueryAnalyzer",
+    # Apply feature-flag based defaults
+    feature_defaults = {}
     
-    # =========================================================================
-    # AUDIT & COMPLIANCE
-    # =========================================================================
+    if is_feature_enabled('cost_tracking_enabled'):
+        feature_defaults.update({
+            'enable_cost_tracking': True,
+            'cost_persistence_enabled': True,
+        })
     
-    "AuditTrail",
-    "AuditEvent",
-    "AuditEventType",
-    "ComplianceRule",
-    "ComplianceChecker",
+    if is_feature_enabled('quality_validation_enabled'):
+        feature_defaults.update({
+            'enable_relevance_scoring': is_feature_enabled('relevance_scoring_enabled'),
+        })
     
-    # =========================================================================
-    # DOCUMENT PROCESSING & INDEXING
-    # =========================================================================
+    if is_feature_enabled('performance_monitoring_enabled'):
+        feature_defaults.update({
+            'enable_performance_monitoring': True,
+        })
     
-    "BiomedicalPDFProcessor",
-    "BiomedicalPDFProcessorError",
-    "DocumentIndexer",
-    "IndexedDocument",
-    "IndexingResult",
+    # Merge with user overrides
+    feature_defaults.update(config_overrides)
     
-    # =========================================================================
-    # RECOVERY & ERROR HANDLING
-    # =========================================================================
+    return create_clinical_rag_system(**feature_defaults)
+
+
+def create_quality_validation_system(**config_overrides):
+    """Create a system optimized for quality validation if the feature is enabled."""
+    if not is_feature_enabled('quality_validation_enabled'):
+        raise RuntimeError(
+            "Quality validation is disabled. Set LIGHTRAG_ENABLE_QUALITY_VALIDATION=true to enable."
+        )
     
-    "AdvancedRecoverySystem",
-    "RecoveryStrategy", 
-    "RecoveryResult",
-    "AlertSystem",
-    "Alert",
-    "AlertPriority",
+    quality_config = get_quality_validation_config(**config_overrides)
+    return create_clinical_rag_system(**quality_config)
+
+
+def create_performance_monitoring_system(**config_overrides):
+    """Create a system optimized for performance monitoring if the feature is enabled."""
+    if not is_feature_enabled('performance_monitoring_enabled'):
+        raise RuntimeError(
+            "Performance monitoring is disabled. Set LIGHTRAG_ENABLE_PERFORMANCE_MONITORING=true to enable."
+        )
     
-    # =========================================================================
-    # FACTORY FUNCTIONS & UTILITIES
-    # =========================================================================
-    
-    "create_clinical_rag_system",
-    "create_enhanced_rag_system",  # Backward compatibility
-    "get_default_research_categories",
-    "get_quality_validation_config",
-    "create_performance_benchmark_suite",
-    "get_integration_status",
-    "validate_integration_setup",
-]
+    performance_config = {
+        'enable_performance_monitoring': True,
+        'enable_cost_tracking': True,
+        'model': 'gpt-4o',  # Use more capable model for monitoring
+        **config_overrides
+    }
+    return create_clinical_rag_system(**performance_config)
 
 
 # =============================================================================
@@ -742,137 +1105,6 @@ def get_default_research_categories():
 # INTEGRATION HELPERS & CONFIGURATION UTILITIES
 # =============================================================================
 
-def get_integration_status():
-    """
-    Get the current status of all integration components.
-    
-    Returns:
-        Dict[str, Any]: Status information for all major components
-    """
-    import importlib
-    import sys
-    
-    status = {
-        'module_version': __version__,
-        'python_version': sys.version,
-        'components': {},
-        'optional_features': {},
-        'environment_config': {}
-    }
-    
-    # Check core components
-    core_components = [
-        'config', 'clinical_metabolomics_rag', 'pdf_processor',
-        'cost_persistence', 'budget_manager', 'research_categorizer'
-    ]
-    
-    for component in core_components:
-        try:
-            module = importlib.import_module(f'.{component}', package='lightrag_integration')
-            status['components'][component] = 'available'
-        except ImportError as e:
-            status['components'][component] = f'unavailable: {str(e)}'
-    
-    # Check optional features
-    optional_features = [
-        ('quality_report_generator', 'Quality Reporting'),
-        ('relevance_scorer', 'Relevance Scoring'),
-        ('factual_accuracy_validator', 'Factual Validation'),
-        ('performance_benchmarking', 'Performance Benchmarking'),
-        ('unified_progress_tracker', 'Progress Tracking')
-    ]
-    
-    for module_name, feature_name in optional_features:
-        try:
-            importlib.import_module(f'.{module_name}', package='lightrag_integration')
-            status['optional_features'][feature_name] = 'available'
-        except ImportError:
-            status['optional_features'][feature_name] = 'unavailable'
-    
-    # Check environment configuration
-    import os
-    env_vars = [
-        'OPENAI_API_KEY', 'LIGHTRAG_MODEL', 'LIGHTRAG_WORKING_DIR',
-        'LIGHTRAG_ENABLE_COST_TRACKING', 'LIGHTRAG_DAILY_BUDGET_LIMIT',
-        'LIGHTRAG_ENABLE_QUALITY_VALIDATION'
-    ]
-    
-    for var in env_vars:
-        value = os.getenv(var)
-        if value:
-            # Mask API keys for security
-            if 'KEY' in var or 'TOKEN' in var:
-                status['environment_config'][var] = f"{'*' * (len(value) - 4)}{value[-4:]}" if len(value) > 4 else "****"
-            else:
-                status['environment_config'][var] = value
-        else:
-            status['environment_config'][var] = None
-    
-    return status
-
-
-def validate_integration_setup():
-    """
-    Validate that the integration is properly set up and configured.
-    
-    Returns:
-        Tuple[bool, List[str]]: (is_valid, list_of_issues)
-        
-    Example:
-        ```python
-        is_valid, issues = validate_integration_setup()
-        if not is_valid:
-            for issue in issues:
-                print(f"Setup issue: {issue}")
-        ```
-    """
-    import importlib
-    import os
-    from pathlib import Path
-    
-    issues = []
-    
-    try:
-        # Test configuration loading
-        config = LightRAGConfig.get_config()
-        if not config.api_key:
-            issues.append("OPENAI_API_KEY environment variable is not set")
-    except Exception as e:
-        issues.append(f"Configuration validation failed: {str(e)}")
-    
-    # Check required directories
-    required_dirs = ['working_dir', 'knowledge_base_dir', 'log_dir']
-    
-    try:
-        config = LightRAGConfig.get_config()
-        for dir_attr in required_dirs:
-            if hasattr(config, dir_attr):
-                dir_path = Path(getattr(config, dir_attr))
-                if not dir_path.exists():
-                    issues.append(f"Required directory does not exist: {dir_path}")
-                elif not dir_path.is_dir():
-                    issues.append(f"Path is not a directory: {dir_path}")
-                elif not os.access(dir_path, os.W_OK):
-                    issues.append(f"Directory is not writable: {dir_path}")
-    except Exception as e:
-        issues.append(f"Directory validation failed: {str(e)}")
-    
-    # Check optional dependencies
-    optional_deps = [
-        ('lightrag', 'LightRAG core functionality'),
-        ('openai', 'OpenAI API integration'),
-        ('aiohttp', 'Async HTTP operations'),
-        ('tenacity', 'Retry mechanisms'),
-    ]
-    
-    for dep_name, description in optional_deps:
-        try:
-            importlib.import_module(dep_name)
-        except ImportError:
-            issues.append(f"Optional dependency missing: {dep_name} ({description})")
-    
-    return len(issues) == 0, issues
-
 
 def _get_category_description(category: ResearchCategory) -> str:
     """Get human-readable description for a research category."""
@@ -896,8 +1128,36 @@ def _get_category_description(category: ResearchCategory) -> str:
 
 
 # =============================================================================
-# MODULE INITIALIZATION & LOGGING
+# MODULE INITIALIZATION & FEATURE FLAG SETUP
 # =============================================================================
+
+# Initialize feature flags
+_FEATURE_FLAGS = _load_feature_flags()
+
+# Register integration modules with their feature flags
+_register_integration_module('relevance_scorer', 'relevance_scoring_enabled', required=False)
+_register_integration_module('accuracy_scorer', 'accuracy_validation_enabled', required=False)
+_register_integration_module('factual_accuracy_validator', 'factual_validation_enabled', required=False)
+_register_integration_module('claim_extractor', 'claim_extraction_enabled', required=False)
+_register_integration_module('enhanced_response_quality_assessor', 'quality_validation_enabled', required=False)
+_register_integration_module('quality_report_generator', 'quality_validation_enabled', required=False)
+_register_integration_module('performance_benchmarking', 'benchmarking_enabled', required=False)
+_register_integration_module('unified_progress_tracker', 'unified_progress_tracking_enabled', required=False)
+_register_integration_module('progress_tracker', 'progress_tracking_enabled', required=False)
+_register_integration_module('realtime_budget_monitor', 'budget_monitoring_enabled', required=False)
+_register_integration_module('document_indexer', 'document_indexing_enabled', required=False)
+_register_integration_module('advanced_recovery_system', 'recovery_system_enabled', required=False)
+_register_integration_module('alert_system', 'alert_system_enabled', required=False)
+
+# Register factory functions
+_FACTORY_FUNCTIONS.update({
+    'create_clinical_rag_system_with_features': create_clinical_rag_system_with_features,
+    'create_quality_validation_system': create_quality_validation_system,
+    'create_performance_monitoring_system': create_performance_monitoring_system,
+})
+
+# Now rebuild exports with actual feature availability
+__all__ = _build_dynamic_exports()
 
 # Import required modules for initialization
 import importlib
@@ -922,16 +1182,23 @@ try:
             )
             _logger.info(f"Clinical Metabolomics Oracle LightRAG Integration v{__version__} initialized with basic logging")
     
+    # Log feature flag status
+    enabled_features = get_enabled_features()
+    if enabled_features:
+        _logger.info(f"Enabled features: {', '.join(enabled_features.keys())}")
+    else:
+        _logger.info("No optional features enabled")
+    
     # Log integration status
     _logger.debug("Checking integration component status...")
     status = get_integration_status()
     
-    available_components = [name for name, status in status['components'].items() if status == 'available']
-    _logger.info(f"Available components: {', '.join(available_components)}")
+    integration_health = status.get('integration_health', 'unknown')
+    _logger.info(f"Integration health: {integration_health}")
     
-    available_features = [name for name, status in status['optional_features'].items() if status == 'available']
-    if available_features:
-        _logger.info(f"Available optional features: {', '.join(available_features)}")
+    if integration_health == 'degraded':
+        failed_modules = status.get('failed_required_modules', [])
+        _logger.warning(f"Failed required modules: {', '.join(failed_modules)}")
     
     # Validate setup
     is_valid, issues = validate_integration_setup()
