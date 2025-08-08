@@ -370,7 +370,7 @@
 - [x] Write tests for intent detection confidence scoring
 
 **CMO-LIGHTRAG-012-T03-TEST** [TEST]
-- [ ] Write performance tests for <2 second classification response
+- [x] Write performance tests for <2 second classification response
 
 **CMO-LIGHTRAG-012-T04** [CODE]
 - [ ] Implement query classification categories and keywords
