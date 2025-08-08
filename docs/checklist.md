@@ -401,7 +401,7 @@
 - [x] Write tests for routing decision logic
 
 **CMO-LIGHTRAG-013-T02-TEST** [TEST]
-- [ ] Write tests for system health monitoring integration
+- [x] Write tests for system health monitoring integration
 
 **CMO-LIGHTRAG-013-T03** [CODE]
 - [ ] Implement IntelligentQueryRouter class structure
