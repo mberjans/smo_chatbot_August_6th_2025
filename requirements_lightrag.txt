@@ -47,6 +47,7 @@ click==8.2.1
 tenacity==9.1.2
 regex==2025.7.34
 xlsxwriter==3.2.5
+psutil==5.9.8
 
 # ==============================================================================
 # Installation Instructions

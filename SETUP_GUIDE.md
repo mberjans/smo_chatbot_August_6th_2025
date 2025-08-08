@@ -37,9 +37,13 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 pip install -r requirements_lightrag.txt
 
-# 4. Setup environment
+# 4. Setup environment (CRITICAL: Dual .env configuration required)
 cp .env.example .env
-# Edit .env with your API keys and configuration
+# IMPORTANT: Check if src/.env exists and configure it too
+ls -la src/.env
+# If src/.env exists, you MUST edit it with your API keys
+# If it doesn't exist, create it: cp .env src/.env
+# Edit BOTH .env files with your API keys and configuration
 
 # 5. Start PostgreSQL and Neo4j databases
 
@@ -70,12 +74,15 @@ chainlit run src/app.py
 
 ### API Access
 
-| Service | Required | Purpose |
-|---------|----------|---------|
-| **OpenAI** | ✅ Required | LLM operations and embeddings |
-| **Perplexity** | Optional | Real-time web search |
-| **Groq** | Optional | Fast inference alternative |
-| **OpenRouter** | Optional | Multiple LLM provider access |
+| Service | Required | Purpose | Minimum Setup | Full Setup |
+|---------|----------|---------|---------------|------------|
+| **OpenAI** | ✅ **REQUIRED** | LLM operations and embeddings | ✅ MUST HAVE | ✅ Required |
+| **Perplexity** | Optional | Real-time web search | ❌ Skip for now | ✅ Recommended |
+| **Groq** | Optional | Fast inference alternative | ❌ Skip for now | ✅ Recommended |  
+| **OpenRouter** | Optional | Multiple LLM provider access | ❌ Skip for now | ⚪ Optional |
+
+**For Minimum Working Setup**: You only need **OpenAI API key**
+**For Full Functionality**: Get all available API keys
 
 ### System Resources
 
@@ -173,21 +180,41 @@ cd Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
 ```
 
 #### Create Virtual Environment
+
+**CRITICAL**: Always use a virtual environment to avoid dependency conflicts.
+
 ```bash
 # Create virtual environment
 python3 -m venv venv
 
-# Activate virtual environment
-source venv/bin/activate  # Linux/Mac
-# OR
-venv\Scripts\activate     # Windows
+# Activate virtual environment (CHOOSE YOUR PLATFORM)
+# On macOS/Linux:
+source venv/bin/activate
+
+# On Windows Command Prompt:
+# venv\Scripts\activate.bat
+
+# On Windows PowerShell:
+# venv\Scripts\Activate.ps1
+
+# On Windows Git Bash:
+# source venv/Scripts/activate
 ```
 
-#### Verify Environment
+#### Verify Environment (CRITICAL CHECK)
+**Run these commands to ensure virtual environment is active:**
+
 ```bash
-which python  # Should point to venv/bin/python
+# Check Python location (should point to venv, NOT system Python)
+which python  # Should show: /path/to/project/venv/bin/python
 python --version  # Should be 3.10+
+echo $VIRTUAL_ENV  # Should show path to your venv directory
+
+# Your prompt should show (venv) at the beginning
+# Example: (venv) user@hostname:~/project$ 
 ```
+
+**⚠️ SETUP FAILURE PREVENTION**: If `which python` shows system Python (like `/usr/bin/python` or `/usr/local/bin/python`), your virtual environment is NOT activated. You MUST activate it before installing dependencies.
 
 ### 2. Dependencies Installation
 
@@ -313,14 +340,29 @@ npx prisma generate
 
 ## Environment Configuration
 
-### 1. Create Environment File
+### 1. Create Environment Files (CRITICAL DUAL CONFIGURATION)
+
+**⚠️ CRITICAL SETUP REQUIREMENT**: This project requires TWO .env files:
+- **Root .env** (project root directory) - Primary configuration
+- **src/.env** (inside src/ directory) - Application-specific overrides
+
+**The src/.env file OVERRIDES the root .env file and is required for the application to work.**
+
 ```bash
+# Step 1: Create root .env file
 cp .env.example .env
+
+# Step 2: Check if src/.env exists
+ls -la src/.env
+
+# Step 3a: If src/.env exists, you MUST edit it
+# Step 3b: If src/.env doesn't exist, create it
+cp .env src/.env
 ```
 
 ### 2. Required Environment Variables
 
-#### Core Configuration
+#### Root .env File Configuration
 ```bash
 # Database connections
 DATABASE_URL=postgresql://cmo_user:password@localhost:5432/clinical_metabolomics_oracle
@@ -333,8 +375,30 @@ OPENAI_API_KEY=sk-your_openai_api_key_here
 
 # LightRAG core settings
 LIGHTRAG_WORKING_DIR=./lightrag_storage
-LIGHTRAG_MODEL=gpt-4o-mini
+LIGHTRAG_LLM_MODEL=gpt-4o-mini
 LIGHTRAG_EMBEDDING_MODEL=text-embedding-3-small
+ENABLE_LIGHTRAG=true
+
+# Chainlit configuration
+CHAINLIT_AUTH_SECRET=your_secure_auth_secret_here
+```
+
+#### src/.env File Configuration (OVERRIDES ROOT)
+**⚠️ CRITICAL**: You MUST configure the src/.env file with these minimum variables:
+
+```bash
+# API Keys (REQUIRED - must match or override root .env)
+OPENAI_API_KEY=sk-your_openai_api_key_here
+GROQ_API_KEY=gsk-your_groq_api_key_here
+PERPLEXITY_API=pplx-your_perplexity_api_key_here
+OPENROUTER_API_KEY=sk-or-your_openrouter_key_here
+
+# Authentication (REQUIRED)
+CHAINLIT_AUTH_SECRET=your_secure_auth_secret_here
+
+# Database (REQUIRED - must match root .env)
+DATABASE_URL=postgresql://cmo_user:password@localhost:5432/clinical_metabolomics_oracle
+NEO4J_PASSWORD=your_neo4j_password
 ```
 
 #### Application Settings
@@ -381,8 +445,13 @@ chmod 755 logs
 4. Copy the key (starts with `sk-`)
 
 #### 2. Configure in Environment
+**⚠️ CRITICAL**: Add to BOTH .env files (root and src/.env)
+
 ```bash
-# Add to .env
+# Add to root .env file
+OPENAI_API_KEY=sk-your_actual_openai_key_here
+
+# Add to src/.env file (REQUIRED - overrides root)
 OPENAI_API_KEY=sk-your_actual_openai_key_here
 ```
 
@@ -645,9 +714,136 @@ EOF
 python health_check.py
 ```
 
+### Independent Developer Quick Validation
+
+**Run this complete validation before proceeding:**
+
+```bash
+#!/bin/bash
+# Complete setup validation script
+
+echo "🔍 Independent Developer Setup Validation"
+echo "========================================="
+
+# 1. Virtual Environment
+echo "1. Virtual Environment Check:"
+if [[ "$VIRTUAL_ENV" ]]; then
+    echo "✅ Virtual environment active: $(basename $VIRTUAL_ENV)"
+else
+    echo "❌ Virtual environment NOT active"
+fi
+
+# 2. Python Version
+PYTHON_VERSION=$(python --version 2>&1)
+echo "2. Python Version: $PYTHON_VERSION"
+
+# 3. Dependencies
+echo "3. Critical Dependencies:"
+pip list | grep -E "(lightrag-hku|psutil|openai|chainlit)" || echo "❌ Missing dependencies"
+
+# 4. Dual .env Configuration
+echo "4. Environment Files:"
+[ -f ".env" ] && echo "✅ Root .env exists" || echo "❌ Root .env missing"
+[ -f "src/.env" ] && echo "✅ src/.env exists" || echo "❌ src/.env missing"
+
+# 5. API Key Check
+echo "5. API Key Configuration:"
+python -c "
+import os
+from dotenv import load_dotenv
+load_dotenv()
+load_dotenv('src/.env')
+key = os.getenv('OPENAI_API_KEY')
+if key and len(key) > 20:
+    print('✅ OpenAI API key configured')
+else:
+    print('❌ OpenAI API key missing or invalid')
+"
+
+# 6. Directory Structure
+echo "6. Directory Structure:"
+for dir in lightrag_storage papers logs; do
+    [ -d "$dir" ] && echo "✅ $dir exists" || echo "❌ $dir missing"
+done
+
+echo "========================================="
+echo "If ALL items show ✅, your setup is ready!"
+echo "If ANY items show ❌, fix them before proceeding."
+```
+
 ---
 
 ## Troubleshooting
+
+### CRITICAL Setup Failures (Independent Developer Test Results)
+
+#### 1. Dual .env Configuration Not Set Up
+
+**Problem**: Application starts but can't authenticate or connect to services
+**Symptoms**: 
+- `KeyError: 'OPENAI_API_KEY'`
+- `Authentication failed`
+- Database connection errors
+
+**Root Cause**: The src/.env file overrides root .env but wasn't configured
+
+**Immediate Fix**:
+```bash
+# Check both files exist and have content
+ls -la .env src/.env
+cat .env | grep OPENAI_API_KEY
+cat src/.env | grep OPENAI_API_KEY
+
+# If src/.env is missing or empty, fix it:
+cp .env src/.env
+
+# Ensure both files have the same API keys:
+grep -E "(OPENAI_API_KEY|DATABASE_URL|CHAINLIT_AUTH_SECRET)" .env
+grep -E "(OPENAI_API_KEY|DATABASE_URL|CHAINLIT_AUTH_SECRET)" src/.env
+```
+
+#### 2. Missing psutil Dependency
+
+**Problem**: `ImportError: No module named 'psutil'`
+**When**: Running lightrag_integration modules
+**Symptoms**: Crashes during system resource monitoring
+
+**Fix**:
+```bash
+# Install the missing dependency
+pip install psutil==5.9.8
+
+# Or reinstall updated requirements
+pip install -r requirements_lightrag.txt
+```
+
+#### 3. Virtual Environment Issues
+
+**Problem**: Dependencies not found despite installation
+**Symptoms**: `ImportError` for installed packages
+**Root Cause**: Virtual environment not activated or using wrong Python
+
+**Comprehensive Fix**:
+```bash
+# Check current Python
+which python  # Must show venv path, not system path
+
+# If wrong, activate virtual environment
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate   # Windows
+
+# Verify activation
+echo $VIRTUAL_ENV  # Should show venv path
+python -c "import sys; print(sys.prefix)"  # Should show venv path
+
+# If still problems, recreate environment
+deactivate
+rm -rf venv
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip install -r requirements_lightrag.txt
+```
 
 ### Common Installation Issues
 
@@ -695,17 +891,35 @@ sudo tail -f /var/log/neo4j/neo4j.log
 sudo neo4j-admin set-initial-password newpassword
 ```
 
-#### Environment Variable Issues
+#### Environment Variable Issues (Enhanced Debugging)
 ```bash
-# Check if .env file is loaded
-python -c "import os; print('API Key:', 'Found' if os.getenv('OPENAI_API_KEY') else 'Missing')"
+# Test BOTH .env files are working
+python -c "
+import os
+from dotenv import load_dotenv
+
+# Load root .env
+load_dotenv('.env')
+root_key = os.getenv('OPENAI_API_KEY')
+
+# Load src/.env (overrides root)
+load_dotenv('src/.env')  
+src_key = os.getenv('OPENAI_API_KEY')
+
+print('Root .env API Key:', 'Found' if root_key else 'Missing')
+print('src/.env API Key:', 'Found' if src_key else 'Missing')
+print('Final API Key:', 'Found' if os.getenv('OPENAI_API_KEY') else 'Missing')
+
+if root_key != src_key:
+    print('⚠️  WARNING: API keys differ between .env files')
+"
 
 # Check file permissions
-ls -la .env
-# Should show -rw------- (600)
+ls -la .env src/.env
+# Both should show -rw------- (600)
 
 # Fix permissions if needed
-chmod 600 .env
+chmod 600 .env src/.env
 ```
 
 #### Permission Issues

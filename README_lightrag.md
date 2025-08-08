@@ -46,10 +46,22 @@ This guide covers the setup and integration of **LightRAG** (Light Retrieval-Aug
 - **Internet**: Stable connection for API calls
 
 ### Required API Keys
-- **OpenAI API Key**: Required for GPT-4o-mini and text-embedding-3-small
+
+#### Minimum Setup (Required):
+- **OpenAI API Key**: **ABSOLUTELY REQUIRED** for GPT-4o-mini and text-embedding-3-small
   - Get your key from: [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
   - Ensure sufficient credits for document processing and queries
   - Recommended: $20+ credits for initial setup and testing
+  - **Without this key, the system will NOT work**
+
+#### Optional API Keys (Enhanced Functionality):
+- **Perplexity API**: For real-time web search (can skip for basic testing)
+- **Groq API**: For faster inference (can skip for basic testing)  
+- **OpenRouter API**: For multiple LLM providers (can skip for basic testing)
+
+#### Setup Priority:
+1. **First**: Get OpenAI API key and test basic functionality
+2. **Later**: Add other API keys for enhanced features
 
 ### Software Dependencies
 - Git (for repository management)
@@ -69,20 +81,34 @@ cd /path/to/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
 
 ### Step 2: Create and Activate Virtual Environment
 
+**CRITICAL**: You MUST activate the virtual environment before installing dependencies or running the application.
+
 ```bash
 # Create virtual environment (if not already created)
-python -m venv lightrag_env
+python3 -m venv lightrag_env
 
-# Activate the environment
+# Activate the environment (CHOOSE YOUR PLATFORM)
 # On macOS/Linux:
 source lightrag_env/bin/activate
 
-# On Windows:
-# lightrag_env\Scripts\activate
+# On Windows Command Prompt:
+# lightrag_env\Scripts\activate.bat
 
-# Verify activation
+# On Windows PowerShell:
+# lightrag_env\Scripts\Activate.ps1
+
+# On Windows Git Bash:
+# source lightrag_env/Scripts/activate
+
+# Verify activation (IMPORTANT - run this to confirm)
 which python  # Should show path to lightrag_env/bin/python
+python --version  # Should be Python 3.9+ 
+echo $VIRTUAL_ENV  # Should show path to lightrag_env
 ```
+
+**⚠️ TROUBLESHOOTING**: If you see system Python path instead of `lightrag_env/bin/python`, the virtual environment is NOT activated. You must activate it before proceeding.
+
+**To check if virtual environment is active**: Your command prompt should show `(lightrag_env)` at the beginning of the line.
 
 ### Step 3: Install Dependencies
 
@@ -127,27 +153,50 @@ ls -la
 
 ### Step 1: Environment Variables Setup
 
-1. **Copy Environment Template**:
-   ```bash
-   cp .env.example .env
-   ```
+**CRITICAL: Dual .env File Configuration**
 
-2. **Edit Configuration**:
-   ```bash
-   # Edit the .env file with your preferred editor
-   nano .env
-   # or
-   code .env
-   ```
+This project uses TWO .env files that you must configure:
+
+1. **Root .env file** (for LightRAG integration)
+2. **src/.env file** (for main application - OVERRIDES root .env)
+
+⚠️ **WARNING**: The `src/.env` file takes precedence over the root `.env` file. You must configure BOTH files correctly.
+
+#### Configure Root .env File:
+```bash
+# Copy the environment template
+cp .env.example .env
+
+# Edit the root .env file
+nano .env
+# or
+code .env
+```
+
+#### Configure src/.env File (CRITICAL):
+```bash
+# Check if src/.env exists
+ls -la src/.env
+
+# If src/.env exists, you MUST update it with your API keys
+nano src/.env
+# or
+code src/.env
+
+# If src/.env doesn't exist, create it from root .env
+cp .env src/.env
+```
 
 ### Step 2: Essential Configuration Variables
 
-**Minimum Required Settings**:
+#### Minimum Required Settings for BOTH .env Files:
+
+**Root .env file** (complete LightRAG configuration):
 ```bash
 # API Configuration
 OPENAI_API_KEY=sk-your_actual_openai_api_key_here
 
-# LightRAG Configuration
+# LightRAG Configuration  
 ENABLE_LIGHTRAG=true
 LIGHTRAG_WORKING_DIR=./lightrag_storage
 LIGHTRAG_PAPERS_DIR=./papers
@@ -156,7 +205,34 @@ LIGHTRAG_PAPERS_DIR=./papers
 LIGHTRAG_LLM_MODEL=gpt-4o-mini
 LIGHTRAG_EMBEDDING_MODEL=text-embedding-3-small
 LIGHTRAG_EMBEDDING_DIM=1536
+
+# Database Configuration
+DATABASE_URL=postgresql://username:password@localhost:5432/database_name
+NEO4J_URL=bolt://localhost:7687
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your_neo4j_password_here
+
+# Chainlit Authentication
+CHAINLIT_AUTH_SECRET=your_secure_auth_secret_here
 ```
+
+**src/.env file** (minimal but CRITICAL - overrides root):
+```bash
+# CRITICAL: These API keys are required in src/.env
+OPENAI_API_KEY=sk-your_actual_openai_api_key_here
+GROQ_API_KEY=gsk_your_groq_api_key_here  # Optional but recommended
+PERPLEXITY_API=pplx-your_perplexity_key_here  # Optional
+OPENROUTER_API_KEY=sk-or-your_openrouter_key_here  # Optional
+
+# Authentication (REQUIRED)
+CHAINLIT_AUTH_SECRET=your_secure_auth_secret_here
+
+# Database (REQUIRED)
+DATABASE_URL=postgresql://username:password@localhost:5432/database_name
+NEO4J_PASSWORD=your_neo4j_password_here
+```
+
+⚠️ **IMPORTANT**: The `src/.env` file will override any conflicting variables from the root `.env` file. Ensure both files have matching values for shared variables.
 
 ### Step 3: Advanced Configuration Options
 
@@ -503,15 +579,80 @@ for dir_path in dirs:
 
 ## Troubleshooting
 
-### Common Issues and Solutions
+### Critical Setup Issues (Based on Independent Developer Testing)
 
-#### 1. Import Errors
+#### 1. Dual .env File Configuration Problems
+
+**Problem**: Application can't find API keys or fails to start
+**Symptoms**: `KeyError: 'OPENAI_API_KEY'`, authentication errors
+
+**Root Cause**: Missing or misconfigured src/.env file that overrides root .env
+
+**Solutions**:
+```bash
+# Step 1: Check both .env files exist
+ls -la .env
+ls -la src/.env
+
+# Step 2: If src/.env missing, create it
+cp .env src/.env
+
+# Step 3: Verify API keys in BOTH files
+grep "OPENAI_API_KEY" .env
+grep "OPENAI_API_KEY" src/.env
+
+# Step 4: Ensure values match
+# Edit src/.env to match your root .env values
+```
+
+#### 2. Missing psutil Dependency
+
+**Problem**: `ImportError: No module named 'psutil'`
+**Symptoms**: Crashes when monitoring system resources in lightrag_integration
+
+**Solution**:
+```bash
+# Install missing dependency
+pip install psutil==5.9.8
+
+# Or reinstall requirements (now includes psutil)
+pip install -r requirements_lightrag.txt
+```
+
+#### 3. Virtual Environment Not Activated
+
+**Problem**: `ImportError: No module named 'lightrag'` despite installation
+**Symptoms**: System Python being used instead of virtual environment
+
+**Solutions**:
+```bash
+# Check if virtual environment is active
+which python  # Should show venv/bin/python, NOT /usr/bin/python
+
+# If not activated, activate it
+source lightrag_env/bin/activate  # Linux/Mac
+# or lightrag_env\Scripts\activate  # Windows
+
+# Your prompt should show (lightrag_env) prefix
+# Example: (lightrag_env) user@hostname:~/project$
+
+# Verify activation
+echo $VIRTUAL_ENV  # Should show path to lightrag_env
+
+# If still problems, recreate virtual environment
+rm -rf lightrag_env
+python3 -m venv lightrag_env
+source lightrag_env/bin/activate
+pip install -r requirements_lightrag.txt
+```
+
+#### 4. Import Errors
 
 **Problem**: `ImportError: No module named 'lightrag'`
 
 **Solutions**:
 ```bash
-# Ensure virtual environment is activated
+# Ensure virtual environment is activated (see above)
 source lightrag_env/bin/activate
 
 # Reinstall requirements
@@ -522,6 +663,7 @@ pip install openai
 
 # Verify installation
 pip show lightrag-hku
+pip list | grep -E "(lightrag|psutil|openai)"
 ```
 
 #### 2. API Key Issues
@@ -818,6 +960,70 @@ After completing this setup:
 
 ---
 
-**🎉 Congratulations!** You have successfully set up LightRAG integration for the Clinical Metabolomics Oracle system. The knowledge graph-based RAG system is now ready to process biomedical research papers and provide intelligent responses to clinical metabolomics queries.
+## Independent Developer Validation
+
+**Complete this checklist to ensure your setup will work:**
+
+### Pre-Launch Validation Checklist
+
+```bash
+# 1. Virtual Environment Check
+which python  # Should show: lightrag_env/bin/python
+echo $VIRTUAL_ENV  # Should show path to lightrag_env
+python --version  # Should be 3.9+
+
+# 2. Dependencies Check
+pip list | grep lightrag-hku  # Should show version 1.4.6
+pip list | grep psutil  # Should show version 5.9.8
+pip list | grep openai  # Should be installed
+
+# 3. Dual .env Configuration Check
+ls -la .env src/.env  # Both files must exist
+grep "OPENAI_API_KEY" .env src/.env  # Both should have your API key
+
+# 4. API Key Validation
+python -c "
+import os
+from dotenv import load_dotenv
+load_dotenv()  # Load root .env
+load_dotenv('src/.env')  # Override with src/.env
+key = os.getenv('OPENAI_API_KEY')
+if key and key.startswith('sk-'):
+    print('✅ API key format is correct')
+else:
+    print('❌ API key missing or invalid format')
+"
+
+# 5. Directory Structure Check
+ls -la lightrag_storage papers logs  # All should exist
+
+# 6. OpenAI API Test
+python -c "
+import openai, os
+from dotenv import load_dotenv
+load_dotenv()
+load_dotenv('src/.env')
+try:
+    client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+    response = client.chat.completions.create(
+        model='gpt-4o-mini',
+        messages=[{'role': 'user', 'content': 'Hello'}],
+        max_tokens=5
+    )
+    print('✅ OpenAI API working')
+except Exception as e:
+    print(f'❌ API error: {e}')
+"
+```
+
+### If ALL checks pass ✅:
+Your setup is ready! You can proceed to initialize the knowledge graph and start using the system.
+
+### If ANY check fails ❌:
+Review the [Troubleshooting](#troubleshooting) section above for the specific issue.
+
+---
+
+**🎉 Congratulations!** Once all validation checks pass, you have successfully set up LightRAG integration for the Clinical Metabolomics Oracle system. The knowledge graph-based RAG system is now ready to process biomedical research papers and provide intelligent responses to clinical metabolomics queries.
 
 For questions or issues, refer to the [Troubleshooting](#troubleshooting) section or consult the project documentation.
