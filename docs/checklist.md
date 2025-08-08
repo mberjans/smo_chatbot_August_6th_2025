@@ -340,7 +340,7 @@
 - [x] Create setup and installation guide
 
 **CMO-LIGHTRAG-011-T03** [DOC]
-- [ ] Document integration procedures with existing CMO system
+- [x] Document integration procedures with existing CMO system
 
 **CMO-LIGHTRAG-011-T04** [DOC]
 - [ ] Create troubleshooting guide with common issues
