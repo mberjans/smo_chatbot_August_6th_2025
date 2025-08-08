@@ -1001,22 +1001,22 @@
   },
   "line_376": {
     "line_number": 376,
-    "original_line": "- [ ] Implement query classification categories and keywords",
+    "original_line": "- [x] Implement query classification categories and keywords",
     "task_id": "line_376",
     "task_description": "Implement query classification categories and keywords",
-    "is_checked": false,
+    "is_checked": true,
     "retry_count": 0,
     "last_attempt": "2025-08-08T04:01:02.730773",
     "is_failed": false
   },
   "line_379": {
     "line_number": 379,
-    "original_line": "- [ ] Implement LLM-based classification system",
+    "original_line": "- [x] Implement LLM-based classification system",
     "task_id": "line_379",
     "task_description": "Implement LLM-based classification system",
-    "is_checked": false,
+    "is_checked": true,
     "retry_count": 0,
-    "last_attempt": null,
+    "last_attempt": "2025-08-08T04:24:59.810466",
     "is_failed": false
   },
   "line_382": {
@@ -1026,7 +1026,7 @@
     "task_description": "Add confidence scoring for classification results",
     "is_checked": false,
     "retry_count": 0,
-    "last_attempt": null,
+    "last_attempt": "2025-08-08T06:25:37.374911",
     "is_failed": false
   },
   "line_385": {
