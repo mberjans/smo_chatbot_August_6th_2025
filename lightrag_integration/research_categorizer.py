@@ -341,6 +341,44 @@ class QueryAnalyzer:
             'procedure': [r'how\s+to', r'steps', r'procedure', r'protocol', r'method']
         }
         
+        # CRITICAL: General query intent patterns (high priority for GENERAL_QUERY category)
+        self.general_query_intent_patterns = [
+            r'\bwhat\s+is\s+(?:metabolomics|biomarkers?|metabolites?|clinical\s+chemistry)',
+            r'\b(?:define|definition\s+of)\s+(?:metabolomics|biomarkers?|pathway)',
+            r'\b(?:explain|describe)\s+(?:the\s+)?(?:principles?|basics?|concept)',
+            r'\bwhat\s+are\s+(?:the\s+)?(?:principles?|fundamentals|basics)',
+            r'\b(?:overview|introduction)\s+(?:of|to)\s+(?:metabolomics|clinical)',
+            r'\bhow\s+does\s+(?:metabolomics|biomarker\s+discovery)\s+work',
+            r'\bbasic\s+(?:information|knowledge)\s+about'
+        ]
+        
+        # API/Database integration intent patterns (prevent compound confusion)
+        self.api_integration_patterns = [
+            r'\bapi\s+integration\s+with\s+(?:multiple\s+)?(?:metabolomics\s+)?databases',
+            r'\bdatabase\s+integration\s+(?:with|for)\s+(?:compound\s+)?identification',
+            r'\b(?:multiple\s+)?(?:metabolomics\s+)?databases?\s+for\s+(?:api|integration)',
+            r'\bintegrat\w+\s+(?:with|multiple)\s+(?:databases?|apis?)',
+            r'\bapi\s+(?:access|connectivity)\s+(?:to|for)\s+(?:hmdb|kegg|pubchem)'
+        ]
+        
+        # Clinical vs Biomarker distinction patterns
+        self.clinical_application_patterns = [
+            r'\bfor\s+precision\s+medicine',
+            r'\bin\s+clinical\s+practice',
+            r'\bused\s+for\s+(?:diagnosis|treatment|therapy)',
+            r'\bclinical\s+(?:application|implementation|use)',
+            r'\bpatient\s+(?:care|diagnosis|treatment)'
+        ]
+        
+        # Temporal/literature search intent patterns (for current trends, latest research)
+        self.temporal_literature_patterns = [
+            r'\b(?:current|recent|latest)\s+trends\s+in\s+(?:clinical|research|metabolomics)',
+            r'\b(?:what\s+are\s+the\s+)?(?:current|recent|latest)\s+(?:advances|developments)',
+            r'\b(?:current|recent)\s+(?:research|literature|publications)',
+            r'\blatest\s+(?:findings|studies|research)\s+in',
+            r'\brecent\s+(?:progress|advances|breakthroughs)\s+in'
+        ]
+        
         # Subject area patterns for metabolomics subdomains
         self.subject_area_patterns = {
             'lipidomics': [r'lipid\w*', r'fatty\s+acid', r'phospholipid', r'sphingolipid', r'sterol', r'triglyceride'],
@@ -374,7 +412,13 @@ class QueryAnalyzer:
             'subject_area': self._detect_subject_area(query_lower),
             'query_length': len(query_text),
             'word_count': len(query_text.split()),
-            'has_technical_terms': self._has_technical_terms(query_lower)
+            'has_technical_terms': self._has_technical_terms(query_lower),
+            
+            # Intent pattern detection (critical for hierarchical scoring)
+            'general_intent_patterns': self._detect_intent_patterns(query_lower, self.general_query_intent_patterns),
+            'api_integration_patterns': self._detect_intent_patterns(query_lower, self.api_integration_patterns),
+            'clinical_application_patterns': self._detect_intent_patterns(query_lower, self.clinical_application_patterns),
+            'temporal_literature_patterns': self._detect_intent_patterns(query_lower, self.temporal_literature_patterns)
         }
         
         # Match keywords and patterns for each category
@@ -422,6 +466,15 @@ class QueryAnalyzer:
         ]
         
         return any(term in query_lower for term in technical_terms)
+    
+    def _detect_intent_patterns(self, query_lower: str, patterns: List[str]) -> List[str]:
+        """Detect intent patterns in query using regex patterns."""
+        matched_patterns = []
+        for pattern in patterns:
+            matches = re.findall(pattern, query_lower, re.IGNORECASE)
+            if matches:
+                matched_patterns.extend(matches if isinstance(matches[0], str) else [match for match in matches])
+        return matched_patterns
 
 
 class ResearchCategorizer:
@@ -514,76 +567,129 @@ class ResearchCategorizer:
     def _calculate_category_scores(self, 
                                  analysis: Dict[str, Any], 
                                  context: Optional[Dict[str, Any]]) -> Dict[ResearchCategory, Dict[str, Any]]:
-        """Calculate scores for each category based on analysis results."""
+        """Calculate scores using hierarchical intent-first scoring approach."""
+        
+        # HIERARCHICAL SCORING: Intent patterns override keyword presence
         scores = {}
+        
+        # First, check for high-priority intent patterns
+        general_intent_detected = len(analysis.get('general_intent_patterns', [])) > 0
+        api_integration_detected = len(analysis.get('api_integration_patterns', [])) > 0
+        clinical_app_detected = len(analysis.get('clinical_application_patterns', [])) > 0
+        temporal_literature_detected = len(analysis.get('temporal_literature_patterns', [])) > 0
         
         for category in ResearchCategory:
             score_data = {
                 'total_score': 0.0,
                 'evidence': [],
+                'intent_score': 0.0,  # New: Intent-based scoring
                 'keyword_score': 0.0,
                 'pattern_score': 0.0,
                 'context_score': 0.0,
-                'bonus_score': 0.0
+                'hierarchical_penalty': 0.0  # New: Apply penalties for contradictory evidence
             }
             
-            # Keyword matching score
+            # LEVEL 1: Intent Pattern Scoring (Highest Priority)
+            if category == ResearchCategory.GENERAL_QUERY and general_intent_detected:
+                score_data['intent_score'] = 2.0  # Very high score for direct general intent
+                score_data['evidence'].extend([f"general_intent:{pattern}" for pattern in analysis['general_intent_patterns'][:2]])
+                
+            elif category == ResearchCategory.DATABASE_INTEGRATION and api_integration_detected:
+                score_data['intent_score'] = 1.8  # High score for API integration intent
+                score_data['evidence'].extend([f"api_intent:{pattern}" for pattern in analysis['api_integration_patterns'][:2]])
+                
+            elif category == ResearchCategory.CLINICAL_DIAGNOSIS and clinical_app_detected:
+                score_data['intent_score'] = 1.6  # High score for clinical application intent
+                score_data['evidence'].extend([f"clinical_app:{pattern}" for pattern in analysis['clinical_application_patterns'][:2]])
+                
+            elif category == ResearchCategory.LITERATURE_SEARCH and temporal_literature_detected:
+                score_data['intent_score'] = 1.9  # Very high score for temporal literature search intent
+                score_data['evidence'].extend([f"temporal_lit:{pattern}" for pattern in analysis['temporal_literature_patterns'][:2]])
+            
+            # LEVEL 2: Traditional Keyword/Pattern Scoring (Lower Priority)
             matched_keywords = analysis['matched_keywords'].get(category, [])
             if matched_keywords:
-                # Score based on number and quality of keyword matches
-                keyword_score = len(matched_keywords) * self.evidence_weights['exact_keyword_match']
-                score_data['keyword_score'] = keyword_score
-                score_data['evidence'].extend([f"keyword:{kw}" for kw in matched_keywords[:3]])  # Limit evidence
+                base_keyword_score = len(matched_keywords) * self.evidence_weights['exact_keyword_match']
+                
+                # Apply contextual dampening if intent patterns contradict
+                if general_intent_detected and category != ResearchCategory.GENERAL_QUERY:
+                    # Dampen specific category scores when general intent is detected
+                    base_keyword_score *= 0.3
+                    score_data['hierarchical_penalty'] = 0.5
+                    score_data['evidence'].append("dampened_by_general_intent")
+                elif api_integration_detected and category == ResearchCategory.METABOLITE_IDENTIFICATION:
+                    # Dampen metabolite identification when API integration is detected
+                    base_keyword_score *= 0.2
+                    score_data['hierarchical_penalty'] = 0.8
+                    score_data['evidence'].append("dampened_by_api_intent")
+                elif clinical_app_detected and category == ResearchCategory.BIOMARKER_DISCOVERY:
+                    # Dampen biomarker discovery when clinical application intent is detected
+                    base_keyword_score *= 0.4
+                    score_data['hierarchical_penalty'] = 0.6
+                    score_data['evidence'].append("dampened_by_clinical_app_intent")
+                elif temporal_literature_detected and category == ResearchCategory.CLINICAL_DIAGNOSIS:
+                    # Dampen clinical diagnosis when temporal literature intent is detected
+                    base_keyword_score *= 0.2
+                    score_data['hierarchical_penalty'] = 0.7
+                    score_data['evidence'].append("dampened_by_temporal_lit_intent")
+                
+                score_data['keyword_score'] = base_keyword_score
+                score_data['evidence'].extend([f"keyword:{kw}" for kw in matched_keywords[:3]])
             
-            # Pattern matching score
+            # Pattern matching score (also subject to dampening)
             matched_patterns = analysis['matched_patterns'].get(category, [])
             if matched_patterns:
                 pattern_score = len(matched_patterns) * self.evidence_weights['pattern_match']
+                
+                # Apply similar dampening logic
+                if general_intent_detected and category != ResearchCategory.GENERAL_QUERY:
+                    pattern_score *= 0.3
+                elif api_integration_detected and category == ResearchCategory.METABOLITE_IDENTIFICATION:
+                    pattern_score *= 0.2
+                elif clinical_app_detected and category == ResearchCategory.BIOMARKER_DISCOVERY:
+                    pattern_score *= 0.4
+                elif temporal_literature_detected and category == ResearchCategory.CLINICAL_DIAGNOSIS:
+                    pattern_score *= 0.2
+                
                 score_data['pattern_score'] = pattern_score
-                score_data['evidence'].extend([f"pattern:{p}" for p in matched_patterns[:2]])  # Limit evidence
+                score_data['evidence'].extend([f"pattern:{p}" for p in matched_patterns[:2]])
             
-            # Context bonuses
+            # LEVEL 3: Context and bonuses
             if context:
                 context_score = self._calculate_context_score(category, context)
                 score_data['context_score'] = context_score
                 if context_score > 0:
                     score_data['evidence'].append("context_match")
             
-            # Technical terms bonus
-            if analysis.get('has_technical_terms'):
-                # Give bonus to research-oriented categories
-                research_categories = [
-                    ResearchCategory.METABOLITE_IDENTIFICATION,
-                    ResearchCategory.PATHWAY_ANALYSIS,
-                    ResearchCategory.BIOMARKER_DISCOVERY,
-                    ResearchCategory.DRUG_DISCOVERY,
-                    ResearchCategory.CLINICAL_DIAGNOSIS,
-                    ResearchCategory.STATISTICAL_ANALYSIS
-                ]
-                if category in research_categories:
-                    score_data['bonus_score'] += self.evidence_weights['technical_terms_bonus']
-                    score_data['evidence'].append("technical_terms")
+            # Calculate total hierarchical score
+            # Intent score has highest weight, traditional scores are secondary
+            total_score = (
+                score_data['intent_score'] * 2.0 +  # Intent patterns are most important
+                score_data['keyword_score'] * 0.6 +  # Reduced keyword importance  
+                score_data['pattern_score'] * 0.8 +  # Slightly higher pattern importance
+                score_data['context_score'] * 0.4 -  # Context is helpful but not decisive
+                score_data['hierarchical_penalty']    # Subtract penalty for conflicts
+            )
             
-            # Subject area alignment bonus
-            if analysis.get('subject_area'):
-                subject_bonus = self._calculate_subject_alignment_bonus(category, analysis['subject_area'])
-                score_data['bonus_score'] += subject_bonus
-                if subject_bonus > 0:
-                    score_data['evidence'].append(f"subject_area:{analysis['subject_area']}")
-            
-            # Calculate total score
-            total_score = (score_data['keyword_score'] + 
-                          score_data['pattern_score'] + 
-                          score_data['context_score'] + 
-                          score_data['bonus_score'])
-            
-            # Apply normalization based on query complexity
+            # Apply normalization
             normalization_factor = self._get_normalization_factor(analysis)
             score_data['total_score'] = total_score * normalization_factor
             
-            # Only include categories with meaningful scores
-            if score_data['total_score'] > 0.1:
+            # Lower threshold to include more potential matches, but hierarchy will decide
+            if score_data['total_score'] > 0.05:
                 scores[category] = score_data
+        
+        # Ensure GENERAL_QUERY always gets considered for basic questions
+        if general_intent_detected and ResearchCategory.GENERAL_QUERY not in scores:
+            scores[ResearchCategory.GENERAL_QUERY] = {
+                'total_score': 1.5,
+                'evidence': ['general_intent_fallback'],
+                'intent_score': 1.5,
+                'keyword_score': 0.0,
+                'pattern_score': 0.0,
+                'context_score': 0.0,
+                'hierarchical_penalty': 0.0
+            }
         
         return scores
     

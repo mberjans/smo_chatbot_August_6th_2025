@@ -191,6 +191,9 @@ class TemporalAnalyzer:
             'today', 'yesterday', 'this week', 'this month', 'this year',
             'now', 'presently', 'nowadays', 'recently', 'lately',
             
+            # Trend indicators (critical for literature search)
+            'trends', 'trending', 'trend',
+            
             # Year-specific indicators
             '2024', '2025', '2026', '2027',
             
@@ -228,6 +231,7 @@ class TemporalAnalyzer:
             r'\b(?:what\'?s\s+new|what\s+are\s+the\s+latest)',
             r'\b(?:today|this\s+(?:week|month|year))',
             r'\b(?:emerging|evolving|trending)\s+(?:research|field|area|therapy|treatment)',
+            r'\b(?:current|recent)\s+trends\s+in\s+(?:clinical|research|metabolomics)',  # Critical missing pattern
             r'\b(?:recent|latest)\s+(?:advances|breakthroughs|discoveries)',
             r'\b(?:current|ongoing)\s+(?:clinical\s+trials|studies|research|investigation)',
             r'\b(?:up-to-date|cutting-edge|state-of-the-art)',

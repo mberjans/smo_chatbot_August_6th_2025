@@ -814,6 +814,45 @@ class TestClassificationAccuracy:
             detailed_results=detailed_results
         )
         
+        # DEBUG: Print detailed results before assertion
+        print(f"\n=== DETAILED CLASSIFICATION RESULTS ===")
+        print(f"Overall Accuracy: {accuracy:.3f} ({accuracy*100:.1f}%)")
+        print(f"Total Queries: {total_queries}")
+        print(f"Correct Classifications: {correct_classifications}")
+        print(f"Average Confidence: {avg_confidence:.3f}")
+        
+        # Show category breakdown
+        print(f"\nCategory Breakdown:")
+        for cat, breakdown in category_breakdown.items():
+            cat_accuracy = breakdown['correct'] / breakdown['total'] if breakdown['total'] > 0 else 0
+            print(f"  {cat}: {breakdown['correct']}/{breakdown['total']} ({cat_accuracy*100:.1f}%)")
+        
+        # Show first 10 failures in detail
+        failures = [r for r in detailed_results if not r['is_correct']]
+        print(f"\nFirst 10 Classification Failures:")
+        for i, result in enumerate(failures[:10], 1):
+            print(f"{i}. Query: '{result['query'][:60]}...'")
+            print(f"   Expected: {result['expected_category']}")
+            print(f"   Got: {result['predicted_category']} (conf: {result['confidence']:.3f})")
+            print(f"   Description: {result['description']}")
+        
+        # Show GENERAL_QUERY specific failures
+        general_failures = [r for r in failures if r['expected_category'] == 'GENERAL_QUERY']
+        if general_failures:
+            print(f"\nGENERAL_QUERY Failures ({len(general_failures)} total):")
+            for result in general_failures[:5]:
+                print(f"  Query: '{result['query']}'")
+                print(f"  Misclassified as: {result['predicted_category']} (conf: {result['confidence']:.3f})")
+        
+        # Show LITERATURE_SEARCH specific failures
+        lit_failures = [r for r in failures if r['expected_category'] == 'LITERATURE_SEARCH']
+        if lit_failures:
+            print(f"\nLITERATURE_SEARCH Failures ({len(lit_failures)} total):")
+            for result in lit_failures[:5]:
+                print(f"  Query: '{result['query']}'")
+                print(f"  Misclassified as: {result['predicted_category']} (conf: {result['confidence']:.3f})")
+                print(f"  Routing: Expected {result['expected_routing']}, Got {result['predicted_routing']}")
+
         # Assertions for requirements
         assert accuracy >= accuracy_requirements['min_overall_accuracy'], \
             f"Overall accuracy {accuracy:.3f} below required {accuracy_requirements['min_overall_accuracy']}"
