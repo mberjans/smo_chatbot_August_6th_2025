@@ -364,7 +364,7 @@
 ### CMO-LIGHTRAG-012: Query Classification and Intent Detection
 
 **CMO-LIGHTRAG-012-T01-TEST** [TEST]
-- [ ] Write tests for query classification with sample biomedical queries
+- [x] Write tests for query classification with sample biomedical queries
 
 **CMO-LIGHTRAG-012-T02-TEST** [TEST]
 - [ ] Write tests for intent detection confidence scoring
