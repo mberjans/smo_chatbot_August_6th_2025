@@ -27,6 +27,7 @@ from typing import Dict, List, Optional, Tuple, Set, Any, Pattern
 from dataclasses import dataclass
 from collections import defaultdict
 from enum import Enum
+from datetime import datetime
 import logging
 from functools import lru_cache
 import hashlib
@@ -1016,4 +1017,684 @@ def get_routing_category_mapping() -> Dict[QueryClassificationCategories, str]:
         QueryClassificationCategories.KNOWLEDGE_GRAPH: "lightrag",
         QueryClassificationCategories.REAL_TIME: "perplexity",
         QueryClassificationCategories.GENERAL: "either"
+    }
+
+
+# ============================================================================
+# ENHANCED CLASSIFICATION RESULT WITH COMPREHENSIVE CONFIDENCE SCORING
+# ============================================================================
+
+@dataclass
+class EnhancedClassificationResult:
+    """
+    Enhanced classification result that integrates comprehensive confidence scoring
+    from the HybridConfidenceScorer system while maintaining compatibility with
+    existing ClassificationResult structure.
+    
+    This extends the basic ClassificationResult with:
+    - Comprehensive confidence metrics from HybridConfidenceResult
+    - LLM and keyword-based confidence analysis integration
+    - Historical calibration and uncertainty quantification
+    - Evidence strength and reliability metrics
+    - Integration with existing routing infrastructure
+    """
+    
+    # Base classification information (compatible with original)
+    category: QueryClassificationCategories
+    confidence: float  # Overall confidence score (0.0-1.0)
+    reasoning: List[str]  # Explanation of classification decision
+    
+    # Original confidence breakdown (maintained for compatibility)
+    keyword_match_confidence: float  # Confidence from keyword matching
+    pattern_match_confidence: float  # Confidence from regex pattern matching
+    semantic_confidence: float       # Confidence from semantic analysis
+    temporal_confidence: float       # Confidence from temporal indicators
+    
+    # Evidence and indicators (maintained for compatibility)
+    matched_keywords: List[str]      # Keywords that influenced classification
+    matched_patterns: List[str]      # Regex patterns that matched
+    biomedical_entities: List[str]   # Identified biomedical entities
+    temporal_indicators: List[str]   # Temporal/real-time indicators found
+    
+    # Alternative classifications (maintained for compatibility)
+    alternative_classifications: List[Tuple[QueryClassificationCategories, float]]
+    
+    # Performance metrics (maintained for compatibility)
+    classification_time_ms: float    # Time taken for classification
+    
+    # Basic uncertainty quantification (maintained for compatibility)
+    ambiguity_score: float          # How ambiguous is the query (0.0-1.0)
+    conflict_score: float           # Conflicting signals between categories (0.0-1.0)
+    
+    # === ENHANCED CONFIDENCE SCORING INTEGRATION ===
+    
+    # Comprehensive confidence interval
+    confidence_interval: Tuple[float, float]  # Confidence bounds (lower, upper)
+    
+    # Advanced confidence breakdown from HybridConfidenceResult
+    llm_confidence_analysis: Optional['LLMConfidenceAnalysis'] = None
+    keyword_confidence_analysis: Optional['KeywordConfidenceAnalysis'] = None
+    
+    # Hybrid scoring weights and calibration
+    llm_weight: float = 0.5  # Weight given to LLM confidence
+    keyword_weight: float = 0.5  # Weight given to keyword confidence
+    calibration_adjustment: float = 0.0  # Historical calibration adjustment
+    
+    # Comprehensive uncertainty quantification
+    epistemic_uncertainty: float = 0.0  # Model uncertainty (what we don't know)
+    aleatoric_uncertainty: float = 0.0  # Data uncertainty (inherent noise)
+    total_uncertainty: float = 0.0  # Combined uncertainty
+    
+    # Quality and reliability indicators
+    confidence_reliability: float = 0.5  # How reliable this confidence estimate is
+    evidence_strength: float = 0.5  # Strength of evidence for classification
+    
+    # Alternative confidence scenarios
+    alternative_confidence_scenarios: List[Tuple[str, float]] = None
+    
+    # Calibration and validation metadata
+    calibration_version: str = "1.0"
+    confidence_calculation_time_ms: float = 0.0
+    
+    def __post_init__(self):
+        """Initialize default values for new fields."""
+        if self.alternative_confidence_scenarios is None:
+            self.alternative_confidence_scenarios = []
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary for serialization with enhanced confidence data."""
+        
+        # Base dictionary from original ClassificationResult
+        base_dict = {
+            'category': self.category.value,
+            'confidence': self.confidence,
+            'reasoning': self.reasoning,
+            'confidence_breakdown': {
+                'keyword_match_confidence': self.keyword_match_confidence,
+                'pattern_match_confidence': self.pattern_match_confidence,
+                'semantic_confidence': self.semantic_confidence,
+                'temporal_confidence': self.temporal_confidence
+            },
+            'evidence': {
+                'matched_keywords': self.matched_keywords,
+                'matched_patterns': self.matched_patterns,
+                'biomedical_entities': self.biomedical_entities,
+                'temporal_indicators': self.temporal_indicators
+            },
+            'alternative_classifications': [
+                (cat.value, conf) for cat, conf in self.alternative_classifications
+            ],
+            'performance': {
+                'classification_time_ms': self.classification_time_ms,
+                'ambiguity_score': self.ambiguity_score,
+                'conflict_score': self.conflict_score
+            }
+        }
+        
+        # Enhanced confidence scoring data
+        enhanced_confidence = {
+            'confidence_interval': {
+                'lower_bound': self.confidence_interval[0],
+                'upper_bound': self.confidence_interval[1],
+                'width': self.confidence_interval[1] - self.confidence_interval[0]
+            },
+            'hybrid_scoring': {
+                'llm_weight': self.llm_weight,
+                'keyword_weight': self.keyword_weight,
+                'calibration_adjustment': self.calibration_adjustment
+            },
+            'uncertainty_metrics': {
+                'epistemic_uncertainty': self.epistemic_uncertainty,
+                'aleatoric_uncertainty': self.aleatoric_uncertainty,
+                'total_uncertainty': self.total_uncertainty
+            },
+            'quality_indicators': {
+                'confidence_reliability': self.confidence_reliability,
+                'evidence_strength': self.evidence_strength
+            },
+            'alternative_scenarios': [
+                {'scenario': scenario, 'confidence': conf} 
+                for scenario, conf in self.alternative_confidence_scenarios
+            ],
+            'calibration_metadata': {
+                'calibration_version': self.calibration_version,
+                'confidence_calculation_time_ms': self.confidence_calculation_time_ms
+            }
+        }
+        
+        # LLM confidence analysis (if available)
+        if self.llm_confidence_analysis:
+            enhanced_confidence['llm_analysis'] = {
+                'raw_confidence': self.llm_confidence_analysis.raw_confidence,
+                'calibrated_confidence': self.llm_confidence_analysis.calibrated_confidence,
+                'reasoning_quality_score': self.llm_confidence_analysis.reasoning_quality_score,
+                'consistency_score': self.llm_confidence_analysis.consistency_score,
+                'response_length': self.llm_confidence_analysis.response_length,
+                'reasoning_depth': self.llm_confidence_analysis.reasoning_depth,
+                'uncertainty_indicators': self.llm_confidence_analysis.uncertainty_indicators,
+                'confidence_expressions': self.llm_confidence_analysis.confidence_expressions
+            }
+        
+        # Keyword confidence analysis (if available)
+        if self.keyword_confidence_analysis:
+            enhanced_confidence['keyword_analysis'] = {
+                'pattern_match_confidence': self.keyword_confidence_analysis.pattern_match_confidence,
+                'keyword_density_confidence': self.keyword_confidence_analysis.keyword_density_confidence,
+                'biomedical_entity_confidence': self.keyword_confidence_analysis.biomedical_entity_confidence,
+                'domain_specificity_confidence': self.keyword_confidence_analysis.domain_specificity_confidence,
+                'signal_analysis': {
+                    'total_biomedical_signals': self.keyword_confidence_analysis.total_biomedical_signals,
+                    'strong_signals': self.keyword_confidence_analysis.strong_signals,
+                    'weak_signals': self.keyword_confidence_analysis.weak_signals,
+                    'conflicting_signals': self.keyword_confidence_analysis.conflicting_signals
+                },
+                'coherence_metrics': {
+                    'semantic_coherence_score': self.keyword_confidence_analysis.semantic_coherence_score,
+                    'domain_alignment_score': self.keyword_confidence_analysis.domain_alignment_score,
+                    'query_completeness_score': self.keyword_confidence_analysis.query_completeness_score
+                }
+            }
+        
+        # Combine base and enhanced data
+        base_dict['enhanced_confidence_scoring'] = enhanced_confidence
+        
+        return base_dict
+    
+    @classmethod
+    def from_basic_classification(cls, 
+                                basic_result: ClassificationResult, 
+                                hybrid_confidence_result: Optional['HybridConfidenceResult'] = None) -> 'EnhancedClassificationResult':
+        """
+        Create EnhancedClassificationResult from basic ClassificationResult.
+        
+        Args:
+            basic_result: Original ClassificationResult
+            hybrid_confidence_result: Optional comprehensive confidence data
+            
+        Returns:
+            EnhancedClassificationResult with integrated confidence scoring
+        """
+        
+        # Extract basic values
+        enhanced = cls(
+            category=basic_result.category,
+            confidence=basic_result.confidence,
+            reasoning=basic_result.reasoning,
+            keyword_match_confidence=basic_result.keyword_match_confidence,
+            pattern_match_confidence=basic_result.pattern_match_confidence,
+            semantic_confidence=basic_result.semantic_confidence,
+            temporal_confidence=basic_result.temporal_confidence,
+            matched_keywords=basic_result.matched_keywords,
+            matched_patterns=basic_result.matched_patterns,
+            biomedical_entities=basic_result.biomedical_entities,
+            temporal_indicators=basic_result.temporal_indicators,
+            alternative_classifications=basic_result.alternative_classifications,
+            classification_time_ms=basic_result.classification_time_ms,
+            ambiguity_score=basic_result.ambiguity_score,
+            conflict_score=basic_result.conflict_score,
+            
+            # Default confidence interval if not provided
+            confidence_interval=(max(0.0, basic_result.confidence - 0.1), 
+                               min(1.0, basic_result.confidence + 0.1))
+        )
+        
+        # Integrate hybrid confidence result if available
+        if hybrid_confidence_result:
+            enhanced.confidence = hybrid_confidence_result.overall_confidence
+            enhanced.confidence_interval = hybrid_confidence_result.confidence_interval
+            enhanced.llm_confidence_analysis = hybrid_confidence_result.llm_confidence
+            enhanced.keyword_confidence_analysis = hybrid_confidence_result.keyword_confidence
+            enhanced.llm_weight = hybrid_confidence_result.llm_weight
+            enhanced.keyword_weight = hybrid_confidence_result.keyword_weight
+            enhanced.calibration_adjustment = hybrid_confidence_result.calibration_adjustment
+            enhanced.epistemic_uncertainty = hybrid_confidence_result.epistemic_uncertainty
+            enhanced.aleatoric_uncertainty = hybrid_confidence_result.aleatoric_uncertainty
+            enhanced.total_uncertainty = hybrid_confidence_result.total_uncertainty
+            enhanced.confidence_reliability = hybrid_confidence_result.confidence_reliability
+            enhanced.evidence_strength = hybrid_confidence_result.evidence_strength
+            enhanced.alternative_confidence_scenarios = hybrid_confidence_result.alternative_confidences
+            enhanced.calibration_version = hybrid_confidence_result.calibration_version
+            enhanced.confidence_calculation_time_ms = hybrid_confidence_result.calculation_time_ms
+        
+        return enhanced
+    
+    def to_basic_classification(self) -> ClassificationResult:
+        """
+        Convert back to basic ClassificationResult for compatibility.
+        
+        Returns:
+            ClassificationResult with core data
+        """
+        return ClassificationResult(
+            category=self.category,
+            confidence=self.confidence,
+            reasoning=self.reasoning,
+            keyword_match_confidence=self.keyword_match_confidence,
+            pattern_match_confidence=self.pattern_match_confidence,
+            semantic_confidence=self.semantic_confidence,
+            temporal_confidence=self.temporal_confidence,
+            matched_keywords=self.matched_keywords,
+            matched_patterns=self.matched_patterns,
+            biomedical_entities=self.biomedical_entities,
+            temporal_indicators=self.temporal_indicators,
+            alternative_classifications=self.alternative_classifications,
+            classification_time_ms=self.classification_time_ms,
+            ambiguity_score=self.ambiguity_score,
+            conflict_score=self.conflict_score
+        )
+    
+    def get_confidence_summary(self) -> Dict[str, Any]:
+        """Get concise summary of confidence metrics."""
+        
+        return {
+            'overall_confidence': self.confidence,
+            'confidence_range': f"[{self.confidence_interval[0]:.3f}, {self.confidence_interval[1]:.3f}]",
+            'evidence_strength': self.evidence_strength,
+            'reliability': self.confidence_reliability,
+            'uncertainty': self.total_uncertainty,
+            'calibrated': self.calibration_adjustment != 0.0,
+            'llm_weight': self.llm_weight,
+            'keyword_weight': self.keyword_weight
+        }
+    
+    def is_high_confidence(self, threshold: float = 0.8) -> bool:
+        """Check if classification meets high confidence threshold."""
+        return (self.confidence >= threshold and 
+                self.confidence_reliability >= 0.7 and
+                self.total_uncertainty <= 0.3)
+    
+    def get_recommendation(self) -> Dict[str, str]:
+        """Get routing recommendation based on confidence analysis."""
+        
+        if self.is_high_confidence():
+            confidence_level = "high"
+            recommendation = f"Route to {self.category.value} with high confidence"
+        elif self.confidence >= 0.6 and self.evidence_strength >= 0.6:
+            confidence_level = "medium"
+            recommendation = f"Route to {self.category.value} with medium confidence"
+        elif self.total_uncertainty > 0.7:
+            confidence_level = "low"
+            recommendation = "Consider hybrid routing or request clarification"
+        else:
+            confidence_level = "uncertain"
+            recommendation = "Use fallback routing strategy"
+        
+        return {
+            'confidence_level': confidence_level,
+            'recommendation': recommendation,
+            'alternative_category': self.alternative_classifications[1][0].value if len(self.alternative_classifications) > 1 else None
+        }
+
+
+# ============================================================================
+# ENHANCED CLASSIFICATION ENGINE WITH CONFIDENCE SCORING INTEGRATION
+# ============================================================================
+
+class EnhancedQueryClassificationEngine:
+    """
+    Enhanced query classification engine that integrates comprehensive confidence
+    scoring with the existing classification system.
+    
+    This engine extends the basic QueryClassificationEngine to:
+    - Automatically calculate comprehensive confidence metrics
+    - Integrate LLM and keyword-based confidence analysis
+    - Apply historical calibration to confidence scores
+    - Provide enhanced classification results with uncertainty quantification
+    """
+    
+    def __init__(self, 
+                 logger: Optional[logging.Logger] = None,
+                 enable_hybrid_confidence: bool = True,
+                 confidence_scorer: Optional['HybridConfidenceScorer'] = None):
+        """
+        Initialize enhanced classification engine.
+        
+        Args:
+            logger: Logger instance
+            enable_hybrid_confidence: Enable comprehensive confidence scoring
+            confidence_scorer: Pre-configured hybrid confidence scorer
+        """
+        self.logger = logger or logging.getLogger(__name__)
+        self.enable_hybrid_confidence = enable_hybrid_confidence
+        
+        # Initialize base classification engine
+        self.base_engine = QueryClassificationEngine(logger)
+        
+        # Initialize confidence scorer if enabled
+        self.confidence_scorer = None
+        if enable_hybrid_confidence:
+            try:
+                if confidence_scorer:
+                    self.confidence_scorer = confidence_scorer
+                else:
+                    # Import and create confidence scorer
+                    from .comprehensive_confidence_scorer import create_hybrid_confidence_scorer
+                    self.confidence_scorer = create_hybrid_confidence_scorer(logger=self.logger)
+                    
+                self.logger.info("Enhanced classification engine initialized with comprehensive confidence scoring")
+            except Exception as e:
+                self.logger.warning(f"Failed to initialize confidence scorer: {e}. Using basic confidence only.")
+                self.enable_hybrid_confidence = False
+    
+    async def classify_query_enhanced(self, 
+                                    query_text: str, 
+                                    context: Optional[Dict[str, Any]] = None,
+                                    include_llm_analysis: bool = True) -> EnhancedClassificationResult:
+        """
+        Classify query with enhanced confidence scoring.
+        
+        Args:
+            query_text: Query text to classify
+            context: Optional context information
+            include_llm_analysis: Whether to include LLM confidence analysis
+            
+        Returns:
+            EnhancedClassificationResult with comprehensive confidence metrics
+        """
+        
+        start_time = time.time()
+        
+        try:
+            # Get basic classification
+            basic_result = self.base_engine.classify_query(query_text, context)
+            
+            # If hybrid confidence scoring is disabled, return basic result in enhanced format
+            if not self.enable_hybrid_confidence or not self.confidence_scorer:
+                return EnhancedClassificationResult.from_basic_classification(basic_result)
+            
+            # Calculate comprehensive confidence
+            hybrid_confidence_result = await self.confidence_scorer.calculate_comprehensive_confidence(
+                query_text=query_text,
+                context=context
+            )
+            
+            # Create enhanced result
+            enhanced_result = EnhancedClassificationResult.from_basic_classification(
+                basic_result, hybrid_confidence_result
+            )
+            
+            # Update timing
+            total_time = (time.time() - start_time) * 1000
+            enhanced_result.classification_time_ms = total_time
+            
+            self.logger.debug(f"Enhanced classification completed in {total_time:.2f}ms for query: {query_text[:50]}...")
+            
+            return enhanced_result
+            
+        except Exception as e:
+            self.logger.error(f"Enhanced classification failed: {e}")
+            
+            # Fallback to basic classification
+            try:
+                basic_result = self.base_engine.classify_query(query_text, context)
+                return EnhancedClassificationResult.from_basic_classification(basic_result)
+            except Exception as fallback_error:
+                self.logger.error(f"Fallback classification also failed: {fallback_error}")
+                return self._create_fallback_enhanced_result(query_text, start_time, str(e))
+    
+    def classify_query(self, 
+                      query_text: str, 
+                      context: Optional[Dict[str, Any]] = None) -> ClassificationResult:
+        """
+        Classify query with basic result format for compatibility.
+        
+        Args:
+            query_text: Query text to classify
+            context: Optional context information
+            
+        Returns:
+            ClassificationResult (basic format)
+        """
+        return self.base_engine.classify_query(query_text, context)
+    
+    async def batch_classify_enhanced(self, 
+                                    queries: List[str],
+                                    context: Optional[Dict[str, Any]] = None) -> List[EnhancedClassificationResult]:
+        """
+        Batch classify multiple queries with enhanced confidence scoring.
+        
+        Args:
+            queries: List of query texts to classify
+            context: Optional shared context information
+            
+        Returns:
+            List of EnhancedClassificationResult objects
+        """
+        
+        results = []
+        for query in queries:
+            try:
+                result = await self.classify_query_enhanced(query, context)
+                results.append(result)
+            except Exception as e:
+                self.logger.error(f"Failed to classify query '{query[:50]}...': {e}")
+                fallback_result = self._create_fallback_enhanced_result(query, time.time(), str(e))
+                results.append(fallback_result)
+        
+        return results
+    
+    def validate_confidence_accuracy(self, 
+                                   query_text: str,
+                                   predicted_result: EnhancedClassificationResult,
+                                   actual_category: QueryClassificationCategories,
+                                   actual_routing_success: bool) -> Dict[str, Any]:
+        """
+        Validate confidence prediction accuracy for calibration improvement.
+        
+        Args:
+            query_text: Original query text
+            predicted_result: The classification result that was predicted
+            actual_category: The actual correct category
+            actual_routing_success: Whether the routing was successful
+            
+        Returns:
+            Validation results and feedback for calibration
+        """
+        
+        validation_results = {
+            'query': query_text,
+            'predicted_category': predicted_result.category.value,
+            'actual_category': actual_category.value,
+            'category_correct': predicted_result.category == actual_category,
+            'predicted_confidence': predicted_result.confidence,
+            'confidence_interval': predicted_result.confidence_interval,
+            'routing_successful': actual_routing_success,
+            'validation_timestamp': datetime.now().isoformat()
+        }
+        
+        # Record feedback for confidence calibration if scorer available
+        if self.confidence_scorer:
+            try:
+                # Import confidence source enum
+                from .comprehensive_confidence_scorer import ConfidenceSource
+                
+                self.confidence_scorer.record_prediction_feedback(
+                    query_text=query_text,
+                    predicted_confidence=predicted_result.confidence,
+                    actual_accuracy=actual_routing_success,
+                    confidence_source=ConfidenceSource.ENSEMBLE_VOTING
+                )
+                
+                validation_results['calibration_feedback_recorded'] = True
+                
+            except Exception as e:
+                self.logger.warning(f"Failed to record calibration feedback: {e}")
+                validation_results['calibration_feedback_recorded'] = False
+        
+        # Calculate confidence accuracy metrics
+        confidence_error = abs(predicted_result.confidence - (1.0 if actual_routing_success else 0.0))
+        validation_results['confidence_error'] = confidence_error
+        
+        # Check if confidence interval contained the actual outcome
+        if actual_routing_success:
+            actual_confidence = 1.0
+        else:
+            actual_confidence = 0.0
+            
+        interval_contains_actual = (predicted_result.confidence_interval[0] <= actual_confidence <= 
+                                  predicted_result.confidence_interval[1])
+        validation_results['confidence_interval_accurate'] = interval_contains_actual
+        
+        return validation_results
+    
+    def get_confidence_calibration_stats(self) -> Dict[str, Any]:
+        """Get confidence calibration statistics."""
+        
+        if not self.confidence_scorer:
+            return {'confidence_scoring_enabled': False}
+        
+        try:
+            stats = self.confidence_scorer.get_comprehensive_stats()
+            stats['confidence_scoring_enabled'] = True
+            return stats
+        except Exception as e:
+            self.logger.error(f"Failed to get calibration stats: {e}")
+            return {'confidence_scoring_enabled': False, 'error': str(e)}
+    
+    def _create_fallback_enhanced_result(self, 
+                                       query_text: str, 
+                                       start_time: float, 
+                                       error_message: str) -> EnhancedClassificationResult:
+        """Create fallback enhanced result when classification fails."""
+        
+        classification_time = (time.time() - start_time) * 1000
+        
+        # Simple heuristics for fallback
+        query_lower = query_text.lower()
+        
+        # Determine category based on simple keyword presence
+        if any(term in query_lower for term in ['latest', 'recent', 'current', '2024', '2025']):
+            category = QueryClassificationCategories.REAL_TIME
+            confidence = 0.3
+        elif any(term in query_lower for term in ['pathway', 'mechanism', 'relationship']):
+            category = QueryClassificationCategories.KNOWLEDGE_GRAPH
+            confidence = 0.3
+        else:
+            category = QueryClassificationCategories.GENERAL
+            confidence = 0.2
+        
+        return EnhancedClassificationResult(
+            category=category,
+            confidence=confidence,
+            reasoning=[f"Fallback classification due to error: {error_message}"],
+            keyword_match_confidence=0.0,
+            pattern_match_confidence=0.0,
+            semantic_confidence=0.0,
+            temporal_confidence=0.0,
+            matched_keywords=[],
+            matched_patterns=[],
+            biomedical_entities=[],
+            temporal_indicators=[],
+            alternative_classifications=[(category, confidence)],
+            classification_time_ms=classification_time,
+            ambiguity_score=1.0,
+            conflict_score=0.0,
+            confidence_interval=(max(0.0, confidence - 0.2), min(1.0, confidence + 0.1)),
+            epistemic_uncertainty=0.9,
+            aleatoric_uncertainty=0.7,
+            total_uncertainty=1.0,
+            confidence_reliability=0.1,
+            evidence_strength=0.1,
+            alternative_confidence_scenarios=[("fallback", confidence)],
+            calibration_version="fallback"
+        )
+
+
+# ============================================================================
+# INTEGRATION HELPER FUNCTIONS FOR ENHANCED CONFIDENCE SCORING
+# ============================================================================
+
+async def create_enhanced_classification_engine(
+    logger: Optional[logging.Logger] = None,
+    enable_hybrid_confidence: bool = True
+) -> EnhancedQueryClassificationEngine:
+    """
+    Factory function to create enhanced classification engine with confidence scoring.
+    
+    Args:
+        logger: Logger instance
+        enable_hybrid_confidence: Enable comprehensive confidence scoring
+        
+    Returns:
+        Configured EnhancedQueryClassificationEngine
+    """
+    
+    if logger is None:
+        logger = logging.getLogger(__name__)
+    
+    try:
+        engine = EnhancedQueryClassificationEngine(
+            logger=logger,
+            enable_hybrid_confidence=enable_hybrid_confidence
+        )
+        
+        logger.info("Enhanced classification engine created successfully")
+        return engine
+        
+    except Exception as e:
+        logger.error(f"Failed to create enhanced classification engine: {e}")
+        # Fallback to basic engine wrapped in enhanced interface
+        return EnhancedQueryClassificationEngine(
+            logger=logger,
+            enable_hybrid_confidence=False
+        )
+
+
+async def classify_with_enhanced_confidence(
+    query_text: str,
+    context: Optional[Dict[str, Any]] = None,
+    engine: Optional[EnhancedQueryClassificationEngine] = None
+) -> EnhancedClassificationResult:
+    """
+    Convenience function for enhanced classification with confidence scoring.
+    
+    Args:
+        query_text: Query to classify
+        context: Optional context information
+        engine: Optional pre-configured engine
+        
+    Returns:
+        EnhancedClassificationResult with comprehensive confidence metrics
+    """
+    
+    if engine is None:
+        engine = await create_enhanced_classification_engine()
+    
+    return await engine.classify_query_enhanced(query_text, context)
+
+
+def integrate_enhanced_classification_with_routing(
+    enhanced_result: EnhancedClassificationResult
+) -> Dict[str, Any]:
+    """
+    Convert EnhancedClassificationResult to routing decision format.
+    
+    Args:
+        enhanced_result: Enhanced classification result
+        
+    Returns:
+        Dict with routing information including enhanced confidence metrics
+    """
+    
+    # Get basic routing mapping
+    category_mapping = get_routing_category_mapping()
+    recommended_route = category_mapping[enhanced_result.category]
+    
+    # Get confidence-based recommendation
+    recommendation = enhanced_result.get_recommendation()
+    
+    return {
+        'routing_decision': {
+            'primary_route': recommended_route,
+            'category': enhanced_result.category.value,
+            'confidence_level': recommendation['confidence_level']
+        },
+        'confidence_metrics': enhanced_result.get_confidence_summary(),
+        'recommendation': recommendation,
+        'fallback_routes': [
+            category_mapping[alt_cat] for alt_cat, _ in enhanced_result.alternative_classifications[:2]
+        ],
+        'should_use_hybrid': enhanced_result.total_uncertainty > 0.5,
+        'requires_clarification': enhanced_result.confidence < 0.4,
+        'detailed_analysis': enhanced_result.to_dict()
     }

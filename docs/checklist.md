@@ -379,7 +379,7 @@
 - [x] Implement LLM-based classification system
 
 **CMO-LIGHTRAG-012-T06** [CODE]
-- [ ] Add confidence scoring for classification results
+- [x] Add confidence scoring for classification results
 
 **CMO-LIGHTRAG-012-T07** [CODE]
 - [ ] Optimize classification performance for real-time use
