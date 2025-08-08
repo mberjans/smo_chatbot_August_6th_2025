@@ -11805,3 +11805,108 @@
 2025-08-07 20:22:54,186 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
 2025-08-07 20:22:54,186 - lightrag_integration - INFO - Integration health: healthy
 2025-08-07 20:22:54,186 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:27:14,120 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:27:14,121 - lightrag_integration - INFO - Enabled features: cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:27:14,121 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:27:14,121 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:28:05,395 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:28:05,395 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:28:05,395 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:28:05,396 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 20:28:30,167 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:28:30,167 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:28:30,167 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:28:30,168 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:28:30,416 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 60.0%
+2025-08-07 20:28:30,418 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 60.0%
+2025-08-07 20:28:30,427 - lightrag_integration.integration_wrapper - INFO - FeatureFlagManager initialized with rollout: 60.0%
+2025-08-07 20:28:30,427 - lightrag_integration.integration_wrapper - INFO - IntegratedQueryService initialized (LightRAG: enabled)
+2025-08-07 20:28:30,427 - lightrag_integration.integration_wrapper - INFO - Routing decision: perplexity (reason: user_cohort_assignment)
+2025-08-07 20:28:30,427 - lightrag_integration.integration_wrapper - INFO - Perplexity query successful (1.00s)
+2025-08-07 20:28:30,427 - lightrag_integration.integration_wrapper - INFO - Routing decision: perplexity (reason: user_cohort_assignment)
+2025-08-07 20:28:30,427 - lightrag_integration.integration_wrapper - INFO - Perplexity query successful (1.00s)
+2025-08-07 20:28:30,427 - lightrag_integration.integration_wrapper - INFO - Service health monitoring started
+2025-08-07 20:28:30,429 - lightrag_integration.integration_wrapper - INFO - FeatureFlagManager initialized with rollout: 0.0%
+2025-08-07 20:28:30,429 - lightrag_integration.integration_wrapper - INFO - IntegratedQueryService initialized (LightRAG: enabled)
+2025-08-07 20:28:30,429 - lightrag_integration.integration_wrapper - INFO - Routing decision: lightrag (reason: user_cohort_assignment)
+2025-08-07 20:28:30,429 - lightrag_integration.integration_wrapper - WARNING - LightRAG query failed: Connection failed
+2025-08-07 20:28:30,429 - lightrag_integration.integration_wrapper - WARNING - LightRAG circuit breaker blocked request: Connection failed
+2025-08-07 20:28:30,429 - lightrag_integration.integration_wrapper - WARNING - LightRAG failure recorded (count: 1): Connection failed
+2025-08-07 20:28:30,429 - lightrag_integration.integration_wrapper - INFO - Falling back to Perplexity after LightRAG failure
+2025-08-07 20:28:30,429 - lightrag_integration.integration_wrapper - INFO - Perplexity (fallback) query successful (0.00s)
+2025-08-07 20:28:30,429 - lightrag_integration.integration_wrapper - INFO - Service health monitoring started
+2025-08-07 20:28:30,436 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 0.0%
+2025-08-07 20:28:30,436 - lightrag_integration.feature_flag_manager - INFO - Circuit breaker attempting recovery (attempt 1)
+2025-08-07 20:28:30,437 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 100.0%
+2025-08-07 20:28:30,437 - lightrag_integration.feature_flag_manager - WARNING - LightRAG quality 0.6 below threshold 0.8
+2025-08-07 20:28:30,438 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 100.0%
+2025-08-07 20:28:30,438 - lightrag_integration.feature_flag_manager - WARNING - LightRAG quality 0.6 below threshold 0.8
+2025-08-07 20:28:30,478 - lightrag_integration.integration_wrapper - INFO - FeatureFlagManager initialized with rollout: 100.0%
+2025-08-07 20:28:30,479 - lightrag_integration.integration_wrapper - INFO - IntegratedQueryService initialized (LightRAG: enabled)
+2025-08-07 20:28:30,479 - lightrag_integration.integration_wrapper - INFO - Routing decision: lightrag (reason: rollout_percentage)
+2025-08-07 20:28:30,479 - lightrag_integration.integration_wrapper - INFO - LightRAG query successful (2.00s)
+2025-08-07 20:28:30,479 - lightrag_integration.integration_wrapper - INFO - Service health monitoring started
+2025-08-07 20:28:30,486 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 50.0%
+2025-08-07 20:28:30,487 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 30.0%
+2025-08-07 20:28:30,489 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 60.0%
+2025-08-07 20:28:30,594 - lightrag_integration.integration_wrapper - INFO - FeatureFlagManager initialized with rollout: 40.0%
+2025-08-07 20:28:30,595 - lightrag_integration.integration_wrapper - INFO - IntegratedQueryService initialized (LightRAG: enabled)
+2025-08-07 20:28:30,595 - lightrag_integration.integration_wrapper - INFO - Routing decision: perplexity (reason: rollout_percentage)
+2025-08-07 20:28:30,595 - lightrag_integration.integration_wrapper - INFO - Perplexity query successful (0.00s)
+2025-08-07 20:28:30,595 - lightrag_integration.integration_wrapper - INFO - Routing decision: perplexity (reason: rollout_percentage)
+2025-08-07 20:28:30,596 - lightrag_integration.integration_wrapper - INFO - Perplexity query successful (0.00s)
+2025-08-07 20:28:30,596 - lightrag_integration.integration_wrapper - INFO - Routing decision: perplexity (reason: rollout_percentage)
+2025-08-07 20:28:30,596 - lightrag_integration.integration_wrapper - INFO - Perplexity query successful (0.00s)
+2025-08-07 20:28:30,596 - lightrag_integration.integration_wrapper - INFO - Routing decision: perplexity (reason: rollout_percentage)
+2025-08-07 20:28:30,596 - lightrag_integration.integration_wrapper - INFO - Perplexity query successful (0.00s)
+2025-08-07 20:28:30,596 - lightrag_integration.integration_wrapper - INFO - Routing decision: lightrag (reason: rollout_percentage)
+2025-08-07 20:28:30,596 - lightrag_integration.integration_wrapper - INFO - LightRAG query successful (0.00s)
+2025-08-07 20:28:30,596 - lightrag_integration.integration_wrapper - INFO - Service health monitoring started
+2025-08-07 20:28:30,598 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 0.0%
+2025-08-07 20:28:30,599 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 10.0%
+2025-08-07 20:28:30,601 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 25.0%
+2025-08-07 20:28:30,602 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 50.0%
+2025-08-07 20:28:30,603 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 75.0%
+2025-08-07 20:28:30,604 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 100.0%
+2025-08-07 20:28:30,606 - lightrag_integration.feature_flag_manager - INFO - FeatureFlagManager initialized with rollout: 50.0%
+2025-08-07 20:28:30,614 - lightrag_integration.integration_wrapper - INFO - FeatureFlagManager initialized with rollout: 100.0%
+2025-08-07 20:28:30,615 - lightrag_integration.integration_wrapper - INFO - IntegratedQueryService initialized (LightRAG: enabled)
+2025-08-07 20:28:30,615 - lightrag_integration.integration_wrapper - INFO - Routing decision: lightrag (reason: rollout_percentage)
+2025-08-07 20:28:30,615 - lightrag_integration.integration_wrapper - WARNING - LightRAG query failed: Timeout
+2025-08-07 20:28:30,615 - lightrag_integration.integration_wrapper - WARNING - LightRAG circuit breaker blocked request: Timeout
+2025-08-07 20:28:30,615 - lightrag_integration.integration_wrapper - WARNING - LightRAG failure recorded (count: 1): Timeout
+2025-08-07 20:28:30,615 - lightrag_integration.integration_wrapper - INFO - Falling back to Perplexity after LightRAG failure
+2025-08-07 20:28:30,615 - lightrag_integration.integration_wrapper - INFO - Perplexity (fallback) query successful (0.00s)
+2025-08-07 20:28:30,615 - lightrag_integration.integration_wrapper - INFO - Service health monitoring started
+2025-08-07 20:28:36,023 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:28:36,023 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:28:36,023 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:28:36,023 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:29:03,544 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:29:03,544 - lightrag_integration - INFO - Enabled features: cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:29:03,544 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:29:03,544 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:29:03,560 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:29:03,560 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:29:03,560 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 20:29:03,686 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, performance_monitoring_enabled, cost_tracking_enabled, relevance_scoring_enabled, benchmarking_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:29:03,687 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:29:03,687 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 20:29:03,710 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, performance_monitoring_enabled, relevance_scoring_enabled, accuracy_validation_enabled, benchmarking_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:29:03,710 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:29:03,711 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 20:29:32,201 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:29:32,201 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, performance_monitoring_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:29:32,201 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:29:32,201 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 20:29:32,202 - lightrag_integration - INFO - Enabled features: lightrag_integration_enabled, quality_validation_enabled, performance_monitoring_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:29:32,202 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:29:32,202 - lightrag_integration - INFO - Integration setup validation passed
+2025-08-07 20:29:44,196 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:29:44,196 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:29:44,196 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:29:44,196 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-07 20:29:58,257 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-07 20:29:58,257 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-07 20:29:58,257 - lightrag_integration - INFO - Integration health: healthy
+2025-08-07 20:29:58,257 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
