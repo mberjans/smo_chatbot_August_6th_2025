@@ -1,0 +1,38 @@
+{
+  "timestamp": "2025-08-08 00:49:12",
+  "performance": {
+    "avg_response_time_ms": 1.4482736587524414,
+    "max_response_time_ms": 4.600048065185547,
+    "throughput_queries_per_sec": 3813.0036363636364,
+    "performance_requirements_met": true
+  },
+  "accuracy": {
+    "correct_predictions": 7,
+    "total_predictions": 8,
+    "accuracy_percentage": 87.5,
+    "average_confidence": 1.0,
+    "accuracy_requirements_met": true
+  },
+  "coverage": {
+    "categories_tested": 10,
+    "total_test_queries": 53,
+    "category_distribution": {
+      "metabolite_identification": 7,
+      "pathway_analysis": 7,
+      "biomarker_discovery": 7,
+      "clinical_diagnosis": 5,
+      "drug_discovery": 5,
+      "statistical_analysis": 5,
+      "data_preprocessing": 5,
+      "database_integration": 4,
+      "literature_search": 4,
+      "knowledge_extraction": 4
+    },
+    "coverage_requirements_met": true
+  },
+  "edge_cases": {
+    "success_rate": 1.0,
+    "edge_case_requirements_met": true
+  },
+  "overall_validation_passed": true
+}
