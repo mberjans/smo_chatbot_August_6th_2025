@@ -1,0 +1,117 @@
+# Test Requirements for LLM Classification System Comprehensive Tests
+# This file contains all dependencies needed for running the comprehensive test suite
+
+# Core Testing Framework
+pytest>=7.4.0                   # Main testing framework
+pytest-asyncio>=0.21.0          # Async test support
+pytest-cov>=4.1.0               # Coverage testing
+pytest-xdist>=3.3.0             # Parallel test execution
+pytest-timeout>=2.1.0           # Test timeout handling
+pytest-html>=3.2.0              # HTML test reports
+pytest-json-report>=1.5.0       # JSON test reports
+pytest-benchmark>=4.0.0         # Performance benchmarking
+pytest-mock>=3.11.0             # Advanced mocking capabilities
+
+# Coverage and Quality Analysis
+coverage>=7.2.0                 # Coverage analysis
+pytest-clarity>=1.0.1           # Better test output formatting
+pytest-sugar>=0.9.7             # Enhanced test output
+pytest-instafail>=0.5.0         # Show failures immediately
+pytest-picked>=0.4.6            # Run previously failed tests
+
+# Performance and Load Testing
+pytest-memray>=1.0.0            # Memory profiling
+pytest-profiling>=1.7.0         # Performance profiling
+pytest-monitor>=1.6.6           # System resource monitoring
+locust>=2.15.0                   # Load testing framework
+memory-profiler>=0.61.0         # Memory usage profiling
+
+# Mock and Test Data Generation
+responses>=0.23.0                # HTTP request mocking
+freezegun>=1.2.2                # Time/date mocking
+factory-boy>=3.3.0              # Test data generation
+faker>=19.0.0                   # Fake data generation
+hypothesis>=6.82.0              # Property-based testing
+
+# Async Testing Support
+aioresponses>=0.7.4             # Async HTTP mocking
+pytest-aiohttp>=1.0.4           # aiohttp testing utilities
+asynctest>=0.13.0               # Async test utilities
+
+# API Testing
+httpx>=0.24.0                   # Modern HTTP client for testing
+requests-mock>=1.11.0           # HTTP request mocking
+
+# Database Testing (if needed)
+pytest-postgresql>=5.0.0        # PostgreSQL testing utilities
+sqlalchemy-utils>=0.41.0        # SQLAlchemy testing helpers
+
+# Logging and Debugging
+pytest-logging>=2016.11.4       # Enhanced logging in tests
+loguru>=0.7.0                   # Advanced logging
+coloredlogs>=15.0.1             # Colored log output
+
+# Configuration and Environment
+python-dotenv>=1.0.0            # Environment variable management
+pydantic>=2.0.0                 # Data validation and settings
+dynaconf>=3.2.0                 # Configuration management
+
+# Data Processing and Analysis
+pandas>=2.0.0                   # Data analysis for test results
+numpy>=1.24.0                   # Numerical computations
+matplotlib>=3.7.0               # Plotting for test visualization
+seaborn>=0.12.0                 # Statistical data visualization
+
+# Quality Assurance Tools
+flake8>=6.0.0                   # Code linting
+black>=23.0.0                   # Code formatting
+isort>=5.12.0                   # Import sorting
+mypy>=1.5.0                     # Type checking
+pylint>=2.17.0                  # Advanced code analysis
+
+# Documentation and Reporting
+jinja2>=3.1.0                   # Template engine for reports
+tabulate>=0.9.0                 # Pretty-print tabular data
+rich>=13.0.0                    # Rich text and beautiful formatting
+
+# JSON and Data Handling
+orjson>=3.9.0                   # Fast JSON processing
+jsonschema>=4.19.0              # JSON schema validation
+pyjwt>=2.8.0                    # JWT token handling
+
+# Network and HTTP Testing
+aiohttp>=3.8.0                  # Async HTTP framework
+websockets>=11.0.0              # WebSocket support
+urllib3>=2.0.0                  # HTTP library
+
+# Timing and Performance
+timeit>=0.0.0                   # Built-in timing utilities
+psutil>=5.9.0                   # System and process utilities
+resource-monitor>=1.0.0         # Resource monitoring
+
+# Test Report Generation
+allure-pytest>=2.13.0           # Allure test reporting
+pytest-html-reporter>=0.2.9     # HTML test reports
+pytest-json>=0.4.0              # JSON test reports
+
+# OpenAI and LLM Testing
+openai>=1.0.0                   # OpenAI API client
+tiktoken>=0.5.0                 # Token counting for OpenAI
+
+# Additional Utilities
+tqdm>=4.65.0                    # Progress bars
+click>=8.1.0                    # Command line interface
+typer>=0.9.0                    # Modern CLI framework
+pathlib2>=2.3.7                 # Enhanced pathlib
+tenacity>=8.2.0                 # Retry utilities
+
+# Development and Debug Tools
+ipdb>=0.13.13                   # Enhanced debugger
+pprint>=0.1                     # Pretty printing
+devtools>=0.11.0                # Development utilities
+
+# Specific to LLM Classification System
+# (These should match your main requirements.txt but may have version constraints for testing)
+lightrag>=0.1.0                 # LightRAG framework
+chainlit>=1.0.0                 # Chainlit interface
+langchain>=0.1.0                # LangChain framework

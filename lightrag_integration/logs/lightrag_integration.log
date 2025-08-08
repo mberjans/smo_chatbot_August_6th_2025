@@ -6719,3 +6719,182 @@
 2025-08-07 11:28:38,301 - clinical_metabolomics_rag - INFO - API usage metrics logger initialized successfully
 2025-08-07 11:28:38,306 - clinical_metabolomics_rag - INFO - LightRAG initialized with working directory: /tmp/test_lightrag
 2025-08-07 11:28:38,306 - clinical_metabolomics_rag - INFO - ClinicalMetabolomicsRAG initialized successfully
+2025-08-08 01:49:22,820 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:49:22,820 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:49:22,820 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:49:22,820 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:49:28,790 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:49:28,790 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:49:28,790 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:49:28,791 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:49:28,872 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:49:28,875 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:49:34,878 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:49:34,878 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:49:34,878 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:49:34,878 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:49:34,951 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:49:34,953 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:49:34,959 - lightrag_integration.research_categorizer - WARNING - Routing failure (1/3): RoutingPrediction.__init__() missing 1 required positional argument: 'confidence_level' for query: LC-MS metabolomics analysis of glucose biomarkers...
+2025-08-08 01:49:47,438 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:49:47,438 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:49:47,438 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:49:47,438 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:49:47,517 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:49:47,520 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:49:53,530 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:49:53,530 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:49:53,530 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:49:53,530 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:49:53,642 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:49:53,645 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:50:34,130 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:50:34,130 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:50:34,130 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:50:34,130 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:50:34,207 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:50:34,210 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:50:40,588 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:50:40,588 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:50:40,588 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:50:40,588 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:50:40,664 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:50:40,666 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:50:40,667 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:50:40,667 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:50:40,667 - lightrag_integration.research_categorizer - WARNING - Routing failure (1/3): Test routing failure for query: test query...
+2025-08-08 01:50:40,667 - lightrag_integration.research_categorizer - WARNING - Routing failure (2/3): Test routing failure for query: test query...
+2025-08-08 01:50:40,667 - lightrag_integration.research_categorizer - ERROR - Circuit breaker opened after 3 failures. Last error: Test routing failure for query: test query...
+2025-08-08 01:50:40,668 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:50:40,668 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:50:40,668 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:50:40,668 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:50:40,668 - lightrag_integration.research_categorizer - INFO - Circuit breaker entering half-open state
+2025-08-08 01:50:46,538 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:50:46,538 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:50:46,538 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:50:46,538 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:50:46,613 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:50:46,615 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:17,634 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:51:17,634 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:51:17,634 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:51:17,634 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:51:17,762 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:17,765 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,122 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:51:29,123 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:51:29,123 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:51:29,123 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:51:29,202 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,204 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,206 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,206 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,212 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,212 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,242 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,242 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,243 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,243 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,243 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,243 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,259 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,259 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,274 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,275 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,275 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,275 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,281 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,281 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,281 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,281 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,282 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,282 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,282 - lightrag_integration.research_categorizer - WARNING - Routing failure (1/3): Test routing failure for query: test query...
+2025-08-08 01:51:29,282 - lightrag_integration.research_categorizer - WARNING - Routing failure (2/3): Test routing failure for query: test query...
+2025-08-08 01:51:29,282 - lightrag_integration.research_categorizer - ERROR - Circuit breaker opened after 3 failures. Last error: Test routing failure for query: test query...
+2025-08-08 01:51:29,282 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,282 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,283 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,283 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,283 - lightrag_integration.research_categorizer - INFO - Circuit breaker entering half-open state
+2025-08-08 01:51:29,283 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,284 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,285 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,285 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,302 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,302 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,355 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,355 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,362 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,362 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,363 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,363 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,364 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,364 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:51:29,366 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:51:29,366 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:21,992 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:52:21,992 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:52:21,992 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:52:21,993 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:52:22,109 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:22,112 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:27,646 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:52:27,646 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:52:27,646 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:52:27,646 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:52:27,721 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:27,723 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,645 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 01:52:32,645 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 01:52:32,646 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 01:52:32,646 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 01:52:32,730 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,732 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,734 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,734 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,740 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,740 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,741 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,741 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,741 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,741 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,742 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,742 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,742 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,742 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,743 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,743 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,743 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,743 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,744 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,744 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,744 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,744 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,745 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,745 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,745 - lightrag_integration.research_categorizer - WARNING - Routing failure (1/3): Test routing failure for query: test query...
+2025-08-08 01:52:32,745 - lightrag_integration.research_categorizer - WARNING - Routing failure (2/3): Test routing failure for query: test query...
+2025-08-08 01:52:32,745 - lightrag_integration.research_categorizer - ERROR - Circuit breaker opened after 3 failures. Last error: Test routing failure for query: test query...
+2025-08-08 01:52:32,746 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,746 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,746 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,746 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,746 - lightrag_integration.research_categorizer - INFO - Circuit breaker entering half-open state
+2025-08-08 01:52:32,747 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,747 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,749 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,749 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,749 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,749 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,804 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,804 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,805 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,805 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,806 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,806 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,807 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,807 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations
+2025-08-08 01:52:32,809 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 01:52:32,809 - lightrag_integration.research_categorizer - INFO - Biomedical query router initialized with performance optimizations

@@ -1188,5 +1188,276 @@ def disease_specific_content():
 try:
     from .comprehensive_test_fixtures import *
     from .biomedical_test_fixtures import *
+    from .test_fixtures_query_classification import *
 except ImportError as e:
     logging.warning(f"Could not import comprehensive test fixtures: {e}")
+
+
+# =====================================================================
+# QUERY CLASSIFICATION TEST FIXTURES
+# =====================================================================
+
+@pytest.fixture
+def query_classification_environment():
+    """
+    Comprehensive environment for query classification testing.
+    
+    Provides all necessary components for testing the query classification
+    system including mock categorizers, performance testing utilities,
+    and biomedical query samples.
+    """
+    from .test_fixtures_query_classification import (
+        MockResearchCategorizer,
+        QueryClassificationPerformanceTester,
+        BiomedicalQueryFixtures
+    )
+    
+    class QueryClassificationEnvironment:
+        def __init__(self):
+            self.categorizer = MockResearchCategorizer()
+            self.performance_tester = QueryClassificationPerformanceTester()
+            self.fixtures = BiomedicalQueryFixtures()
+            self.test_session_start = time.time()
+        
+        def get_test_queries(self, category: str = None, count: int = None):
+            """Get test queries for specified category."""
+            if category:
+                queries = self.fixtures.get_sample_queries_by_category(category)
+            else:
+                all_queries = self.fixtures.get_all_sample_queries()
+                queries = []
+                for cat_queries in all_queries.values():
+                    queries.extend(cat_queries)
+            
+            return queries[:count] if count else queries
+        
+        def run_performance_test(self, queries: List[str]):
+            """Run performance test on queries."""
+            return self.performance_tester.benchmark_query_batch(self.categorizer, queries)
+        
+        def validate_prediction(self, prediction, expected_category=None, min_confidence=None):
+            """Validate a prediction meets expected criteria."""
+            assert hasattr(prediction, 'category'), "Prediction missing category"
+            assert hasattr(prediction, 'confidence'), "Prediction missing confidence"
+            assert 0.0 <= prediction.confidence <= 1.0, "Invalid confidence range"
+            
+            if expected_category:
+                assert prediction.category == expected_category, \
+                    f"Expected {expected_category}, got {prediction.category}"
+            
+            if min_confidence:
+                assert prediction.confidence >= min_confidence, \
+                    f"Confidence {prediction.confidence} below minimum {min_confidence}"
+            
+            return True
+        
+        def get_session_stats(self):
+            """Get session statistics."""
+            return {
+                'session_duration': time.time() - self.test_session_start,
+                'categorizer_stats': self.categorizer.get_performance_stats(),
+                'available_fixtures': {
+                    'sample_queries': len(self.fixtures.get_all_sample_queries()),
+                    'edge_cases': len(self.fixtures.get_edge_cases()),
+                    'performance_queries': len(self.fixtures.get_performance_queries())
+                }
+            }
+    
+    return QueryClassificationEnvironment()
+
+
+@pytest.fixture
+def biomedical_query_validator():
+    """
+    Validator for biomedical query classification results.
+    
+    Provides utilities to validate that query classification results
+    meet expected criteria for biomedical research queries.
+    """
+    
+    class BiomedicalQueryValidator:
+        def __init__(self):
+            self.validation_count = 0
+            self.validation_results = []
+        
+        def validate_biomedical_classification(self, prediction, query: str, expected_results: Dict = None):
+            """Validate biomedical query classification."""
+            self.validation_count += 1
+            
+            # Basic validation
+            assert hasattr(prediction, 'category'), "Missing category attribute"
+            assert hasattr(prediction, 'confidence'), "Missing confidence attribute"
+            assert hasattr(prediction, 'evidence'), "Missing evidence attribute"
+            
+            # Confidence validation
+            assert isinstance(prediction.confidence, float), "Confidence must be float"
+            assert 0.0 <= prediction.confidence <= 1.0, "Confidence out of range"
+            
+            # Evidence validation
+            assert isinstance(prediction.evidence, list), "Evidence must be list"
+            
+            # Biomedical context validation
+            query_lower = query.lower()
+            biomedical_terms = [
+                'metabolite', 'biomarker', 'clinical', 'pathway', 'drug', 
+                'statistical', 'database', 'literature', 'patient', 'diagnosis',
+                'lc-ms', 'gc-ms', 'nmr', 'metabolomics', 'proteomics'
+            ]
+            
+            has_biomedical_terms = any(term in query_lower for term in biomedical_terms)
+            if has_biomedical_terms and prediction.confidence < 0.2:
+                print(f"Warning: Low confidence {prediction.confidence:.3f} for biomedical query: {query[:50]}...")
+            
+            # Expected results validation
+            if expected_results:
+                if 'category' in expected_results:
+                    assert prediction.category == expected_results['category'], \
+                        f"Expected category {expected_results['category']}, got {prediction.category}"
+                
+                if 'min_confidence' in expected_results:
+                    assert prediction.confidence >= expected_results['min_confidence'], \
+                        f"Confidence {prediction.confidence} below minimum {expected_results['min_confidence']}"
+                
+                if 'evidence_terms' in expected_results:
+                    evidence_text = ' '.join(prediction.evidence).lower()
+                    for term in expected_results['evidence_terms']:
+                        if term.lower() not in evidence_text:
+                            print(f"Warning: Expected evidence term '{term}' not found in {prediction.evidence}")
+            
+            result = {
+                'query': query,
+                'prediction': prediction,
+                'validation_passed': True,
+                'validation_time': time.time()
+            }
+            self.validation_results.append(result)
+            
+            return result
+        
+        def get_validation_summary(self):
+            """Get summary of all validations performed."""
+            return {
+                'total_validations': self.validation_count,
+                'all_passed': all(r['validation_passed'] for r in self.validation_results),
+                'average_confidence': sum(r['prediction'].confidence for r in self.validation_results) / max(1, len(self.validation_results))
+            }
+    
+    return BiomedicalQueryValidator()
+
+
+@pytest.fixture
+def query_classification_benchmarker():
+    """
+    Benchmarking utilities for query classification performance.
+    
+    Provides tools to benchmark classification performance against
+    various metrics and requirements.
+    """
+    
+    class QueryClassificationBenchmarker:
+        def __init__(self):
+            self.benchmark_data = {}
+            self.thresholds = {
+                'response_time_ms': 1000,
+                'min_accuracy': 0.85,
+                'min_throughput_qps': 10,
+                'max_memory_mb': 100
+            }
+        
+        def benchmark_response_time(self, categorizer, queries: List[str], iterations: int = 1):
+            """Benchmark response time performance."""
+            times = []
+            
+            for query in queries:
+                query_times = []
+                for _ in range(iterations):
+                    start = time.perf_counter()
+                    categorizer.categorize_query(query)
+                    end = time.perf_counter()
+                    query_times.append((end - start) * 1000)
+                
+                times.extend(query_times)
+            
+            results = {
+                'total_queries': len(queries) * iterations,
+                'avg_time_ms': statistics.mean(times),
+                'min_time_ms': min(times),
+                'max_time_ms': max(times),
+                'std_dev_ms': statistics.stdev(times) if len(times) > 1 else 0.0,
+                'meets_threshold': statistics.mean(times) <= self.thresholds['response_time_ms']
+            }
+            
+            self.benchmark_data['response_time'] = results
+            return results
+        
+        def benchmark_throughput(self, categorizer, queries: List[str]):
+            """Benchmark throughput performance."""
+            start_time = time.perf_counter()
+            
+            for query in queries:
+                categorizer.categorize_query(query)
+            
+            end_time = time.perf_counter()
+            duration = end_time - start_time
+            throughput = len(queries) / duration
+            
+            results = {
+                'total_queries': len(queries),
+                'duration_seconds': duration,
+                'throughput_qps': throughput,
+                'meets_threshold': throughput >= self.thresholds['min_throughput_qps']
+            }
+            
+            self.benchmark_data['throughput'] = results
+            return results
+        
+        def benchmark_accuracy(self, categorizer, test_cases: List[Dict]):
+            """Benchmark classification accuracy."""
+            correct = 0
+            total = 0
+            
+            for test_case in test_cases:
+                if 'expected_category' not in test_case:
+                    continue
+                
+                prediction = categorizer.categorize_query(test_case['query'])
+                if prediction.category == test_case['expected_category']:
+                    correct += 1
+                total += 1
+            
+            accuracy = correct / max(1, total)
+            
+            results = {
+                'correct_predictions': correct,
+                'total_predictions': total,
+                'accuracy': accuracy,
+                'meets_threshold': accuracy >= self.thresholds['min_accuracy']
+            }
+            
+            self.benchmark_data['accuracy'] = results
+            return results
+        
+        def generate_benchmark_report(self):
+            """Generate comprehensive benchmark report."""
+            report = "=== Query Classification Benchmark Report ===\n\n"
+            
+            for metric, data in self.benchmark_data.items():
+                report += f"{metric.upper()}:\n"
+                for key, value in data.items():
+                    if isinstance(value, float):
+                        report += f"  {key}: {value:.3f}\n"
+                    else:
+                        report += f"  {key}: {value}\n"
+                report += "\n"
+            
+            # Overall assessment
+            all_thresholds_met = all(
+                data.get('meets_threshold', False) 
+                for data in self.benchmark_data.values()
+            )
+            
+            report += f"Overall Assessment: {'PASS' if all_thresholds_met else 'FAIL'}\n"
+            
+            return report
+    
+    return QueryClassificationBenchmarker()

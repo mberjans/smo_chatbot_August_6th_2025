@@ -5646,3 +5646,16 @@
 2025-08-07 02:06:44,338 - clinical_metabolomics_rag - INFO - Query processed successfully in 0.10s using hybrid mode
 2025-08-07 02:06:44,338 - clinical_metabolomics_rag - INFO - Cleaning up ClinicalMetabolomicsRAG resources
 2025-08-07 02:06:44,338 - clinical_metabolomics_rag - INFO - Cleanup completed successfully
+2025-08-08 00:46:56,102 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 00:46:56,103 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 00:46:56,103 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 00:46:56,103 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 00:46:56,295 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 00:46:56,484 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 00:46:56,623 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 00:49:30,062 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-08 00:49:30,062 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-08 00:49:30,062 - lightrag_integration - INFO - Integration health: healthy
+2025-08-08 00:49:30,062 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-08 00:49:30,349 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized
+2025-08-08 00:49:30,503 - lightrag_integration.research_categorizer - INFO - Research categorizer initialized

@@ -5,7 +5,7 @@ IMPORTANT: Before creating any new code, always check the existing codebase thor
 For unchecked tasks on the checklists, write the program one task of one ticket at a time. Once task is finshed, check it on the docs/checklist.md, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, and switch to the next task. Once you complete tasks on one ticket, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, switch to the next ticket. After the push, update the momety bank if it exists. Never chain multiple shell command together with & sign. Never use list comprehension in python. Avoid using regular expression for pattern matching. Instead create special pattern matching function to pattern matching. Work until all bugs are fixed. Please do not ask me for conformation whether I want you to proceedto the next ticket. Just keep working until completing the last ticket.
 
 CURRENT TASK TO COMPLETE:
-Test integration examples and backward compatibility
+Implement LLM-based classification system
 
 CONTEXT:
 - Project directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
@@ -13,22 +13,22 @@ CONTEXT:
 - Focus on completing the current task above
 - IMPORTANT: After completing the task, update docs/checklist.md to mark the task as complete by changing [ ] to [x]
 
-REMAINING UNCHECKED TASKS (116 total):
-→ CURRENT Test integration examples and backward compatibility
-  2. Create integration documentation and examples
-  3. Verify dependency on CMO-LIGHTRAG-007 completion
-  4. Generate API documentation for all public methods
-  5. Create setup and installation guide
-  6. Document integration procedures with existing CMO system
-  7. Create troubleshooting guide with common issues
-  8. Compile performance and quality assessment report
-  9. Create MVP handoff documentation for Phase 2 team
-  10. Independent developer test of setup guide
-  ... and 106 more tasks
+REMAINING UNCHECKED TASKS (101 total):
+→ CURRENT Implement LLM-based classification system
+  2. Add confidence scoring for classification results
+  3. Optimize classification performance for real-time use
+  4. Implement fallback mechanisms for uncertain classifications
+  5. Execute classification tests and verify >90% accuracy
+  6. Verify dependency on CMO-LIGHTRAG-011 completion
+  7. Write tests for routing decision logic
+  8. Write tests for system health monitoring integration
+  9. Implement IntelligentQueryRouter class structure
+  10. Implement routing decision engine
+  ... and 91 more tasks
 
 CRITICAL INSTRUCTIONS:
 1. Read docs/checklist.md, docs/plan.md, and docs/tickets.md for context
-2. Focus ONLY on completing the current task: Test integration examples and backward compatibility
+2. Focus ONLY on completing the current task: Implement LLM-based classification system
 3. Think 
 4. Create to-do list of smaller subtasks
 5. Assign task to software-engeneer subagent. Give subagent only information it needs for the task. You can also give subagent ticket-specific information extracted from docs/tickets.md as well as task specific information extracted from docs/checklist.md 
