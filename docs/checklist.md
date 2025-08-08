@@ -367,7 +367,7 @@
 - [x] Write tests for query classification with sample biomedical queries
 
 **CMO-LIGHTRAG-012-T02-TEST** [TEST]
-- [ ] Write tests for intent detection confidence scoring
+- [x] Write tests for intent detection confidence scoring
 
 **CMO-LIGHTRAG-012-T03-TEST** [TEST]
 - [ ] Write performance tests for <2 second classification response
