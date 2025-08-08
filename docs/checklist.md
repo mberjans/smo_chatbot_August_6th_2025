@@ -376,7 +376,7 @@
 - [x] Implement query classification categories and keywords
 
 **CMO-LIGHTRAG-012-T05** [CODE]
-- [ ] Implement LLM-based classification system
+- [x] Implement LLM-based classification system
 
 **CMO-LIGHTRAG-012-T06** [CODE]
 - [ ] Add confidence scoring for classification results
