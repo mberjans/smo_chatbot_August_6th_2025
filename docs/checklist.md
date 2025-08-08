@@ -391,7 +391,7 @@
 - [x] Execute classification tests and verify >90% accuracy
 
 **CMO-LIGHTRAG-012-T10** [VALIDATE]
-- [ ] Verify dependency on CMO-LIGHTRAG-011 completion
+- [x] Verify dependency on CMO-LIGHTRAG-011 completion
 
 ---
 
