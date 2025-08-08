@@ -337,7 +337,7 @@
 - [x] Generate API documentation for all public methods
 
 **CMO-LIGHTRAG-011-T02** [DOC]
-- [ ] Create setup and installation guide
+- [x] Create setup and installation guide
 
 **CMO-LIGHTRAG-011-T03** [DOC]
 - [ ] Document integration procedures with existing CMO system
