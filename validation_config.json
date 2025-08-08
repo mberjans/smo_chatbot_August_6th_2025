@@ -1,0 +1,213 @@
+{
+  "validation_suite_config": {
+    "name": "CMO-LIGHTRAG-013-T01 Comprehensive Routing Validation",
+    "version": "1.0.0",
+    "description": "Comprehensive test configuration for routing decision logic validation",
+    "created": "2025-08-08",
+    "author": "Claude Code (Anthropic)"
+  },
+  
+  "test_dataset_sizes": {
+    "lightrag_queries": 100,
+    "perplexity_queries": 100,
+    "either_queries": 50,
+    "hybrid_queries": 50,
+    "uncertainty_scenarios": 75,
+    "edge_cases": 30,
+    "performance_queries": 200
+  },
+  
+  "quick_test_dataset_sizes": {
+    "lightrag_queries": 25,
+    "perplexity_queries": 25,
+    "either_queries": 15,
+    "hybrid_queries": 15,
+    "uncertainty_scenarios": 20,
+    "edge_cases": 10,
+    "performance_queries": 40
+  },
+  
+  "success_criteria": {
+    "overall_accuracy_min": 0.90,
+    "category_accuracy_mins": {
+      "lightrag_queries": 0.90,
+      "perplexity_queries": 0.90,
+      "either_queries": 0.85,
+      "hybrid_queries": 0.85,
+      "uncertainty_scenarios": 0.75
+    },
+    "performance_requirements": {
+      "avg_response_time_ms_max": 50,
+      "p95_response_time_ms_max": 50,
+      "p99_response_time_ms_max": 100,
+      "throughput_qps_min": 100,
+      "memory_growth_mb_max": 100
+    },
+    "reliability_requirements": {
+      "uncertainty_detection_accuracy_min": 0.95,
+      "fallback_activation_correctness_min": 0.95,
+      "integration_success_rate_min": 0.95,
+      "edge_case_handling_success_min": 0.95,
+      "memory_stability_score_min": 0.95
+    },
+    "confidence_requirements": {
+      "confidence_calibration_error_max": 0.15,
+      "confidence_reliability_score_min": 0.85
+    }
+  },
+  
+  "test_categories": {
+    "core_routing_accuracy": {
+      "enabled": true,
+      "priority": "critical",
+      "description": "Validate routing decision accuracy across all categories",
+      "test_methods": [
+        "test_lightrag_routing_comprehensive_accuracy",
+        "test_perplexity_routing_temporal_accuracy", 
+        "test_hybrid_routing_complexity_handling",
+        "test_either_routing_flexibility"
+      ]
+    },
+    "uncertainty_handling": {
+      "enabled": true,
+      "priority": "critical",
+      "description": "Validate uncertainty detection and fallback mechanisms",
+      "test_methods": [
+        "test_comprehensive_uncertainty_detection",
+        "test_fallback_strategy_activation",
+        "test_confidence_threshold_behavior"
+      ]
+    },
+    "performance_requirements": {
+      "enabled": true,
+      "priority": "critical", 
+      "description": "Validate response time and throughput requirements",
+      "test_methods": [
+        "test_routing_time_requirements",
+        "test_concurrent_load_performance",
+        "test_memory_stability_under_load"
+      ]
+    },
+    "system_integration": {
+      "enabled": true,
+      "priority": "high",
+      "description": "Validate cross-component integration and workflows",
+      "test_methods": [
+        "test_end_to_end_routing_workflow",
+        "test_component_communication_integration",
+        "test_health_monitoring_integration"
+      ]
+    },
+    "edge_cases": {
+      "enabled": true,
+      "priority": "high",
+      "description": "Validate robustness against edge cases and errors",
+      "test_methods": [
+        "test_malformed_input_robustness",
+        "test_component_failure_resilience",
+        "test_system_health_degradation_adaptation"
+      ]
+    },
+    "clinical_workflows": {
+      "enabled": true,
+      "priority": "medium",
+      "description": "Validate real-world clinical metabolomics workflows",
+      "test_methods": [
+        "test_clinical_metabolomics_query_routing",
+        "test_multi_domain_scientific_query_routing",
+        "test_domain_specific_accuracy"
+      ]
+    }
+  },
+  
+  "mock_router_config": {
+    "confidence_thresholds": {
+      "lightrag_min": 0.75,
+      "perplexity_min": 0.80,
+      "either_range": [0.45, 0.75],
+      "hybrid_range": [0.65, 0.85]
+    },
+    "system_health": {
+      "default_system_health": 0.95,
+      "default_component_health": {
+        "lightrag": 0.95,
+        "perplexity": 0.92,
+        "classifier": 0.98
+      }
+    },
+    "uncertainty_detection": {
+      "low_confidence_keywords": ["maybe", "perhaps", "possibly", "uncertain", "not sure"],
+      "high_ambiguity_terms": ["MS", "NMR applications", "biomarker research"],
+      "conflicting_patterns": [
+        ["latest", "established"],
+        ["current", "traditional"],
+        ["recent", "historical"], 
+        ["modern", "classical"]
+      ],
+      "weak_evidence_indicators": ["something about", "stuff about", "things related to"]
+    },
+    "performance_simulation": {
+      "base_processing_time_ms": [15, 40],
+      "complexity_factor_max": 2.0,
+      "health_impact_enabled": true,
+      "circuit_breaker_enabled": true
+    }
+  },
+  
+  "biomedical_domain_config": {
+    "biomedical_entities": [
+      "glucose", "insulin", "diabetes", "metabolomics", "biomarker", "pathway",
+      "metabolism", "LC-MS", "GC-MS", "NMR", "mass spectrometry", "lipidomics",
+      "proteomics", "genomics", "metabolite", "protein", "enzyme", "hormone",
+      "cancer", "cardiovascular", "obesity", "neurological", "Alzheimer's",
+      "Parkinson's", "hypertension", "stroke", "myocardial infarction",
+      "chromatography", "spectroscopy", "tandem MS", "QTOF", "orbitrap",
+      "sample preparation", "derivatization", "isotope labeling",
+      "metformin", "statins", "aspirin", "warfarin", "drug metabolism",
+      "pharmacokinetics", "pharmacodynamics", "drug-drug interactions"
+    ],
+    "temporal_indicators": [
+      "latest", "recent", "current", "new", "breaking", "today", "2024", "2025",
+      "advances", "developments", "breakthrough", "emerging", "novel", "cutting-edge",
+      "state-of-the-art", "up-to-date", "contemporary", "modern"
+    ],
+    "knowledge_indicators": [
+      "relationship", "mechanism", "pathway", "interaction", "association",
+      "correlation", "connection", "link", "influence", "effect", "impact",
+      "regulation", "modulation", "control", "activation", "inhibition"
+    ],
+    "clinical_workflows": [
+      "biomarker_discovery", "diagnostic_development", "therapeutic_monitoring",
+      "personalized_medicine", "clinical_validation", "regulatory_approval",
+      "method_development", "quality_control", "data_analysis"
+    ]
+  },
+  
+  "reporting_config": {
+    "output_formats": ["json", "markdown", "txt", "html"],
+    "include_detailed_metrics": true,
+    "include_performance_charts": true,
+    "include_accuracy_breakdown": true,
+    "include_recommendations": true,
+    "include_production_readiness_assessment": true,
+    "generate_executive_summary": true
+  },
+  
+  "logging_config": {
+    "log_level": "INFO",
+    "log_file": "logs/comprehensive_routing_validation.log",
+    "enable_performance_logging": true,
+    "enable_detailed_tracing": false,
+    "log_test_case_details": true,
+    "log_routing_decisions": true
+  },
+  
+  "validation_metadata": {
+    "validation_environment": "test",
+    "clinical_domain": "metabolomics",
+    "target_deployment": "production",
+    "compliance_requirements": ["clinical_grade", "regulatory_ready"],
+    "performance_tier": "high_performance",
+    "reliability_tier": "mission_critical"
+  }
+}

@@ -1,0 +1,107 @@
+2025-08-08 14:51:45,052 - __main__ - INFO - ================================================================================
+2025-08-08 14:51:45,052 - __main__ - INFO - STARTING SYSTEM HEALTH MONITORING INTEGRATION TESTS
+2025-08-08 14:51:45,052 - __main__ - INFO - ================================================================================
+2025-08-08 14:51:45,052 - __main__ - INFO - 
+--- Running circuit_breaker tests (TestCircuitBreakerIntegration) ---
+2025-08-08 14:51:46,082 - __main__ - ERROR - ❌ circuit_breaker tests FAILED (1.03s)
+2025-08-08 14:51:46,082 - __main__ - ERROR - Error output: INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+INFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+INFO: Integration health: healthy
+WARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/circuit_breaker_results.json
+  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini
+  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests
+
+<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+2025-08-08 14:51:46,082 - __main__ - INFO - 
+--- Running health_routing tests (TestHealthBasedRoutingDecisions) ---
+2025-08-08 14:51:46,807 - __main__ - ERROR - ❌ health_routing tests FAILED (0.73s)
+2025-08-08 14:51:46,808 - __main__ - ERROR - Error output: INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+INFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+INFO: Integration health: healthy
+WARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/health_routing_results.json
+  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini
+  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests
+
+<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+2025-08-08 14:51:46,808 - __main__ - INFO - 
+--- Running failure_recovery tests (TestFailureDetectionAndRecovery) ---
+2025-08-08 14:51:47,404 - __main__ - ERROR - ❌ failure_recovery tests FAILED (0.60s)
+2025-08-08 14:51:47,404 - __main__ - ERROR - Error output: INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+INFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+INFO: Integration health: healthy
+WARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/failure_recovery_results.json
+  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini
+  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests
+
+<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+2025-08-08 14:51:47,405 - __main__ - INFO - 
+--- Running performance_monitoring tests (TestPerformanceMonitoring) ---
+2025-08-08 14:51:48,206 - __main__ - ERROR - ❌ performance_monitoring tests FAILED (0.80s)
+2025-08-08 14:51:48,206 - __main__ - ERROR - Error output: INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+INFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+INFO: Integration health: healthy
+WARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/performance_monitoring_results.json
+  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini
+  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests
+
+<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+2025-08-08 14:51:48,206 - __main__ - INFO - 
+--- Running load_balancing tests (TestLoadBalancing) ---
+2025-08-08 14:51:48,926 - __main__ - ERROR - ❌ load_balancing tests FAILED (0.72s)
+2025-08-08 14:51:48,927 - __main__ - ERROR - Error output: INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+INFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+INFO: Integration health: healthy
+WARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/load_balancing_results.json
+  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini
+  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests
+
+<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+2025-08-08 14:51:48,927 - __main__ - INFO - 
+--- Running service_availability tests (TestServiceAvailabilityImpact) ---
+2025-08-08 14:51:49,653 - __main__ - ERROR - ❌ service_availability tests FAILED (0.73s)
+2025-08-08 14:51:49,654 - __main__ - ERROR - Error output: INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+INFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+INFO: Integration health: healthy
+WARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/service_availability_results.json
+  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini
+  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests
+
+<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+2025-08-08 14:51:49,654 - __main__ - INFO - 
+--- Running integration tests (TestHealthMonitoringIntegration) ---
+2025-08-08 14:51:50,295 - __main__ - ERROR - ❌ integration tests FAILED (0.64s)
+2025-08-08 14:51:50,295 - __main__ - ERROR - Error output: INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+INFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+INFO: Integration health: healthy
+WARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/integration_results.json
+  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini
+  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests
+
+<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+2025-08-08 14:51:50,296 - __main__ - INFO - 
+================================================================================
+2025-08-08 14:51:50,296 - __main__ - INFO - HEALTH MONITORING INTEGRATION TESTS COMPLETED
+2025-08-08 14:51:50,296 - __main__ - INFO - Total Execution Time: 5.24 seconds
+2025-08-08 14:51:50,296 - __main__ - INFO - ================================================================================
+2025-08-08 14:51:50,296 - __main__ - ERROR - ❌ Significant health monitoring test failures detected.

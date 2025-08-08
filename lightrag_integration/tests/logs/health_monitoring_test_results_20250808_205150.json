@@ -1,0 +1,96 @@
+{
+  "test_categories": {
+    "circuit_breaker": {
+      "success": false,
+      "execution_time_seconds": 1.0292441844940186,
+      "stdout": "",
+      "stderr": "INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging\nINFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled\nINFO: Integration health: healthy\nWARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)\nERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/circuit_breaker_results.json\n  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini\n  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests\n\n<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute\n",
+      "return_code": 4,
+      "detailed_results": null
+    },
+    "health_routing": {
+      "success": false,
+      "execution_time_seconds": 0.7252109050750732,
+      "stdout": "",
+      "stderr": "INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging\nINFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled\nINFO: Integration health: healthy\nWARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)\nERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/health_routing_results.json\n  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini\n  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests\n\n<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute\n",
+      "return_code": 4,
+      "detailed_results": null
+    },
+    "failure_recovery": {
+      "success": false,
+      "execution_time_seconds": 0.5965418815612793,
+      "stdout": "",
+      "stderr": "INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging\nINFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled\nINFO: Integration health: healthy\nWARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)\nERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/failure_recovery_results.json\n  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini\n  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests\n\n<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute\n",
+      "return_code": 4,
+      "detailed_results": null
+    },
+    "performance_monitoring": {
+      "success": false,
+      "execution_time_seconds": 0.8011751174926758,
+      "stdout": "",
+      "stderr": "INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging\nINFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled\nINFO: Integration health: healthy\nWARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)\nERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/performance_monitoring_results.json\n  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini\n  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests\n\n<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute\n",
+      "return_code": 4,
+      "detailed_results": null
+    },
+    "load_balancing": {
+      "success": false,
+      "execution_time_seconds": 0.719693660736084,
+      "stdout": "",
+      "stderr": "INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging\nINFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled\nINFO: Integration health: healthy\nWARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)\nERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/load_balancing_results.json\n  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini\n  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests\n\n<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute\n",
+      "return_code": 4,
+      "detailed_results": null
+    },
+    "service_availability": {
+      "success": false,
+      "execution_time_seconds": 0.7264261245727539,
+      "stdout": "",
+      "stderr": "INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging\nINFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled\nINFO: Integration health: healthy\nWARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)\nERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/service_availability_results.json\n  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini\n  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests\n\n<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute\n",
+      "return_code": 4,
+      "detailed_results": null
+    },
+    "integration": {
+      "success": false,
+      "execution_time_seconds": 0.6411588191986084,
+      "stdout": "",
+      "stderr": "INFO: Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging\nINFO: Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled\nINFO: Integration health: healthy\nWARNING: Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)\nERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --json-report --json-report-file=/Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/logs/integration_results.json\n  inifile: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests/pytest.ini\n  rootdir: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025/lightrag_integration/tests\n\n<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute\n",
+      "return_code": 4,
+      "detailed_results": null
+    }
+  },
+  "performance_summary": {
+    "total_test_categories": 0,
+    "successful_categories": 0,
+    "failed_categories": 0,
+    "average_execution_time_seconds": 0,
+    "performance_analysis": {},
+    "success_rate_percentage": 0.0
+  },
+  "health_monitoring_effectiveness": {
+    "circuit_breaker_effectiveness": "needs_improvement",
+    "failure_detection_capability": "needs_improvement",
+    "recovery_mechanisms": "needs_improvement",
+    "performance_impact_handling": "needs_improvement",
+    "load_balancing_quality": "needs_improvement",
+    "service_availability_management": "needs_improvement",
+    "overall_effectiveness_score": 0.3,
+    "key_strengths": [],
+    "areas_for_improvement": [
+      "Circuit breaker implementation needs review",
+      "Failure detection/recovery needs enhancement",
+      "Performance monitoring integration needs work",
+      "Load balancing implementation needs improvement",
+      "Service availability management needs enhancement"
+    ]
+  },
+  "recommendations": [
+    "CRITICAL: Test success rate is below 80%. Review failed test categories and fix underlying issues.",
+    "CRITICAL: Health monitoring effectiveness is low. Review and enhance health monitoring integration.",
+    "CIRCUIT BREAKER: Enhance circuit breaker implementation to improve failure handling.",
+    "FAILURE DETECTION: Improve failure detection mechanisms for better system resilience.",
+    "LOAD BALANCING: Enhance load balancing algorithms to better distribute requests based on health.",
+    "MONITORING: Continue to monitor system health metrics in production to validate test assumptions.",
+    "DOCUMENTATION: Update system documentation to reflect health monitoring integration patterns."
+  ],
+  "execution_time_seconds": 5.243200063705444,
+  "timestamp": "2025-08-08T20:51:50.295880+00:00"
+}

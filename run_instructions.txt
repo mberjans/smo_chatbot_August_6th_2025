@@ -5,7 +5,7 @@ IMPORTANT: Before creating any new code, always check the existing codebase thor
 For unchecked tasks on the checklists, write the program one task of one ticket at a time. Once task is finshed, check it on the docs/checklist.md, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, and switch to the next task. Once you complete tasks on one ticket, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, switch to the next ticket. After the push, update the momety bank if it exists. Never chain multiple shell command together with & sign. Never use list comprehension in python. Avoid using regular expression for pattern matching. Instead create special pattern matching function to pattern matching. Work until all bugs are fixed. Please do not ask me for conformation whether I want you to proceedto the next ticket. Just keep working until completing the last ticket.
 
 CURRENT TASK TO COMPLETE:
-Optimize classification performance for real-time use
+Write tests for system health monitoring integration
 
 CONTEXT:
 - Project directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
@@ -13,22 +13,22 @@ CONTEXT:
 - Focus on completing the current task above
 - IMPORTANT: After completing the task, update docs/checklist.md to mark the task as complete by changing [ ] to [x]
 
-REMAINING UNCHECKED TASKS (99 total):
-→ CURRENT Optimize classification performance for real-time use
-  2. Implement fallback mechanisms for uncertain classifications
-  3. Execute classification tests and verify >90% accuracy
-  4. Verify dependency on CMO-LIGHTRAG-011 completion
-  5. Write tests for routing decision logic
-  6. Write tests for system health monitoring integration
-  7. Implement IntelligentQueryRouter class structure
-  8. Implement routing decision engine
-  9. Add system health checks and monitoring
-  10. Implement load balancing between multiple backends
-  ... and 89 more tasks
+REMAINING UNCHECKED TASKS (94 total):
+→ CURRENT Write tests for system health monitoring integration
+  2. Implement IntelligentQueryRouter class structure
+  3. Implement routing decision engine
+  4. Add system health checks and monitoring
+  5. Implement load balancing between multiple backends
+  6. Add routing decision logging and analytics
+  7. Execute routing tests and verify decision accuracy
+  8. Verify dependency on CMO-LIGHTRAG-012 completion
+  9. Write tests for multi-level fallback scenarios
+  10. Write tests for circuit breaker functionality
+  ... and 84 more tasks
 
 CRITICAL INSTRUCTIONS:
 1. Read docs/checklist.md, docs/plan.md, and docs/tickets.md for context
-2. Focus ONLY on completing the current task: Optimize classification performance for real-time use
+2. Focus ONLY on completing the current task: Write tests for system health monitoring integration
 3. Think 
 4. Create to-do list of smaller subtasks
 5. Assign task to software-engeneer subagent. Give subagent only information it needs for the task. You can also give subagent ticket-specific information extracted from docs/tickets.md as well as task specific information extracted from docs/checklist.md 

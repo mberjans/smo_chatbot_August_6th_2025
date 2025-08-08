@@ -398,7 +398,7 @@
 ### CMO-LIGHTRAG-013: Intelligent Query Router Implementation
 
 **CMO-LIGHTRAG-013-T01-TEST** [TEST]
-- [ ] Write tests for routing decision logic
+- [x] Write tests for routing decision logic
 
 **CMO-LIGHTRAG-013-T02-TEST** [TEST]
 - [ ] Write tests for system health monitoring integration
