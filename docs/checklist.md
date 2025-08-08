@@ -355,7 +355,7 @@
 - [x] Independent developer test of setup guide
 
 **CMO-LIGHTRAG-011-T08** [VALIDATE]
-- [ ] Verify dependencies on CMO-LIGHTRAG-009 and CMO-LIGHTRAG-010
+- [x] Verify dependencies on CMO-LIGHTRAG-009 and CMO-LIGHTRAG-010
 
 ---
 
