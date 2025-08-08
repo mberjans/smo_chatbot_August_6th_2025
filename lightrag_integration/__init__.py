@@ -532,6 +532,25 @@ from .research_categorizer import (
     QueryAnalyzer
 )
 
+# Query Routing System
+from .query_router import (
+    BiomedicalQueryRouter,
+    RoutingDecision,
+    RoutingPrediction,
+    TemporalAnalyzer
+)
+
+# Enhanced Query Classification System (CMO-LIGHTRAG-012-T04)
+from .query_classification_system import (
+    QueryClassificationCategories,
+    BiomedicalKeywordSets,
+    QueryClassificationEngine,
+    ClassificationResult,
+    create_classification_engine,
+    classify_for_routing,
+    get_routing_category_mapping
+)
+
 # =============================================================================
 # AUDIT & COMPLIANCE
 # =============================================================================
@@ -618,6 +637,13 @@ def _build_dynamic_exports():
         
         # Research & categorization (always available)
         "ResearchCategorizer", "CategoryPrediction", "CategoryMetrics", "QueryAnalyzer",
+        
+        # Query routing (always available)
+        "BiomedicalQueryRouter", "RoutingDecision", "RoutingPrediction", "TemporalAnalyzer",
+        
+        # Enhanced query classification (always available)
+        "QueryClassificationCategories", "BiomedicalKeywordSets", "QueryClassificationEngine",
+        "ClassificationResult", "create_classification_engine", "classify_for_routing", "get_routing_category_mapping",
         
         # Audit & compliance (always available)
         "AuditTrail", "AuditEvent", "AuditEventType", "ComplianceRule", "ComplianceChecker",
