@@ -373,7 +373,7 @@
 - [x] Write performance tests for <2 second classification response
 
 **CMO-LIGHTRAG-012-T04** [CODE]
-- [ ] Implement query classification categories and keywords
+- [x] Implement query classification categories and keywords
 
 **CMO-LIGHTRAG-012-T05** [CODE]
 - [ ] Implement LLM-based classification system
