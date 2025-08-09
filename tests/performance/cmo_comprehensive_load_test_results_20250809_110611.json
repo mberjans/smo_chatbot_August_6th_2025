@@ -1,0 +1,307 @@
+{
+  "execution_results": {
+    "scenarios_executed": [
+      "academic_research_sustained_50",
+      "clinical_morning_rush_60",
+      "cache_effectiveness_realistic_80",
+      "rag_intensive_sustained_60"
+    ],
+    "successful_scenarios": [
+      "academic_research_sustained_50",
+      "clinical_morning_rush_60",
+      "cache_effectiveness_realistic_80",
+      "rag_intensive_sustained_60"
+    ],
+    "failed_scenarios": [],
+    "detailed_results": {
+      "academic_research_sustained_50": {
+        "scenario": "CMOTestScenario(scenario_id='academic_research_sustained_50', name='Academic Research Sessions', description='Academic researchers conducting sustained deep research sessions', concurrent_users=50, total_operations=400, test_duration_seconds=2400, load_pattern=<LoadPattern.SUSTAINED: 'sustained'>, component_focus=[<ComponentType.RAG_QUERY: 'rag_query'>, <ComponentType.FULL_SYSTEM: 'full_system'>], performance_targets={'success_rate': 0.93, 'p95_response_ms': 3000, 'max_memory_growth_mb': 180, 'cache_hit_rate': 0.85})",
+        "metrics": "CMOMetrics(scenario_id='academic_research_sustained_50', execution_time=20.010297775268555, concurrent_users=50, total_operations=400, successful_operations=376, failed_operations=24, response_times=[597.8713669301047, 1749.7551401722576, 2005.657525869842, 2411.202030495559, 849.9366922416385, 1650.2777865055282, 743.17817237283, 737.4076163240254, 876.7281362996761, 431.57816904347305, 1343.2776560778698, 711.107906185548, 1723.4787764481991, 1235.7452040287083, 1153.6730720834437, 1058.7057044311032, 1641.878089339641, 812.3273780380644, 1294.5022960796464, 1080.4276132545576, 755.294137426333, 1285.2816673860566, 982.0161632516983, 1552.799088327813, 1072.9276051250538, 714.7573829505475, 985.9585706720163, 1134.9124452084855, 1122.4540840529403, 581.9958503137507, 553.9981012113511, 725.8762155369463], success_rate=0.94, throughput=19.98970752421158, resource_usage={'memory_growth_mb': 71.83094712773324, 'peak_memory_mb': 271.8309471277332, 'cpu_utilization_percent': 75.0, 'peak_concurrent_connections': 50, 'network_throughput_mbps': 25.0}, cmo_specific_metrics={'lightrag': {'success_rate': 0.95, 'average_response_time_ms': 3866.1051298966577, 'average_tokens_generated': 2924, 'average_cost_per_query': 0.06681411325734066, 'timeout_rate': 0.03766814715911672, 'fallback_activation_rate': 0.026404382579922437}})",
+        "validation": {
+          "scenario_id": "academic_research_sustained_50",
+          "overall_passed": true,
+          "target_validations": {
+            "success_rate": {
+              "target": 0.93,
+              "actual": 0.94,
+              "passed": true,
+              "margin": 0.009999999999999898
+            },
+            "p95_response_ms": {
+              "target": 3000,
+              "actual": 2005.657525869842,
+              "passed": true,
+              "margin": 994.342474130158
+            },
+            "memory_growth_mb": {
+              "target": 180,
+              "actual": 71.83094712773324,
+              "passed": true,
+              "margin": 108.16905287226676
+            }
+          },
+          "cmo_015_compliance": {
+            "concurrent_users_50_plus": true,
+            "success_rate_95_percent": false,
+            "p95_response_2000ms": false
+          },
+          "performance_grade": "C",
+          "recommendations": []
+        },
+        "execution_time": 20.01043701171875
+      },
+      "clinical_morning_rush_60": {
+        "scenario": "CMOTestScenario(scenario_id='clinical_morning_rush_60', name='Hospital Morning Rush Load', description='Morning hospital rush with mixed clinical users', concurrent_users=60, total_operations=300, test_duration_seconds=900, load_pattern=<LoadPattern.BURST: 'burst'>, component_focus=[<ComponentType.FULL_SYSTEM: 'full_system'>], performance_targets={'success_rate': 0.96, 'p95_response_ms': 1500, 'max_memory_growth_mb': 120, 'cache_hit_rate': 0.75})",
+        "metrics": "CMOMetrics(scenario_id='clinical_morning_rush_60', execution_time=9.010898113250732, concurrent_users=60, total_operations=300, successful_operations=276, failed_operations=24, response_times=[1089.8246683718867, 1138.71423879568, 906.1818026055269, 651.6790892137186, 677.2342456954259, 335.58245722950085, 2813.427032993006, 2186.806247218882, 1896.4412149006857, 2692.6666369784243, 2765.5471839979746, 3919.332216807773, 758.735647815433, 749.8646550476262, 903.9335747454496, 1274.5193380399548, 1385.9042422509797, 808.06401741038, 1249.479950682439, 1263.0474223694282, 2252.0141145063562, 3467.342563232548, 3453.9421334242506, 2871.1775635487397, 334.6742568352248, 934.5483794472262, 1101.5373787727708, 470.96529442032806, 1103.5073663612948, 754.8176235115784], success_rate=0.9199999999999999, throughput=33.29301876788986, resource_usage={'memory_growth_mb': 83.7058053260615, 'peak_memory_mb': 283.7058053260615, 'cpu_utilization_percent': 90.0, 'peak_concurrent_connections': 60, 'network_throughput_mbps': 30.0}, cmo_specific_metrics={})",
+        "validation": {
+          "scenario_id": "clinical_morning_rush_60",
+          "overall_passed": false,
+          "target_validations": {
+            "success_rate": {
+              "target": 0.96,
+              "actual": 0.9199999999999999,
+              "passed": false,
+              "margin": -0.040000000000000036
+            },
+            "p95_response_ms": {
+              "target": 1500,
+              "actual": 3467.342563232548,
+              "passed": false,
+              "margin": -1967.342563232548
+            },
+            "memory_growth_mb": {
+              "target": 120,
+              "actual": 83.7058053260615,
+              "passed": true,
+              "margin": 36.294194673938506
+            }
+          },
+          "cmo_015_compliance": {
+            "concurrent_users_50_plus": true,
+            "success_rate_95_percent": false,
+            "p95_response_2000ms": false
+          },
+          "performance_grade": "D",
+          "recommendations": [
+            "Success rate (92.0%) below target (96.0%). Consider improving error handling and system reliability.",
+            "P95 response time (3467ms) exceeds target (1500ms). Consider performance optimization and caching improvements."
+          ]
+        },
+        "execution_time": 9.011448860168457
+      },
+      "cache_effectiveness_realistic_80": {
+        "scenario": "CMOTestScenario(scenario_id='cache_effectiveness_realistic_80', name='Cache Effectiveness Testing', description='Testing multi-tier cache effectiveness with realistic patterns', concurrent_users=80, total_operations=640, test_duration_seconds=1200, load_pattern=<LoadPattern.REALISTIC: 'realistic'>, component_focus=[<ComponentType.CACHING: 'caching'>], performance_targets={'success_rate': 0.95, 'cache_hit_rate_l1': 0.85, 'cache_hit_rate_l2': 0.7, 'p95_response_ms': 1800})",
+        "metrics": "CMOMetrics(scenario_id='cache_effectiveness_realistic_80', execution_time=12.010413885116577, concurrent_users=80, total_operations=640, successful_operations=582, failed_operations=58, response_times=[1554.8116399642527, 1833.6140851384089, 1951.154263648958, 2290.0768943562593, 2011.4054712743086, 2052.2524565853955, 1838.27094267667, 770.1688127997193, 1772.6474851519586, 1964.2671804497186, 1800.6850169829393, 959.2146915622043, 3133.0471933603044, 3937.7661400005263, 3467.754486050845, 3312.4639964934813, 2426.2125344638616, 3188.2661488646177, 2596.12699263772, 2196.264779324062, 2817.8100410041143, 3529.2004761915, 3633.183758844262, 3481.8517793962847, 1097.2486532090506, 940.8511763744737, 1071.828919599111, 854.1563571959985, 1201.2258155565387, 717.6055390716265, 756.3298599902648, 1339.3653291767996, 832.4766685872701, 949.4574004424167, 731.8249906446897, 1330.3181773508418, 4084.5617333327937, 2684.3356616427277, 1360.2617206629493, 2160.3338581970675, 1814.2829043220577, 1579.6429058981817, 2760.4142109681675, 644.269648097925, 2875.5078989434946, 1341.6285615194747, 2809.062489693093, 2862.5489484894556, 1671.0935228728522, 1475.5636289169336, 1498.4526858846298, 1254.6830109111008, 1638.8501317118048, 1270.7946088512058, 1497.1497576733489, 1086.9192896028424, 659.5795016891635, 841.7787115426526, 1365.8622816186835, 2468.876882862488], success_rate=0.9099999999999999, throughput=53.28708953095232, resource_usage={'memory_growth_mb': 90.91812217742793, 'peak_memory_mb': 290.9181221774279, 'cpu_utilization_percent': 95, 'peak_concurrent_connections': 80, 'network_throughput_mbps': 40.0}, cmo_specific_metrics={'cache': {'l1_hit_rate': 0.8322515300849055, 'l2_hit_rate': 0.7013140230995701, 'l3_hit_rate': 0.7403185510398684, 'overall_hit_rate': 0.7951387497504756, 'cache_size_mb': 196, 'eviction_rate': 0.11488827708798274, 'cache_write_latency_ms': 2.768859448273354}})",
+        "validation": {
+          "scenario_id": "cache_effectiveness_realistic_80",
+          "overall_passed": false,
+          "target_validations": {
+            "success_rate": {
+              "target": 0.95,
+              "actual": 0.9099999999999999,
+              "passed": false,
+              "margin": -0.040000000000000036
+            },
+            "p95_response_ms": {
+              "target": 1800,
+              "actual": 3633.183758844262,
+              "passed": false,
+              "margin": -1833.1837588442618
+            }
+          },
+          "cmo_015_compliance": {
+            "concurrent_users_50_plus": true,
+            "success_rate_95_percent": false,
+            "p95_response_2000ms": false
+          },
+          "performance_grade": "D",
+          "recommendations": [
+            "Success rate (91.0%) below target (95.0%). Consider improving error handling and system reliability.",
+            "P95 response time (3633ms) exceeds target (1800ms). Consider performance optimization and caching improvements."
+          ]
+        },
+        "execution_time": 12.01073694229126
+      },
+      "rag_intensive_sustained_60": {
+        "scenario": "CMOTestScenario(scenario_id='rag_intensive_sustained_60', name='RAG-Intensive Query Testing', description='Intensive testing focused on LightRAG performance', concurrent_users=60, total_operations=480, test_duration_seconds=1800, load_pattern=<LoadPattern.SUSTAINED: 'sustained'>, component_focus=[<ComponentType.RAG_QUERY: 'rag_query'>], performance_targets={'success_rate': 0.92, 'lightrag_success_rate': 0.94, 'p95_response_ms': 3500, 'max_cost_per_query': 0.12})",
+        "metrics": "CMOMetrics(scenario_id='rag_intensive_sustained_60', execution_time=18.009504079818726, concurrent_users=60, total_operations=480, successful_operations=446, failed_operations=34, response_times=[1349.5048420872708, 1662.8405376835474, 2855.7560055651043, 2426.8767185462802, 1627.817597060553, 1677.1024217420027, 2152.536908370045, 1471.425909231732, 1165.4146943226615, 1308.7168098984407, 1381.2373072947692, 1525.4909682218104, 1581.2674915313673, 1572.2880248790486, 1463.3601587445025, 1455.7523228391094, 2009.713866380795, 725.6818603870292, 1734.2689806859892, 1004.3140820221304, 1216.02054916623, 958.0777692909481, 1385.0125742757823, 1494.5630686551767, 1096.2699894129355, 958.4706043588077, 1604.0802987915645, 1546.000527851077, 1246.4768838452833, 890.3346307338334, 1215.0875921572642, 1122.7984465897564, 768.3417510027352, 901.4462709564377, 861.6193718185491, 382.3893417046578], success_rate=0.9299999999999999, throughput=26.65259397885827, resource_usage={'memory_growth_mb': 76.68102413669044, 'peak_memory_mb': 276.68102413669044, 'cpu_utilization_percent': 90.0, 'peak_concurrent_connections': 60, 'network_throughput_mbps': 30.0}, cmo_specific_metrics={'lightrag': {'success_rate': 0.94, 'average_response_time_ms': 3529.5282473880907, 'average_tokens_generated': 2384, 'average_cost_per_query': 0.10073293825747337, 'timeout_rate': 0.01912589676353961, 'fallback_activation_rate': 0.0677764306864655}})",
+        "validation": {
+          "scenario_id": "rag_intensive_sustained_60",
+          "overall_passed": true,
+          "target_validations": {
+            "success_rate": {
+              "target": 0.92,
+              "actual": 0.9299999999999999,
+              "passed": true,
+              "margin": 0.009999999999999898
+            },
+            "p95_response_ms": {
+              "target": 3500,
+              "actual": 2426.8767185462802,
+              "passed": true,
+              "margin": 1073.1232814537198
+            }
+          },
+          "cmo_015_compliance": {
+            "concurrent_users_50_plus": true,
+            "success_rate_95_percent": false,
+            "p95_response_2000ms": false
+          },
+          "performance_grade": "C",
+          "recommendations": []
+        },
+        "execution_time": 18.009832859039307
+      }
+    },
+    "execution_metadata": {
+      "start_time": "2025-08-09T11:05:04.283264",
+      "total_scenarios": 4,
+      "end_time": "2025-08-09T11:06:11.341694",
+      "total_execution_time": 67.05841112136841,
+      "success_count": 4,
+      "failure_count": 0
+    }
+  },
+  "comprehensive_analysis": {
+    "analysis_timestamp": "2025-08-09T11:06:11.341889",
+    "scenarios_analyzed": 4,
+    "overall_system_performance": {
+      "average_success_rate": 0.9249999999999999,
+      "median_success_rate": 0.9249999999999999,
+      "min_success_rate": 0.9099999999999999,
+      "average_p95_response_ms": 2883.265141623233,
+      "max_concurrent_users_tested": 80,
+      "average_memory_growth_mb": 80.78397469197827,
+      "performance_grade_distribution": {
+        "C": 2,
+        "D": 2
+      }
+    },
+    "cmo_lightrag_015_compliance": {
+      "compliant_scenarios": 0,
+      "total_scenarios": 4,
+      "compliance_percentage": 0.0,
+      "overall_system_compliant": false
+    },
+    "scenario_performance_summary": [
+      {
+        "scenario_id": "academic_research_sustained_50",
+        "scenario_name": "Academic Research Sessions",
+        "concurrent_users": 50,
+        "success_rate": 0.94,
+        "p95_response_ms": 2005.657525869842,
+        "memory_growth_mb": 71.83094712773324,
+        "performance_grade": "C",
+        "cmo_015_compliant": false,
+        "overall_passed": true
+      },
+      {
+        "scenario_id": "clinical_morning_rush_60",
+        "scenario_name": "Hospital Morning Rush Load",
+        "concurrent_users": 60,
+        "success_rate": 0.9199999999999999,
+        "p95_response_ms": 3467.342563232548,
+        "memory_growth_mb": 83.7058053260615,
+        "performance_grade": "D",
+        "cmo_015_compliant": false,
+        "overall_passed": false
+      },
+      {
+        "scenario_id": "cache_effectiveness_realistic_80",
+        "scenario_name": "Cache Effectiveness Testing",
+        "concurrent_users": 80,
+        "success_rate": 0.9099999999999999,
+        "p95_response_ms": 3633.183758844262,
+        "memory_growth_mb": 90.91812217742793,
+        "performance_grade": "D",
+        "cmo_015_compliant": false,
+        "overall_passed": false
+      },
+      {
+        "scenario_id": "rag_intensive_sustained_60",
+        "scenario_name": "RAG-Intensive Query Testing",
+        "concurrent_users": 60,
+        "success_rate": 0.9299999999999999,
+        "p95_response_ms": 2426.8767185462802,
+        "memory_growth_mb": 76.68102413669044,
+        "performance_grade": "C",
+        "cmo_015_compliant": false,
+        "overall_passed": true
+      }
+    ],
+    "system_health_assessment": "Fair",
+    "scalability_assessment": "Excellent scalability",
+    "component_performance_analysis": {
+      "lightrag_performance": {
+        "average_success_rate": 0.945,
+        "average_response_time_ms": 3697.816688642374,
+        "average_cost_per_query": 0.08377352575740701,
+        "average_timeout_rate": 0.028397021961328164,
+        "health_status": "Needs Attention"
+      },
+      "cache_performance": {
+        "average_overall_hit_rate": 0.7951387497504756,
+        "average_l1_hit_rate": 0.8322515300849055,
+        "average_l2_hit_rate": 0.7013140230995701,
+        "average_cache_size_mb": 196,
+        "health_status": "Healthy"
+      },
+      "circuit_breaker_performance": {},
+      "fallback_system_performance": {}
+    }
+  },
+  "cmo_lightrag_015_validation": {
+    "validation_timestamp": "2025-08-09T11:06:11.342647",
+    "requirements_check": {
+      "concurrent_users_50_plus": {
+        "requirement": "50+ concurrent users",
+        "actual": 80,
+        "passed": true,
+        "details": "Maximum concurrent users tested: 80"
+      },
+      "success_rate_95_percent": {
+        "requirement": ">95% success rate",
+        "actual": 0.9249999999999999,
+        "passed": false,
+        "details": "Average success rate across all scenarios: 92.5%"
+      },
+      "p95_response_2000ms": {
+        "requirement": "P95 response time <2000ms",
+        "actual": 2883.265141623233,
+        "passed": false,
+        "details": "Average P95 response time: 2883ms"
+      }
+    },
+    "scenario_validations": {
+      "academic_research_sustained_50": {
+        "concurrent_users": 50,
+        "success_rate": 0.94,
+        "p95_response_ms": 2005.657525869842,
+        "compliant": false
+      },
+      "clinical_morning_rush_60": {
+        "concurrent_users": 60,
+        "success_rate": 0.9199999999999999,
+        "p95_response_ms": 3467.342563232548,
+        "compliant": false
+      },
+      "cache_effectiveness_realistic_80": {
+        "concurrent_users": 80,
+        "success_rate": 0.9099999999999999,
+        "p95_response_ms": 3633.183758844262,
+        "compliant": false
+      },
+      "rag_intensive_sustained_60": {
+        "concurrent_users": 60,
+        "success_rate": 0.9299999999999999,
+        "p95_response_ms": 2426.8767185462802,
+        "compliant": false
+      }
+    },
+    "overall_compliance": {
+      "total_scenarios_tested": 4,
+      "compliant_scenarios": 0,
+      "system_compliant": false
+    }
+  }
+}
