@@ -1,0 +1,51 @@
+================================================================================
+ROUTING ACCURACY VALIDATION REPORT
+Generated: 2025-08-08T20:01:59.412846
+================================================================================
+
+OVERALL ACCURACY METRICS:
+========================================
+Total Test Queries: 60
+Base Router Accuracy: 73.33%
+Intelligent Router Accuracy: 73.33%
+Target Accuracy (>90%) Met: ✗ NO
+Intelligent Router Target Met: ✗ NO
+
+PROCESSING TIME PERFORMANCE:
+Mean Response Time: 0.72ms
+95th Percentile: 0.81ms
+Max Response Time: 6.68ms
+
+CATEGORY-SPECIFIC ACCURACY:
+========================================
+LIGHTRAG: 73.33% (11/15) ✗ FAIL
+PERPLEXITY: 80.00% (12/15) ✗ FAIL
+EITHER: 100.00% (15/15) ✓ PASS
+HYBRID: 40.00% (6/15) ✗ FAIL
+
+FAILED CATEGORIES ANALYSIS:
+========================================
+
+LIGHTRAG Failures:
+  - Query 8: Expected lightrag, Got either
+  - Query 11: Expected lightrag, Got either
+  - Query 12: Expected lightrag, Got either
+  - Query 14: Expected lightrag, Got either
+
+PERPLEXITY Failures:
+  - Query 8: Expected perplexity, Got hybrid
+  - Query 13: Expected perplexity, Got hybrid
+  - Query 14: Expected perplexity, Got hybrid
+
+HYBRID Failures:
+  - Query 2: Expected hybrid, Got perplexity
+  - Query 3: Expected hybrid, Got lightrag
+  - Query 4: Expected hybrid, Got perplexity
+  - Query 7: Expected hybrid, Got perplexity
+  - Query 9: Expected hybrid, Got perplexity
+
+RECOMMENDATIONS:
+========================================
+✗ Routing accuracy below 90% requirement
+✗ Additional training/tuning needed before production
+- Focus improvement efforts on: lightrag, perplexity, hybrid

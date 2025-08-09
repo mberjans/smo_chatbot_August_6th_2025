@@ -3101,10 +3101,60 @@ class ProductionLoadBalancer:
             # Add other backend types as needed
             
     def _initialize_circuit_breakers(self):
-        """Initialize circuit breakers"""
+        """Initialize circuit breakers with enhanced support"""
+        # Initialize enhanced circuit breaker integration if available
+        try:
+            from .enhanced_circuit_breaker_system import (
+                EnhancedCircuitBreakerIntegration,
+                ServiceType
+            )
+            
+            # Create enhanced circuit breaker integration
+            self.enhanced_circuit_breaker_integration = EnhancedCircuitBreakerIntegration(
+                config=self._get_enhanced_circuit_breaker_config(),
+                logger=self.logger
+            )
+            
+            self.logger.info("Enhanced circuit breaker integration initialized for production load balancer")
+            
+        except ImportError:
+            self.enhanced_circuit_breaker_integration = None
+            self.logger.warning("Enhanced circuit breakers not available, using traditional circuit breakers")
+        
+        # Initialize traditional circuit breakers for backward compatibility
         for instance_id, instance_config in self.config.backend_instances.items():
             if instance_config.circuit_breaker_enabled:
                 self.circuit_breakers[instance_id] = ProductionCircuitBreaker(instance_config)
+    
+    def _get_enhanced_circuit_breaker_config(self) -> Dict[str, Any]:
+        """Get configuration for enhanced circuit breakers."""
+        return {
+            'openai_api': {
+                'failure_threshold': 5,
+                'recovery_timeout': 60.0,
+                'degradation_threshold': 3,
+                'rate_limit_threshold': 10,
+                'budget_threshold_percentage': 90.0,
+            },
+            'perplexity_api': {
+                'failure_threshold': 5,
+                'recovery_timeout': 60.0,
+                'degradation_threshold': 3,
+                'rate_limit_threshold': 15,
+                'budget_threshold_percentage': 85.0,
+            },
+            'lightrag': {
+                'failure_threshold': 5,
+                'recovery_timeout': 60.0,
+                'memory_threshold_gb': 2.0,
+                'response_time_threshold': 30.0,
+            },
+            'cache': {
+                'failure_threshold': 10,
+                'recovery_timeout': 30.0,
+                'memory_threshold_gb': 1.0,
+            }
+        }
                 
     def _initialize_metrics(self):
         """Initialize metrics storage"""

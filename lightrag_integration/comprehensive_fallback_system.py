@@ -49,8 +49,22 @@ try:
     from .cost_persistence import ResearchCategory
     from .cost_based_circuit_breaker import CostBasedCircuitBreaker
     from .budget_manager import BudgetManager
+    
+    # Enhanced circuit breaker integration
+    try:
+        from .enhanced_circuit_breaker_system import (
+            EnhancedCircuitBreakerIntegration,
+            CircuitBreakerOrchestrator,
+            ServiceType,
+            EnhancedCircuitBreakerState
+        )
+        ENHANCED_CIRCUIT_BREAKERS_AVAILABLE = True
+    except ImportError:
+        ENHANCED_CIRCUIT_BREAKERS_AVAILABLE = False
+        
 except ImportError as e:
     logging.warning(f"Could not import some modules: {e}. Some features may be limited.")
+    ENHANCED_CIRCUIT_BREAKERS_AVAILABLE = False
 
 
 # ============================================================================

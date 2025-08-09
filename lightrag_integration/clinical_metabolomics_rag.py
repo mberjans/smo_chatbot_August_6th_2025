@@ -138,6 +138,27 @@ from .research_categorizer import ResearchCategorizer, CategoryPrediction
 from .audit_trail import AuditTrail, AuditEventType
 from .pdf_processor import BiomedicalPDFProcessor, BiomedicalPDFProcessorError
 
+# Enhanced Circuit Breaker System Integration
+try:
+    from .enhanced_circuit_breaker_system import (
+        EnhancedCircuitBreakerIntegration,
+        CircuitBreakerOrchestrator,
+        OpenAICircuitBreaker,
+        LightRAGCircuitBreaker,
+        ServiceType,
+        EnhancedCircuitBreakerState
+    )
+    ENHANCED_CIRCUIT_BREAKERS_AVAILABLE = True
+except ImportError:
+    ENHANCED_CIRCUIT_BREAKERS_AVAILABLE = False
+    # Create mock classes for fallback
+    class EnhancedCircuitBreakerIntegration:
+        def __init__(self, *args, **kwargs):
+            pass
+    class CircuitBreakerOrchestrator:
+        def __init__(self, *args, **kwargs):
+            pass
+
 
 class CircuitBreakerError(Exception):
     """
@@ -6593,16 +6614,41 @@ class ClinicalMetabolomicsRAG:
         self.request_queue = RequestQueue(
             max_concurrent=self.rate_limiter_config['max_concurrent_requests']
         )
-        self.llm_circuit_breaker = CircuitBreaker(
-            failure_threshold=self.circuit_breaker_config.get('failure_threshold', 5),
-            recovery_timeout=self.circuit_breaker_config.get('recovery_timeout', 60.0),
-            expected_exception=Exception  # Use base Exception for compatibility
+        
+        # Initialize enhanced circuit breaker system if available
+        self.enhanced_circuit_breakers_enabled = (
+            ENHANCED_CIRCUIT_BREAKERS_AVAILABLE and 
+            kwargs.get('use_enhanced_circuit_breakers', True)
         )
-        self.embedding_circuit_breaker = CircuitBreaker(
-            failure_threshold=self.circuit_breaker_config.get('failure_threshold', 5),
-            recovery_timeout=self.circuit_breaker_config.get('recovery_timeout', 60.0),
-            expected_exception=Exception  # Use base Exception for compatibility
-        )
+        
+        if self.enhanced_circuit_breakers_enabled:
+            # Initialize enhanced circuit breaker integration
+            self.circuit_breaker_integration = self._initialize_enhanced_circuit_breakers()
+            
+            # Use enhanced circuit breakers from the orchestrator
+            self.openai_circuit_breaker = self.circuit_breaker_integration.get_service_breaker(ServiceType.OPENAI_API)
+            self.lightrag_circuit_breaker = self.circuit_breaker_integration.get_service_breaker(ServiceType.LIGHTRAG)
+            
+            # Legacy circuit breakers for backward compatibility
+            self.llm_circuit_breaker = self._create_legacy_wrapper(self.openai_circuit_breaker)
+            self.embedding_circuit_breaker = self._create_legacy_wrapper(self.openai_circuit_breaker)
+            
+            self.logger.info("Enhanced circuit breaker system initialized")
+        else:
+            # Fallback to traditional circuit breakers
+            self.circuit_breaker_integration = None
+            self.llm_circuit_breaker = CircuitBreaker(
+                failure_threshold=self.circuit_breaker_config.get('failure_threshold', 5),
+                recovery_timeout=self.circuit_breaker_config.get('recovery_timeout', 60.0),
+                expected_exception=Exception
+            )
+            self.embedding_circuit_breaker = CircuitBreaker(
+                failure_threshold=self.circuit_breaker_config.get('failure_threshold', 5),
+                recovery_timeout=self.circuit_breaker_config.get('recovery_timeout', 60.0),
+                expected_exception=Exception
+            )
+            
+            self.logger.info("Traditional circuit breakers initialized")
         
         # Enhanced monitoring
         self.error_metrics = {
@@ -7266,6 +7312,142 @@ class ClinicalMetabolomicsRAG:
             default_config.update(custom_config)
         
         return default_config
+    
+    def _initialize_enhanced_circuit_breakers(self) -> 'EnhancedCircuitBreakerIntegration':
+        """Initialize enhanced circuit breaker system with appropriate configuration."""
+        try:
+            # Create configuration for enhanced circuit breakers
+            config = {
+                'openai_api': {
+                    'failure_threshold': self.circuit_breaker_config.get('failure_threshold', 5),
+                    'recovery_timeout': self.circuit_breaker_config.get('recovery_timeout', 60.0),
+                    'degradation_threshold': self.circuit_breaker_config.get('degradation_threshold', 3),
+                    'rate_limit_threshold': self.circuit_breaker_config.get('rate_limit_threshold', 10),
+                    'budget_threshold_percentage': self.circuit_breaker_config.get('budget_threshold', 90.0),
+                },
+                'lightrag': {
+                    'failure_threshold': self.circuit_breaker_config.get('failure_threshold', 5),
+                    'recovery_timeout': self.circuit_breaker_config.get('recovery_timeout', 60.0),
+                    'memory_threshold_gb': self.circuit_breaker_config.get('memory_threshold', 2.0),
+                    'response_time_threshold': self.circuit_breaker_config.get('response_time_threshold', 30.0),
+                }
+            }
+            
+            # Initialize the enhanced circuit breaker integration
+            integration = EnhancedCircuitBreakerIntegration(
+                config=config,
+                budget_manager=self.budget_manager,
+                cost_persistence=self.cost_persistence,
+                logger=self.logger
+            )
+            
+            return integration
+            
+        except Exception as e:
+            self.logger.error(f"Failed to initialize enhanced circuit breakers: {e}")
+            # Fall back to traditional circuit breakers by returning None
+            return None
+    
+    def _create_legacy_wrapper(self, enhanced_breaker) -> 'CircuitBreaker':
+        """Create legacy circuit breaker wrapper for backward compatibility."""
+        class LegacyCircuitBreakerWrapper:
+            def __init__(self, enhanced_breaker):
+                self.enhanced_breaker = enhanced_breaker
+                self.failure_count = 0
+                self.state = 'closed'
+                
+            async def call(self, func, *args, **kwargs):
+                """Execute function with enhanced circuit breaker protection."""
+                if not self.enhanced_breaker:
+                    return await func(*args, **kwargs)
+                
+                try:
+                    # Use enhanced circuit breaker's execute method
+                    result = await self.enhanced_breaker.execute_with_protection(
+                        func, *args, **kwargs
+                    )
+                    
+                    # Update legacy state for compatibility
+                    self.state = 'closed'
+                    self.failure_count = 0
+                    
+                    return result
+                    
+                except Exception as e:
+                    # Update legacy state based on enhanced breaker state
+                    if hasattr(self.enhanced_breaker, 'state'):
+                        if self.enhanced_breaker.state in [EnhancedCircuitBreakerState.OPEN, 
+                                                          EnhancedCircuitBreakerState.DEGRADED]:
+                            self.state = 'open'
+                            self.failure_count += 1
+                        elif self.enhanced_breaker.state == EnhancedCircuitBreakerState.HALF_OPEN:
+                            self.state = 'half-open'
+                    
+                    raise e
+        
+        return LegacyCircuitBreakerWrapper(enhanced_breaker)
+    
+    def _get_circuit_breaker_status(self) -> Dict[str, Any]:
+        """Get comprehensive circuit breaker status including enhanced features."""
+        status = {
+            # Legacy circuit breaker status for backward compatibility
+            'llm_circuit_state': self.llm_circuit_breaker.state,
+            'llm_failure_count': getattr(self.llm_circuit_breaker, 'failure_count', 0),
+            'embedding_circuit_state': self.embedding_circuit_breaker.state,
+            'embedding_failure_count': getattr(self.embedding_circuit_breaker, 'failure_count', 0),
+        }
+        
+        # Add enhanced circuit breaker status if available
+        if self.enhanced_circuit_breakers_enabled and self.circuit_breaker_integration:
+            try:
+                enhanced_status = self.circuit_breaker_integration.get_system_status()
+                status.update({
+                    'enhanced_enabled': True,
+                    'orchestrator_status': enhanced_status.get('orchestrator_state', 'unknown'),
+                    'service_breakers': {
+                        'openai': enhanced_status.get('service_breakers', {}).get('openai_api', {}),
+                        'lightrag': enhanced_status.get('service_breakers', {}).get('lightrag', {}),
+                    },
+                    'system_health': enhanced_status.get('system_health', 'unknown'),
+                    'total_protected_calls': enhanced_status.get('total_protected_calls', 0),
+                    'total_blocked_calls': enhanced_status.get('total_blocked_calls', 0),
+                })
+            except Exception as e:
+                self.logger.warning(f"Error getting enhanced circuit breaker status: {e}")
+                status['enhanced_enabled'] = False
+                status['enhanced_error'] = str(e)
+        else:
+            status['enhanced_enabled'] = False
+        
+        return status
+    
+    def _check_all_circuit_breakers_closed(self) -> bool:
+        """Check if all circuit breakers (legacy and enhanced) are closed."""
+        # Check legacy circuit breakers
+        legacy_closed = (
+            self.llm_circuit_breaker.state == 'closed' and 
+            self.embedding_circuit_breaker.state == 'closed'
+        )
+        
+        # If enhanced circuit breakers are not enabled, return legacy status
+        if not self.enhanced_circuit_breakers_enabled or not self.circuit_breaker_integration:
+            return legacy_closed
+        
+        # Check enhanced circuit breakers
+        try:
+            enhanced_status = self.circuit_breaker_integration.get_system_status()
+            system_health = enhanced_status.get('system_health', {})
+            
+            # Consider system healthy if no circuit breakers are open
+            enhanced_healthy = system_health.get('status', 'unhealthy') in ['healthy', 'degraded']
+            
+            # Both legacy and enhanced systems should be healthy
+            return legacy_closed and enhanced_healthy
+            
+        except Exception as e:
+            self.logger.warning(f"Error checking enhanced circuit breaker status: {e}")
+            # Fallback to legacy status if enhanced system fails
+            return legacy_closed
     
     def _check_disk_space(self, path: Path, required_space_mb: int = 100) -> Dict[str, Any]:
         """
@@ -10034,12 +10216,7 @@ class ClinicalMetabolomicsRAG:
                 ),
                 'average_response_time': self.error_metrics['api_call_stats']['average_response_time']
             },
-            'circuit_breaker_status': {
-                'llm_circuit_state': self.llm_circuit_breaker.state,
-                'llm_failure_count': self.llm_circuit_breaker.failure_count,
-                'embedding_circuit_state': self.embedding_circuit_breaker.state,
-                'embedding_failure_count': self.embedding_circuit_breaker.failure_count
-            },
+            'circuit_breaker_status': self._get_circuit_breaker_status(),
             'rate_limiting': {
                 'current_tokens': self.rate_limiter.tokens,
                 'max_requests': self.rate_limiter.max_requests,
@@ -10065,10 +10242,7 @@ class ClinicalMetabolomicsRAG:
                     self.error_metrics['last_rate_limit'] is None or 
                     now - self.error_metrics['last_rate_limit'] > 60
                 ),
-                'circuit_breakers_closed': (
-                    self.llm_circuit_breaker.state == 'closed' and 
-                    self.embedding_circuit_breaker.state == 'closed'
-                )
+                'circuit_breakers_closed': self._check_all_circuit_breakers_closed()
             }
         }
     

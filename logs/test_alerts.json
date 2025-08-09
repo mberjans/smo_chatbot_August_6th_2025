@@ -1,0 +1,67 @@
+[
+  {
+    "id": "response_time_perplexity_critical",
+    "backend_type": "perplexity",
+    "severity": "critical",
+    "message": "Response time 2500ms exceeds critical threshold",
+    "timestamp": "2025-08-08T15:46:40.889788",
+    "threshold_breached": "response_time",
+    "current_value": 2500.0,
+    "threshold_value": 2000.0,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  },
+  {
+    "id": "error_rate_perplexity_critical",
+    "backend_type": "perplexity",
+    "severity": "critical",
+    "message": "Error rate 20.0% exceeds critical threshold",
+    "timestamp": "2025-08-08T15:46:40.889788",
+    "threshold_breached": "error_rate",
+    "current_value": 0.2,
+    "threshold_value": 0.15,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  },
+  {
+    "id": "availability_perplexity_critical",
+    "backend_type": "perplexity",
+    "severity": "critical",
+    "message": "Availability 85.0% below critical threshold",
+    "timestamp": "2025-08-08T15:46:40.889788",
+    "threshold_breached": "availability",
+    "current_value": 85.0,
+    "threshold_value": 90.0,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  },
+  {
+    "id": "health_score_perplexity_critical",
+    "backend_type": "perplexity",
+    "severity": "critical",
+    "message": "Health score 49.5 below critical threshold",
+    "timestamp": "2025-08-08T15:46:40.889788",
+    "threshold_breached": "health_score",
+    "current_value": 49.5,
+    "threshold_value": 60.0,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  },
+  {
+    "id": "consecutive_failures_perplexity_critical",
+    "backend_type": "perplexity",
+    "severity": "critical",
+    "message": "Consecutive failures 7 exceeds critical threshold",
+    "timestamp": "2025-08-08T15:46:40.889788",
+    "threshold_breached": "consecutive_failures",
+    "current_value": 7.0,
+    "threshold_value": 5.0,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  }
+]

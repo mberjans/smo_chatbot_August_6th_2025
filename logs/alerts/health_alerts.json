@@ -1,0 +1,67 @@
+[
+  {
+    "id": "memory_usage_lightrag_warning",
+    "backend_type": "lightrag",
+    "severity": "warning",
+    "message": "Memory Usage 75.1% exceeds warning threshold",
+    "timestamp": "2025-08-09T00:32:22.350088",
+    "threshold_breached": "memory_usage",
+    "current_value": 75.1,
+    "threshold_value": 70.0,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  },
+  {
+    "id": "response_time_lightrag_critical",
+    "backend_type": "lightrag",
+    "severity": "critical",
+    "message": "Response time 3121ms exceeds critical threshold",
+    "timestamp": "2025-08-09T00:32:22.460946",
+    "threshold_breached": "response_time",
+    "current_value": 3120.820250000179,
+    "threshold_value": 2000.0,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  },
+  {
+    "id": "memory_usage_lightrag_warning",
+    "backend_type": "lightrag",
+    "severity": "warning",
+    "message": "Memory Usage 75.1% exceeds warning threshold",
+    "timestamp": "2025-08-09T00:32:22.460946",
+    "threshold_breached": "memory_usage",
+    "current_value": 75.1,
+    "threshold_value": 70.0,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  },
+  {
+    "id": "response_time_lightrag_critical",
+    "backend_type": "lightrag",
+    "severity": "critical",
+    "message": "Response time 3084ms exceeds critical threshold",
+    "timestamp": "2025-08-09T00:32:22.478091",
+    "threshold_breached": "response_time",
+    "current_value": 3083.8839580010244,
+    "threshold_value": 2000.0,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  },
+  {
+    "id": "memory_usage_lightrag_warning",
+    "backend_type": "lightrag",
+    "severity": "warning",
+    "message": "Memory Usage 75.1% exceeds warning threshold",
+    "timestamp": "2025-08-09T00:32:22.478091",
+    "threshold_breached": "memory_usage",
+    "current_value": 75.1,
+    "threshold_value": 70.0,
+    "suppressed": false,
+    "acknowledged": false,
+    "auto_recovery": false
+  }
+]

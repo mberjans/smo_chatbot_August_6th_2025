@@ -1,0 +1,35 @@
+{
+  "correct_queries_avg_confidence": 0.59855625,
+  "incorrect_queries_avg_confidence": 0,
+  "confidence_discrimination": 0,
+  "details": [
+    {
+      "query": "What are the metabolic pathways in glycolysis?",
+      "confidence": 0.95,
+      "is_correct": true,
+      "expected_decision": "lightrag",
+      "actual_decision": "lightrag"
+    },
+    {
+      "query": "Latest COVID-19 research published this week",
+      "confidence": 0.4275,
+      "is_correct": true,
+      "expected_decision": "perplexity",
+      "actual_decision": "perplexity"
+    },
+    {
+      "query": "How does exercise affect health?",
+      "confidence": 0.2,
+      "is_correct": true,
+      "expected_decision": "either",
+      "actual_decision": "either"
+    },
+    {
+      "query": "What are cancer pathways and recent immunotherapy trials?",
+      "confidence": 0.816725,
+      "is_correct": true,
+      "expected_decision": "hybrid",
+      "actual_decision": "hybrid"
+    }
+  ]
+}
