@@ -1,0 +1,181 @@
+{
+  "timestamp": "2025-08-09T01:05:49.197620",
+  "system_name": "Clinical Metabolomics Oracle - Multi-Level Fallback System",
+  "validation_summary": {
+    "directory_structure": {
+      "Core Components": {
+        "query_router.py": true,
+        "research_categorizer.py": true,
+        "cost_persistence.py": true,
+        "enhanced_logging.py": true,
+        "budget_manager.py": true
+      },
+      "Fallback System": {
+        "comprehensive_fallback_system.py": true,
+        "enhanced_query_router_with_fallback.py": true,
+        "clinical_metabolomics_fallback_config.py": true,
+        "uncertainty_aware_fallback_implementation.py": true
+      },
+      "Configuration": {
+        "config.py": true,
+        "clinical_metabolomics_configs/": true,
+        "production_deployment_configs/": true
+      },
+      "Integration": {
+        "main_integration.py": true,
+        "integration_wrapper.py": true,
+        "feature_flag_manager.py": true
+      },
+      "Monitoring": {
+        "alert_system.py": true,
+        "api_metrics_logger.py": true,
+        "audit_trail.py": true,
+        "production_monitoring.py": true
+      }
+    },
+    "test_coverage": {
+      "Basic Integration Tests": {
+        "tests/test_basic_integration.py": {
+          "exists": true,
+          "executable": true,
+          "last_run_status": "unknown"
+        },
+        "tests/test_configurations.py": {
+          "exists": true,
+          "executable": true,
+          "last_run_status": "unknown"
+        }
+      },
+      "Fallback System Tests": {
+        "tests/test_fallback_mechanisms.py": {
+          "exists": true,
+          "executable": true,
+          "last_run_status": "unknown"
+        },
+        "tests/test_comprehensive_fallback_system.py": {
+          "exists": true,
+          "executable": true,
+          "last_run_status": "unknown"
+        }
+      },
+      "Clinical Tests": {
+        "tests/test_clinical_metabolomics_rag.py": {
+          "exists": true,
+          "executable": true,
+          "last_run_status": "unknown"
+        },
+        "test_clinical_config.py": {
+          "exists": true,
+          "executable": true,
+          "last_run_status": "unknown"
+        }
+      },
+      "Performance Tests": {
+        "tests/test_performance_benchmarks.py": {
+          "exists": true,
+          "executable": true,
+          "last_run_status": "unknown"
+        },
+        "test_high_performance_integration.py": {
+          "exists": true,
+          "executable": true,
+          "last_run_status": "unknown"
+        }
+      }
+    },
+    "test_results": {
+      "tests/test_basic_integration.py": {
+        "status": "completed",
+        "return_code": 0,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "duration": 0.9675850868225098,
+        "success_rate": 1.0
+      },
+      "tests/test_fallback_mechanisms.py": {
+        "status": "completed",
+        "return_code": 1,
+        "passed": 28,
+        "failed": 2,
+        "skipped": 2,
+        "duration": 1.2768959999084473,
+        "success_rate": 0.9333333333333333
+      }
+    },
+    "configuration_analysis": {
+      "clinical_metabolomics_configs/production_diagnostic_config.json": {
+        "status": "valid_json",
+        "keys": [
+          "environment",
+          "accuracy_level",
+          "created_at",
+          "thresholds",
+          "timeouts",
+          "cache_patterns",
+          "reliability",
+          "description"
+        ],
+        "size": 2786
+      },
+      "clinical_metabolomics_configs/production_research_config.json": {
+        "status": "valid_json",
+        "keys": [
+          "environment",
+          "accuracy_level",
+          "created_at",
+          "thresholds",
+          "timeouts",
+          "cache_patterns",
+          "reliability",
+          "description"
+        ],
+        "size": 2784
+      },
+      "production_deployment_configs/production.env.template": {
+        "status": "readable",
+        "lines": 125,
+        "size": 3241
+      }
+    },
+    "system_health": {
+      "logs": {
+        "logs/lightrag_integration.log": {
+          "exists": true,
+          "size": 2161435,
+          "modified": "2025-08-09T01:05:48.988030"
+        },
+        "logs/claude_monitor.log": {
+          "exists": false
+        }
+      },
+      "directories": {
+        "logs/": {
+          "exists": true,
+          "file_count": 5
+        },
+        "quality_reports/": {
+          "exists": true,
+          "file_count": 3
+        },
+        "performance_benchmarking/": {
+          "exists": true,
+          "file_count": 58
+        }
+      }
+    },
+    "capabilities_assessment": {
+      "query_routing": true,
+      "fallback_orchestration": true,
+      "enhanced_routing": true,
+      "clinical_configuration": true,
+      "monitoring_alerting": true,
+      "performance_tracking": true,
+      "cache_management": true,
+      "error_recovery": true
+    },
+    "recommendations": [
+      "\ud83d\udfe2 Core fallback system capabilities are mostly complete"
+    ]
+  }
+}
