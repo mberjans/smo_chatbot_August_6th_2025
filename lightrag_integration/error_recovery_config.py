@@ -44,9 +44,14 @@ except ImportError:
     YAML_AVAILABLE = False
 
 # Import error recovery types
-from .comprehensive_error_recovery_system import (
-    RetryStrategy, ErrorSeverity, RecoveryAction, ErrorRecoveryRule
-)
+try:
+    from .comprehensive_error_recovery_system import (
+        RetryStrategy, ErrorSeverity, RecoveryAction, ErrorRecoveryRule
+    )
+except ImportError:
+    from comprehensive_error_recovery_system import (
+        RetryStrategy, ErrorSeverity, RecoveryAction, ErrorRecoveryRule
+    )
 
 
 class ConfigurationProfile(Enum):

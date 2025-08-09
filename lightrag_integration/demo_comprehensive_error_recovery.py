@@ -43,18 +43,34 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 # Import error recovery system components
-from .comprehensive_error_recovery_system import (
-    create_error_recovery_orchestrator, ErrorRecoveryRule, RetryStrategy,
-    ErrorSeverity, RecoveryAction
-)
-from .error_recovery_config import (
-    create_error_recovery_config_manager, ConfigurationProfile
-)
-from .error_recovery_integration import (
-    initialize_error_recovery_system, retry_on_error, error_recovery_context,
-    execute_with_retry, execute_async_with_retry, get_error_recovery_status,
-    shutdown_error_recovery_system, ClinicalMetabolomicsErrorRecoveryMixin
-)
+try:
+    from .comprehensive_error_recovery_system import (
+        create_error_recovery_orchestrator, ErrorRecoveryRule, RetryStrategy,
+        ErrorSeverity, RecoveryAction
+    )
+except ImportError:
+    from comprehensive_error_recovery_system import (
+        create_error_recovery_orchestrator, ErrorRecoveryRule, RetryStrategy,
+        ErrorSeverity, RecoveryAction
+    )
+try:
+    from .error_recovery_config import (
+        create_error_recovery_config_manager, ConfigurationProfile
+    )
+    from .error_recovery_integration import (
+        initialize_error_recovery_system, retry_on_error, error_recovery_context,
+        execute_with_retry, execute_async_with_retry, get_error_recovery_status,
+        shutdown_error_recovery_system, ClinicalMetabolomicsErrorRecoveryMixin
+    )
+except ImportError:
+    from error_recovery_config import (
+        create_error_recovery_config_manager, ConfigurationProfile
+    )
+    from error_recovery_integration import (
+        initialize_error_recovery_system, retry_on_error, error_recovery_context,
+        execute_with_retry, execute_async_with_retry, get_error_recovery_status,
+        shutdown_error_recovery_system, ClinicalMetabolomicsErrorRecoveryMixin
+    )
 
 # Mock existing Clinical Metabolomics Oracle components
 class MockClinicalMetabolomicsRAG(ClinicalMetabolomicsErrorRecoveryMixin):
