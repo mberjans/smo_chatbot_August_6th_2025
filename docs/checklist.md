@@ -422,7 +422,7 @@
 - [x] Execute routing tests and verify decision accuracy
 
 **CMO-LIGHTRAG-013-T09** [VALIDATE]
-- [ ] Verify dependency on CMO-LIGHTRAG-012 completion
+- [x] Verify dependency on CMO-LIGHTRAG-012 completion
 
 ---
 
