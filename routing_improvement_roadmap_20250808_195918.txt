@@ -1,0 +1,55 @@
+================================================================================
+ROUTING ACCURACY IMPROVEMENT ROADMAP
+Generated: 2025-08-08T19:59:18.703459
+================================================================================
+
+1. PATTERN-SPECIFIC ACCURACY ANALYSIS:
+==================================================
+LIGHTRAG_MISCLASSIFIED: 30.0% ✗ CRITICAL
+HYBRID_UNDERDETECTED: 16.7% ✗ CRITICAL
+TEMPORAL_INDICATORS: 100.0% ✓ GOOD
+CONFIDENCE_CALIBRATION: 0.0% ✗ CRITICAL
+
+2. PRIORITY IMPROVEMENTS:
+==================================================
+HIGH PRIORITY:
+  • Enhance combination keyword pattern matching (frequency: 10)
+  • Increase weight for biological process indicators (frequency: 7)
+  • Improve confidence scoring for molecular mechanism queries (frequency: 7)
+  • Strengthen temporal + knowledge hybrid detection (frequency: 6)
+
+MEDIUM PRIORITY:
+  • Adjust confidence thresholds for different query categories (frequency: 2)
+
+3. CONFIDENCE CALIBRATION:
+==================================================
+Correct predictions avg confidence: 0.599
+Incorrect predictions avg confidence: 0.000
+Confidence discrimination: 0.000
+⚠ Poor confidence calibration - correct predictions should have higher confidence
+
+4. IMPLEMENTATION RECOMMENDATIONS:
+==================================================
+A. Immediate Actions (Week 1):
+   - Enhance keyword detection for pathway/mechanism queries
+   - Improve temporal indicator pattern matching
+   - Calibrate confidence thresholds per category
+
+B. Short-term Improvements (2-4 weeks):
+   - Implement hybrid query detection improvements
+   - Add biomedical entity count weighting
+   - Create confidence score validation framework
+
+C. Long-term Enhancements (1-2 months):
+   - Machine learning model fine-tuning
+   - Advanced pattern recognition for complex queries
+   - Continuous accuracy monitoring system
+
+5. SUCCESS METRICS:
+==================================================
+Target Goals:
+  • Overall routing accuracy: >90%
+  • LIGHTRAG pathway queries: >85%
+  • HYBRID detection: >75%
+  • Temporal queries: >90%
+  • Confidence discrimination: >0.25

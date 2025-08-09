@@ -1,0 +1,1838 @@
+{
+  "timestamp": "2025-08-08T19:57:35.292538",
+  "overall_metrics": {
+    "total_test_queries": 60,
+    "base_router_accuracy": 73.33333333333333,
+    "intelligent_router_accuracy": 73.33333333333333,
+    "base_correct_predictions": 44,
+    "intelligent_correct_predictions": 44,
+    "target_accuracy_met": false,
+    "intelligent_target_accuracy_met": false,
+    "processing_time_stats": {
+      "mean_ms": 0.7253925005594889,
+      "median_ms": 0.6173849105834961,
+      "min_ms": 0.44226646423339844,
+      "max_ms": 6.576776504516602,
+      "p95_ms": 0.8411407470703125
+    },
+    "base_confidence_stats": {
+      "mean": 0.5499994591750842,
+      "median": 0.5621333333333333,
+      "min": 0.2,
+      "max": 0.95
+    },
+    "intelligent_confidence_stats": {
+      "mean": 0.5499994591750842,
+      "median": 0.5621333333333333,
+      "min": 0.2,
+      "max": 0.95
+    }
+  },
+  "category_results": {
+    "lightrag": {
+      "total_queries": 15,
+      "correct_predictions": 11,
+      "accuracy_percentage": 73.33333333333333,
+      "details": [
+        {
+          "query_id": 1,
+          "query": "What are the metabolic pathways involved in glucose metabolism?",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 6.576776504516602
+        },
+        {
+          "query_id": 2,
+          "query": "How do amino acids interact in protein synthesis pathways?",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.5621333333333333,
+          "intelligent_confidence": 0.5621333333333333,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.7050037384033203
+        },
+        {
+          "query_id": 3,
+          "query": "What is the relationship between cholesterol and cardiovascular disease?",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.24,
+          "intelligent_confidence": 0.24,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.7240772247314453
+        },
+        {
+          "query_id": 4,
+          "query": "Explain the role of mitochondria in cellular respiration pathways",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.5621333333333333,
+          "intelligent_confidence": 0.5621333333333333,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6189346313476562
+        },
+        {
+          "query_id": 5,
+          "query": "How does insulin signaling affect glucose metabolism?",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.34349999999999997,
+          "intelligent_confidence": 0.34349999999999997,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5249977111816406
+        },
+        {
+          "query_id": 6,
+          "query": "What are the key enzymes in glycolysis pathway?",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5261898040771484
+        },
+        {
+          "query_id": 7,
+          "query": "Describe the relationship between fatty acid oxidation and ketogenesis",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.24,
+          "intelligent_confidence": 0.24,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6399154663085938
+        },
+        {
+          "query_id": 8,
+          "query": "How do neurotransmitters interact in synaptic transmission?",
+          "expected": "lightrag",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.5869865417480469
+        },
+        {
+          "query_id": 9,
+          "query": "What is the molecular mechanism of DNA replication?",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5161762237548828
+        },
+        {
+          "query_id": 10,
+          "query": "Explain the interaction between AMPK and mTOR signaling pathways",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.7063777777777777,
+          "intelligent_confidence": 0.7063777777777777,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6158351898193359
+        },
+        {
+          "query_id": 11,
+          "query": "How does the citric acid cycle connect to oxidative phosphorylation?",
+          "expected": "lightrag",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.6148815155029297
+        },
+        {
+          "query_id": 12,
+          "query": "What are the regulatory mechanisms in steroid hormone synthesis?",
+          "expected": "lightrag",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.6048679351806641
+        },
+        {
+          "query_id": 13,
+          "query": "Describe the molecular interactions in autophagy pathways",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.7011,
+          "intelligent_confidence": 0.7011,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5691051483154297
+        },
+        {
+          "query_id": 14,
+          "query": "How do growth factors regulate cell cycle progression?",
+          "expected": "lightrag",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.5650520324707031
+        },
+        {
+          "query_id": 15,
+          "query": "What is the relationship between inflammation and metabolic dysfunction?",
+          "expected": "lightrag",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.3613166666666666,
+          "intelligent_confidence": 0.3613166666666666,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6127357482910156
+        }
+      ]
+    },
+    "perplexity": {
+      "total_queries": 15,
+      "correct_predictions": 12,
+      "accuracy_percentage": 80.0,
+      "details": [
+        {
+          "query_id": 1,
+          "query": "What are the latest clinical trials for COVID-19 treatments published this week?",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.804901123046875
+        },
+        {
+          "query_id": 2,
+          "query": "Recent breakthrough discoveries in metabolomics research from 2024",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.441875,
+          "intelligent_confidence": 0.441875,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5910396575927734
+        },
+        {
+          "query_id": 3,
+          "query": "What are the current FDA approvals for diabetes medications in 2025?",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.33719999999999994,
+          "intelligent_confidence": 0.33719999999999994,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6549358367919922
+        },
+        {
+          "query_id": 4,
+          "query": "Latest findings on CRISPR gene editing published this month",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.4435,
+          "intelligent_confidence": 0.4435,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5748271942138672
+        },
+        {
+          "query_id": 5,
+          "query": "Recent advances in cancer immunotherapy from top journals this year",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6549358367919922
+        },
+        {
+          "query_id": 6,
+          "query": "What are the newest biomarkers discovered for Alzheimer's disease in 2025?",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6837844848632812
+        },
+        {
+          "query_id": 7,
+          "query": "Current clinical trial results for obesity treatments published recently",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6880760192871094
+        },
+        {
+          "query_id": 8,
+          "query": "Latest research on microbiome and mental health from 2024-2025",
+          "expected": "perplexity",
+          "base_router_decision": "hybrid",
+          "intelligent_router_decision": "hybrid",
+          "base_confidence": 0.4275,
+          "intelligent_confidence": 0.4275,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.5908012390136719
+        },
+        {
+          "query_id": 9,
+          "query": "Recent developments in personalized medicine published this year",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.7400249999999999,
+          "intelligent_confidence": 0.7400249999999999,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6320476531982422
+        },
+        {
+          "query_id": 10,
+          "query": "What are the current trends in metabolomics research for 2025?",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.7359999999999999,
+          "intelligent_confidence": 0.7359999999999999,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6039142608642578
+        },
+        {
+          "query_id": 11,
+          "query": "Latest publications on artificial intelligence in drug discovery",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.7400249999999999,
+          "intelligent_confidence": 0.7400249999999999,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6301403045654297
+        },
+        {
+          "query_id": 12,
+          "query": "Recent breakthroughs in rare disease treatments from 2024",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6568431854248047
+        },
+        {
+          "query_id": 13,
+          "query": "Current research on longevity and aging published this month",
+          "expected": "perplexity",
+          "base_router_decision": "hybrid",
+          "intelligent_router_decision": "hybrid",
+          "base_confidence": 0.7216249999999998,
+          "intelligent_confidence": 0.7216249999999998,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.5860328674316406
+        },
+        {
+          "query_id": 14,
+          "query": "Latest findings on environmental toxins and health from recent studies",
+          "expected": "perplexity",
+          "base_router_decision": "hybrid",
+          "intelligent_router_decision": "hybrid",
+          "base_confidence": 0.4435,
+          "intelligent_confidence": 0.4435,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.6389617919921875
+        },
+        {
+          "query_id": 15,
+          "query": "What are the newest treatment protocols for autoimmune diseases in 2025?",
+          "expected": "perplexity",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.6732,
+          "intelligent_confidence": 0.6732,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.6749629974365234
+        }
+      ]
+    },
+    "either": {
+      "total_queries": 15,
+      "correct_predictions": 15,
+      "accuracy_percentage": 100.0,
+      "details": [
+        {
+          "query_id": 1,
+          "query": "How does diabetes affect kidney function?",
+          "expected": "either",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.26,
+          "intelligent_confidence": 0.26,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.4763603210449219
+        },
+        {
+          "query_id": 2,
+          "query": "What are the symptoms of metabolic syndrome?",
+          "expected": "either",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.24,
+          "intelligent_confidence": 0.24,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5092620849609375
+        },
+        {
+          "query_id": 3,
+          "query": "How do statins work to lower cholesterol?",
+          "expected": "either",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5002021789550781
+        },
+        {
+          "query_id": 4,
+          "query": "What is the role of inflammation in heart disease?",
+          "expected": "either",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.24,
+          "intelligent_confidence": 0.24,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5137920379638672
+        },
+        {
+          "query_id": 5,
+          "query": "How does exercise affect metabolism?",
+          "expected": "either",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.2975,
+          "intelligent_confidence": 0.2975,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.44226646423339844
+        },
+        {
+          "query_id": 6,
+          "query": "What are the causes of insulin resistance?",
+          "expected": "either",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.49996376037597656
+        },
+        {
+          "query_id": 7,
+          "query": "How do antidepressants affect brain chemistry?",
+          "expected": "either",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.514984130859375
+        },
+        {
+          "query_id": 8,
+          "query": "What is the relationship between sleep and metabolism?",
+          "expected": "either",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.5397,
+          "intelligent_confidence": 0.5397,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5371570587158203
+        },
+        {
+          "query_id": 9,
+          "query": "How does stress affect the immune system?",
+          "expected": "either",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.4661083221435547
+        },
+        {
+          "query_id": 10,
+          "query": "What are the health effects of intermittent fasting?",
+          "expected": "either",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5488395690917969
+        },
+        {
+          "query_id": 11,
+          "query": "How do probiotics affect gut health?",
+          "expected": "either",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.4630088806152344
+        },
+        {
+          "query_id": 12,
+          "query": "What is the role of genetics in obesity?",
+          "expected": "either",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5278587341308594
+        },
+        {
+          "query_id": 13,
+          "query": "How does alcohol affect liver metabolism?",
+          "expected": "either",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.34349999999999997,
+          "intelligent_confidence": 0.34349999999999997,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.47087669372558594
+        },
+        {
+          "query_id": 14,
+          "query": "What are the benefits of omega-3 fatty acids?",
+          "expected": "either",
+          "base_router_decision": "either",
+          "intelligent_router_decision": "either",
+          "base_confidence": 0.2,
+          "intelligent_confidence": 0.2,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.5178451538085938
+        },
+        {
+          "query_id": 15,
+          "query": "How does aging affect metabolic processes?",
+          "expected": "either",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.5819666666666666,
+          "intelligent_confidence": 0.5819666666666666,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.47707557678222656
+        }
+      ]
+    },
+    "hybrid": {
+      "total_queries": 15,
+      "correct_predictions": 6,
+      "accuracy_percentage": 40.0,
+      "details": [
+        {
+          "query_id": 1,
+          "query": "What are the current research trends in metabolomics and recent breakthrough discoveries?",
+          "expected": "hybrid",
+          "base_router_decision": "hybrid",
+          "intelligent_router_decision": "hybrid",
+          "base_confidence": 0.7345624999999999,
+          "intelligent_confidence": 0.7345624999999999,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.7569789886474609
+        },
+        {
+          "query_id": 2,
+          "query": "How do metabolic pathways change with age and what are the latest research findings?",
+          "expected": "hybrid",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.8609294891357422
+        },
+        {
+          "query_id": 3,
+          "query": "What is the molecular basis of diabetes and what are the newest treatment approaches?",
+          "expected": "hybrid",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.6282,
+          "intelligent_confidence": 0.6282,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.7350444793701172
+        },
+        {
+          "query_id": 4,
+          "query": "Explain cancer metabolism pathways and recent clinical trial results",
+          "expected": "hybrid",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.675201416015625
+        },
+        {
+          "query_id": 5,
+          "query": "How do environmental toxins affect cellular metabolism and what are recent regulatory changes?",
+          "expected": "hybrid",
+          "base_router_decision": "hybrid",
+          "intelligent_router_decision": "hybrid",
+          "base_confidence": 0.6732,
+          "intelligent_confidence": 0.6732,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.7998943328857422
+        },
+        {
+          "query_id": 6,
+          "query": "What are the mechanistic pathways of neurodegeneration and current therapeutic trials?",
+          "expected": "hybrid",
+          "base_router_decision": "hybrid",
+          "intelligent_router_decision": "hybrid",
+          "base_confidence": 0.6988909090909091,
+          "intelligent_confidence": 0.6988909090909091,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.7531642913818359
+        },
+        {
+          "query_id": 7,
+          "query": "How does the gut microbiome influence metabolism and what are recent research developments?",
+          "expected": "hybrid",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.7569789886474609
+        },
+        {
+          "query_id": 8,
+          "query": "Explain the molecular basis of autoimmune diseases and latest treatment protocols",
+          "expected": "hybrid",
+          "base_router_decision": "hybrid",
+          "intelligent_router_decision": "hybrid",
+          "base_confidence": 0.6732,
+          "intelligent_confidence": 0.6732,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.8411407470703125
+        },
+        {
+          "query_id": 9,
+          "query": "What are the pathways involved in aging and current longevity research trends?",
+          "expected": "hybrid",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.6781,
+          "intelligent_confidence": 0.6781,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.7231235504150391
+        },
+        {
+          "query_id": 10,
+          "query": "How do genetic variants affect drug metabolism and current personalized medicine approaches?",
+          "expected": "hybrid",
+          "base_router_decision": "hybrid",
+          "intelligent_router_decision": "hybrid",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.8149147033691406
+        },
+        {
+          "query_id": 11,
+          "query": "What are the metabolic mechanisms of obesity and recent FDA-approved treatments?",
+          "expected": "hybrid",
+          "base_router_decision": "hybrid",
+          "intelligent_router_decision": "hybrid",
+          "base_confidence": 0.7529363636363637,
+          "intelligent_confidence": 0.7529363636363637,
+          "base_correct": true,
+          "intelligent_correct": true,
+          "processing_time_ms": 0.7369518280029297
+        },
+        {
+          "query_id": 12,
+          "query": "Explain the molecular pathways of inflammation and current therapeutic targets",
+          "expected": "hybrid",
+          "base_router_decision": "lightrag",
+          "intelligent_router_decision": "lightrag",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.7178783416748047
+        },
+        {
+          "query_id": 13,
+          "query": "How do circadian rhythms affect metabolism and what are recent research findings?",
+          "expected": "hybrid",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.7269382476806641
+        },
+        {
+          "query_id": 14,
+          "query": "What are the cellular mechanisms of cancer and latest immunotherapy developments?",
+          "expected": "hybrid",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.33719999999999994,
+          "intelligent_confidence": 0.33719999999999994,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.7309913635253906
+        },
+        {
+          "query_id": 15,
+          "query": "How do metabolic disorders affect brain function and current research in neurometabolism?",
+          "expected": "hybrid",
+          "base_router_decision": "perplexity",
+          "intelligent_router_decision": "perplexity",
+          "base_confidence": 0.95,
+          "intelligent_confidence": 0.95,
+          "base_correct": false,
+          "intelligent_correct": false,
+          "processing_time_ms": 0.7600784301757812
+        }
+      ]
+    }
+  },
+  "detailed_results": [
+    {
+      "query_id": 1,
+      "query": "What are the metabolic pathways involved in glucose metabolism?",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 6.576776504516602
+    },
+    {
+      "query_id": 2,
+      "query": "How do amino acids interact in protein synthesis pathways?",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.5621333333333333,
+      "intelligent_confidence": 0.5621333333333333,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.7050037384033203
+    },
+    {
+      "query_id": 3,
+      "query": "What is the relationship between cholesterol and cardiovascular disease?",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.24,
+      "intelligent_confidence": 0.24,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.7240772247314453
+    },
+    {
+      "query_id": 4,
+      "query": "Explain the role of mitochondria in cellular respiration pathways",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.5621333333333333,
+      "intelligent_confidence": 0.5621333333333333,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6189346313476562
+    },
+    {
+      "query_id": 5,
+      "query": "How does insulin signaling affect glucose metabolism?",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.34349999999999997,
+      "intelligent_confidence": 0.34349999999999997,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5249977111816406
+    },
+    {
+      "query_id": 6,
+      "query": "What are the key enzymes in glycolysis pathway?",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5261898040771484
+    },
+    {
+      "query_id": 7,
+      "query": "Describe the relationship between fatty acid oxidation and ketogenesis",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.24,
+      "intelligent_confidence": 0.24,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6399154663085938
+    },
+    {
+      "query_id": 8,
+      "query": "How do neurotransmitters interact in synaptic transmission?",
+      "expected": "lightrag",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.5869865417480469
+    },
+    {
+      "query_id": 9,
+      "query": "What is the molecular mechanism of DNA replication?",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5161762237548828
+    },
+    {
+      "query_id": 10,
+      "query": "Explain the interaction between AMPK and mTOR signaling pathways",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.7063777777777777,
+      "intelligent_confidence": 0.7063777777777777,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6158351898193359
+    },
+    {
+      "query_id": 11,
+      "query": "How does the citric acid cycle connect to oxidative phosphorylation?",
+      "expected": "lightrag",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.6148815155029297
+    },
+    {
+      "query_id": 12,
+      "query": "What are the regulatory mechanisms in steroid hormone synthesis?",
+      "expected": "lightrag",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.6048679351806641
+    },
+    {
+      "query_id": 13,
+      "query": "Describe the molecular interactions in autophagy pathways",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.7011,
+      "intelligent_confidence": 0.7011,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5691051483154297
+    },
+    {
+      "query_id": 14,
+      "query": "How do growth factors regulate cell cycle progression?",
+      "expected": "lightrag",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.5650520324707031
+    },
+    {
+      "query_id": 15,
+      "query": "What is the relationship between inflammation and metabolic dysfunction?",
+      "expected": "lightrag",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.3613166666666666,
+      "intelligent_confidence": 0.3613166666666666,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6127357482910156
+    },
+    {
+      "query_id": 1,
+      "query": "What are the latest clinical trials for COVID-19 treatments published this week?",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.804901123046875
+    },
+    {
+      "query_id": 2,
+      "query": "Recent breakthrough discoveries in metabolomics research from 2024",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.441875,
+      "intelligent_confidence": 0.441875,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5910396575927734
+    },
+    {
+      "query_id": 3,
+      "query": "What are the current FDA approvals for diabetes medications in 2025?",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.33719999999999994,
+      "intelligent_confidence": 0.33719999999999994,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6549358367919922
+    },
+    {
+      "query_id": 4,
+      "query": "Latest findings on CRISPR gene editing published this month",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.4435,
+      "intelligent_confidence": 0.4435,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5748271942138672
+    },
+    {
+      "query_id": 5,
+      "query": "Recent advances in cancer immunotherapy from top journals this year",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6549358367919922
+    },
+    {
+      "query_id": 6,
+      "query": "What are the newest biomarkers discovered for Alzheimer's disease in 2025?",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6837844848632812
+    },
+    {
+      "query_id": 7,
+      "query": "Current clinical trial results for obesity treatments published recently",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6880760192871094
+    },
+    {
+      "query_id": 8,
+      "query": "Latest research on microbiome and mental health from 2024-2025",
+      "expected": "perplexity",
+      "base_router_decision": "hybrid",
+      "intelligent_router_decision": "hybrid",
+      "base_confidence": 0.4275,
+      "intelligent_confidence": 0.4275,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.5908012390136719
+    },
+    {
+      "query_id": 9,
+      "query": "Recent developments in personalized medicine published this year",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.7400249999999999,
+      "intelligent_confidence": 0.7400249999999999,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6320476531982422
+    },
+    {
+      "query_id": 10,
+      "query": "What are the current trends in metabolomics research for 2025?",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.7359999999999999,
+      "intelligent_confidence": 0.7359999999999999,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6039142608642578
+    },
+    {
+      "query_id": 11,
+      "query": "Latest publications on artificial intelligence in drug discovery",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.7400249999999999,
+      "intelligent_confidence": 0.7400249999999999,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6301403045654297
+    },
+    {
+      "query_id": 12,
+      "query": "Recent breakthroughs in rare disease treatments from 2024",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6568431854248047
+    },
+    {
+      "query_id": 13,
+      "query": "Current research on longevity and aging published this month",
+      "expected": "perplexity",
+      "base_router_decision": "hybrid",
+      "intelligent_router_decision": "hybrid",
+      "base_confidence": 0.7216249999999998,
+      "intelligent_confidence": 0.7216249999999998,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.5860328674316406
+    },
+    {
+      "query_id": 14,
+      "query": "Latest findings on environmental toxins and health from recent studies",
+      "expected": "perplexity",
+      "base_router_decision": "hybrid",
+      "intelligent_router_decision": "hybrid",
+      "base_confidence": 0.4435,
+      "intelligent_confidence": 0.4435,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.6389617919921875
+    },
+    {
+      "query_id": 15,
+      "query": "What are the newest treatment protocols for autoimmune diseases in 2025?",
+      "expected": "perplexity",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.6732,
+      "intelligent_confidence": 0.6732,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.6749629974365234
+    },
+    {
+      "query_id": 1,
+      "query": "How does diabetes affect kidney function?",
+      "expected": "either",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.26,
+      "intelligent_confidence": 0.26,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.4763603210449219
+    },
+    {
+      "query_id": 2,
+      "query": "What are the symptoms of metabolic syndrome?",
+      "expected": "either",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.24,
+      "intelligent_confidence": 0.24,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5092620849609375
+    },
+    {
+      "query_id": 3,
+      "query": "How do statins work to lower cholesterol?",
+      "expected": "either",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5002021789550781
+    },
+    {
+      "query_id": 4,
+      "query": "What is the role of inflammation in heart disease?",
+      "expected": "either",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.24,
+      "intelligent_confidence": 0.24,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5137920379638672
+    },
+    {
+      "query_id": 5,
+      "query": "How does exercise affect metabolism?",
+      "expected": "either",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.2975,
+      "intelligent_confidence": 0.2975,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.44226646423339844
+    },
+    {
+      "query_id": 6,
+      "query": "What are the causes of insulin resistance?",
+      "expected": "either",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.49996376037597656
+    },
+    {
+      "query_id": 7,
+      "query": "How do antidepressants affect brain chemistry?",
+      "expected": "either",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.514984130859375
+    },
+    {
+      "query_id": 8,
+      "query": "What is the relationship between sleep and metabolism?",
+      "expected": "either",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.5397,
+      "intelligent_confidence": 0.5397,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5371570587158203
+    },
+    {
+      "query_id": 9,
+      "query": "How does stress affect the immune system?",
+      "expected": "either",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.4661083221435547
+    },
+    {
+      "query_id": 10,
+      "query": "What are the health effects of intermittent fasting?",
+      "expected": "either",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5488395690917969
+    },
+    {
+      "query_id": 11,
+      "query": "How do probiotics affect gut health?",
+      "expected": "either",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.4630088806152344
+    },
+    {
+      "query_id": 12,
+      "query": "What is the role of genetics in obesity?",
+      "expected": "either",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5278587341308594
+    },
+    {
+      "query_id": 13,
+      "query": "How does alcohol affect liver metabolism?",
+      "expected": "either",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.34349999999999997,
+      "intelligent_confidence": 0.34349999999999997,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.47087669372558594
+    },
+    {
+      "query_id": 14,
+      "query": "What are the benefits of omega-3 fatty acids?",
+      "expected": "either",
+      "base_router_decision": "either",
+      "intelligent_router_decision": "either",
+      "base_confidence": 0.2,
+      "intelligent_confidence": 0.2,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.5178451538085938
+    },
+    {
+      "query_id": 15,
+      "query": "How does aging affect metabolic processes?",
+      "expected": "either",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.5819666666666666,
+      "intelligent_confidence": 0.5819666666666666,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.47707557678222656
+    },
+    {
+      "query_id": 1,
+      "query": "What are the current research trends in metabolomics and recent breakthrough discoveries?",
+      "expected": "hybrid",
+      "base_router_decision": "hybrid",
+      "intelligent_router_decision": "hybrid",
+      "base_confidence": 0.7345624999999999,
+      "intelligent_confidence": 0.7345624999999999,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.7569789886474609
+    },
+    {
+      "query_id": 2,
+      "query": "How do metabolic pathways change with age and what are the latest research findings?",
+      "expected": "hybrid",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.8609294891357422
+    },
+    {
+      "query_id": 3,
+      "query": "What is the molecular basis of diabetes and what are the newest treatment approaches?",
+      "expected": "hybrid",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.6282,
+      "intelligent_confidence": 0.6282,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.7350444793701172
+    },
+    {
+      "query_id": 4,
+      "query": "Explain cancer metabolism pathways and recent clinical trial results",
+      "expected": "hybrid",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.675201416015625
+    },
+    {
+      "query_id": 5,
+      "query": "How do environmental toxins affect cellular metabolism and what are recent regulatory changes?",
+      "expected": "hybrid",
+      "base_router_decision": "hybrid",
+      "intelligent_router_decision": "hybrid",
+      "base_confidence": 0.6732,
+      "intelligent_confidence": 0.6732,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.7998943328857422
+    },
+    {
+      "query_id": 6,
+      "query": "What are the mechanistic pathways of neurodegeneration and current therapeutic trials?",
+      "expected": "hybrid",
+      "base_router_decision": "hybrid",
+      "intelligent_router_decision": "hybrid",
+      "base_confidence": 0.6988909090909091,
+      "intelligent_confidence": 0.6988909090909091,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.7531642913818359
+    },
+    {
+      "query_id": 7,
+      "query": "How does the gut microbiome influence metabolism and what are recent research developments?",
+      "expected": "hybrid",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.7569789886474609
+    },
+    {
+      "query_id": 8,
+      "query": "Explain the molecular basis of autoimmune diseases and latest treatment protocols",
+      "expected": "hybrid",
+      "base_router_decision": "hybrid",
+      "intelligent_router_decision": "hybrid",
+      "base_confidence": 0.6732,
+      "intelligent_confidence": 0.6732,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.8411407470703125
+    },
+    {
+      "query_id": 9,
+      "query": "What are the pathways involved in aging and current longevity research trends?",
+      "expected": "hybrid",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.6781,
+      "intelligent_confidence": 0.6781,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.7231235504150391
+    },
+    {
+      "query_id": 10,
+      "query": "How do genetic variants affect drug metabolism and current personalized medicine approaches?",
+      "expected": "hybrid",
+      "base_router_decision": "hybrid",
+      "intelligent_router_decision": "hybrid",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.8149147033691406
+    },
+    {
+      "query_id": 11,
+      "query": "What are the metabolic mechanisms of obesity and recent FDA-approved treatments?",
+      "expected": "hybrid",
+      "base_router_decision": "hybrid",
+      "intelligent_router_decision": "hybrid",
+      "base_confidence": 0.7529363636363637,
+      "intelligent_confidence": 0.7529363636363637,
+      "base_correct": true,
+      "intelligent_correct": true,
+      "processing_time_ms": 0.7369518280029297
+    },
+    {
+      "query_id": 12,
+      "query": "Explain the molecular pathways of inflammation and current therapeutic targets",
+      "expected": "hybrid",
+      "base_router_decision": "lightrag",
+      "intelligent_router_decision": "lightrag",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.7178783416748047
+    },
+    {
+      "query_id": 13,
+      "query": "How do circadian rhythms affect metabolism and what are recent research findings?",
+      "expected": "hybrid",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.7269382476806641
+    },
+    {
+      "query_id": 14,
+      "query": "What are the cellular mechanisms of cancer and latest immunotherapy developments?",
+      "expected": "hybrid",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.33719999999999994,
+      "intelligent_confidence": 0.33719999999999994,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.7309913635253906
+    },
+    {
+      "query_id": 15,
+      "query": "How do metabolic disorders affect brain function and current research in neurometabolism?",
+      "expected": "hybrid",
+      "base_router_decision": "perplexity",
+      "intelligent_router_decision": "perplexity",
+      "base_confidence": 0.95,
+      "intelligent_confidence": 0.95,
+      "base_correct": false,
+      "intelligent_correct": false,
+      "processing_time_ms": 0.7600784301757812
+    }
+  ],
+  "load_balancing_results": {
+    "total_load_balanced_requests": 50,
+    "backend_distribution": {
+      "lightrag": 40,
+      "perplexity": 10
+    },
+    "distribution_percentages": {
+      "lightrag": 80.0,
+      "perplexity": 20.0
+    },
+    "balanced_routing": false,
+    "details": [
+      {
+        "query": "How does diabetes affect kidney function?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does diabetes affect kidney function?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does diabetes affect kidney function?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does diabetes affect kidney function?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does diabetes affect kidney function?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What are the symptoms of metabolic syndrome?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What are the symptoms of metabolic syndrome?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What are the symptoms of metabolic syndrome?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What are the symptoms of metabolic syndrome?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What are the symptoms of metabolic syndrome?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How do statins work to lower cholesterol?...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How do statins work to lower cholesterol?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How do statins work to lower cholesterol?...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How do statins work to lower cholesterol?...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How do statins work to lower cholesterol?...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What is the role of inflammation in heart disease?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What is the role of inflammation in heart disease?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What is the role of inflammation in heart disease?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What is the role of inflammation in heart disease?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What is the role of inflammation in heart disease?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does exercise affect metabolism?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does exercise affect metabolism?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does exercise affect metabolism?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does exercise affect metabolism?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does exercise affect metabolism?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What are the causes of insulin resistance?...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What are the causes of insulin resistance?...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What are the causes of insulin resistance?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What are the causes of insulin resistance?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What are the causes of insulin resistance?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How do antidepressants affect brain chemistry?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How do antidepressants affect brain chemistry?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How do antidepressants affect brain chemistry?...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How do antidepressants affect brain chemistry?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How do antidepressants affect brain chemistry?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What is the relationship between sleep and metabol...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What is the relationship between sleep and metabol...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What is the relationship between sleep and metabol...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What is the relationship between sleep and metabol...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "What is the relationship between sleep and metabol...",
+        "selected_backend": "lightrag",
+        "routing_decision": "lightrag"
+      },
+      {
+        "query": "How does stress affect the immune system?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How does stress affect the immune system?...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How does stress affect the immune system?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How does stress affect the immune system?...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      },
+      {
+        "query": "How does stress affect the immune system?...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What are the health effects of intermittent fastin...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What are the health effects of intermittent fastin...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What are the health effects of intermittent fastin...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What are the health effects of intermittent fastin...",
+        "selected_backend": "lightrag",
+        "routing_decision": "either"
+      },
+      {
+        "query": "What are the health effects of intermittent fastin...",
+        "selected_backend": "perplexity",
+        "routing_decision": "either"
+      }
+    ]
+  },
+  "system_health_results": {
+    "system_health_status": {
+      "overall_status": "healthy",
+      "healthy_backends": 2,
+      "total_backends": 2,
+      "backends": {
+        "lightrag": {
+          "backend_type": "lightrag",
+          "status": "healthy",
+          "response_time_ms": 0.0,
+          "error_rate": 0.0,
+          "last_health_check": "2025-08-08T19:57:35.248519",
+          "consecutive_failures": 0,
+          "total_requests": 0,
+          "successful_requests": 0,
+          "health_score": 100.0,
+          "availability_percentage": 100.0,
+          "mean_time_to_recovery_ms": 0.0,
+          "cpu_usage_percent": 0.0,
+          "memory_usage_percent": 0.0,
+          "disk_usage_percent": 0.0,
+          "performance_metrics": {
+            "p50_response_time": 0.0,
+            "p95_response_time": 0.0,
+            "p99_response_time": 0.0,
+            "response_time_trend": "stable",
+            "error_rate_trend": "stable",
+            "availability_trend": "stable",
+            "error_patterns": {},
+            "error_categories": {},
+            "recovery_times_count": 0,
+            "avg_recovery_time_ms": 0.0
+          }
+        },
+        "perplexity": {
+          "backend_type": "perplexity",
+          "status": "healthy",
+          "response_time_ms": 0.0,
+          "error_rate": 0.0,
+          "last_health_check": "2025-08-08T19:57:35.248528",
+          "consecutive_failures": 0,
+          "total_requests": 0,
+          "successful_requests": 0,
+          "health_score": 100.0,
+          "availability_percentage": 100.0,
+          "mean_time_to_recovery_ms": 0.0,
+          "cpu_usage_percent": 0.0,
+          "memory_usage_percent": 0.0,
+          "disk_usage_percent": 0.0,
+          "performance_metrics": {
+            "p50_response_time": 0.0,
+            "p95_response_time": 0.0,
+            "p99_response_time": 0.0,
+            "response_time_trend": "stable",
+            "error_rate_trend": "stable",
+            "availability_trend": "stable",
+            "error_patterns": {},
+            "error_categories": {},
+            "recovery_times_count": 0,
+            "avg_recovery_time_ms": 0.0
+          }
+        }
+      }
+    },
+    "normal_routing": {
+      "decision": "lightrag",
+      "confidence": 0.34349999999999997,
+      "backend": "lightrag",
+      "health_impacted": false
+    }
+  }
+}

@@ -368,12 +368,12 @@ class BiomedicalQueryRouter(ResearchCategorizer):
         # Define routing mappings based on research categories
         self.category_routing_map = self._initialize_category_routing_map()
         
-        # Enhanced routing confidence thresholds with fallback strategies - more aggressive routing
+        # Enhanced routing confidence thresholds with fallback strategies - OPTIMIZED FOR ACCURACY
         self.routing_thresholds = {
-            'high_confidence': 0.7,      # Route directly to optimal system (lowered)
-            'medium_confidence': 0.5,    # Route with monitoring (lowered)
-            'low_confidence': 0.3,       # Use fallback strategies or hybrid approach (lowered)
-            'fallback_threshold': 0.15   # Use fallback routing (lowered)
+            'high_confidence': 0.6,      # Route directly to optimal system
+            'medium_confidence': 0.4,    # Route with monitoring  
+            'low_confidence': 0.2,       # Use fallback strategies or hybrid approach (LOWERED)
+            'fallback_threshold': 0.1    # Use fallback routing (LOWERED - more permissive)
         }
         
         # Fallback strategies configuration
@@ -577,62 +577,93 @@ class BiomedicalQueryRouter(ResearchCategorizer):
         has_temporal_signals = temporal_score > 1.5
         has_kg_signals = kg_detection and kg_detection.get('confidence', 0.0) > 0.4
         
-        # Multi-part complex queries with both temporal and knowledge components
+        # Multi-part complex queries with both temporal and knowledge components - ENHANCED
         if has_temporal_signals and has_kg_signals:
-            scores['hybrid'] += 0.7  # Strong hybrid boost for mixed signals
+            scores['hybrid'] += 0.85  # Much stronger hybrid boost for mixed signals
             
-        # Check for specific hybrid patterns
+        # REFINED hybrid patterns - only truly dual-requirement queries - ENHANCED FOR BETTER DETECTION
         hybrid_patterns = [
-            r'latest.*(?:and|relationship|mechanism|pathway|relate|understanding)',
-            r'current.*(?:and|how.*relate|mechanism|understanding|approaches)',
-            r'recent.*(?:and|impact|relationship|connection|how.*relate)',
-            r'new.*(?:and|how.*affect|relate|impact|understanding)',
-            r'(?:latest|current|recent).*(?:discoveries|advances).*(?:how|relate|mechanism|pathway)'
+            # Explicit both-system patterns (temporal AND relational/mechanistic with clear connector)
+            r'(?:latest|recent|current).*(?:and).*(?:relationship|mechanism|pathway|relate|understanding|connection)',
+            r'(?:molecular basis|mechanisms|pathways).*(?:and).*(?:latest|recent|current|new)',
+            r'(?:how|what).*(?:pathways|mechanisms).*(?:and|with).*(?:recent|latest|current)',
+            r'(?:explain|describe).*(?:mechanisms|pathways).*(?:and).*(?:recent|latest|current)',
+            # Change + temporal patterns (both dynamic change AND recent info needed)
+            r'(?:pathways|mechanisms).*(?:change|affect|evolve).*(?:and|what).*(?:latest|recent)',
+            r'(?:how do|what are).*(?:pathways|mechanisms).*(?:change|evolve).*(?:and).*(?:recent|current)',
+            # Specific dual-requirement disease + research patterns
+            r'(?:molecular basis|mechanisms).*(?:of|in).*(?:diabetes|cancer|aging).*(?:and).*(?:newest|latest|recent).*(?:treatment|research|approaches)',
+            r'(?:pathways involved in|mechanisms of).*(?:aging|disease).*(?:and).*(?:current|recent|latest).*(?:research|trends|findings)',
+            # Very specific "what are pathways AND what are latest" patterns
+            r'(?:what are the).*(?:pathways|mechanisms).*(?:and).*(?:what are the|current|recent|latest)',
+            # Only match if there's clear dual requirement with explicit connector words
+            r'(?:cellular|molecular).*mechanisms.*(?:and|with).*(?:current|recent|latest).*(?:therapeutic|research)',
+            r'(?:metabolism|metabolic).*pathways.*(?:and|with).*(?:recent|current|latest).*(?:developments|research|findings)',
+            # Additional patterns for "how does X affect Y and what are recent Z" queries
+            r'(?:how does|how do).*(?:affect|influence).*(?:metabolism|brain|cellular).*(?:and what are).*(?:recent|current|latest)',
+            r'(?:gut microbiome|circadian rhythms|metabolic disorders).*(?:influence|affect).*(?:metabolism|brain).*(?:and what are).*(?:recent|current)',
+            r'(?:current research trends).*(?:in|and).*(?:recent breakthrough|discoveries)',
+            r'(?:research trends).*(?:and).*(?:recent|latest).*(?:discoveries|developments|findings)'
         ]
         
         is_hybrid_query = False
+        hybrid_pattern_matches = 0
         for pattern in hybrid_patterns:
             if re.search(pattern, query_text.lower()):
-                scores['hybrid'] += 0.8
+                hybrid_pattern_matches += 1
+                scores['hybrid'] += 0.7  # More moderate boost per pattern match
                 is_hybrid_query = True
-                break
         
-        # Strong temporal indicators favor Perplexity - BUT NOT FOR HYBRID QUERIES
+        # Additional boost if multiple patterns match (very strong hybrid signal)
+        if hybrid_pattern_matches > 1:
+            scores['hybrid'] += 0.6  # More moderate boost for multiple pattern matches
+        
+        # Only apply strong hybrid preference if patterns clearly match
+        if is_hybrid_query and hybrid_pattern_matches >= 1:
+            scores['hybrid'] += 0.5  # Additional preference for hybrid patterns
+        
+        # Strong temporal indicators favor Perplexity - BUT NOT FOR HYBRID QUERIES (FIXED)
         if temporal_score > 1.5 and not is_hybrid_query:
             # VERY STRONG temporal signals should heavily favor PERPLEXITY
             scores['perplexity'] += min(temporal_score * 0.6, 1.0)
             scores['lightrag'] = max(0, scores['lightrag'] - 0.5)
             
-            # If temporal score is very high, force PERPLEXITY routing
-            if temporal_score > 3.0:
+            # If temporal score is very high, force PERPLEXITY routing ONLY if not hybrid
+            if temporal_score > 4.0 and scores['hybrid'] < 0.7:  # Don't override strong hybrid signals
                 scores['perplexity'] = 0.95
                 scores['lightrag'] = 0.1
                 scores['either'] = 0.2
-                scores['hybrid'] = 0.3
+                scores['hybrid'] = max(scores['hybrid'], 0.3)  # Preserve hybrid score
         elif temporal_score > 2.0 and not is_hybrid_query:
             scores['perplexity'] += min(temporal_score * 0.3, 0.8)
             scores['lightrag'] -= min(temporal_score * 0.2, 0.4)
         
-        # Strong established knowledge indicators favor LightRAG
-        if established_score > 2.0:
-            scores['lightrag'] += min(established_score * 0.3, 0.8)
-            scores['perplexity'] -= min(established_score * 0.2, 0.4)
+        # Strong established knowledge indicators favor LightRAG - ENHANCED
+        if established_score > 1.5:  # Lower threshold
+            scores['lightrag'] += min(established_score * 0.4, 0.9)  # Higher boost
+            scores['perplexity'] -= min(established_score * 0.3, 0.5)  # Stronger penalty
         
-        # Enhanced knowledge graph scoring using fast detection
+        # Enhanced knowledge graph scoring using fast detection - BOOSTED FOR ACCURACY
         if kg_detection:
             kg_confidence = kg_detection.get('confidence', 0.0)
-            if kg_confidence > 0.3:  # Lowered threshold
-                scores['lightrag'] += kg_confidence * 0.7  # Increased weight
+            if kg_confidence > 0.2:  # Even lower threshold for better sensitivity
+                scores['lightrag'] += kg_confidence * 0.9  # Much higher weight for KG signals
                 
-            # Specific knowledge graph indicators boost LightRAG
+            # Specific knowledge graph indicators boost LightRAG - ENHANCED
             relationship_count = len(kg_detection.get('relationship_indicators', []))
             pathway_count = len(kg_detection.get('pathway_indicators', []))
             mechanism_count = len(kg_detection.get('mechanism_indicators', []))
             
-            kg_specific_score = (relationship_count * 0.3 + 
-                               pathway_count * 0.3 + 
-                               mechanism_count * 0.3)
+            # Much higher scoring for pathway and mechanism queries
+            kg_specific_score = (relationship_count * 0.4 + 
+                               pathway_count * 0.5 +     # Higher weight for pathways
+                               mechanism_count * 0.5)    # Higher weight for mechanisms
             scores['lightrag'] += kg_specific_score
+            
+            # Additional boost if multiple KG indicators present
+            total_kg_indicators = relationship_count + pathway_count + mechanism_count
+            if total_kg_indicators > 1:
+                scores['lightrag'] += 0.3  # Multi-indicator boost
         
         # Real-time intent scoring - but NOT for hybrid queries
         real_time_confidence = temporal_analysis.get('confidence', 0.0)
@@ -762,16 +793,22 @@ class BiomedicalQueryRouter(ResearchCategorizer):
                 re.compile(r'\binteraction\s+(?:between|of|with)', re.IGNORECASE)
             ],
             'pathway_patterns': [
-                re.compile(r'\b(?:pathway|network|mechanism)\s+(?:of|for|in|involving)', re.IGNORECASE),
-                re.compile(r'\bmetabolic\s+(?:pathway|network|route)', re.IGNORECASE),
-                re.compile(r'\bbiomedical\s+pathway', re.IGNORECASE),
-                re.compile(r'\bsignaling\s+(?:pathway|cascade)', re.IGNORECASE)
+                re.compile(r'\b(?:pathway|pathways|network|networks|mechanism|mechanisms)\s+(?:of|for|in|involving|related|associated)', re.IGNORECASE),
+                re.compile(r'\bmetabolic\s+(?:pathway|pathways|network|route|routes)', re.IGNORECASE),
+                re.compile(r'\bbiomedical\s+(?:pathway|pathways)', re.IGNORECASE),
+                re.compile(r'\bsignaling\s+(?:pathway|pathways|cascade|cascades)', re.IGNORECASE),
+                re.compile(r'\b(?:what are the|which|describe the)\s+.*(?:pathway|pathways)', re.IGNORECASE),
+                re.compile(r'\b(?:glucose|metabolic|cellular|protein|amino acid|fatty acid)\s+.*(?:pathway|pathways|metabolism)', re.IGNORECASE),
+                re.compile(r'\bpathways?\s+(?:involved|related|associated|connected)', re.IGNORECASE)
             ],
             'mechanism_patterns': [
-                re.compile(r'\bmechanism\s+(?:of\s+action|behind|underlying)', re.IGNORECASE),
-                re.compile(r'\bhow\s+does\s+\w+\s+work', re.IGNORECASE),
+                re.compile(r'\bmechanism\s+(?:of\s+action|behind|underlying|involved|related)', re.IGNORECASE),
+                re.compile(r'\bhow\s+does\s+\w+\s+(?:work|function|operate|affect)', re.IGNORECASE),
                 re.compile(r'\bmode\s+of\s+action', re.IGNORECASE),
-                re.compile(r'\bmolecular\s+mechanism', re.IGNORECASE)
+                re.compile(r'\bmolecular\s+mechanism', re.IGNORECASE),
+                re.compile(r'\b(?:what is the|explain the|describe the)\s+.*mechanism', re.IGNORECASE),
+                re.compile(r'\bmechanisms?\s+(?:of|for|in|involved|underlying)', re.IGNORECASE),
+                re.compile(r'\b(?:cellular|molecular|biochemical)\s+mechanisms?', re.IGNORECASE)
             ]
         }
         
@@ -979,9 +1016,9 @@ class BiomedicalQueryRouter(ResearchCategorizer):
                 detection_result['general_query_indicators'].append(match.group())
                 kg_score += 1.0
         
-        # Calculate confidence (much more sensitive)
-        detection_result['confidence'] = min(kg_score / 3.0, 1.0)  # More generous normalization
-        detection_result['has_kg_intent'] = detection_result['confidence'] > 0.2  # Lower threshold for detection
+        # Calculate confidence (much more sensitive) - ENHANCED FOR ACCURACY
+        detection_result['confidence'] = min(kg_score / 2.5, 1.0)  # Even more generous normalization
+        detection_result['has_kg_intent'] = detection_result['confidence'] > 0.15  # Even lower threshold for detection
         
         detection_time = (time.time() - start_time) * 1000
         if detection_time > 15:  # Log if exceeds target
@@ -1394,12 +1431,12 @@ class BiomedicalQueryRouter(ResearchCategorizer):
         signal_strength_confidence = signal_strength['signal_quality_score']
         context_coherence_confidence = context_coherence['overall_coherence']
         
-        # Calculate overall confidence using weighted combination - more optimistic scoring
+        # Calculate overall confidence using weighted combination - ENHANCED FOR ACCURACY
         weights = {
-            'research_category': 0.5,   # Increased weight for main categorization
-            'temporal_analysis': 0.1,   # Reduced weight
-            'signal_strength': 0.25,    # Balanced weight for signal quality
-            'context_coherence': 0.15   # Reduced weight
+            'research_category': 0.6,   # Even higher weight for main categorization
+            'temporal_analysis': 0.05,  # Minimal weight unless needed
+            'signal_strength': 0.3,     # Higher weight for signal quality
+            'context_coherence': 0.05   # Minimal weight
         }
         
         # Base confidence calculation with better baseline
@@ -1410,26 +1447,27 @@ class BiomedicalQueryRouter(ResearchCategorizer):
             context_coherence_confidence * weights['context_coherence']
         )
         
-        # Apply much smaller ambiguity and conflict penalties
-        ambiguity_penalty = ambiguity_analysis['ambiguity_score'] * 0.08  # Further reduced
-        conflict_penalty = ambiguity_analysis['conflict_score'] * 0.05    # Much smaller penalty
-        overall_confidence = max(0.2, base_confidence - ambiguity_penalty - conflict_penalty)  # Higher minimum
+        # Apply very small ambiguity and conflict penalties
+        ambiguity_penalty = ambiguity_analysis['ambiguity_score'] * 0.05  # Very small penalty
+        conflict_penalty = ambiguity_analysis['conflict_score'] * 0.03    # Tiny penalty
+        overall_confidence = max(0.25, base_confidence - ambiguity_penalty - conflict_penalty)  # Even higher minimum
         
-        # Apply stronger confidence boosts for biomedical evidence
+        # Apply stronger confidence boosts for biomedical evidence - ENHANCED
         biomedical_entities = signal_strength['biomedical_entity_count']
         keyword_density = signal_strength['keyword_density']
+        pattern_match_strength = signal_strength['pattern_match_strength']
         
-        if biomedical_entities >= 3 or keyword_density > 0.2:
-            overall_confidence = min(overall_confidence * 1.4, 0.95)  # Strong boost for clear biomedical signals
-        elif biomedical_entities >= 2 or keyword_density > 0.15:
-            overall_confidence = min(overall_confidence * 1.3, 0.9)   # Good boost for decent signals
-        elif biomedical_entities >= 1 or keyword_density > 0.1:
-            overall_confidence = min(overall_confidence * 1.2, 0.85)  # Moderate boost for basic signals
+        # More aggressive confidence boosts
+        if biomedical_entities >= 3 or keyword_density > 0.2 or pattern_match_strength > 0.3:
+            overall_confidence = min(overall_confidence * 1.6, 0.95)  # Very strong boost for clear biomedical signals
+        elif biomedical_entities >= 2 or keyword_density > 0.15 or pattern_match_strength > 0.2:
+            overall_confidence = min(overall_confidence * 1.5, 0.9)   # Strong boost for decent signals
+        elif biomedical_entities >= 1 or keyword_density > 0.1 or pattern_match_strength > 0.1:
+            overall_confidence = min(overall_confidence * 1.4, 0.85)  # Good boost for basic signals
         
-        # Additional boost for clear pathway/mechanism queries
-        if (signal_strength['pattern_match_strength'] > 0.5 or 
-            research_category_confidence > 0.7):
-            overall_confidence = min(overall_confidence * 1.15, 0.95)
+        # Additional boost for clear pathway/mechanism queries - ENHANCED
+        if (pattern_match_strength > 0.3 or research_category_confidence > 0.6):
+            overall_confidence = min(overall_confidence * 1.2, 0.95)  # Additional boost for clear patterns
         
         # Generate alternative interpretations
         alternative_interpretations = self._generate_alternative_interpretations(query_text, analysis_results)
@@ -1509,39 +1547,64 @@ class BiomedicalQueryRouter(ResearchCategorizer):
         has_temporal_signals = temporal_score > 1.5
         has_kg_signals = kg_confidence > 0.4
         
-        # Multi-part complex queries with both temporal and knowledge components
+        # Multi-part complex queries with both temporal and knowledge components - ENHANCED
         if has_temporal_signals and has_kg_signals:
-            routing_scores[RoutingDecision.HYBRID] += 0.7  # Strong hybrid boost for mixed signals
+            routing_scores[RoutingDecision.HYBRID] += 0.85  # Much stronger hybrid boost for mixed signals
             
-        # Check for specific hybrid patterns
+        # REFINED hybrid patterns - only truly dual-requirement queries - ENHANCED FOR BETTER DETECTION (DUPLICATE FROM _calculate_routing_scores)
         hybrid_patterns = [
-            r'latest.*(?:and|relationship|mechanism|pathway|relate|understanding)',
-            r'current.*(?:and|how.*relate|mechanism|understanding|approaches)',
-            r'recent.*(?:and|impact|relationship|connection|how.*relate)',
-            r'new.*(?:and|how.*affect|relate|impact|understanding)',
-            r'(?:latest|current|recent).*(?:discoveries|advances).*(?:how|relate|mechanism|pathway)'
+            # Explicit both-system patterns (temporal AND relational/mechanistic with clear connector)
+            r'(?:latest|recent|current).*(?:and).*(?:relationship|mechanism|pathway|relate|understanding|connection)',
+            r'(?:molecular basis|mechanisms|pathways).*(?:and).*(?:latest|recent|current|new)',
+            r'(?:how|what).*(?:pathways|mechanisms).*(?:and|with).*(?:recent|latest|current)',
+            r'(?:explain|describe).*(?:mechanisms|pathways).*(?:and).*(?:recent|latest|current)',
+            # Change + temporal patterns (both dynamic change AND recent info needed)
+            r'(?:pathways|mechanisms).*(?:change|affect|evolve).*(?:and|what).*(?:latest|recent)',
+            r'(?:how do|what are).*(?:pathways|mechanisms).*(?:change|evolve).*(?:and).*(?:recent|current)',
+            # Specific dual-requirement disease + research patterns
+            r'(?:molecular basis|mechanisms).*(?:of|in).*(?:diabetes|cancer|aging).*(?:and).*(?:newest|latest|recent).*(?:treatment|research|approaches)',
+            r'(?:pathways involved in|mechanisms of).*(?:aging|disease).*(?:and).*(?:current|recent|latest).*(?:research|trends|findings)',
+            # Very specific "what are pathways AND what are latest" patterns
+            r'(?:what are the).*(?:pathways|mechanisms).*(?:and).*(?:what are the|current|recent|latest)',
+            # Only match if there's clear dual requirement with explicit connector words
+            r'(?:cellular|molecular).*mechanisms.*(?:and|with).*(?:current|recent|latest).*(?:therapeutic|research)',
+            r'(?:metabolism|metabolic).*pathways.*(?:and|with).*(?:recent|current|latest).*(?:developments|research|findings)',
+            # Additional patterns for "how does X affect Y and what are recent Z" queries
+            r'(?:how does|how do).*(?:affect|influence).*(?:metabolism|brain|cellular).*(?:and what are).*(?:recent|current|latest)',
+            r'(?:gut microbiome|circadian rhythms|metabolic disorders).*(?:influence|affect).*(?:metabolism|brain).*(?:and what are).*(?:recent|current)',
+            r'(?:current research trends).*(?:in|and).*(?:recent breakthrough|discoveries)',
+            r'(?:research trends).*(?:and).*(?:recent|latest).*(?:discoveries|developments|findings)'
         ]
         
         is_hybrid_query = False
+        hybrid_pattern_matches = 0
         for pattern in hybrid_patterns:
             if re.search(pattern, query_text.lower()):
-                routing_scores[RoutingDecision.HYBRID] += 0.8
+                hybrid_pattern_matches += 1
+                routing_scores[RoutingDecision.HYBRID] += 0.7  # More moderate boost per pattern match
                 is_hybrid_query = True
-                break
         
-        # TEMPORAL OVERRIDE LOGIC - CRITICAL FOR ACCURACY
+        # Additional boost if multiple patterns match (very strong hybrid signal)
+        if hybrid_pattern_matches > 1:
+            routing_scores[RoutingDecision.HYBRID] += 0.6  # More moderate boost for multiple pattern matches
+        
+        # Only apply strong hybrid preference if patterns clearly match
+        if is_hybrid_query and hybrid_pattern_matches >= 1:
+            routing_scores[RoutingDecision.HYBRID] += 0.5  # Additional preference for hybrid patterns
+        
+        # TEMPORAL OVERRIDE LOGIC - CRITICAL FOR ACCURACY (FIXED)
         if temporal_score > 1.5 and not is_hybrid_query:
             # VERY STRONG temporal signals should heavily favor PERPLEXITY regardless of category
             routing_scores[RoutingDecision.PERPLEXITY] += min(temporal_score * 0.15, 0.9)  # Strong temporal boost
             # Reduce LIGHTRAG score when temporal signals are strong
             routing_scores[RoutingDecision.LIGHTRAG] = max(0, routing_scores[RoutingDecision.LIGHTRAG] - 0.3)
             
-            # If temporal score is very high, force PERPLEXITY routing
-            if temporal_score > 4.0:
+            # If temporal score is very high, force PERPLEXITY routing ONLY if not hybrid
+            if temporal_score > 4.0 and routing_scores[RoutingDecision.HYBRID] < 0.7:  # Don't override strong hybrid signals
                 routing_scores[RoutingDecision.PERPLEXITY] = 0.9
                 routing_scores[RoutingDecision.LIGHTRAG] = 0.1
                 routing_scores[RoutingDecision.EITHER] = 0.2
-                routing_scores[RoutingDecision.HYBRID] = 0.3
+                routing_scores[RoutingDecision.HYBRID] = max(routing_scores[RoutingDecision.HYBRID], 0.3)  # Preserve hybrid score
         
         # Knowledge graph signals influence (kg_confidence already defined above)
         if kg_confidence > 0.4 and not is_hybrid_query:

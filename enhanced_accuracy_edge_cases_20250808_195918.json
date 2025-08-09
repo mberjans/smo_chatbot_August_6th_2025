@@ -1,0 +1,705 @@
+{
+  "pattern_results": {
+    "lightrag_misclassified": {
+      "total_queries": 10,
+      "correct_predictions": 3,
+      "accuracy_percentage": 30.0,
+      "details": [
+        {
+          "query_id": 1,
+          "query": "How do neurotransmitters interact in synaptic transmission?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "either",
+          "confidence": 0.2,
+          "is_correct": false,
+          "processing_time_ms": 6.295919418334961,
+          "improvement_suggestions": [
+            "Enhance pathway/mechanism keyword detection for: How do neurotransmitters interact in synaptic tran...",
+            "Increase weight for biological process indicators",
+            "Improve confidence scoring for molecular mechanism queries"
+          ],
+          "confidence_metrics": {
+            "overall": 0.2,
+            "temporal": 0.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 2,
+          "query": "How does the citric acid cycle connect to oxidative phosphorylation?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "either",
+          "confidence": 0.2,
+          "is_correct": false,
+          "processing_time_ms": 0.33092498779296875,
+          "improvement_suggestions": [
+            "Enhance pathway/mechanism keyword detection for: How does the citric acid cycle connect to oxidativ...",
+            "Increase weight for biological process indicators",
+            "Improve confidence scoring for molecular mechanism queries"
+          ],
+          "confidence_metrics": {
+            "overall": 0.2,
+            "temporal": 0.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 3,
+          "query": "What are the regulatory mechanisms in steroid hormone synthesis?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "either",
+          "confidence": 0.2,
+          "is_correct": false,
+          "processing_time_ms": 0.3077983856201172,
+          "improvement_suggestions": [
+            "Enhance pathway/mechanism keyword detection for: What are the regulatory mechanisms in steroid horm...",
+            "Increase weight for biological process indicators",
+            "Improve confidence scoring for molecular mechanism queries"
+          ],
+          "confidence_metrics": {
+            "overall": 0.2,
+            "temporal": 0.125,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 4,
+          "query": "How do growth factors regulate cell cycle progression?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "either",
+          "confidence": 0.2,
+          "is_correct": false,
+          "processing_time_ms": 0.2779960632324219,
+          "improvement_suggestions": [
+            "Enhance pathway/mechanism keyword detection for: How do growth factors regulate cell cycle progress...",
+            "Increase weight for biological process indicators",
+            "Improve confidence scoring for molecular mechanism queries"
+          ],
+          "confidence_metrics": {
+            "overall": 0.2,
+            "temporal": 0.5,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 5,
+          "query": "What are the molecular mechanisms of protein folding?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "lightrag",
+          "confidence": 0.24,
+          "is_correct": true,
+          "processing_time_ms": 0.2880096435546875,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.24,
+            "temporal": 0.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 6,
+          "query": "How do transcription factors regulate gene expression?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "either",
+          "confidence": 0.2,
+          "is_correct": false,
+          "processing_time_ms": 0.2701282501220703,
+          "improvement_suggestions": [
+            "Enhance pathway/mechanism keyword detection for: How do transcription factors regulate gene express...",
+            "Increase weight for biological process indicators",
+            "Improve confidence scoring for molecular mechanism queries"
+          ],
+          "confidence_metrics": {
+            "overall": 0.2,
+            "temporal": 0.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 7,
+          "query": "What is the role of calcium signaling in muscle contraction?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "either",
+          "confidence": 0.2,
+          "is_correct": false,
+          "processing_time_ms": 0.2741813659667969,
+          "improvement_suggestions": [
+            "Enhance pathway/mechanism keyword detection for: What is the role of calcium signaling in muscle co...",
+            "Increase weight for biological process indicators",
+            "Improve confidence scoring for molecular mechanism queries"
+          ],
+          "confidence_metrics": {
+            "overall": 0.2,
+            "temporal": 0.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 8,
+          "query": "How do enzymes catalyze biochemical reactions?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "lightrag",
+          "confidence": 0.95,
+          "is_correct": true,
+          "processing_time_ms": 0.25653839111328125,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.95,
+            "temporal": 0.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 9,
+          "query": "What are the steps in DNA damage repair pathways?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "lightrag",
+          "confidence": 0.36983333333333335,
+          "is_correct": true,
+          "processing_time_ms": 0.2620220184326172,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.36983333333333335,
+            "temporal": 0.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 10,
+          "query": "How does the electron transport chain generate ATP?",
+          "pattern": "lightrag_misclassified",
+          "routing_decision": "either",
+          "confidence": 0.2,
+          "is_correct": false,
+          "processing_time_ms": 0.24771690368652344,
+          "improvement_suggestions": [
+            "Enhance pathway/mechanism keyword detection for: How does the electron transport chain generate ATP...",
+            "Increase weight for biological process indicators",
+            "Improve confidence scoring for molecular mechanism queries"
+          ],
+          "confidence_metrics": {
+            "overall": 0.2,
+            "temporal": 0.0,
+            "biomedical_entities": 0
+          }
+        }
+      ]
+    },
+    "hybrid_underdetected": {
+      "total_queries": 12,
+      "correct_predictions": 2,
+      "accuracy_percentage": 16.666666666666664,
+      "details": [
+        {
+          "query_id": 1,
+          "query": "What is the molecular basis of diabetes and recent treatment advances?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "hybrid",
+          "confidence": 0.6732,
+          "is_correct": true,
+          "processing_time_ms": 0.31304359436035156,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.6732,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 2,
+          "query": "How do metabolic pathways change with age and current research?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "perplexity",
+          "confidence": 0.95,
+          "is_correct": false,
+          "processing_time_ms": 0.30612945556640625,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: How do metabolic pathways change with age and curr...",
+            "Enhance combination keyword pattern matching",
+            "Strengthen temporal + knowledge hybrid detection"
+          ],
+          "confidence_metrics": {
+            "overall": 0.95,
+            "temporal": 1.0,
+            "biomedical_entities": 2
+          }
+        },
+        {
+          "query_id": 3,
+          "query": "What are cancer metabolism mechanisms and latest clinical trials?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "lightrag",
+          "confidence": 0.95,
+          "is_correct": false,
+          "processing_time_ms": 0.308990478515625,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: What are cancer metabolism mechanisms and latest c...",
+            "Enhance combination keyword pattern matching"
+          ],
+          "confidence_metrics": {
+            "overall": 0.95,
+            "temporal": 1.0,
+            "biomedical_entities": 2
+          }
+        },
+        {
+          "query_id": 4,
+          "query": "How does gut microbiome affect metabolism and recent findings?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "perplexity",
+          "confidence": 0.6372,
+          "is_correct": false,
+          "processing_time_ms": 0.2841949462890625,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: How does gut microbiome affect metabolism and rece...",
+            "Enhance combination keyword pattern matching",
+            "Strengthen temporal + knowledge hybrid detection"
+          ],
+          "confidence_metrics": {
+            "overall": 0.6372,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 5,
+          "query": "What are aging pathways and current longevity research?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "perplexity",
+          "confidence": 0.68505,
+          "is_correct": false,
+          "processing_time_ms": 0.2689361572265625,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: What are aging pathways and current longevity rese...",
+            "Enhance combination keyword pattern matching",
+            "Strengthen temporal + knowledge hybrid detection"
+          ],
+          "confidence_metrics": {
+            "overall": 0.68505,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 6,
+          "query": "How do circadian rhythms affect metabolism and recent research?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "perplexity",
+          "confidence": 0.95,
+          "is_correct": false,
+          "processing_time_ms": 0.2932548522949219,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: How do circadian rhythms affect metabolism and rec...",
+            "Enhance combination keyword pattern matching",
+            "Strengthen temporal + knowledge hybrid detection"
+          ],
+          "confidence_metrics": {
+            "overall": 0.95,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 7,
+          "query": "What are cellular cancer mechanisms and immunotherapy developments?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "either",
+          "confidence": 0.35219999999999996,
+          "is_correct": false,
+          "processing_time_ms": 0.3008842468261719,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: What are cellular cancer mechanisms and immunother...",
+            "Enhance combination keyword pattern matching"
+          ],
+          "confidence_metrics": {
+            "overall": 0.35219999999999996,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 8,
+          "query": "How do metabolic disorders affect brain function and neurometabolism research?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "lightrag",
+          "confidence": 0.60255,
+          "is_correct": false,
+          "processing_time_ms": 0.3199577331542969,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: How do metabolic disorders affect brain function a...",
+            "Enhance combination keyword pattern matching"
+          ],
+          "confidence_metrics": {
+            "overall": 0.60255,
+            "temporal": 0.0,
+            "biomedical_entities": 2
+          }
+        },
+        {
+          "query_id": 9,
+          "query": "What are the genetic mechanisms of Alzheimer's and current therapeutic trials?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "perplexity",
+          "confidence": 0.47350000000000003,
+          "is_correct": false,
+          "processing_time_ms": 0.34308433532714844,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: What are the genetic mechanisms of Alzheimer's and...",
+            "Enhance combination keyword pattern matching",
+            "Strengthen temporal + knowledge hybrid detection"
+          ],
+          "confidence_metrics": {
+            "overall": 0.47350000000000003,
+            "temporal": 1.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 10,
+          "query": "How does exercise affect cellular metabolism and recent performance research?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "hybrid",
+          "confidence": 0.6372,
+          "is_correct": true,
+          "processing_time_ms": 0.3180503845214844,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.6372,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 11,
+          "query": "What are the molecular pathways of depression and latest medication developments?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "perplexity",
+          "confidence": 0.6988909090909091,
+          "is_correct": false,
+          "processing_time_ms": 0.3497600555419922,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: What are the molecular pathways of depression and ...",
+            "Enhance combination keyword pattern matching"
+          ],
+          "confidence_metrics": {
+            "overall": 0.6988909090909091,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 12,
+          "query": "How do environmental toxins affect metabolism and current regulatory updates?",
+          "pattern": "hybrid_underdetected",
+          "routing_decision": "perplexity",
+          "confidence": 0.6372,
+          "is_correct": false,
+          "processing_time_ms": 0.3387928009033203,
+          "improvement_suggestions": [
+            "Improve dual-requirement detection for: How do environmental toxins affect metabolism and ...",
+            "Enhance combination keyword pattern matching",
+            "Strengthen temporal + knowledge hybrid detection"
+          ],
+          "confidence_metrics": {
+            "overall": 0.6372,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        }
+      ]
+    },
+    "temporal_indicators": {
+      "total_queries": 6,
+      "correct_predictions": 6,
+      "accuracy_percentage": 100.0,
+      "details": [
+        {
+          "query_id": 1,
+          "query": "What are the 2025 breakthrough discoveries in metabolomics?",
+          "pattern": "temporal_indicators",
+          "routing_decision": "perplexity",
+          "confidence": 0.20787500000000003,
+          "is_correct": true,
+          "processing_time_ms": 0.2830028533935547,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.20787500000000003,
+            "temporal": 1.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 2,
+          "query": "Latest clinical trials published this month for diabetes treatment",
+          "pattern": "temporal_indicators",
+          "routing_decision": "perplexity",
+          "confidence": 0.95,
+          "is_correct": true,
+          "processing_time_ms": 0.3199577331542969,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.95,
+            "temporal": 1.0,
+            "biomedical_entities": 2
+          }
+        },
+        {
+          "query_id": 3,
+          "query": "Recent FDA approvals in the past week for cancer drugs",
+          "pattern": "temporal_indicators",
+          "routing_decision": "perplexity",
+          "confidence": 0.6522,
+          "is_correct": true,
+          "processing_time_ms": 0.2791881561279297,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.6522,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 4,
+          "query": "Current research trends emerging in 2025 for personalized medicine",
+          "pattern": "temporal_indicators",
+          "routing_decision": "perplexity",
+          "confidence": 0.7216249999999998,
+          "is_correct": true,
+          "processing_time_ms": 0.30112266540527344,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.7216249999999998,
+            "temporal": 1.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 5,
+          "query": "What were the top biomedical discoveries of 2024?",
+          "pattern": "temporal_indicators",
+          "routing_decision": "perplexity",
+          "confidence": 0.4435,
+          "is_correct": true,
+          "processing_time_ms": 0.26297569274902344,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.4435,
+            "temporal": 1.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 6,
+          "query": "Newest treatment protocols released this year for autoimmune diseases",
+          "pattern": "temporal_indicators",
+          "routing_decision": "perplexity",
+          "confidence": 0.6522,
+          "is_correct": true,
+          "processing_time_ms": 0.3151893615722656,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.6522,
+            "temporal": 1.0,
+            "biomedical_entities": 1
+          }
+        }
+      ]
+    },
+    "confidence_calibration": {
+      "total_queries": 4,
+      "correct_predictions": 0,
+      "accuracy_percentage": 0.0,
+      "details": [
+        {
+          "query_id": 1,
+          "query": "What are the key enzymes in glycolysis?",
+          "pattern": "confidence_calibration",
+          "routing_decision": "lightrag",
+          "confidence": 0.5343428571428571,
+          "is_correct": false,
+          "processing_time_ms": 0.2300739288330078,
+          "improvement_suggestions": [
+            "Calibrate confidence scoring for query type: What are the key enzymes in glycolysis?...",
+            "Adjust confidence thresholds for different query categories"
+          ],
+          "confidence_metrics": {
+            "overall": 0.5343428571428571,
+            "temporal": 0.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 2,
+          "query": "Latest COVID-19 research published yesterday",
+          "pattern": "confidence_calibration",
+          "routing_decision": "perplexity",
+          "confidence": 0.39749999999999996,
+          "is_correct": false,
+          "processing_time_ms": 0.23484230041503906,
+          "improvement_suggestions": [
+            "Calibrate confidence scoring for query type: Latest COVID-19 research published yesterday...",
+            "Adjust confidence thresholds for different query categories"
+          ],
+          "confidence_metrics": {
+            "overall": 0.39749999999999996,
+            "temporal": 1.0,
+            "biomedical_entities": 0
+          }
+        },
+        {
+          "query_id": 3,
+          "query": "How does diabetes affect kidney function?",
+          "pattern": "confidence_calibration",
+          "routing_decision": "lightrag",
+          "confidence": 0.26,
+          "is_correct": false,
+          "processing_time_ms": 0.3039836883544922,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.26,
+            "temporal": 0.0,
+            "biomedical_entities": 1
+          }
+        },
+        {
+          "query_id": 4,
+          "query": "What are metabolic pathways involved in aging and recent longevity research breakthroughs?",
+          "pattern": "confidence_calibration",
+          "routing_decision": "perplexity",
+          "confidence": 0.95,
+          "is_correct": false,
+          "processing_time_ms": 0.37789344787597656,
+          "improvement_suggestions": [],
+          "confidence_metrics": {
+            "overall": 0.95,
+            "temporal": 1.0,
+            "biomedical_entities": 2
+          }
+        }
+      ]
+    }
+  },
+  "improvement_suggestions": [
+    {
+      "suggestion": "Enhance combination keyword pattern matching",
+      "frequency": 10,
+      "priority": "high"
+    },
+    {
+      "suggestion": "Increase weight for biological process indicators",
+      "frequency": 7,
+      "priority": "high"
+    },
+    {
+      "suggestion": "Improve confidence scoring for molecular mechanism queries",
+      "frequency": 7,
+      "priority": "high"
+    },
+    {
+      "suggestion": "Strengthen temporal + knowledge hybrid detection",
+      "frequency": 6,
+      "priority": "high"
+    },
+    {
+      "suggestion": "Adjust confidence thresholds for different query categories",
+      "frequency": 2,
+      "priority": "medium"
+    },
+    {
+      "suggestion": "Enhance pathway/mechanism keyword detection for: How do neurotransmitters interact in synaptic tran...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Enhance pathway/mechanism keyword detection for: How does the citric acid cycle connect to oxidativ...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Enhance pathway/mechanism keyword detection for: What are the regulatory mechanisms in steroid horm...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Enhance pathway/mechanism keyword detection for: How do growth factors regulate cell cycle progress...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Enhance pathway/mechanism keyword detection for: How do transcription factors regulate gene express...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Enhance pathway/mechanism keyword detection for: What is the role of calcium signaling in muscle co...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Enhance pathway/mechanism keyword detection for: How does the electron transport chain generate ATP...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: How do metabolic pathways change with age and curr...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: What are cancer metabolism mechanisms and latest c...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: How does gut microbiome affect metabolism and rece...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: What are aging pathways and current longevity rese...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: How do circadian rhythms affect metabolism and rec...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: What are cellular cancer mechanisms and immunother...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: How do metabolic disorders affect brain function a...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: What are the genetic mechanisms of Alzheimer's and...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: What are the molecular pathways of depression and ...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Improve dual-requirement detection for: How do environmental toxins affect metabolism and ...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Calibrate confidence scoring for query type: What are the key enzymes in glycolysis?...",
+      "frequency": 1,
+      "priority": "low"
+    },
+    {
+      "suggestion": "Calibrate confidence scoring for query type: Latest COVID-19 research published yesterday...",
+      "frequency": 1,
+      "priority": "low"
+    }
+  ],
+  "timestamp": "2025-08-08T19:59:18.702420"
+}
