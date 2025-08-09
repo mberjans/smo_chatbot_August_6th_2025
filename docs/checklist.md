@@ -429,10 +429,10 @@
 ### CMO-LIGHTRAG-014: Error Handling and Fallback System
 
 **CMO-LIGHTRAG-014-T01-TEST** [TEST]
-- [ ] Write tests for multi-level fallback scenarios
+- [x] Write tests for multi-level fallback scenarios
 
 **CMO-LIGHTRAG-014-T02-TEST** [TEST]
-- [ ] Write tests for circuit breaker functionality
+- [x] Write tests for circuit breaker functionality
 
 **CMO-LIGHTRAG-014-T03** [CODE]
 - [ ] Implement multi-level fallback system (LightRAG → Perplexity → Cache)
