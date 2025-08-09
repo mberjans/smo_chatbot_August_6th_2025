@@ -1,0 +1,52 @@
+2025-08-09 07:17:15,831 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 07:17:15,831 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 07:17:15,831 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 07:17:15,832 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 07:17:53,959 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 07:17:53,959 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 07:17:53,960 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 07:17:53,960 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:07:00,633 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:07:00,633 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:07:00,633 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:07:00,634 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:08:33,838 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:08:33,838 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:08:33,838 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:08:33,839 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:08:43,618 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:08:43,619 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:08:43,619 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:08:43,619 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:08:49,274 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:08:49,275 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:08:49,275 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:08:49,275 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:10:23,558 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:10:23,558 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:10:23,558 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:10:23,559 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:10:46,432 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:10:46,432 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:10:46,432 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:10:46,432 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:10:52,758 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:10:52,758 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:10:52,758 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:10:52,758 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:11:03,055 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:11:03,055 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:11:03,056 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:11:03,056 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:11:09,674 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:11:09,674 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:11:09,674 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:11:09,675 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:12:17,076 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:12:17,077 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:12:17,077 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:12:17,077 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 08:12:23,569 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 08:12:23,569 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 08:12:23,569 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 08:12:23,569 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)

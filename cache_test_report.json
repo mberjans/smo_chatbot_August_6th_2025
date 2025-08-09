@@ -1,0 +1,135 @@
+{
+  "test_run_timestamp": "2025-08-09T08:12:11.247662",
+  "test_modules": {
+    "test_cache_storage_operations.py": {
+      "description": "Core cache storage and retrieval operations",
+      "test_classes": [
+        "TestCacheKeyGeneration",
+        "TestCacheDataSerialization",
+        "TestCacheMetadata",
+        "TestCacheSizeLimits",
+        "TestCacheTTL",
+        "TestCacheThreadSafety",
+        "TestCachePerformance"
+      ],
+      "coverage_areas": [
+        "Cache key generation and collision handling",
+        "Data serialization/deserialization",
+        "Cache entry metadata management",
+        "Size limit enforcement",
+        "TTL expiration handling",
+        "Thread safety",
+        "Performance characteristics"
+      ]
+    },
+    "test_multi_tier_cache.py": {
+      "description": "Multi-level cache coordination and operations",
+      "test_classes": [
+        "TestL1MemoryCache",
+        "TestL2DiskCache",
+        "TestL3RedisCache",
+        "TestMultiTierCoordination",
+        "TestCachePromotionStrategies",
+        "TestCacheConsistency",
+        "TestMultiTierPerformance"
+      ],
+      "coverage_areas": [
+        "L1 memory cache operations",
+        "L2 disk cache persistence",
+        "L3 Redis cache distributed operations",
+        "Cross-tier coordination",
+        "Cache promotion/demotion",
+        "Data consistency across tiers",
+        "Multi-tier performance optimization"
+      ]
+    },
+    "test_emergency_cache.py": {
+      "description": "Emergency cache system for failover scenarios",
+      "test_classes": [
+        "TestEmergencyCacheActivation",
+        "TestPickleSerialization",
+        "TestEmergencyCachePreloading",
+        "TestEmergencyCacheFileManagement",
+        "TestEmergencyCachePerformance",
+        "TestPatternBasedFallback",
+        "TestEmergencyCacheRecovery"
+      ],
+      "coverage_areas": [
+        "Emergency cache activation/deactivation",
+        "Pickle serialization security",
+        "Common pattern preloading",
+        "File management and rotation",
+        "Sub-second response guarantees",
+        "Pattern-based fallback",
+        "Recovery mechanisms"
+      ]
+    },
+    "test_query_router_cache.py": {
+      "description": "Query router LRU cache functionality",
+      "test_classes": [
+        "TestQueryRouterLRUCache",
+        "TestQueryHashConsistency",
+        "TestConfidenceBasedCaching",
+        "TestCacheInvalidation",
+        "TestQueryRouterPerformance",
+        "TestCacheThreadSafety",
+        "TestCacheMemoryManagement"
+      ],
+      "coverage_areas": [
+        "LRU eviction policy",
+        "Consistent query hashing",
+        "Confidence-based caching decisions",
+        "Cache invalidation mechanisms",
+        "Performance improvements",
+        "Thread safety",
+        "Memory usage optimization"
+      ]
+    }
+  },
+  "test_fixtures": {
+    "cache_test_fixtures.py": {
+      "description": "Comprehensive test fixtures and utilities",
+      "components": [
+        "BiomedicalTestDataGenerator",
+        "MockCacheBackends",
+        "CachePerformanceMetrics",
+        "CachePerformanceMeasurer"
+      ]
+    },
+    "conftest.py": {
+      "description": "Pytest configuration and shared fixtures",
+      "fixtures": [
+        "temp_cache_dir",
+        "mock_redis_client",
+        "mock_disk_cache",
+        "failing_cache_backend",
+        "performance_measurer",
+        "memory_usage_tracker"
+      ]
+    }
+  },
+  "test_coverage_summary": {
+    "total_test_files": 4,
+    "total_test_classes": 25,
+    "estimated_test_methods": 150,
+    "coverage_areas": [
+      "Core cache operations (CRUD, TTL, eviction)",
+      "Multi-tier cache coordination",
+      "Emergency failover systems",
+      "Query router caching",
+      "Performance optimization",
+      "Thread safety and concurrency",
+      "Memory management",
+      "Error handling and recovery",
+      "Realistic biomedical data scenarios"
+    ]
+  },
+  "performance_targets": {
+    "cache_get_operation": "<1ms average",
+    "cache_set_operation": "<2ms average",
+    "multi_tier_fallback": "<100ms total",
+    "emergency_cache_response": "<1s guaranteed",
+    "overall_hit_rate": ">80% for repeated queries",
+    "memory_usage": "<512MB for typical workload"
+  }
+}
