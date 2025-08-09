@@ -5,7 +5,7 @@ IMPORTANT: Before creating any new code, always check the existing codebase thor
 For unchecked tasks on the checklists, write the program one task of one ticket at a time. Once task is finshed, check it on the docs/checklist.md, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, and switch to the next task. Once you complete tasks on one ticket, add all changed files to the git using a separate git add command, commit changes with commit message that you generate yourself using individual git commit command, push changes to the git repository with indvidual git push command, switch to the next ticket. After the push, update the momety bank if it exists. Never chain multiple shell command together with & sign. Never use list comprehension in python. Avoid using regular expression for pattern matching. Instead create special pattern matching function to pattern matching. Work until all bugs are fixed. Please do not ask me for conformation whether I want you to proceedto the next ticket. Just keep working until completing the last ticket.
 
 CURRENT TASK TO COMPLETE:
-Add graceful degradation under high load
+Execute fallback system tests and validate reliability
 
 CONTEXT:
 - Project directory: /Users/Mark/Research/Clinical_Metabolomics_Oracle/smo_chatbot_August_6th_2025
@@ -13,22 +13,22 @@ CONTEXT:
 - Focus on completing the current task above
 - IMPORTANT: After completing the task, update docs/checklist.md to mark the task as complete by changing [ ] to [x]
 
-REMAINING UNCHECKED TASKS (82 total):
-→ CURRENT Add graceful degradation under high load
-  2. Implement error recovery and retry logic
-  3. Set up system health monitoring dashboard
-  4. Execute fallback system tests and validate reliability
-  5. Verify dependency on CMO-LIGHTRAG-013 completion
-  6. Write tests for response caching functionality
-  7. Write load tests for concurrent user support
-  8. Implement response caching system with TTL
-  9. Set up connection pooling for all external APIs
-  10. Optimize async processing for concurrent users
-  ... and 72 more tasks
+REMAINING UNCHECKED TASKS (79 total):
+→ CURRENT Execute fallback system tests and validate reliability
+  2. Verify dependency on CMO-LIGHTRAG-013 completion
+  3. Write tests for response caching functionality
+  4. Write load tests for concurrent user support
+  5. Implement response caching system with TTL
+  6. Set up connection pooling for all external APIs
+  7. Optimize async processing for concurrent users
+  8. Implement memory usage optimization and monitoring
+  9. Add cache invalidation strategies
+  10. Execute performance tests and verify >50% improvement
+  ... and 69 more tasks
 
 CRITICAL INSTRUCTIONS:
 1. Read docs/checklist.md, docs/plan.md, and docs/tickets.md for context
-2. Focus ONLY on completing the current task: Add graceful degradation under high load
+2. Focus ONLY on completing the current task: Execute fallback system tests and validate reliability
 3. Think 
 4. Create to-do list of smaller subtasks
 5. Assign task to software-engeneer subagent. Give subagent only information it needs for the task. You can also give subagent ticket-specific information extracted from docs/tickets.md as well as task specific information extracted from docs/checklist.md 

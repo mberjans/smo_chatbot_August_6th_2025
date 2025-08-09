@@ -1,0 +1,150 @@
+{
+  "test_run": {
+    "start_time": "2025-08-09T03:15:12.966841",
+    "end_time": "2025-08-09T03:15:47.629084",
+    "duration_seconds": 34.662243,
+    "total_tests": 13,
+    "passed_tests": 13,
+    "failed_tests": 0,
+    "skipped_tests": 0,
+    "success_rate": 100.0
+  },
+  "test_results": [
+    {
+      "test_name": "Orchestrator Initialization",
+      "category": "Component Integration",
+      "status": "PASS",
+      "duration": 6.008148193359375e-05,
+      "details": "Orchestrator initialized successfully with configuration",
+      "error": ""
+    },
+    {
+      "test_name": "System Startup/Shutdown",
+      "category": "Component Integration",
+      "status": "PASS",
+      "duration": 0.00017404556274414062,
+      "details": "System startup/shutdown successful. Components active: {'load_monitoring_active': False, 'degradation_controller_active': False, 'throttling_system_active': False, 'integrated_load_balancer': False, 'integrated_rag_system': False, 'integrated_monitoring': False}",
+      "error": ""
+    },
+    {
+      "test_name": "Health Monitoring",
+      "category": "Component Integration",
+      "status": "PASS",
+      "duration": 0.0003490447998046875,
+      "details": "Health monitoring active. Status: degraded, Components: {'load_monitoring': 'inactive', 'degradation_controller': 'inactive', 'throttling_system': 'inactive'}",
+      "error": ""
+    },
+    {
+      "test_name": "Load Level Transitions",
+      "category": "Load Level Transitions",
+      "status": "PASS",
+      "duration": 5.00773811340332,
+      "details": "Load transition monitoring completed. Levels observed: ['NORMAL']",
+      "error": ""
+    },
+    {
+      "test_name": "Hysteresis Behavior",
+      "category": "Load Level Transitions",
+      "status": "PASS",
+      "duration": 5.011545896530151,
+      "details": "Hysteresis test completed. Total level changes: 1, Rapid changes: 0",
+      "error": ""
+    },
+    {
+      "test_name": "High Request Volume",
+      "category": "Performance Under Load",
+      "status": "PASS",
+      "duration": 3.017540216445923,
+      "details": "High volume test: 100 requests, 0 successful (0.0%), 100 failed. Submission time: 0.00s. Final health: degraded",
+      "error": ""
+    },
+    {
+      "test_name": "Memory Pressure Simulation",
+      "category": "Performance Under Load",
+      "status": "PASS",
+      "duration": 5.019948959350586,
+      "details": "Memory pressure test: Initial status: degraded, Final status: degraded, Data chunks created: 0",
+      "error": ""
+    },
+    {
+      "test_name": "Request Throttling",
+      "category": "System Protection",
+      "status": "PASS",
+      "duration": 1.9362518787384033,
+      "details": "Throttling test: 20 requests in 1.9s. 0 successful, 0 throttled. Rate limit working: False",
+      "error": ""
+    },
+    {
+      "test_name": "Queue Overflow Protection",
+      "category": "System Protection",
+      "status": "PASS",
+      "duration": 0.00045180320739746094,
+      "details": "Queue overflow test: 15 requests submitted, 0 accepted, 15 rejected. System health: degraded",
+      "error": ""
+    },
+    {
+      "test_name": "Graceful Recovery",
+      "category": "Recovery & Resilience",
+      "status": "PASS",
+      "duration": 6.013925075531006,
+      "details": "Recovery test: Baseline: degraded, Overload: degraded, Recovery: degraded",
+      "error": ""
+    },
+    {
+      "test_name": "Component Failure Isolation",
+      "category": "Recovery & Resilience",
+      "status": "PASS",
+      "duration": 0.00034308433532714844,
+      "details": "Failure isolation test: 5 failing requests handled, subsequent request success: False, system health: degraded",
+      "error": ""
+    },
+    {
+      "test_name": "Complete Request Lifecycle",
+      "category": "End-to-End Functionality",
+      "status": "PASS",
+      "duration": 2.002068042755127,
+      "details": "Complete lifecycle test: 0/5 successful, avg processing: 0.000s, final health: degraded",
+      "error": ""
+    },
+    {
+      "test_name": "Production Integration Readiness",
+      "category": "End-to-End Functionality",
+      "status": "PASS",
+      "duration": 0.0006611347198486328,
+      "details": "Production readiness: 100% ready. Missing status fields: [], Missing health fields: [], Config complete: True",
+      "error": ""
+    }
+  ],
+  "categories": {
+    "Component Integration": {
+      "pass": 3,
+      "fail": 0,
+      "skip": 0
+    },
+    "Load Level Transitions": {
+      "pass": 2,
+      "fail": 0,
+      "skip": 0
+    },
+    "Performance Under Load": {
+      "pass": 2,
+      "fail": 0,
+      "skip": 0
+    },
+    "System Protection": {
+      "pass": 2,
+      "fail": 0,
+      "skip": 0
+    },
+    "Recovery & Resilience": {
+      "pass": 2,
+      "fail": 0,
+      "skip": 0
+    },
+    "End-to-End Functionality": {
+      "pass": 2,
+      "fail": 0,
+      "skip": 0
+    }
+  }
+}

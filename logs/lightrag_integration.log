@@ -19966,3 +19966,178 @@ AttributeError: 'BackendMetrics' object has no attribute 'current_connections'
 2025-08-09 02:27:09,111 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
 2025-08-09 02:27:09,111 - lightrag_integration - INFO - Integration health: healthy
 2025-08-09 02:27:09,112 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:11:26,391 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:11:26,391 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:11:26,391 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:11:26,391 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:11:48,626 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:11:48,626 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:11:48,626 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:11:48,626 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:12:16,871 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:12:16,872 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:12:16,872 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:12:16,872 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:12:26,817 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:12:26,818 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:12:26,818 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:12:26,818 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:12:38,446 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:12:38,446 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:12:38,446 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:12:38,446 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:12:46,426 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:12:46,426 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:12:46,426 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:12:46,426 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:13:01,907 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:13:01,907 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:13:01,907 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:13:01,908 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:13:13,357 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:13:13,357 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:13:13,357 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:13:13,357 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:13:13,415 - lightrag_integration.enhanced_load_monitoring_system - INFO - Enhanced Load Detection System initialized
+2025-08-09 05:28:58,174 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:28:58,174 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:28:58,174 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:28:58,174 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:52:02,680 - lightrag_integration - INFO - Clinical Metabolomics Oracle LightRAG Integration v1.1.0 initialized with enhanced logging
+2025-08-09 05:52:02,680 - lightrag_integration - INFO - Enabled features: quality_validation_enabled, cost_tracking_enabled, relevance_scoring_enabled, pdf_processing_enabled, circuit_breaker_enabled
+2025-08-09 05:52:02,680 - lightrag_integration - INFO - Integration health: healthy
+2025-08-09 05:52:02,680 - lightrag_integration - WARNING - Integration setup issues detected: LightRAG integration is disabled (LIGHTRAG_INTEGRATION_ENABLED=false)
+2025-08-09 05:52:02,900 - lightrag_integration.enhanced_load_monitoring_system - INFO - Enhanced Load Detection System initialized
+2025-08-09 05:52:02,900 - lightrag_integration.graceful_degradation_integration - INFO - Enhanced load monitoring system initialized
+2025-08-09 05:52:02,901 - lightrag_integration.progressive_service_degradation_controller - INFO - Integrated with enhanced load detection system
+2025-08-09 05:52:02,901 - lightrag_integration.progressive_service_degradation_controller - INFO - Progressive Service Degradation Controller initialized
+2025-08-09 05:52:02,901 - lightrag_integration.graceful_degradation_integration - INFO - Progressive service degradation controller initialized
+2025-08-09 05:52:02,901 - lightrag_integration.graceful_degradation_integration - ERROR - Failed to initialize throttling system: TCPConnector.__init__() got an unexpected keyword argument 'timeout'
+2025-08-09 05:52:02,901 - lightrag_integration.graceful_degradation_integration - INFO - Graceful Degradation Orchestrator initialized
+2025-08-09 05:52:02,901 - lightrag_integration.enhanced_load_monitoring_system - INFO - Enhanced load monitoring started
+2025-08-09 05:52:02,901 - lightrag_integration.graceful_degradation_integration - INFO - Load monitoring started
+2025-08-09 05:52:02,901 - lightrag_integration.graceful_degradation_integration - INFO - Graceful Degradation System started successfully
+2025-08-09 05:52:02,905 - lightrag_integration.unified_system_health_dashboard - INFO - Database initialized at unified_health_dashboard.db
+2025-08-09 05:52:02,905 - lightrag_integration.unified_system_health_dashboard - INFO - Unified Data Aggregator initialized
+2025-08-09 05:52:02,905 - lightrag_integration.unified_system_health_dashboard - INFO - Registered 3 monitoring systems
+2025-08-09 05:52:02,905 - lightrag_integration.unified_system_health_dashboard - INFO - Successfully registered orchestrator monitoring systems
+2025-08-09 05:52:02,906 - lightrag_integration.unified_system_health_dashboard - INFO - FastAPI application initialized
+2025-08-09 05:52:02,906 - lightrag_integration.unified_system_health_dashboard - INFO - Unified System Health Dashboard initialized
+2025-08-09 05:52:03,018 - lightrag_integration.enhanced_load_monitoring_system - INFO - Load level changed: NORMAL → EMERGENCY
+2025-08-09 05:52:03,018 - lightrag_integration.graceful_degradation_integration - INFO - System load level changed: NORMAL → EMERGENCY
+2025-08-09 05:52:03,018 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → EMERGENCY
+2025-08-09 05:52:03,019 - lightrag_integration.progressive_service_degradation_controller - WARNING - EMERGENCY MODE ACTIVATED - Maximum degradation in effect
+2025-08-09 05:52:03,019 - lightrag_integration.progressive_service_degradation_controller.TimeoutManager - INFO - Updating timeouts: NORMAL → EMERGENCY
+2025-08-09 05:52:03,019 - lightrag_integration.progressive_service_degradation_controller.QueryComplexityManager - INFO - Updating query complexity: NORMAL → EMERGENCY
+2025-08-09 05:52:03,019 - lightrag_integration.progressive_service_degradation_controller.FeatureControlManager - INFO - Updating feature availability: NORMAL → EMERGENCY
+2025-08-09 05:52:03,019 - lightrag_integration.progressive_service_degradation_controller.FeatureControlManager - INFO - Disabled features: detailed_logging, complex_analytics, confidence_analysis, background_tasks, caching_writes, enable_parallel_processing, enable_result_streaming, enable_metadata_extraction
+2025-08-09 05:52:03,019 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → EMERGENCY
+2025-08-09 05:52:03,019 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: EMERGENCY
+2025-08-09 05:52:03,019 - lightrag_integration.progressive_service_degradation_controller - INFO - Disabled features: detailed_logging, complex_analytics, confidence_analysis, background_tasks, caching_writes, enable_parallel_processing, enable_result_streaming, enable_metadata_extraction
+2025-08-09 05:52:03,019 - lightrag_integration.load_based_request_throttling_system.LoadBasedThrottler - INFO - Adjusted throttling rate: 10.0 → 2.0 req/s (load level: EMERGENCY)
+2025-08-09 05:52:03,019 - lightrag_integration.load_based_request_throttling_system.PriorityRequestQueue - INFO - Adjusted queue limit: 100 → 20 (load level: EMERGENCY)
+2025-08-09 05:52:03,019 - lightrag_integration.unified_system_health_dashboard - INFO - Data aggregation started
+2025-08-09 05:52:03,019 - lightrag_integration.unified_system_health_dashboard - INFO - Dashboard starting on 0.0.0.0:8093
+2025-08-09 05:52:04,907 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:04,908 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: EMERGENCY → NORMAL
+2025-08-09 05:52:04,908 - lightrag_integration.progressive_service_degradation_controller.TimeoutManager - INFO - Updating timeouts: EMERGENCY → NORMAL
+2025-08-09 05:52:04,909 - lightrag_integration.progressive_service_degradation_controller.QueryComplexityManager - INFO - Updating query complexity: EMERGENCY → NORMAL
+2025-08-09 05:52:04,909 - lightrag_integration.progressive_service_degradation_controller.FeatureControlManager - INFO - Updating feature availability: EMERGENCY → NORMAL
+2025-08-09 05:52:04,909 - lightrag_integration.progressive_service_degradation_controller.FeatureControlManager - INFO - Enabled features: detailed_logging, complex_analytics, confidence_analysis, background_tasks, caching_writes, enable_parallel_processing, enable_result_streaming, enable_metadata_extraction
+2025-08-09 05:52:04,909 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: EMERGENCY → NORMAL
+2025-08-09 05:52:04,909 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:09,910 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:09,910 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:09,911 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:09,911 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:14,912 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:14,913 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:14,913 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:14,913 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:19,966 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:19,967 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:19,967 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:19,967 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:24,970 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:24,971 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:24,971 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:24,971 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:29,972 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:29,973 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:29,973 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:29,973 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:34,974 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:34,975 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:34,975 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:34,975 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:39,977 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:39,978 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:39,978 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:39,978 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:44,981 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:44,982 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:44,982 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:44,982 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:49,985 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:49,986 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:49,986 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:49,986 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:54,988 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:54,989 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:54,990 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:54,990 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:52:59,991 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to NORMAL: Demo: Normal system operation with typical load
+2025-08-09 05:52:59,992 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → NORMAL
+2025-08-09 05:52:59,992 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → NORMAL
+2025-08-09 05:52:59,993 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: NORMAL
+2025-08-09 05:53:04,995 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:04,995 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: NORMAL → ELEVATED
+2025-08-09 05:53:04,996 - lightrag_integration.progressive_service_degradation_controller.TimeoutManager - INFO - Updating timeouts: NORMAL → ELEVATED
+2025-08-09 05:53:04,996 - lightrag_integration.progressive_service_degradation_controller.QueryComplexityManager - INFO - Updating query complexity: NORMAL → ELEVATED
+2025-08-09 05:53:04,996 - lightrag_integration.progressive_service_degradation_controller.FeatureControlManager - INFO - Updating feature availability: NORMAL → ELEVATED
+2025-08-09 05:53:04,996 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: NORMAL → ELEVATED
+2025-08-09 05:53:04,996 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:09,999 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:10,000 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:10,000 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:10,000 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:15,004 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:15,004 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:15,005 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:15,005 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:20,007 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:20,008 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:20,008 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:20,008 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:25,011 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:25,012 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:25,012 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:25,012 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:30,014 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:30,014 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:30,014 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:30,015 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:35,017 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:35,018 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:35,018 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:35,019 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:40,021 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:40,023 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:40,023 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:40,023 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:45,026 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:45,026 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:45,026 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:45,026 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:50,028 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:50,029 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:50,029 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:50,029 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:53:55,030 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:53:55,030 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:53:55,030 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:53:55,030 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
+2025-08-09 05:54:00,032 - lightrag_integration.progressive_service_degradation_controller - WARNING - Force setting load level to ELEVATED: Demo: Traffic spike - increased user activity
+2025-08-09 05:54:00,033 - lightrag_integration.progressive_service_degradation_controller - INFO - Applying degradation level: ELEVATED → ELEVATED
+2025-08-09 05:54:00,033 - lightrag_integration.graceful_degradation_integration - INFO - Degradation applied: ELEVATED → ELEVATED
+2025-08-09 05:54:00,034 - lightrag_integration.progressive_service_degradation_controller - INFO - Current degradation level: ELEVATED
