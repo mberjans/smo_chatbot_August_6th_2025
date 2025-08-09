@@ -453,7 +453,7 @@
 - [x] Execute fallback system tests and validate reliability
 
 **CMO-LIGHTRAG-014-T09** [VALIDATE]
-- [ ] Verify dependency on CMO-LIGHTRAG-013 completion
+- [x] Verify dependency on CMO-LIGHTRAG-013 completion
 
 ---
 
