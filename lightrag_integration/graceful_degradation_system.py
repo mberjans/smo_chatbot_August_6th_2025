@@ -334,97 +334,145 @@ class DegradationStrategy:
 # ============================================================================
 
 class LoadDetectionSystem:
-    """Monitors system metrics and determines appropriate load levels."""
+    """Enhanced system metrics monitoring with production integration.
     
-    def __init__(self, thresholds: Optional[LoadThresholds] = None,
-                 monitoring_interval: float = 5.0):
+    Provides real-time monitoring of:
+    - CPU utilization with multi-core awareness
+    - Memory pressure with swap usage
+    - Request queue depth with backlog tracking
+    - Response time percentiles (P95, P99)
+    - Error rate tracking with categorization
+    - Network I/O and connection pool metrics
+    - Hysteresis-based threshold management for stability
+    """
+    
+    def __init__(self, 
+                 thresholds: Optional[LoadThresholds] = None,
+                 monitoring_interval: float = 5.0,
+                 production_monitoring: Optional[Any] = None,
+                 enable_hysteresis: bool = True,
+                 hysteresis_factor: float = 0.85):
         self.thresholds = thresholds or LoadThresholds()
         self.monitoring_interval = monitoring_interval
+        self.production_monitoring = production_monitoring
+        self.enable_hysteresis = enable_hysteresis
+        self.hysteresis_factor = hysteresis_factor
         self.logger = logging.getLogger(__name__)
         
-        # Metrics history for trend analysis
-        self.metrics_history: deque = deque(maxlen=100)
-        self.load_level_history: deque = deque(maxlen=20)
+        # Enhanced metrics history with categorization
+        self.metrics_history: deque = deque(maxlen=200)  # Increased for better trend analysis
+        self.load_level_history: deque = deque(maxlen=50)  # More history for hysteresis
+        self.degradation_events: List[Dict[str, Any]] = []
         
-        # Current state
+        # Current state with enhanced tracking
         self.current_metrics: Optional[SystemLoadMetrics] = None
         self.current_load_level: SystemLoadLevel = SystemLoadLevel.NORMAL
+        self.previous_load_level: SystemLoadLevel = SystemLoadLevel.NORMAL
         
-        # Monitoring state
+        # Monitoring state with performance optimizations
         self._monitoring_active = False
         self._monitor_task: Optional[asyncio.Task] = None
         self._callbacks: List[Callable[[SystemLoadMetrics], None]] = []
+        self._metrics_lock = threading.Lock()
         
-        # Request queue simulation (would integrate with actual request handler)
+        # Real-time metrics integration
         self._request_queue_depth = 0
-        self._response_times: deque = deque(maxlen=1000)
+        self._response_times: deque = deque(maxlen=2000)  # Larger sample for accuracy
         self._error_count = 0
         self._total_requests = 0
+        self._connection_count = 0
+        self._last_metrics_update = time.time()
         
+        # Performance optimization - cached calculations
+        self._cached_percentiles: Optional[Tuple[float, float]] = None
+        self._cached_percentiles_timestamp = 0.0
+        self._percentile_cache_ttl = 2.0  # Cache for 2 seconds
+        
+        # Enhanced system monitoring with OS-specific optimizations
+        self._cpu_times_prev = None
+        self._network_io_prev = None
+        self._process_pool_size = min(4, (psutil.cpu_count() or 1))
+        
+        # Initialize integration with production monitoring
+        self._initialize_production_integration()
+        
+    def _initialize_production_integration(self):
+        """Initialize integration with production monitoring system."""
+        if self.production_monitoring and MONITORING_AVAILABLE:
+            try:
+                # Register with production monitoring for metrics sharing
+                if hasattr(self.production_monitoring, 'register_load_detector'):
+                    self.production_monitoring.register_load_detector(self)
+                self.logger.info("Integrated with production monitoring system")
+            except Exception as e:
+                self.logger.warning(f"Failed to integrate with production monitoring: {e}")
+    
     def add_load_change_callback(self, callback: Callable[[SystemLoadMetrics], None]):
         """Add callback for load level changes."""
         self._callbacks.append(callback)
     
     def get_system_metrics(self) -> SystemLoadMetrics:
-        """Collect current system metrics."""
-        try:
-            # CPU utilization
-            cpu_percent = psutil.cpu_percent(interval=1)
-            
-            # Memory metrics
-            memory = psutil.virtual_memory()
-            memory_pressure = memory.percent
-            
-            # Disk I/O wait time
+        """Enhanced real-time system metrics collection with minimal overhead."""
+        current_time = time.time()
+        
+        with self._metrics_lock:
             try:
-                disk_io = psutil.disk_io_counters()
-                disk_io_wait = getattr(disk_io, 'read_time', 0) + getattr(disk_io, 'write_time', 0)
-            except:
-                disk_io_wait = 0.0
+                # Optimized CPU utilization with per-core awareness
+                cpu_percent = self._get_optimized_cpu_usage()
+                
+                # Enhanced memory metrics including swap
+                memory_metrics = self._get_enhanced_memory_metrics()
+                memory_pressure = memory_metrics['pressure']
+                
+                # Network and I/O metrics
+                io_metrics = self._get_io_metrics()
+                disk_io_wait = io_metrics['disk_wait']
+                
+                # Optimized response time calculations with caching
+                response_p95, response_p99 = self._get_cached_percentiles(current_time)
+                
+                # Enhanced error rate with categorization
+                error_rate = self._calculate_enhanced_error_rate()
+                
+                # Real connection count integration
+                active_connections = self._get_active_connections_count()
+                
+                # Integration with production monitoring
+                if self.production_monitoring:
+                    self._sync_with_production_monitoring()
+                
+                # Create enhanced metrics object
+                metrics = SystemLoadMetrics(
+                    timestamp=datetime.now(),
+                    cpu_utilization=cpu_percent,
+                    memory_pressure=memory_pressure,
+                    request_queue_depth=self._request_queue_depth,
+                    response_time_p95=response_p95,
+                    response_time_p99=response_p99,
+                    error_rate=error_rate,
+                    active_connections=active_connections,
+                    disk_io_wait=disk_io_wait
+                )
+                
+                # Enhanced load level calculation with hysteresis
+                metrics.load_level = self._calculate_load_level_with_hysteresis(metrics)
+                metrics.load_score = self._calculate_enhanced_load_score(metrics)
+                metrics.degradation_recommended = metrics.load_level > SystemLoadLevel.NORMAL
+                
+                # Update metrics history for trend analysis
+                self.metrics_history.append(metrics)
+                self._last_metrics_update = current_time
+                
+                return metrics
             
-            # Response time calculations
-            response_p95 = 0.0
-            response_p99 = 0.0
-            if self._response_times:
-                sorted_times = sorted(self._response_times)
-                p95_idx = int(len(sorted_times) * 0.95)
-                p99_idx = int(len(sorted_times) * 0.99)
-                response_p95 = sorted_times[p95_idx] if p95_idx < len(sorted_times) else 0
-                response_p99 = sorted_times[p99_idx] if p99_idx < len(sorted_times) else 0
-            
-            # Error rate calculation
-            error_rate = 0.0
-            if self._total_requests > 0:
-                error_rate = (self._error_count / self._total_requests) * 100
-            
-            # Create metrics object
-            metrics = SystemLoadMetrics(
-                timestamp=datetime.now(),
-                cpu_utilization=cpu_percent,
-                memory_pressure=memory_pressure,
-                request_queue_depth=self._request_queue_depth,
-                response_time_p95=response_p95,
-                response_time_p99=response_p99,
-                error_rate=error_rate,
-                active_connections=0,  # Would integrate with actual connection counter
-                disk_io_wait=disk_io_wait
-            )
-            
-            # Determine load level and score
-            metrics.load_level = self._calculate_load_level(metrics)
-            metrics.load_score = self._calculate_load_score(metrics)
-            metrics.degradation_recommended = metrics.load_level > SystemLoadLevel.NORMAL
-            
-            return metrics
-            
-        except Exception as e:
-            self.logger.error(f"Error collecting system metrics: {e}")
-            # Return safe defaults
-            return SystemLoadMetrics(
-                timestamp=datetime.now(),
-                cpu_utilization=0.0,
-                memory_pressure=0.0,
-                request_queue_depth=0,
+            except Exception as e:
+                self.logger.error(f"Error collecting enhanced system metrics: {e}")
+                # Return safe defaults with current timestamp
+                return SystemLoadMetrics(
+                    timestamp=datetime.now(),
+                    cpu_utilization=0.0,
+                    memory_pressure=0.0,
+                    request_queue_depth=0,
                 response_time_p95=0.0,
                 response_time_p99=0.0,
                 error_rate=0.0,
